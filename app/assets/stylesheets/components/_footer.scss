@@ -1,0 +1,47 @@
+.site-footer {
+  background-color: $secondary-color;
+  border-top: 1px solid $border-dark;
+  padding: 1rem 0;
+
+  .footer-legal {
+    font-size: 0.78rem;
+    color: rgba(226, 226, 226, 0.45);
+    line-height: 1.6;
+
+    a {
+      color: rgba(226, 226, 226, 0.45);
+      text-decoration: none;
+
+      &:hover {
+        color: $teal;
+      }
+    }
+  }
+
+  // Discrete login link — only appears in footer (not navbar)
+  .footer-login-link {
+    font-size: 0.72rem;
+    color: rgba(226, 226, 226, 0.25);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 0.2rem;
+
+    &:hover {
+      color: rgba(226, 226, 226, 0.55);
+    }
+  }
+
+  .footer-social {
+    a {
+      color: rgba(226, 226, 226, 0.45);
+      font-size: 1rem;
+      margin-left: 1.1rem;
+      transition: color 0.2s ease;
+      text-decoration: none;
+
+      &:hover {
+        color: $teal;
+      }
+    }
+  }
+}

@@ -1,12 +1,109 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+.navbar-isarak {
+  background-color: $secondary-color;
+  border-bottom: 1px solid $border-dark;
+
+  .navbar-brand {
+    font-family: $headers-font;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $font-color;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+
+    &:hover {
+      color: $teal;
+    }
+  }
+
+  .navbar-toggler {
+    border: 1px solid $border-dark;
+    padding: 0.35rem 0.6rem;
+
+    .navbar-toggler-icon {
+      // White icon for dark navbar
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28226%2C226%2C226%2C0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(137, 214, 204, 0.2);
+    }
+  }
+
+  .nav-link {
+    color: rgba(226, 226, 226, 0.8);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 0.75rem;
+    transition: color 0.2s ease;
+
+    &:hover,
+    &.active {
+      color: $teal;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: $black;
+    border: 1px solid $border-dark;
+    border-radius: 0.375rem;
+    margin-top: 0.25rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+
+    .dropdown-item {
+      color: rgba(226, 226, 226, 0.8);
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+
+      &:hover,
+      &:focus {
+        background-color: $secondary-color;
+        color: $teal;
+      }
+    }
+
+    .dropdown-divider {
+      border-color: $border-dark;
+    }
+  }
+
+  // Contact Me CTA button (visitor nav)
+  .btn-nav-cta {
+    background-color: $teal;
+    color: $black;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.45rem 1.2rem;
+    border-radius: 0.375rem;
+    border: none;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $teal-hover;
+      color: $black;
+    }
+  }
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
-}
+// Avatar initials circle (signed-in user)
+.avatar-initials {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: $teal;
+  color: $black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+  &:hover {
+    background-color: $teal-hover;
+  }
 }

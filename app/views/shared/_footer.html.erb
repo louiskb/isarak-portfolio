@@ -1,0 +1,38 @@
+<footer class="site-footer">
+  <div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center">
+
+      <%# Left: copyright, legal links, discrete login %>
+      <div class="footer-legal">
+        <div>
+          &copy; <%= Date.current.year %> Isara. All rights reserved.
+          &ensp;&middot;&ensp;
+          <%= link_to "Privacy Policy", "#" %>
+          &ensp;&middot;&ensp;
+          <%= link_to "Terms of Service", "#" %>
+        </div>
+        <%# Discrete login — only shown when not signed in %>
+        <% unless user_signed_in? %>
+          <%= link_to "Login", new_user_session_path, class: "footer-login-link" %>
+        <% end %>
+      </div>
+
+      <%# Right: social icons — update hrefs with Isara's actual profiles %>
+      <div class="footer-social d-flex align-items-center">
+        <a href="#" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" title="ResearchGate" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-researchgate"></i>
+        </a>
+        <a href="#" title="Google Scholar" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-graduation-cap"></i>
+        </a>
+        <a href="#" title="Twitter / X" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-x-twitter"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>

@@ -1,10 +1,19 @@
-// Define variables for your color scheme
+// Isarak Portfolio — Color Scheme
+// Inspired by GMK Delta Light: dark background, mint teal accent, light text
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Brand accent
+$teal:            #89D6CC;  // Primary mint teal — CTAs, links, highlights
+$teal-hover:      #6BC4BA;  // Teal hover/active state
+
+// Dark surfaces
+$secondary-color: #2D2D2D;  // Charcoal — navbar, footer, card surfaces
+$black:           #080808;  // Near-black — page background
+
+// Text
+$font-color:      #E2E2E2;  // Light gray — primary text on dark
+$font-muted:      #9CA3AF;  // Muted/secondary text
+
+// Utility
+$border-dark:     #3D3D3D;  // Subtle border on dark surfaces
+$surface:         #1A1A1A;  // Intermediate surface (between black and charcoal)
+$teal-subtle:     rgba(137, 214, 204, 0.12); // Very subtle teal background tint

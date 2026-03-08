@@ -1,28 +1,83 @@
-// This is where you override default Bootstrap variables
-// 1. Find all Bootstrap variables that you can override at the end of each component's documentation under the `Sass variables` anchor
-// e.g. here are the ones you can override for the navbar https://getbootstrap.com/docs/5.3/components/navbar/#sass-variables
-// 2. These variables are defined with default value (see https://robots.thoughtbot.com/sass-default)
-// 3. You can override them below!
+// Bootstrap Variable Overrides — Dark Theme
+// Full reference: https://getbootstrap.com/docs/5.3/customize/sass/
 
-// General style
-$font-family-sans-serif: $body-font;
-$headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
-$font-size-base:         1rem;
+// Typography
+$font-family-sans-serif:  $body-font;
+$headings-font-family:    $headers-font;
+$font-size-base:          1rem;
+$font-weight-normal:      400;
+$headings-font-weight:    600;
+$headings-line-height:    1.25;
+$line-height-base:        1.65;
 
-// Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+// Core colors
+$body-bg:                 $black;
+$body-color:              $font-color;
+$primary:                 $teal;
+$secondary:               $secondary-color;
+$dark:                    $black;
+$light:                   $secondary-color;
 
-// Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
+// Links
+$link-color:              $teal;
+$link-hover-color:        $teal-hover;
+$link-decoration:         none;
 
-// Override other variables below!
+// Borders
+$border-color:            $border-dark;
+$border-radius-sm:        0.25rem;
+$border-radius:           0.375rem;
+$border-radius-lg:        0.5rem;
+$border-radius-xl:        0.75rem;
+
+// Cards
+$card-bg:                 $secondary-color;
+$card-border-color:       $border-dark;
+$card-color:              $font-color;
+$card-cap-bg:             $surface;
+
+// Dropdowns
+$dropdown-bg:             $black;
+$dropdown-border-color:   $border-dark;
+$dropdown-link-color:     $font-color;
+$dropdown-link-hover-bg:  $secondary-color;
+$dropdown-link-hover-color: $teal;
+$dropdown-divider-bg:     $border-dark;
+
+// Form inputs
+$input-bg:                $secondary-color;
+$input-color:             $font-color;
+$input-border-color:      $border-dark;
+$input-placeholder-color: rgba(226, 226, 226, 0.4);
+$input-focus-border-color: $teal;
+$input-focus-box-shadow:  0 0 0 0.2rem rgba(137, 214, 204, 0.2);
+
+// Buttons
+$btn-font-weight:         600;
+
+// Tables
+$table-color:             $font-color;
+$table-bg:                transparent;
+$table-border-color:      $border-dark;
+
+// Pagination
+$pagination-bg:           $secondary-color;
+$pagination-color:        $font-color;
+$pagination-border-color: $border-dark;
+$pagination-hover-bg:     $black;
+$pagination-hover-color:  $teal;
+$pagination-active-bg:    $teal;
+$pagination-active-border-color: $teal;
+$pagination-active-color: $black;
+
+// Modals
+$modal-content-bg:        $secondary-color;
+$modal-content-border-color: $border-dark;
+$modal-header-border-color: $border-dark;
+$modal-footer-border-color: $border-dark;
+
+// Badges
+$badge-font-weight:       500;
+
+// Headings — teal colour for h1 accent, others inherit body color
+$headings-color:          null; // inherit; set per-component in SCSS as needed

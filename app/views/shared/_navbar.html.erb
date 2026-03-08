@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-isarak">
+  <div class="container-fluid px-4">
+
+    <%# Logo / Brand — left side %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      Isara
+    <% end %>
+
+    <%# Mobile hamburger toggle %>
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%# Nav links — right side %>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center gap-1">
+
+        <% if user_signed_in? %>
+          <%# ==================== SIGNED-IN USER NAV ==================== %>
+
+          <li class="nav-item">
+            <%= link_to "Portfolio", root_path, class: "nav-link" %>
+          </li>
+
+          <%# Career dropdown — all resource types %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              Career
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><%= link_to "Research", "#", class: "dropdown-item" %></li>
+              <li><%= link_to "Grants & Awards", "#", class: "dropdown-item" %></li>
+              <li><%= link_to "Teaching", "#", class: "dropdown-item" %></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Blog", "#", class: "nav-link" %>
+          </li>
+
+          <%# Avatar circle with profile/logout dropdown %>
+          <li class="nav-item dropdown ms-2">
+            <a class="nav-link p-0 d-flex align-items-center" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="avatar-initials">
+                <%= current_user.email[0].upcase %>
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><%= link_to "Profile", edit_user_registration_path, class: "dropdown-item" %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= button_to "Logout", destroy_user_session_path,
+                    method: :delete,
+                    class: "dropdown-item text-start border-0 bg-transparent w-100",
+                    form: { "data-turbo": "false" } %>
+              </li>
+            </ul>
+          </li>
+
+        <% else %>
+          <%# ==================== VISITOR NAV ==================== %>
+
+          <li class="nav-item">
+            <%= link_to "Portfolio", root_path, class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Research", "#", class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Blog", "#", class: "nav-link" %>
+          </li>
+
+          <%# Contact Me CTA button %>
+          <li class="nav-item ms-2">
+            <%= link_to "Contact Me", "#contact", class: "btn-nav-cta" %>
+          </li>
+
+        <% end %>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
