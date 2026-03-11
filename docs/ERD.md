@@ -52,6 +52,7 @@ erDiagram
     BLOG_POST {
         int id PK
         string title
+        string author
         int status
         boolean ai_generated
         datetime scheduled_at
