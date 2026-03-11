@@ -1,0 +1,2 @@
+class ResearchItem < ApplicationRecord
+end

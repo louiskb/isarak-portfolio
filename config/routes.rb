@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :research_items
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
   devise_for :users
   root to: "pages#home"
