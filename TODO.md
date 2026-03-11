@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-08
+> Created: 2026-03-08 | Last updated: 2026-03-11
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Navbar + footer
+Phase 3 — Blog (pair programming, Louis leads)
 
 ---
 
@@ -13,32 +13,38 @@ Navbar + footer
 - [x] Google Fonts (Playfair Display + Inter)
 - [x] CLAUDE.md, README.md
 - [ ] Confirm .gitignore covers `.env`, `.mcp.json` tokens, `settings.local.json`
-- [ ] Navbar
-- [ ] Footer
-- [ ] Add footer render to application layout
+- [x] Navbar
+- [x] Footer
+- [x] Add footer render to application layout
 
 ---
 
 ## Phase 2 — Backend (Models & Admin Management)
-- [ ] Identify all resource types (research papers, publications, talks, awards, etc.) — confirm with Isara
-- [ ] Generate models, migrations, controllers for each resource type
-- [ ] FriendlyId slugs on all public-facing resources
+- [x] Identify all resource types — ResearchItem, GrantAward, Teaching, BlogPost
+- [x] Scaffold + migrate all 4 models
+- [x] FriendlyId slugs on all resources
+- [x] Enums — ResearchItem (project/paper/publication), GrantAward (grant/award), BlogPost (draft/scheduled/published)
+- [x] belongs_to :user on all resources + has_many on User with dependent: :destroy
+- [x] Auth gates — authenticate_user! on all controllers (BlogPost index/show public)
+- [x] CV attachment on User (has_one_attached :cv)
+- [ ] Cloudinary wiring — configure Active Storage to use Cloudinary as backend (all uploads: CV, images, Trix)
+- [ ] Admin management views — restyle scaffold views to match dark theme
 - [ ] Seed data for development
-- [ ] Admin dashboard / management views (CRUD) — login-gated
-- [ ] Document upload/download (CV, research papers) via Cloudinary or Active Storage
 - [ ] Contact form (Action Mailer)
 
 ---
 
 ## Phase 3 — Blog + AI Blog Builder
-- [ ] Blog post model (title, body via Action Text, published_at, status: draft/scheduled/published)
-- [ ] Rich text editor (Action Text) + image upload (Cloudinary)
-- [ ] FriendlyId slugs on posts
+- [x] BlogPost model — title, author, status enum, ai_generated, scheduled_at, slug, blog_post_erb_content
+- [x] Action Text — has_rich_text :body (optional rich text editor)
+- [x] FriendlyId slug on BlogPost
+- [x] Strong params wired (body, blog_post_erb_content, all fields)
+- [ ] Blog post form (new/edit) — Louis building
+- [ ] Public blog index view
+- [ ] Public blog show view — render body OR blog_post_erb_content depending on which is set
 - [ ] Scheduled posts via Solid Queue background jobs
-- [ ] AI blog post generator (RubyLLM)
-- [ ] AI-generated posts can be scheduled too
-- [ ] Public blog index + show pages
-- [ ] Pagination (Pagy)
+- [ ] AI blog post generator (RubyLLM) — sets ai_generated: true, populates blog_post_erb_content
+- [ ] Pagination on blog index (Pagy)
 
 ---
 
@@ -46,9 +52,9 @@ Navbar + footer
 - [ ] Build from Figma: https://www.figma.com/design/urlKYDQaoyIghxaQg69bYC/isarak-portfolio
 - [ ] Hero section
 - [ ] About / bio section
-- [ ] Resource sections (research, publications, etc.) — dynamically populated from Phase 2 models
-- [ ] Contact form section
-- [ ] Animations / scroll effects (to discuss — Louis has design inspirations)
+- [ ] Resource sections (ResearchItem, GrantAward, Teaching) — dynamically populated
+- [ ] Contact form section (including backend logic)
+- [ ] Animations / scroll effects
 - [ ] Mobile responsive check
 
 ---
@@ -65,13 +71,16 @@ Navbar + footer
 - Auth: Devise, single user (Isara only — no public sign-up)
 - Styling: Bootstrap 5.3 + SCSS (no Tailwind)
 - Font: Playfair Display (headings) + Inter (body)
-- Colors: Teal `#0D9488`, Dark gray `#1F2937`, White `#FFFFFF`
-- URL slugs: FriendlyId on all public resources
-- Background jobs: Solid Queue (already included in Rails 8 stack)
+- Colors: Dark theme — Teal `#89D6CC`, Charcoal `#2D2D2D`, Black `#080808`
+- URL slugs: FriendlyId on all resources
+- Background jobs: Solid Queue (Rails 8 default)
+- All uploads → Cloudinary via Active Storage backend (not local disk)
+- Blog content: dual-mode — Action Text `body` (manual) OR `blog_post_erb_content` (AI-generated HTML/ERB)
+- AI-generated posts set `ai_generated: true` flag automatically
 - Build order: Setup → Navbar/Footer → Backend → Blog → Landing Page
 
 ## Questions / Open Items
-- Confirm resource types with Isara (research papers? publications? conference talks? awards?)
 - Will Isara need multiple language support (EN/TH)?
 - Hosting / deployment plan (Heroku, Railway, Kamal?)
 - Does Isara want an RSS feed for the blog?
+- Teaching model: use `has_one_attached :image` (Active Storage → Cloudinary) or plain `image_url` string? — decide when implementing uploads
