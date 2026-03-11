@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @grant_award %>
+
+<div>
+  <%= link_to "Edit this grant award", edit_grant_award_path(@grant_award) %> |
+  <%= link_to "Back to grant awards", grant_awards_path %>
+
+  <%= button_to "Destroy this grant award", @grant_award, method: :delete %>
+</div>

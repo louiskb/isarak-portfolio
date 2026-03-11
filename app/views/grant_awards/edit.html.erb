@@ -1,0 +1,12 @@
+<% content_for :title, "Editing grant award" %>
+
+<h1>Editing grant award</h1>
+
+<%= render "form", grant_award: @grant_award %>
+
+<br>
+
+<div>
+  <%= link_to "Show this grant award", @grant_award %> |
+  <%= link_to "Back to grant awards", grant_awards_path %>
+</div>

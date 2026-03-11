@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Grant awards" %>
+
+<h1>Grant awards</h1>
+
+<div id="grant_awards">
+  <% @grant_awards.each do |grant_award| %>
+    <%= render grant_award %>
+    <p>
+      <%= link_to "Show this grant award", grant_award %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New grant award", new_grant_award_path %>
