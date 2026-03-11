@@ -4,6 +4,8 @@ class GrantAward < ApplicationRecord
 
   enum :category, { grant: 0, award: 1 }
 
+  belongs_to :user
+
   validates :title, presence: true
   validates :category, presence: true
 end

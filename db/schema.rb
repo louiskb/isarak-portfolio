@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_11_071343) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_11_072622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,6 +51,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_071343) do
     t.integer "status"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_blog_posts_on_user_id"
   end
 
   create_table "grant_awards", force: :cascade do |t|
@@ -61,7 +63,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_071343) do
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.integer "year"
+    t.index ["user_id"], name: "index_grant_awards_on_user_id"
   end
 
   create_table "research_items", force: :cascade do |t|
@@ -74,6 +78,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_071343) do
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_research_items_on_user_id"
   end
 
   create_table "teachings", force: :cascade do |t|
@@ -84,7 +90,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_071343) do
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.integer "year"
+    t.index ["user_id"], name: "index_teachings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -103,4 +111,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_071343) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "blog_posts", "users"
+  add_foreign_key "grant_awards", "users"
+  add_foreign_key "research_items", "users"
+  add_foreign_key "teachings", "users"
 end

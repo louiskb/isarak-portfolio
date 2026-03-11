@@ -4,7 +4,7 @@ class GrantAwardsController < ApplicationController
 
   # GET /grant_awards or /grant_awards.json
   def index
-    @grant_awards = GrantAward.all
+    @grant_awards = current_user.grant_awards.all
   end
 
   # GET /grant_awards/1 or /grant_awards/1.json
@@ -22,7 +22,7 @@ class GrantAwardsController < ApplicationController
 
   # POST /grant_awards or /grant_awards.json
   def create
-    @grant_award = GrantAward.new(grant_award_params)
+    @grant_award = current_user.grant_awards.new(grant_award_params)
 
     respond_to do |format|
       if @grant_award.save

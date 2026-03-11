@@ -4,7 +4,7 @@ class TeachingsController < ApplicationController
 
   # GET /teachings or /teachings.json
   def index
-    @teachings = Teaching.all
+    @teachings = current_user.teachings.all
   end
 
   # GET /teachings/1 or /teachings/1.json
@@ -22,7 +22,7 @@ class TeachingsController < ApplicationController
 
   # POST /teachings or /teachings.json
   def create
-    @teaching = Teaching.new(teaching_params)
+    @teaching = current_user.teachings.new(teaching_params)
 
     respond_to do |format|
       if @teaching.save

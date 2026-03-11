@@ -4,7 +4,7 @@ class ResearchItemsController < ApplicationController
 
   # GET /research_items or /research_items.json
   def index
-    @research_items = ResearchItem.all
+    @research_items = current_user.research_items.all
   end
 
   # GET /research_items/1 or /research_items/1.json
@@ -22,7 +22,7 @@ class ResearchItemsController < ApplicationController
 
   # POST /research_items or /research_items.json
   def create
-    @research_item = ResearchItem.new(research_item_params)
+    @research_item = current_user.research_items.new(research_item_params)
 
     respond_to do |format|
       if @research_item.save

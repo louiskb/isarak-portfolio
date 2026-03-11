@@ -69,13 +69,17 @@ erDiagram
         int blob_id FK
     }
 
+    USER ||--o{ RESEARCH_ITEM : "has many"
+    USER ||--o{ GRANT_AWARD : "has many"
+    USER ||--o{ TEACHING : "has many"
+    USER ||--o{ BLOG_POST : "has many"
     USER ||--o{ ACTIVE_STORAGE_ATTACHMENT : "has CV"
     BLOG_POST ||--o{ ACTIVE_STORAGE_ATTACHMENT : "has rich text attachments"
 ```
 
 ## Notes
 
-- No `user_id` FK on resources — Isara is the only user, resources are managed content not owned records
+- All resources have a `user_id` FK — each record belongs to User (Isara)
 - `category` is a Rails enum (stored as `int`, mapped to labels)
   - `ResearchItem`: `project / paper / publication`
   - `GrantAward`: `grant / award`
