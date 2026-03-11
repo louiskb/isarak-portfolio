@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_11_070343) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_11_070926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_070343) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "grant_awards", force: :cascade do |t|
+    t.string "awarding_body"
+    t.integer "category"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "slug"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "year"
+  end
+
   create_table "research_items", force: :cascade do |t|
     t.integer "category"
     t.datetime "created_at", null: false
@@ -52,6 +63,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_070343) do
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "teachings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "image_url"
+    t.string "institution"
+    t.string "slug"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "year"
   end
 
   create_table "users", force: :cascade do |t|

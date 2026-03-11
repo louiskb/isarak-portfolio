@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :teachings
   resources :grant_awards
   resources :research_items
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
