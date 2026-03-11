@@ -44,9 +44,9 @@ Louis's own portfolio (same structure, use as reference):
 
 ## Key Commands
 ```bash
-bin/rails server          # Start dev server
-bin/rails console         # Rails console
-bin/rails db:migrate      # Run migrations
+rails server              # Start dev server
+rails console             # Rails console
+rails db:migrate          # Run migrations
 bundle exec rubocop -a    # Auto-fix linting
 ```
 
