@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :blog_posts
   resources :teachings
   resources :grant_awards
   resources :research_items

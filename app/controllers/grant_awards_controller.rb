@@ -1,4 +1,5 @@
 class GrantAwardsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_grant_award, only: %i[ show edit update destroy ]
 
   # GET /grant_awards or /grant_awards.json
@@ -60,7 +61,7 @@ class GrantAwardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grant_award
-      @grant_award = GrantAward.find(params.expect(:id))
+      @grant_award = GrantAward.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

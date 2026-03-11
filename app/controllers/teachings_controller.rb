@@ -1,4 +1,5 @@
 class TeachingsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_teaching, only: %i[ show edit update destroy ]
 
   # GET /teachings or /teachings.json
@@ -60,7 +61,7 @@ class TeachingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_teaching
-      @teaching = Teaching.find(params.expect(:id))
+      @teaching = Teaching.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

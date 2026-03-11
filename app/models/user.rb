@@ -6,4 +6,6 @@ friendly_id :email, use: :slugged # Use email as slug (unique)
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one_attached :cv
 end

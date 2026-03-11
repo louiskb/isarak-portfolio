@@ -1,4 +1,5 @@
 class ResearchItemsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_research_item, only: %i[ show edit update destroy ]
 
   # GET /research_items or /research_items.json
@@ -60,7 +61,7 @@ class ResearchItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_research_item
-      @research_item = ResearchItem.find(params.expect(:id))
+      @research_item = ResearchItem.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
