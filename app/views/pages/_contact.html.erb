@@ -1,0 +1,34 @@
+<%# Contact section — anchored for navbar "Contact Me" CTA link %>
+<section id="contact" class="py-5">
+  <div class="container">
+    <div class="card shadow-sm rounded-4 my-3">
+      <div class="card-body p-4 p-md-5">
+        <h2 class="mb-3">Get in Touch</h2>
+        <p class="card-text mb-4">
+          Interested in collaborating on research or have a question?<br><br>
+          Fill out the form below or email me directly at
+          <%= link_to "isara@yourdomain.com", "mailto:isara@yourdomain.com", class: "text-decoration-none" %>.
+        </p>
+
+        <%# Contact form %>
+        <%= simple_form_for @contact, url: contacts_path, local: true, data: { controller: "load-button" }, class: "mb-2" do |f| %>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <%= f.input :first_name, label: "First Name" %>
+            </div>
+            <div class="col-12 col-md-6">
+              <%= f.input :last_name, label: "Last Name" %>
+            </div>
+          </div>
+          <%= f.input :email, label: "Your Email" %>
+          <%= f.input :message, as: :text, rows: 6, label: "Message" %>
+          <%# Honeypot spam protection %>
+          <%= invisible_captcha %>
+          <%= f.button :submit, "Send Message",
+              data: { action: "click->load-button#loader" },
+              class: "btn btn-primary btn-lg rounded-5 mt-4 mb-4" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

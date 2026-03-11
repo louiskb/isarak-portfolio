@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-11
+> Created: 2026-03-08 | Last updated: 2026-03-11 (contact form)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -30,7 +30,10 @@ Phase 3 — Blog (pair programming, Louis leads)
 - [ ] Cloudinary wiring — configure Active Storage to use Cloudinary as backend (all uploads: CV, images, Trix)
 - [ ] Admin management views — restyle scaffold views to match dark theme
 - [ ] Seed data for development
-- [ ] Contact form (Action Mailer)
+- [x] Contact form — model, controller, mailer, routes, invisible_captcha spam protection, load-button Stimulus controller, form partial wired to homepage
+  - [ ] Configure SMTP provider + fill in ENV vars when deploying (MAILER_SENDER, SMTP_ADDRESS, SMTP_PORT, SMTP_DOMAIN, SMTP_USERNAME, SMTP_PASSWORD)
+  - [ ] Enable dev email delivery — uncomment Letter Opener or local SMTP block in development.rb
+  - [ ] Update production.rb `action_mailer.default_url_options` host to real domain
 
 ---
 
@@ -53,7 +56,8 @@ Phase 3 — Blog (pair programming, Louis leads)
 - [ ] Hero section
 - [ ] About / bio section
 - [ ] Resource sections (ResearchItem, GrantAward, Teaching) — dynamically populated
-- [ ] Contact form section (including backend logic)
+- [x] Contact form section — backend done, form partial rendered at bottom of homepage
+  - [ ] Restyle contact section to match Figma design (Phase 4 visual pass)
 - [ ] Animations / scroll effects
 - [ ] Mobile responsive check
 
