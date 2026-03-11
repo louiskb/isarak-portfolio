@@ -6,6 +6,8 @@ class BlogPost < ApplicationRecord
 
   belongs_to :user
 
+  has_rich_text :body
+
   validates :title, presence: true
   validates :status, presence: true
 end
