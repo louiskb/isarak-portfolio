@@ -4,7 +4,7 @@ class GrantAwardsController < ApplicationController
 
   # GET /grant_awards or /grant_awards.json
   def index
-    @grant_awards = current_user.grant_awards.all
+    @pagy, @grant_awards = pagy(current_user.grant_awards.all)
   end
 
   # GET /grant_awards/1 or /grant_awards/1.json

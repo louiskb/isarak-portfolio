@@ -4,7 +4,7 @@ class TeachingsController < ApplicationController
 
   # GET /teachings or /teachings.json
   def index
-    @teachings = current_user.teachings.all
+    @pagy, @teachings = pagy(current_user.teachings.all)
   end
 
   # GET /teachings/1 or /teachings/1.json

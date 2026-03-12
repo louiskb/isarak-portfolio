@@ -55,5 +55,7 @@
         <%= link_to "Add your first entry", new_teaching_path, class: "btn btn-resource-add" %>
       </div>
     <% end %>
+
+    <%= pagy_nav(@pagy) if @pagy.pages > 1 %>
   </div>
 </section>

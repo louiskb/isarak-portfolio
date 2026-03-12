@@ -5,7 +5,7 @@ class ResearchItemsController < ApplicationController
   # GET /research_items or /research_items.json
   # Public — visitors see all items with external links; Isara gets a Manage button
   def index
-    @research_items = ResearchItem.all.order(published_at: :desc, created_at: :desc)
+    @pagy, @research_items = pagy(ResearchItem.all.order(published_at: :desc, created_at: :desc))
   end
 
   # GET /research_items/1 or /research_items/1.json
