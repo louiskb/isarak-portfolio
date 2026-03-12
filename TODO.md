@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-12 (AI blog builder)
+> Created: 2026-03-08 | Last updated: 2026-03-12 (featured_image, inline images, keep-image checkbox, ENV.fetch)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -53,8 +53,10 @@ Phase 3 — Blog (pair programming, Louis leads)
   - [x] ai_new + ai_revise views with load-button Stimulus spinner
   - [x] Unsplash integration — auto feature image prepended with photographer attribution
   - [x] sanitize initializer — figure, figcaption, style added to allowlist
-- [ ] featured_image on BlogPost — `has_one_attached :featured_image`; shown on index cards + show page; Isara can upload manually; AI uses Unsplash only if left blank (NEXT SESSION)
-- [ ] Add UNSPLASH_ACCESS_KEY to .env (Louis to do — get free key from unsplash.com/developers)
+  - [x] Inline Unsplash images — AI puts `<!-- IMAGE: query -->` placeholders; service replaces with real Unsplash figures
+- [x] featured_image on BlogPost — `has_one_attached :featured_image`; shown on show page; upload on all forms (manual + AI new + AI revise); on AI revision defaults to fresh Unsplash; "Keep this image" checkbox on ai_revise to opt out; ENV.fetch used project-wide
+- [ ] Show featured_image on public blog index cards (once index view is built)
+- [x] Add UNSPLASH_ACCESS_KEY to .env — done (access key only; secret key not needed)
 - [ ] Public blog index view
 - [ ] Scheduled posts via Solid Queue background jobs
 - [ ] Pagination on blog index (Pagy)
@@ -91,6 +93,7 @@ Phase 3 — Blog (pair programming, Louis leads)
 - All uploads → Cloudinary via Active Storage backend (not local disk)
 - Blog content: dual-mode — Action Text `body` (manual) OR `blog_post_erb_content` (AI-generated HTML/ERB)
 - AI-generated posts set `ai_generated: true` flag automatically
+- ENV vars: prefer `ENV.fetch("KEY", nil)` over `ENV["KEY"]` in all app code (not Rails/system boilerplate)
 - Build order: Setup → Navbar/Footer → Backend → Blog → Landing Page
 
 ## Questions / Open Items

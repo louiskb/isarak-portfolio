@@ -11,7 +11,15 @@
 <% end %>
 
 <%= simple_form_for :blog_post, url: create_with_ai_blog_posts_path, method: :post,
-      html: { data: { controller: "load-button" } } do |f| %>
+      html: { multipart: true, data: { controller: "load-button" } } do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :featured_image, "Featured image (optional)", class: "form-label fw-semibold" %>
+    <small class="text-muted d-block mb-2">
+      Upload your own image, or leave blank — the AI will automatically find a relevant Unsplash photo.
+    </small>
+    <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
+  </div>
 
   <div class="mb-4">
     <%= f.label :prompt, "What should the post be about?", class: "form-label fw-semibold" %>

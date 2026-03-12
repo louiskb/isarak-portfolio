@@ -9,32 +9,41 @@ class BlogPostAiService
   end
 
   # Creates a brand-new blog post from a user prompt.
+  # featured_image: an ActionDispatch::Http::UploadedFile (from form upload) or nil.
+  # If nil, Unsplash is used to auto-fetch a feature image.
   # Returns the BlogPost instance (persisted if successful, unpersisted with errors if not).
-  def create_from_prompt(prompt)
+  def create_from_prompt(prompt, featured_image: nil)
     chat = RubyLLM.chat(model: "gpt-4o")
     chat.with_instructions(creation_system_prompt)
 
     response = chat.ask(prompt, with: BlogPostSchema)
 
-    image_html = fetch_image_html(response.image_query)
-    content = "#{image_html}#{response.content}"
+    # Replace any <!-- IMAGE: query --> placeholders the AI placed in the content
+    content = inject_inline_images(response.content)
+
+    # Feature image: skip Unsplash if Isara uploaded their own
+    image_html = featured_image.present? ? "" : fetch_image_html(response.image_query)
+    full_content = "#{image_html}#{content}"
 
     blog_post = @user.blog_posts.build(
       title: response.title,
-      blog_post_erb_content: content,
+      blog_post_erb_content: full_content,
       ai_generated: true,
       status: :draft
     )
+
+    blog_post.featured_image.attach(featured_image) if featured_image.present?
 
     blog_post.save
     blog_post
   end
 
   # Revises an existing blog post using the given revision prompt.
-  # Uses the post's current content (rich text body OR erb content) as context for the AI.
-  # After revision, stores the result in blog_post_erb_content and clears the rich text body.
+  # featured_image: a newly uploaded file, or nil.
+  # keep_featured_image: if true, preserve the existing attached image and skip Unsplash.
+  # Priority: new upload > keep_featured_image flag > Unsplash (default, replaces any existing image).
   # Returns the BlogPost instance.
-  def revise_blog_post(blog_post, revision_prompt)
+  def revise_blog_post(blog_post, revision_prompt, featured_image: nil, keep_featured_image: false)
     current_content = if blog_post.blog_post_erb_content.present?
       blog_post.blog_post_erb_content
     elsif blog_post.body.present?
@@ -48,12 +57,28 @@ class BlogPostAiService
 
     response = chat.ask(revision_prompt, with: BlogPostSchema)
 
-    image_html = fetch_image_html(response.image_query)
-    content = "#{image_html}#{response.content}"
+    content = inject_inline_images(response.content)
+
+    # Feature image priority: new upload > keep flag > Unsplash (default replaces existing)
+    if featured_image.present?
+      # Isara uploaded a new image — use it
+      blog_post.featured_image.attach(featured_image)
+      image_html = ""
+    elsif keep_featured_image
+      # Isara opted to keep the existing image — leave it untouched
+      image_html = ""
+    else
+      # Default: revision may have changed the topic, so fetch a fresh Unsplash photo.
+      # Purge any previously attached featured_image so the show page doesn't show a stale one.
+      blog_post.featured_image.purge_later if blog_post.featured_image.attached?
+      image_html = fetch_image_html(response.image_query)
+    end
+
+    full_content = "#{image_html}#{content}"
 
     blog_post.assign_attributes(
       title: response.title,
-      blog_post_erb_content: content,
+      blog_post_erb_content: full_content,
       ai_generated: true
     )
 
@@ -67,10 +92,20 @@ class BlogPostAiService
 
   private
 
+  # Replaces <!-- IMAGE: search query --> placeholders in AI-generated HTML with
+  # real Unsplash figures. The AI uses these to place inline images between sections.
+  # Gracefully leaves the placeholder as an empty string if the fetch fails.
+  def inject_inline_images(content)
+    content.gsub(/<!-- IMAGE: (.+?) -->/) do
+      query = ::Regexp.last_match(1).strip
+      fetch_image_html(query)
+    end
+  end
+
   # Fetches a relevant image from Unsplash and returns a ready-to-inject HTML string.
   # Returns an empty string if the API key is missing or the request fails — so a failed image fetch never blocks the post from saving.
   def fetch_image_html(query)
-    access_key = ENV["UNSPLASH_ACCESS_KEY"]
+    access_key = ENV.fetch("UNSPLASH_ACCESS_KEY", nil)
     return "" if access_key.blank? || query.blank?
 
     uri = URI(UNSPLASH_API_URL)
@@ -140,6 +175,7 @@ class BlogPostAiService
       12. No target='_blank' attributes — these may be sanitized
       13. Optimize content for SEO: use relevant keywords naturally in headings and the opening paragraph
       14. Return the HTML as a single unformatted string with no line breaks between tags — easy to store in a database field
+      15. You may insert up to 2 inline image placeholders using the syntax: <!-- IMAGE: your query here --> — place them between sections where a relevant photo would add value (e.g. after an h2 or between paragraphs). Use 2–4 word Unsplash-style queries (e.g. <!-- IMAGE: airport runway aerial --> or <!-- IMAGE: suburban housing development -->). They will be automatically replaced with real Unsplash photos. Do not use this for the header image — that is handled separately.
     PROMPT
   end
 
@@ -188,6 +224,7 @@ class BlogPostAiService
       12. No target='_blank' attributes — these may be sanitized
       13. Optimize content for SEO: use relevant keywords naturally in headings and the opening paragraph
       14. Return the HTML as a single unformatted string with no line breaks between tags — easy to store in a database field
+      15. You may insert up to 2 inline image placeholders using the syntax: <!-- IMAGE: your query here --> — place them between sections where a relevant photo would add value (e.g. after an h2 or between paragraphs). Use 2–4 word Unsplash-style queries (e.g. <!-- IMAGE: airport runway aerial --> or <!-- IMAGE: suburban housing development -->). They will be automatically replaced with real Unsplash photos. Do not use this for the header image — that is handled separately.
     PROMPT
   end
 end

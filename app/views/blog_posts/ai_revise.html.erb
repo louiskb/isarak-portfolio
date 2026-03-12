@@ -42,7 +42,31 @@
 </div>
 
 <%= simple_form_for :blog_post, url: revise_with_ai_blog_post_path(@blog_post), method: :patch,
-      html: { data: { controller: "load-button" } } do |f| %>
+      html: { multipart: true, data: { controller: "load-button" } } do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :featured_image, "Featured image", class: "form-label fw-semibold" %>
+    <% if @blog_post.featured_image.attached? %>
+      <div class="d-flex align-items-start gap-3 mb-2">
+        <%= image_tag @blog_post.featured_image,
+              class: "img-fluid rounded flex-shrink-0",
+              style: "max-height:100px;max-width:160px;object-fit:cover;" %>
+        <div>
+          <div class="form-check">
+            <%= f.check_box :keep_featured_image, class: "form-check-input" %>
+            <%= f.label :keep_featured_image, "Keep this image", class: "form-check-label fw-semibold" %>
+          </div>
+          <small class="text-muted">
+            By default the AI fetches a fresh Unsplash photo — check this to keep your current image instead.
+          </small>
+        </div>
+      </div>
+      <small class="text-muted d-block mb-1">Or upload a different image:</small>
+    <% else %>
+      <small class="text-muted d-block mb-2">Upload an image, or leave blank — the AI will find a relevant Unsplash photo.</small>
+    <% end %>
+    <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
+  </div>
 
   <div class="mb-4">
     <%= f.label :prompt, "How should the AI revise this post?", class: "form-label fw-semibold" %>

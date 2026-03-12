@@ -70,11 +70,11 @@ Rails.application.configure do
   # MAILER_SENDER    — the from/reply address, e.g. "isara@yourdomain.com"
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV["SMTP_ADDRESS"],
-    port: ENV["SMTP_PORT"],
-    domain: ENV["SMTP_DOMAIN"],
-    user_name: ENV["SMTP_USERNAME"],
-    password: ENV["SMTP_PASSWORD"],
+    address: ENV.fetch("SMTP_ADDRESS", nil),
+    port: ENV.fetch("SMTP_PORT", nil),
+    domain: ENV.fetch("SMTP_DOMAIN", nil),
+    user_name: ENV.fetch("SMTP_USERNAME", nil),
+    password: ENV.fetch("SMTP_PASSWORD", nil),
     authentication: :plain,
     enable_starttls_auto: true,
     open_timeout: 5,

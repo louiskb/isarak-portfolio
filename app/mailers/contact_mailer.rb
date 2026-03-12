@@ -2,7 +2,7 @@ class ContactMailer < ApplicationMailer
   def received_email
     @contact = params[:contact]
     mail(
-      to: ENV["MAILER_SENDER"],
+      to: ENV.fetch("MAILER_SENDER", nil),
       subject: "New Contact: #{@contact.first_name} #{@contact.last_name}",
       reply_to: @contact.email
     )
@@ -12,7 +12,7 @@ class ContactMailer < ApplicationMailer
     @contact = params[:contact]
     mail(
       to: @contact.email,
-      from: ENV["MAILER_SENDER"],
+      from: ENV.fetch("MAILER_SENDER", nil),
       subject: "Message received!"
     )
   end

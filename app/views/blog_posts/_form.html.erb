@@ -8,6 +8,17 @@
     <%= f.input :status, collection: BlogPost.statuses.keys %>
     <%= f.input :scheduled_at %>
 
+    <div class="mb-3">
+      <%= f.label :featured_image, "Featured image", class: "form-label" %>
+      <% if @blog_post.featured_image.attached? %>
+        <div class="mb-2">
+          <%= image_tag @blog_post.featured_image, class: "img-fluid rounded", style: "max-height:180px;object-fit:cover;" %>
+        </div>
+      <% end %>
+      <%= f.input :featured_image, label: false, as: :file, input_html: { accept: "image/*" } %>
+      <small class="text-muted">Leave blank to keep the existing image (or let AI use an Unsplash photo).</small>
+    </div>
+
     <% if @blog_post.blog_post_erb_content.present? %>
       <%# AI mode: post is managed via raw HTML/ERB content — Trix editor is hidden %>
       <div class="mb-3">

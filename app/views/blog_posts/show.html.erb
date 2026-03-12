@@ -9,6 +9,15 @@
     </p>
   <% end %>
 
+  <% if @blog_post.featured_image.attached? %>
+    <div class="mb-4">
+      <%= image_tag @blog_post.featured_image,
+            class: "img-fluid rounded",
+            style: "width:100%;max-height:420px;object-fit:cover;",
+            alt: @blog_post.title %>
+    </div>
+  <% end %>
+
   <div class="blog-post-content mt-4">
     <% if @blog_post.blog_post_erb_content.present? %>
       <div data-controller="html-inject" hidden>

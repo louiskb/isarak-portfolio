@@ -68,7 +68,7 @@ class BlogPostsController < ApplicationController
   def create_with_ai
     begin
       service = BlogPostAiService.new(current_user)
-      @blog_post = service.create_from_prompt(ai_params[:prompt])
+      @blog_post = service.create_from_prompt(ai_params[:prompt], featured_image: ai_params[:featured_image])
 
       if @blog_post.persisted?
         redirect_to @blog_post, notice: "Blog post created with AI. Review and publish when ready."
@@ -93,7 +93,10 @@ class BlogPostsController < ApplicationController
   def revise_with_ai
     begin
       service = BlogPostAiService.new(current_user)
-      @blog_post = service.revise_blog_post(@blog_post, ai_params[:prompt])
+      keep = ai_params[:keep_featured_image] == "1"
+      @blog_post = service.revise_blog_post(@blog_post, ai_params[:prompt],
+        featured_image: ai_params[:featured_image],
+        keep_featured_image: keep)
 
       if @blog_post.persisted?
         redirect_to @blog_post, notice: "Blog post revised with AI. Review the changes."
@@ -116,11 +119,11 @@ class BlogPostsController < ApplicationController
 
   # ai_generated is intentionally excluded — the AI service sets it automatically.
   def blog_post_params
-    params.expect(blog_post: [ :title, :author, :status, :scheduled_at, :slug, :blog_post_erb_content, :body, photos: [] ])
+    params.expect(blog_post: [ :title, :author, :status, :scheduled_at, :slug, :blog_post_erb_content, :body, :featured_image, photos: [] ])
   end
 
   def ai_params
-    params.expect(blog_post: [ :prompt ])
+    params.expect(blog_post: [ :prompt, :featured_image, :keep_featured_image ])
   end
 
   def handle_ai_error(error, render_action)
