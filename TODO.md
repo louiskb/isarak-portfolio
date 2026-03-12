@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-12 (featured_image, inline images, keep-image checkbox, ENV.fetch)
+> Created: 2026-03-08 | Last updated: 2026-03-12 (blog status, scheduling, Solid Queue, bin/dev, cancel_schedule)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -58,7 +58,21 @@ Phase 3 — Blog (pair programming, Louis leads)
 - [ ] Show featured_image on public blog index cards (once index view is built)
 - [x] Add UNSPLASH_ACCESS_KEY to .env — done (access key only; secret key not needed)
 - [ ] Public blog index view
-- [ ] Scheduled posts via Solid Queue background jobs
+- [x] Scheduled posts via Solid Queue background jobs
+  - [x] PublishScheduledPostsJob — finds scheduled posts past scheduled_at, calls published!
+  - [x] recurring.yml — job runs every minute in development + production
+  - [x] bin/dev + Procfile.dev — foreman starts Rails server + Solid Queue worker together
+  - [x] database.yml — development queue database added (isarak_portfolio_development_queue)
+  - [x] development.rb — Solid Queue adapter + connects_to :queue configured
+  - [x] db:schema:load required on fresh clone to set up queue_schema.rb (secondary DB)
+- [x] Blog post status management (show page — Isara only)
+  - [x] Status badge (green=published, yellow=scheduled, grey=draft) — Isara only
+  - [x] Publish now button — draft posts (turbo confirm)
+  - [x] Schedule modal — draft posts only; datetime-local picker
+  - [x] Publish now modal — scheduled posts; warns schedule will be cancelled
+  - [x] Edit scheduled post modal — update scheduled_at or revert to draft
+  - [x] cancel_schedule action — sets status: draft, clears scheduled_at
+  - [ ] Show status badge on public blog index cards (Isara only) — do when building index view
 - [ ] Pagination on blog index (Pagy)
 
 ---

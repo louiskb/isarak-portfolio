@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       # These have :id in the URL because you need to know which post to revise.
       get   "ai_revise"
       patch "revise_with_ai"
+      patch "publish"
+      patch "schedule"
+      patch "cancel_schedule"
     end
   end
   resources :teachings

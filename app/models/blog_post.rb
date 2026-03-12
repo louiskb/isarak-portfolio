@@ -22,3 +22,4 @@ class BlogPost < ApplicationRecord
       errors.add(:base, "A post can only have rich text content or HTML content, not both.")
     end
   end
+end

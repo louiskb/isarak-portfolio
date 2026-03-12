@@ -1,6 +1,6 @@
 class BlogPostsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
-  before_action :set_blog_post, only: %i[ show edit update destroy ai_revise revise_with_ai ]
+  before_action :set_blog_post, only: %i[ show edit update destroy ai_revise revise_with_ai publish schedule cancel_schedule ]
 
   # GET /blog_posts or /blog_posts.json
   def index
@@ -56,6 +56,41 @@ class BlogPostsController < ApplicationController
       format.html { redirect_to blog_posts_path, notice: "Blog post was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
+  end
+
+  # PATCH /blog_posts/:id/publish
+  # Immediately publishes a draft or scheduled post.
+  def publish
+    @blog_post.published!
+    redirect_to @blog_post, notice: "Post published successfully."
+  end
+
+  # PATCH /blog_posts/:id/schedule
+  # Sets the post to scheduled with a future publish time.
+  def schedule
+    scheduled_at = params[:scheduled_at]
+
+    if scheduled_at.blank?
+      redirect_to @blog_post, alert: "Please choose a date and time to schedule."
+      return
+    end
+
+    parsed_time = Time.zone.parse(scheduled_at)
+
+    if parsed_time.nil? || parsed_time <= Time.current
+      redirect_to @blog_post, alert: "Scheduled time must be in the future."
+      return
+    end
+
+    @blog_post.update!(status: :scheduled, scheduled_at: parsed_time)
+    redirect_to @blog_post, notice: "Post scheduled for #{parsed_time.strftime("%d %b %Y at %H:%M")}."
+  end
+
+  # PATCH /blog_posts/:id/cancel_schedule
+  # Cancels a scheduled post and reverts it to draft.
+  def cancel_schedule
+    @blog_post.update!(status: :draft, scheduled_at: nil)
+    redirect_to @blog_post, notice: "Schedule cancelled. Post reverted to draft."
   end
 
   # GET /blog_posts/ai_new
