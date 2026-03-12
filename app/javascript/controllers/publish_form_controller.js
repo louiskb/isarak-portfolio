@@ -7,10 +7,15 @@ import { Modal } from "bootstrap"
 // exposing raw select inputs to Isara.
 export default class extends Controller {
   static targets = ["statusInput", "scheduledAtInput", "scheduleInput"]
+  static values = { currentStatus: String }
 
   // Default action — save the post as a draft.
+  // Asks for confirmation if the post is currently published (would unpublish it).
   saveDraft(event) {
     event.preventDefault()
+    if (this.currentStatusValue === "published") {
+      if (!confirm("This will unpublish the post and move it back to draft. Continue?")) return
+    }
     this.statusInputTarget.value = "draft"
     this.scheduledAtInputTarget.value = ""
     this.element.requestSubmit()

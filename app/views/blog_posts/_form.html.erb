@@ -1,5 +1,8 @@
 <%= simple_form_for(@blog_post,
-      html: { multipart: true, data: { controller: "publish-form" } }) do |f| %>
+      html: { multipart: true, data: {
+        controller: "publish-form",
+        "publish-form-current-status-value": (@blog_post.status || "draft")
+      } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -56,6 +59,13 @@
 
   <%# ===== SPLIT PUBLISH BUTTON ===== %>
   <div class="form-actions d-flex align-items-center gap-3 flex-wrap mt-4">
+    <% if @blog_post.persisted? && @blog_post.scheduled? %>
+      <p class="small text-warning w-100 mb-1">
+        <i class="fa-regular fa-clock me-1"></i>
+        Scheduled to publish on <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
+        &mdash; use the dropdown to reschedule or change status.
+      </p>
+    <% end %>
     <div class="btn-group dropup">
 
       <%# Default action button — context-aware label %>

@@ -47,7 +47,7 @@ class BlogPostAiService
   # keep_featured_image: if true, preserve the existing attached image and skip Unsplash.
   # Priority: new upload > keep_featured_image flag > Unsplash (default, replaces any existing image).
   # Returns the BlogPost instance.
-  def revise_blog_post(blog_post, revision_prompt, featured_image: nil, keep_featured_image: false)
+  def revise_blog_post(blog_post, revision_prompt, featured_image: nil, keep_featured_image: false, status: nil, scheduled_at: nil)
     current_content = if blog_post.blog_post_erb_content.present?
       blog_post.blog_post_erb_content
     elsif blog_post.body.present?
@@ -80,12 +80,17 @@ class BlogPostAiService
 
     full_content = "#{image_html}#{content}"
 
-    blog_post.assign_attributes(
+    attrs = {
       title: response.title,
       blog_excerpt: response.excerpt,
       blog_post_erb_content: full_content,
       ai_generated: true
-    )
+    }
+    if status
+      attrs[:status] = status
+      attrs[:scheduled_at] = (status == :scheduled ? scheduled_at : nil)
+    end
+    blog_post.assign_attributes(attrs)
 
     # Clear the rich text body — the AI has now used it as a reference.
     # Going forward this post is managed via blog_post_erb_content only.

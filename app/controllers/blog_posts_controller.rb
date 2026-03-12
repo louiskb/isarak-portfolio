@@ -22,11 +22,17 @@ class BlogPostsController < ApplicationController
 
   # POST /blog_posts or /blog_posts.json
   def create
-    @blog_post = current_user.blog_posts.new(blog_post_params)
+    status, scheduled_at = resolve_publish_intent(
+      params.dig(:blog_post, :status),
+      params.dig(:blog_post, :scheduled_at)
+    )
+    @blog_post = current_user.blog_posts.new(
+      blog_post_params.merge(status: status, scheduled_at: scheduled_at)
+    )
 
     respond_to do |format|
       if @blog_post.save
-        format.html { redirect_to @blog_post, notice: "Blog post was successfully created." }
+        format.html { redirect_to @blog_post, notice: publish_notice(status, scheduled_at, action: :created) }
         format.json { render :show, status: :created, location: @blog_post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,9 +43,14 @@ class BlogPostsController < ApplicationController
 
   # PATCH/PUT /blog_posts/1 or /blog_posts/1.json
   def update
+    status, scheduled_at = resolve_publish_intent(
+      params.dig(:blog_post, :status),
+      params.dig(:blog_post, :scheduled_at)
+    )
+
     respond_to do |format|
-      if @blog_post.update(blog_post_params)
-        format.html { redirect_to @blog_post, notice: "Blog post was successfully updated.", status: :see_other }
+      if @blog_post.update(blog_post_params.merge(status: status, scheduled_at: scheduled_at))
+        format.html { redirect_to @blog_post, notice: publish_notice(status, scheduled_at, action: :updated), status: :see_other }
         format.json { render :show, status: :ok, location: @blog_post }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -103,7 +114,7 @@ class BlogPostsController < ApplicationController
   # Supports draft, publish, and schedule via the split button (status + scheduled_at params).
   def create_with_ai
     begin
-      requested_status, scheduled_at = resolve_publish_intent(
+      status, scheduled_at = resolve_publish_intent(
         ai_params[:status],
         ai_params[:scheduled_at]
       )
@@ -112,17 +123,12 @@ class BlogPostsController < ApplicationController
       @blog_post = service.create_from_prompt(
         ai_params[:prompt],
         featured_image: ai_params[:featured_image],
-        status: requested_status,
+        status: status,
         scheduled_at: scheduled_at
       )
 
       if @blog_post.persisted?
-        notice = case requested_status
-        when :published then "Blog post created with AI and published."
-        when :scheduled then "Blog post created with AI and scheduled for #{scheduled_at.strftime("%d %b %Y at %H:%M")}."
-        else "Blog post created with AI. Review and publish when ready."
-        end
-        redirect_to @blog_post, notice: notice
+        redirect_to @blog_post, notice: publish_notice(status, scheduled_at, action: :ai_created)
       else
         flash.now[:alert] = "The AI response couldn't be saved: #{@blog_post.errors.full_messages.to_sentence}"
         @prompt = ai_params[:prompt]
@@ -141,16 +147,24 @@ class BlogPostsController < ApplicationController
 
   # PATCH /blog_posts/:id/revise_with_ai
   # Revises an existing blog post using the AI service.
+  # Supports draft, publish, and schedule via the split button (status + scheduled_at params).
   def revise_with_ai
     begin
+      status, scheduled_at = resolve_publish_intent(
+        ai_params[:status],
+        ai_params[:scheduled_at]
+      )
+
       service = BlogPostAiService.new(current_user)
       keep = ai_params[:keep_featured_image] == "1"
       @blog_post = service.revise_blog_post(@blog_post, ai_params[:prompt],
         featured_image: ai_params[:featured_image],
-        keep_featured_image: keep)
+        keep_featured_image: keep,
+        status: status,
+        scheduled_at: scheduled_at)
 
       if @blog_post.persisted?
-        redirect_to @blog_post, notice: "Blog post revised with AI. Review the changes."
+        redirect_to @blog_post, notice: publish_notice(status, scheduled_at, action: :ai_revised)
       else
         flash.now[:alert] = "The AI revision couldn't be saved: #{@blog_post.errors.full_messages.to_sentence}"
         @prompt = ai_params[:prompt]
@@ -168,9 +182,11 @@ class BlogPostsController < ApplicationController
     @blog_post = BlogPost.friendly.find(params[:id])
   end
 
-  # ai_generated is intentionally excluded — the AI service sets it automatically.
+  # ai_generated and status/scheduled_at are handled outside blog_post_params:
+  # - ai_generated is set by the AI service
+  # - status/scheduled_at are resolved via resolve_publish_intent and merged in explicitly
   def blog_post_params
-    params.expect(blog_post: [ :title, :author, :status, :scheduled_at, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, photos: [] ])
+    params.expect(blog_post: [ :title, :author, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, photos: [] ])
   end
 
   def ai_params
@@ -192,6 +208,22 @@ class BlogPostsController < ApplicationController
     end
 
     [ status, nil ]
+  end
+
+  # Returns a human-readable flash notice describing what happened to the post.
+  def publish_notice(status, scheduled_at, action:)
+    base = case action
+           when :created    then "Blog post saved"
+           when :updated    then "Blog post updated"
+           when :ai_created then "Blog post created with AI"
+           when :ai_revised then "Blog post revised with AI"
+           end
+
+    case status
+    when :published then "#{base} and published."
+    when :scheduled then "#{base} and scheduled for #{scheduled_at.strftime("%d %b %Y at %H:%M")}."
+    else                 "#{base} as draft."
+    end
   end
 
   def handle_ai_error(error, render_action)
