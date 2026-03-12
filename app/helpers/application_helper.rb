@@ -1,6 +1,4 @@
 module ApplicationHelper
-  include Pagy::Frontend
-
   # Returns "nav-link active" when the current page matches the given path,
   # "nav-link" otherwise. Anchor-only paths (#section) are never active.
   # For non-root paths, prefix matching is used so sub-pages also highlight

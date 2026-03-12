@@ -1,16 +1,16 @@
 <%# TODO: Build full landing page here (Phase 4 — reference Figma) %>
 
 <%#
-  ABOUT SECTION — Phase 4
-  Render the user's `about` bio here using:
+  # ABOUT SECTION — Phase 4
+  # Render the user's `about` bio here using:
 
-    <% isara = User.first %>
-    <% if isara&.about.present? %>
-      <p><%= isara.about %></p>
-    <% end %>
+  #   isara = User.first
+  #   if isara&.about.present?
+  #     p isara.about
+  #   end
 
-  The bio is editable by Isara from the Profile page (/profile).
-  See Figma node for the About section layout.
+  # The bio is editable by Isara from the Profile page (/profile).
+  # See Figma node for the About section layout.
 %>
 
 <%= render "pages/contact" %>
