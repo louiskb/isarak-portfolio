@@ -8,6 +8,9 @@ friendly_id :email, use: :slugged # Use email as slug (unique)
          :recoverable, :rememberable, :validatable
 
   has_one_attached :cv
+  has_one_attached :avatar
+
+  validate :single_user_only, on: :create
 
   # `dependent: :destroy` means if the user account is ever deleted, all their content goes with it - no orphaned records left in the DB.
   #
@@ -32,4 +35,10 @@ friendly_id :email, use: :slugged # Use email as slug (unique)
   has_many :grant_awards, dependent: :destroy
   has_many :teachings, dependent: :destroy
   has_many :blog_posts, dependent: :destroy
+
+  private
+
+  def single_user_only
+    errors.add(:base, "Registration is closed — this site has one account only.") if User.exists?
+  end
 end

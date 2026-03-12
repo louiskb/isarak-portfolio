@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_11_090345) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_12_132050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_090345) do
   create_table "blog_posts", force: :cascade do |t|
     t.boolean "ai_generated"
     t.string "author"
+    t.text "blog_excerpt"
     t.text "blog_post_erb_content"
     t.datetime "created_at", null: false
     t.datetime "scheduled_at"
@@ -116,9 +117,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_11_090345) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.text "about"
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "name"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap Color Mode Toggle Example</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    /* Smooth theme transition */
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row mb-4">
+      <div class="col">
+        <h1 class="display-5">Color Mode Toggle</h1>
+        <p class="lead text-body-secondary">
+          Demonstrates Bootstrap 5.3 dark mode with system preference detection and manual toggle.
+        </p>
+      </div>
+    </div>
+
+    <!-- Theme Toggle Controls -->
+    <div class="row mb-5">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Theme Selector</h5>
+          </div>
+          <div class="card-body">
+            <div class="btn-group" role="group" aria-label="Theme selection">
+              <input type="radio" class="btn-check" name="theme" id="theme-light" value="light" autocomplete="off">
+              <label class="btn btn-outline-primary" for="theme-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun-fill me-1" viewBox="0 0 16 16">
+                  <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+                </svg>
+                Light
+              </label>
+
+              <input type="radio" class="btn-check" name="theme" id="theme-dark" value="dark" autocomplete="off">
+              <label class="btn btn-outline-primary" for="theme-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars-fill me-1" viewBox="0 0 16 16">
+                  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
+                  <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097z"/>
+                </svg>
+                Dark
+              </label>
+
+              <input type="radio" class="btn-check" name="theme" id="theme-auto" value="auto" autocomplete="off">
+              <label class="btn btn-outline-primary" for="theme-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half me-1" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
+                </svg>
+                Auto
+              </label>
+            </div>
+            <p class="text-body-secondary mt-3 mb-0">
+              <small>Current theme: <code id="current-theme">light</code></small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Component Showcase -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-6">
+        <div class="card h-100">
+          <div class="card-header">Standard Card</div>
+          <div class="card-body">
+            <h5 class="card-title">Theme-Aware Card</h5>
+            <p class="card-text">This card automatically adapts to the current color mode. The background, text, and border colors all respond to the <code>data-bs-theme</code> attribute.</p>
+            <a href="#" class="btn btn-primary">Primary Action</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Per-Component Theme Override -->
+      <div class="col-md-6">
+        <div class="card h-100" data-bs-theme="dark">
+          <div class="card-header">Forced Dark Card</div>
+          <div class="card-body">
+            <h5 class="card-title">Always Dark</h5>
+            <p class="card-text">This card has <code>data-bs-theme="dark"</code> applied directly, so it stays dark regardless of the page theme. Useful for contrast sections.</p>
+            <a href="#" class="btn btn-outline-light">Outline Button</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Examples -->
+    <div class="row mb-5">
+      <div class="col">
+        <h4>Alerts</h4>
+        <div class="alert alert-primary" role="alert">
+          A primary alert adapts to color modes automatically.
+        </div>
+        <div class="alert alert-success" role="alert">
+          Success alerts use subtle background colors that work in both modes.
+        </div>
+        <div class="alert alert-warning" role="alert">
+          Warning alert with theme-appropriate contrast.
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Elements -->
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <h4>Form Controls</h4>
+        <form>
+          <div class="mb-3">
+            <label for="exampleInput" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInput" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleSelect" class="form-select">Select menu</label>
+            <select class="form-select" id="exampleSelect">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="exampleCheck">
+            <label class="form-check-label" for="exampleCheck">
+              Check this checkbox
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <h4>Button Variants</h4>
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" class="btn btn-primary">Primary</button>
+          <button type="button" class="btn btn-secondary">Secondary</button>
+          <button type="button" class="btn btn-success">Success</button>
+          <button type="button" class="btn btn-danger">Danger</button>
+          <button type="button" class="btn btn-warning">Warning</button>
+          <button type="button" class="btn btn-info">Info</button>
+          <button type="button" class="btn btn-light">Light</button>
+          <button type="button" class="btn btn-dark">Dark</button>
+          <button type="button" class="btn btn-outline-primary">Outline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Example -->
+    <div class="row">
+      <div class="col">
+        <h4>Table</h4>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Feature</th>
+              <th scope="col">Light Mode</th>
+              <th scope="col">Dark Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Background</td>
+              <td><code>#ffffff</code></td>
+              <td><code>#212529</code></td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Text Color</td>
+              <td><code>#212529</code></td>
+              <td><code>#dee2e6</code></td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Border Color</td>
+              <td><code>#dee2e6</code></td>
+              <td><code>#495057</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      // Get stored theme or default to 'auto'
+      const getStoredTheme = () => localStorage.getItem('theme');
+      const setStoredTheme = (theme) => localStorage.setItem('theme', theme);
+
+      // Get system preference
+      const getPreferredTheme = () => {
+        const storedTheme = getStoredTheme();
+        if (storedTheme) {
+          return storedTheme;
+        }
+        return 'auto';
+      };
+
+      // Resolve 'auto' to actual theme based on system preference
+      const getResolvedTheme = (theme) => {
+        if (theme === 'auto') {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        return theme;
+      };
+
+      // Apply theme to document
+      const setTheme = (theme) => {
+        const resolvedTheme = getResolvedTheme(theme);
+        document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+        document.getElementById('current-theme').textContent = `${theme}${theme === 'auto' ? ` (${resolvedTheme})` : ''}`;
+      };
+
+      // Update active state of theme toggle buttons
+      const updateActiveButton = (theme) => {
+        document.querySelectorAll('[name="theme"]').forEach((radio) => {
+          radio.checked = radio.value === theme;
+        });
+      };
+
+      // Initialize on page load
+      const initTheme = () => {
+        const theme = getPreferredTheme();
+        setTheme(theme);
+        updateActiveButton(theme);
+      };
+
+      // Set up event listeners
+      const setupListeners = () => {
+        // Theme toggle buttons
+        document.querySelectorAll('[name="theme"]').forEach((radio) => {
+          radio.addEventListener('change', (e) => {
+            const theme = e.target.value;
+            setStoredTheme(theme);
+            setTheme(theme);
+          });
+        });
+
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          const storedTheme = getStoredTheme();
+          if (storedTheme === 'auto' || !storedTheme) {
+            setTheme('auto');
+          }
+        });
+      };
+
+      // Run on DOM ready
+      initTheme();
+      setupListeners();
+    })();
+  </script>
+</body>
+</html>

@@ -11,8 +11,10 @@ class BlogPostAiService
   # Creates a brand-new blog post from a user prompt.
   # featured_image: an ActionDispatch::Http::UploadedFile (from form upload) or nil.
   # If nil, Unsplash is used to auto-fetch a feature image.
+  # status: desired publish state (:draft, :published, or :scheduled) — defaults to :draft.
+  # scheduled_at: a Time object; required when status is :scheduled.
   # Returns the BlogPost instance (persisted if successful, unpersisted with errors if not).
-  def create_from_prompt(prompt, featured_image: nil)
+  def create_from_prompt(prompt, featured_image: nil, status: :draft, scheduled_at: nil)
     chat = RubyLLM.chat(model: "gpt-4o")
     chat.with_instructions(creation_system_prompt)
 
@@ -27,9 +29,11 @@ class BlogPostAiService
 
     blog_post = @user.blog_posts.build(
       title: response.title,
+      blog_excerpt: response.excerpt,
       blog_post_erb_content: full_content,
       ai_generated: true,
-      status: :draft
+      status: status,
+      scheduled_at: scheduled_at
     )
 
     blog_post.featured_image.attach(featured_image) if featured_image.present?
@@ -78,6 +82,7 @@ class BlogPostAiService
 
     blog_post.assign_attributes(
       title: response.title,
+      blog_excerpt: response.excerpt,
       blog_post_erb_content: full_content,
       ai_generated: true
     )
@@ -156,7 +161,9 @@ class BlogPostAiService
       Write a full blog post for Dr Isara based on the topic provided. The tone should be scholarly but accessible — explain jargon where used. Write in first person where it feels natural ("In my research...", "I have found..."). Target length: 400–700 words of content (excluding the title).
 
       ## Format
-      Return three fields: `title`, `content`, and `image_query`.
+      Return four fields: `title`, `excerpt`, `content`, and `image_query`.
+
+      **`excerpt`**: A 1-2 sentence plain-text summary of the post (no HTML). Displayed as the preview card description on the blog index. Keep it under 180 characters — informative and compelling.
 
       **`image_query`**: A short 2–4 word Unsplash search query for a relevant header image. Prefer landscape, architecture, or urban environment searches (e.g. "urban planning city", "airport terminal", "suburban housing"). Avoid people-focused or abstract queries.
 
@@ -202,10 +209,12 @@ class BlogPostAiService
       ---
 
       ## Task
-      Revise this blog post based on Dr Isara's instructions. Preserve the overall structure and tone unless explicitly told to change them. Return the revised `title`, the full revised `content`, and a fresh `image_query`.
+      Revise this blog post based on Dr Isara's instructions. Preserve the overall structure and tone unless explicitly told to change them. Return the revised `title`, a revised `excerpt`, the full revised `content`, and a fresh `image_query`.
 
       ## Format
-      Return three fields: `title`, `content`, and `image_query`.
+      Return four fields: `title`, `excerpt`, `content`, and `image_query`.
+
+      **`excerpt`**: A 1-2 sentence plain-text summary of the post (no HTML). Displayed as the preview card description on the blog index. Keep it under 180 characters — informative and compelling.
 
       **`image_query`**: A short 2–4 word Unsplash search query for a relevant header image. Prefer landscape, architecture, or urban environment searches (e.g. "urban planning city", "airport terminal", "suburban housing"). Avoid people-focused or abstract queries.
 

@@ -11,8 +11,8 @@
           &ensp;&middot;&ensp;
           <%= link_to "Terms of Service", "#" %>
         </div>
-        <%# Discrete login — only shown when not signed in %>
-        <% unless user_signed_in? %>
+        <%# Discrete login — only shown on the research page, when not signed in %>
+        <% if !user_signed_in? && request.path.start_with?(research_items_path) %>
           <%= link_to "Login", new_user_session_path, class: "footer-login-link" %>
         <% end %>
       </div>

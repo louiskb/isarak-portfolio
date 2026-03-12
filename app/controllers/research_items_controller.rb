@@ -1,10 +1,11 @@
 class ResearchItemsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
   before_action :set_research_item, only: %i[ show edit update destroy ]
 
   # GET /research_items or /research_items.json
+  # Public — visitors see all items with external links; Isara gets a Manage button
   def index
-    @research_items = current_user.research_items.all
+    @research_items = ResearchItem.all.order(published_at: :desc, created_at: :desc)
   end
 
   # GET /research_items/1 or /research_items/1.json

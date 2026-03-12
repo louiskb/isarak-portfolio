@@ -1,10 +1,63 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@teaching.title} — Teaching" %>
 
-<%= render @teaching %>
+<div class="resource-detail">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-<div>
-  <%= link_to "Edit this teaching", edit_teaching_path(@teaching) %> |
-  <%= link_to "Back to teachings", teachings_path %>
+        <%# Breadcrumb %>
+        <div class="resource-breadcrumb">
+          <%= link_to "← Back to Teaching", teachings_path, class: "resource-back-link" %>
+        </div>
 
-  <%= button_to "Destroy this teaching", @teaching, method: :delete %>
+        <%= render "shared/flashes" %>
+
+        <article>
+          <div class="resource-detail-header">
+            <h1 class="resource-detail-title"><%= @teaching.title %></h1>
+
+            <div class="resource-detail-meta">
+              <% if @teaching.institution.present? %>
+                <span>
+                  <i class="fa-solid fa-graduation-cap me-1"></i>
+                  <%= @teaching.institution %>
+                </span>
+              <% end %>
+              <% if @teaching.year.present? %>
+                <span>
+                  <i class="fa-regular fa-calendar me-1"></i>
+                  <%= @teaching.year %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @teaching.description.present? %>
+            <div class="resource-detail-description">
+              <%= simple_format @teaching.description %>
+            </div>
+          <% end %>
+
+          <% if @teaching.image_url.present? %>
+            <div class="mt-4">
+              <%= image_tag @teaching.image_url,
+                    alt: @teaching.title,
+                    class: "img-fluid rounded",
+                    style: "max-height: 360px; object-fit: cover; width: 100%;" %>
+            </div>
+          <% end %>
+        </article>
+
+        <%# Admin actions %>
+        <div class="resource-detail-actions">
+          <%= link_to "Edit", edit_teaching_path(@teaching), class: "btn btn-resource-edit" %>
+          <%= button_to "Delete", @teaching,
+                method: :delete,
+                class: "btn btn-resource-delete",
+                data: { turbo_confirm: "Delete \"#{@teaching.title}\"? This cannot be undone." } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

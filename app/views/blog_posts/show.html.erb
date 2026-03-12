@@ -1,223 +1,237 @@
-<% if notice.present? %>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <%= notice %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
-<% if alert.present? %>
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <%= alert %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<% end %>
+<% content_for :title, "#{@blog_post.title} — Blog" %>
 
-<article>
-  <div class="d-flex align-items-start gap-3 flex-wrap mb-1">
-    <h1 class="mb-0"><%= @blog_post.title %></h1>
-    <% if user_signed_in? %>
-      <% badge_class = @blog_post.published? ? "bg-success" : @blog_post.scheduled? ? "bg-warning text-dark" : "bg-secondary" %>
-      <span class="badge <%= badge_class %> align-self-center"><%= @blog_post.status.humanize %></span>
-    <% end %>
-  </div>
+<div class="blog-show">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-  <% if @blog_post.scheduled? && user_signed_in? %>
-    <div class="d-flex align-items-center gap-2 mb-2">
-      <small class="text-muted">Scheduled for <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %></small>
-      <button type="button"
-              class="btn btn-outline-secondary btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#editScheduleModal">
-        Edit scheduled post
-      </button>
-    </div>
-  <% end %>
+        <%# Breadcrumb %>
+        <div class="resource-breadcrumb">
+          <%= link_to "← Back to Blog", blog_posts_path, class: "resource-back-link" %>
+        </div>
 
-  <% if @blog_post.ai_generated? %>
-    <p class="text-muted">
-      <small>✨ Created with AI</small>
-    </p>
-  <% end %>
+        <%= render "shared/flashes" %>
 
-  <% if @blog_post.featured_image.attached? %>
-    <div class="mb-4">
-      <%= image_tag @blog_post.featured_image,
-            class: "img-fluid rounded",
-            style: "width:100%;max-height:420px;object-fit:cover;",
-            alt: @blog_post.title %>
-    </div>
-  <% end %>
-
-  <div class="blog-post-content mt-4">
-    <% if @blog_post.blog_post_erb_content.present? %>
-      <div data-controller="html-inject" hidden>
-        <%= sanitize @blog_post.blog_post_erb_content %>
-      </div>
-    <% elsif @blog_post.body.present? %>
-      <%= @blog_post.body %>
-    <% else %>
-      <p class="text-muted fst-italic">No content yet.</p>
-    <% end %>
-  </div>
-</article>
-
-<% if user_signed_in? %>
-  <div class="d-flex gap-2 align-items-center mt-4 flex-wrap">
-    <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "btn btn-outline-secondary btn-sm" %>
-    <%= link_to "Back to blog posts", blog_posts_path, class: "btn btn-outline-secondary btn-sm" %>
-
-    <%# ── Draft: publish + schedule buttons ─────────────────── %>
-    <% if @blog_post.draft? %>
-      <%= button_to "Publish now",
-            publish_blog_post_path(@blog_post),
-            method: :patch,
-            data: { turbo_confirm: "Publish this post? It will be visible to everyone immediately." },
-            class: "btn btn-success btn-sm" %>
-
-      <button type="button"
-              class="btn btn-outline-primary btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#scheduleModal">
-        Schedule
-      </button>
-
-      <%# ── Schedule modal (draft only) ────────────────────── %>
-      <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="scheduleModalLabel">Schedule post</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <%= form_with url: schedule_blog_post_path(@blog_post), method: :patch do |f| %>
-              <div class="modal-body">
-                <p class="text-muted mb-3">Choose when this post will go live. It will be published automatically at the chosen time.</p>
-                <div class="mb-3">
-                  <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
-                  <%= f.datetime_local_field :scheduled_at,
-                        class: "form-control",
-                        min: Time.current.strftime("%Y-%m-%dT%H:%M"),
-                        required: true %>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <%= f.submit "Schedule post", class: "btn btn-primary" %>
-              </div>
+        <article>
+          <%# Title + status badge %>
+          <div class="d-flex align-items-start gap-3 flex-wrap mb-2">
+            <h1 class="blog-show-title mb-0"><%= @blog_post.title %></h1>
+            <% if user_signed_in? %>
+              <span class="badge rounded-pill align-self-center blog-status-<%= @blog_post.status %>">
+                <%= @blog_post.status.capitalize %>
+              </span>
             <% end %>
           </div>
-        </div>
-      </div>
-    <% end %>
 
-    <%# ── Scheduled: publish warning + edit schedule modals ── %>
-    <% if @blog_post.scheduled? %>
-      <button type="button"
-              class="btn btn-success btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#publishNowModal">
-        Publish now
-      </button>
+          <%# Scheduled indicator (admin only) %>
+          <% if @blog_post.scheduled? && user_signed_in? %>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <small class="blog-show-meta">
+                <i class="fa-regular fa-clock me-1"></i>
+                Scheduled for <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
+              </small>
+              <button type="button"
+                      class="btn btn-outline-secondary btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editScheduleModal">
+                Edit schedule
+              </button>
+            </div>
+          <% end %>
 
-      <%# Publish now warning modal %>
-      <div class="modal fade" id="publishNowModal" tabindex="-1" aria-labelledby="publishNowModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="publishNowModalLabel">Publish now?</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <%# Meta %>
+          <p class="blog-show-meta mb-4">
+            <i class="fa-regular fa-calendar me-1"></i>
+            <%= @blog_post.created_at.strftime("%B %-d, %Y") %>
+            <% if @blog_post.ai_generated? %>
+              &nbsp;&middot;&nbsp;<span class="blog-show-ai-badge">
+                <i class="fa-solid fa-robot me-1"></i>AI-generated
+              </span>
+            <% end %>
+          </p>
+
+          <%# Featured image %>
+          <% if @blog_post.featured_image.attached? %>
+            <div class="blog-show-image mb-5">
+              <%= image_tag @blog_post.featured_image,
+                    class: "img-fluid rounded",
+                    style: "width:100%;max-height:420px;object-fit:cover;",
+                    alt: @blog_post.title %>
             </div>
-            <div class="modal-body">
-              <p>This post is scheduled to publish on <strong><%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %></strong>.</p>
-              <p class="mb-0">Publishing now will <strong>cancel that schedule</strong> and make the post live immediately.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep schedule</button>
-              <%= form_with url: publish_blog_post_path(@blog_post), method: :patch do |f| %>
-                <%= f.submit "Publish now", class: "btn btn-success" %>
-              <% end %>
-            </div>
+          <% end %>
+
+          <%# Content %>
+          <div class="blog-post-content">
+            <% if @blog_post.blog_post_erb_content.present? %>
+              <div data-controller="html-inject" hidden>
+                <%= sanitize @blog_post.blog_post_erb_content %>
+              </div>
+            <% elsif @blog_post.body.present? %>
+              <%= @blog_post.body %>
+            <% else %>
+              <p class="text-muted fst-italic">No content yet.</p>
+            <% end %>
           </div>
-        </div>
-      </div>
+        </article>
 
-      <%# Edit schedule modal %>
-      <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="editScheduleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="editScheduleModalLabel">Edit scheduled post</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <%= form_with url: schedule_blog_post_path(@blog_post), method: :patch do |f| %>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
-                  <%= f.datetime_local_field :scheduled_at,
-                        class: "form-control",
-                        value: @blog_post.scheduled_at.strftime("%Y-%m-%dT%H:%M"),
-                        min: Time.current.strftime("%Y-%m-%dT%H:%M"),
-                        required: true %>
+        <%# ===== ADMIN ACTIONS ===== %>
+        <% if user_signed_in? %>
+          <div class="blog-show-actions">
+
+            <%# Status actions %>
+            <% if @blog_post.draft? %>
+              <%= button_to "Publish now",
+                    publish_blog_post_path(@blog_post),
+                    method: :patch,
+                    data: { turbo_confirm: "Publish this post? It will be visible to everyone immediately." },
+                    class: "btn btn-blog-publish btn-sm" %>
+
+              <button type="button" class="btn btn-blog-schedule btn-sm"
+                      data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                Schedule
+              </button>
+            <% end %>
+
+            <% if @blog_post.scheduled? %>
+              <button type="button" class="btn btn-blog-publish btn-sm"
+                      data-bs-toggle="modal" data-bs-target="#publishNowModal">
+                Publish now
+              </button>
+            <% end %>
+
+            <span class="blog-show-actions-divider"></span>
+
+            <%# Edit / AI Revise %>
+            <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "btn btn-resource-edit btn-sm" %>
+
+            <% if @blog_post.body.present? && @blog_post.blog_post_erb_content.blank? %>
+              <button type="button" class="btn btn-blog-ai btn-sm"
+                      data-bs-toggle="modal" data-bs-target="#aiReviseWarningModal">
+                ✨ Revise with AI
+              </button>
+            <% else %>
+              <%= link_to "✨ Revise with AI", ai_revise_blog_post_path(@blog_post), class: "btn btn-blog-ai btn-sm" %>
+            <% end %>
+
+            <%= button_to "Delete", @blog_post,
+                  method: :delete,
+                  class: "btn btn-resource-delete btn-sm",
+                  data: { turbo_confirm: "Delete this post? This cannot be undone." } %>
+          </div>
+        <% end %>
+
+        <%# ===== MODALS ===== %>
+
+        <%# Schedule modal (draft only) %>
+        <% if user_signed_in? && @blog_post.draft? %>
+          <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="scheduleModalLabel">Schedule post</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <hr>
-                <p class="text-muted mb-2"><small>Changed your mind? Revert this post to draft and reschedule later.</small></p>
-                <%= form_with url: cancel_schedule_blog_post_path(@blog_post), method: :patch do |fc| %>
-                  <%= fc.submit "Revert to draft", class: "btn btn-outline-danger btn-sm" %>
+                <%= form_with url: schedule_blog_post_path(@blog_post), method: :patch do |f| %>
+                  <div class="modal-body">
+                    <p class="text-muted mb-3">Choose when this post will go live.</p>
+                    <div class="mb-3">
+                      <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
+                      <%= f.datetime_local_field :scheduled_at,
+                            class: "form-control",
+                            min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+                            required: true %>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <%= f.submit "Schedule post", class: "btn btn-primary" %>
+                  </div>
                 <% end %>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <%= f.submit "Update schedule", class: "btn btn-primary" %>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Publish now + edit schedule modals (scheduled only) %>
+        <% if user_signed_in? && @blog_post.scheduled? %>
+          <div class="modal fade" id="publishNowModal" tabindex="-1" aria-labelledby="publishNowModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="publishNowModalLabel">Publish now?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Scheduled for <strong><%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %></strong>.</p>
+                  <p class="mb-0">Publishing now will <strong>cancel that schedule</strong> and make the post live immediately.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep schedule</button>
+                  <%= form_with url: publish_blog_post_path(@blog_post), method: :patch do |f| %>
+                    <%= f.submit "Publish now", class: "btn btn-success" %>
+                  <% end %>
+                </div>
               </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    |
-
-    <% if @blog_post.body.present? && @blog_post.blog_post_erb_content.blank? %>
-      <%# Manual post — show warning modal before AI revision %>
-      <button type="button"
-              class="btn btn-outline-primary btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#aiReviseWarningModal">
-        ✨ Revise with AI
-      </button>
-
-      <div class="modal fade" id="aiReviseWarningModal" tabindex="-1" aria-labelledby="aiReviseWarningModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="aiReviseWarningModalLabel">⚠️ Before you continue</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>This post was written manually using the rich text editor.</p>
-              <p>If you revise it with AI, the rich text content will be <strong>permanently replaced</strong> with AI-generated HTML. After this:</p>
-              <ul>
-                <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
-                <li>You can still edit the raw HTML directly, or keep using AI to revise it further.</li>
-              </ul>
-              <p class="text-muted mb-0">The AI will use your current rich text content as its starting point for the revision.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <%= link_to "Continue to AI Revision", ai_revise_blog_post_path(@blog_post), class: "btn btn-primary" %>
             </div>
           </div>
-        </div>
-      </div>
-    <% else %>
-      <%# AI post or empty post — link directly %>
-      <%= link_to "✨ Revise with AI", ai_revise_blog_post_path(@blog_post), class: "btn btn-outline-primary btn-sm" %>
-    <% end %>
 
-    |
-    <%= button_to "Delete", @blog_post, method: :delete, data: { turbo_confirm: "Are you sure you want to delete this post?" } %>
+          <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="editScheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editScheduleModalLabel">Edit scheduled post</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <%= form_with url: schedule_blog_post_path(@blog_post), method: :patch do |f| %>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
+                      <%= f.datetime_local_field :scheduled_at,
+                            class: "form-control",
+                            value: @blog_post.scheduled_at.strftime("%Y-%m-%dT%H:%M"),
+                            min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+                            required: true %>
+                    </div>
+                    <hr>
+                    <p class="text-muted mb-2"><small>Changed your mind? Revert to draft and reschedule later.</small></p>
+                    <%= form_with url: cancel_schedule_blog_post_path(@blog_post), method: :patch do |fc| %>
+                      <%= fc.submit "Revert to draft", class: "btn btn-outline-danger btn-sm" %>
+                    <% end %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <%= f.submit "Update schedule", class: "btn btn-primary" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# AI revision warning modal (manual posts) %>
+        <% if user_signed_in? && @blog_post.body.present? && @blog_post.blog_post_erb_content.blank? %>
+          <div class="modal fade" id="aiReviseWarningModal" tabindex="-1" aria-labelledby="aiReviseWarningModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="aiReviseWarningModalLabel">⚠️ Before you continue</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>This post was written manually using the rich text editor.</p>
+                  <p>If you revise it with AI, the content will be <strong>permanently replaced</strong> with AI-generated HTML. After this, you won't be able to edit it in the Trix editor.</p>
+                  <p class="text-muted mb-0">The AI will use your current content as its starting point.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <%= link_to "Continue to AI Revision", ai_revise_blog_post_path(@blog_post), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
   </div>
-<% else %>
-  <div class="mt-4">
-    <%= link_to "Back to blog posts", blog_posts_path %>
-  </div>
-<% end %>
+</div>

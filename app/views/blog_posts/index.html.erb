@@ -1,16 +1,103 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Blog — Isara Khanjanasthiti" %>
 
-<% content_for :title, "Blog posts" %>
+<%# ===== BLOG HERO ===== %>
+<section class="blog-hero">
+  <div class="container">
+    <div class="blog-hero-inner">
+      <p class="blog-hero-label">Writing</p>
+      <h1 class="blog-hero-title">Thoughts on planning,<br>research & academia</h1>
+      <p class="blog-hero-subtitle">
+        Ideas and reflections from urban planning, housing policy, and university teaching.
+      </p>
+      <% if user_signed_in? %>
+        <div class="d-flex gap-2 mt-4">
+          <%= link_to "New post", new_blog_post_path, class: "btn btn-primary btn-sm" %>
+          <%= link_to "Create with AI", ai_new_blog_posts_path, class: "btn btn-outline-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
 
-<h1>Blog posts</h1>
+<%# ===== BLOG GRID ===== %>
+<section class="blog-grid-section">
+  <div class="container">
+    <% if @blog_posts.any? %>
+      <div class="row row-cols-1 row-cols-lg-3 g-4">
+        <% @blog_posts.each do |post| %>
+          <div class="col">
+            <article class="card blog-card h-100">
 
-<div id="blog_posts">
-  <% @blog_posts.each do |blog_post| %>
-    <%= render blog_post %>
-    <p>
-      <%= link_to "Show this blog post", blog_post %>
-    </p>
-  <% end %>
-</div>
+              <%# Image — clickable link to show page %>
+              <%= link_to post, class: "blog-card-img-link" do %>
+                <div class="position-relative overflow-hidden blog-card-img-top">
+                  <div class="ratio ratio-16x9">
+                    <% if post.featured_image.attached? %>
+                      <%= image_tag post.featured_image,
+                            alt: post.title,
+                            class: "object-fit-cover blog-card-image" %>
+                    <% else %>
+                      <div class="blog-card-placeholder d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-newspaper blog-card-placeholder-icon"></i>
+                      </div>
+                    <% end %>
+                  </div>
 
-<%= link_to "New blog post", new_blog_post_path %>
+                  <%# Status badge — Isara only %>
+                  <% if user_signed_in? %>
+                    <span class="position-absolute top-0 end-0 m-2 badge rounded-pill blog-status-<%= post.status %>">
+                      <%= post.status.capitalize %>
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <%# Card body %>
+              <div class="card-body d-flex flex-column">
+                <p class="blog-card-meta">
+                  <i class="fa-regular fa-calendar me-1"></i>
+                  <%= post.created_at.strftime("%b %-d, %Y") %>
+                  <% if user_signed_in? && post.scheduled? && post.scheduled_at %>
+                    &nbsp;· Scheduled <%= post.scheduled_at.strftime("%b %-d") %>
+                  <% end %>
+                </p>
+
+                <h2 class="blog-card-title">
+                  <%= link_to post.title, post, class: "blog-card-title-link" %>
+                </h2>
+
+                <% if post.blog_excerpt.present? %>
+                  <p class="blog-card-excerpt"><%= post.blog_excerpt %></p>
+                <% end %>
+
+                <%# Footer row: Read more + AI badge + Manage button %>
+                <div class="blog-card-footer mt-auto">
+                  <%= link_to "Read more", post, class: "blog-card-read-more" %>
+
+                  <% if user_signed_in? %>
+                    <div class="d-flex align-items-center gap-2 ms-auto">
+                      <% if post.ai_generated? %>
+                        <span class="blog-card-ai-badge" title="Created with AI">
+                          <i class="fa-solid fa-robot"></i>
+                        </span>
+                      <% end %>
+                      <%= link_to "Manage →", post, class: "btn btn-resource-manage btn-sm" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+            </article>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="blog-empty text-center py-5">
+        <p class="text-muted mb-3">No posts published yet.</p>
+        <% if user_signed_in? %>
+          <%= link_to "Write your first post", new_blog_post_path, class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

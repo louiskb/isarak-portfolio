@@ -1,9 +1,13 @@
 class BlogPostSchema < RubyLLM::Schema
-  description "A structured academic blog post with a title, HTML content, and an image search query"
+  description "A structured academic blog post with a title, excerpt, HTML content, and an image search query"
 
   property :title,
     type: :string,
     description: "A clear, academic blog post title"
+
+  property :excerpt,
+    type: :string,
+    description: "A 1-2 sentence plain-text summary of the post (no HTML). Shown as the preview on the blog index page. Keep it under 180 characters — compelling but concise."
 
   property :content,
     type: :string,

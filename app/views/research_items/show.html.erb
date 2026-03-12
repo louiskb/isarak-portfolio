@@ -1,10 +1,65 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@research_item.title} — Research" %>
 
-<%= render @research_item %>
+<div class="resource-detail">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-<div>
-  <%= link_to "Edit this research item", edit_research_item_path(@research_item) %> |
-  <%= link_to "Back to research items", research_items_path %>
+        <%# Breadcrumb %>
+        <div class="resource-breadcrumb">
+          <%= link_to "← Back to Research", research_items_path, class: "resource-back-link" %>
+        </div>
 
-  <%= button_to "Destroy this research item", @research_item, method: :delete %>
+        <%= render "shared/flashes" %>
+
+        <article>
+          <div class="resource-detail-header">
+            <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+              <span class="resource-card-category resource-badge-<%= @research_item.category %>">
+                <%= @research_item.category.capitalize %>
+              </span>
+              <% if @research_item.featured? %>
+                <span class="resource-featured-badge">
+                  <i class="fa-solid fa-star me-1"></i>Featured
+                </span>
+              <% end %>
+            </div>
+
+            <h1 class="resource-detail-title"><%= @research_item.title %></h1>
+
+            <div class="resource-detail-meta">
+              <% if @research_item.published_at.present? %>
+                <span>
+                  <i class="fa-regular fa-calendar me-1"></i>
+                  <%= @research_item.published_at.strftime("%B %Y") %>
+                </span>
+              <% end %>
+              <% if @research_item.external_url.present? %>
+                <span>
+                  <i class="fa-solid fa-link me-1"></i>
+                  <%= link_to "View paper", @research_item.external_url, target: "_blank", rel: "noopener noreferrer" %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @research_item.description.present? %>
+            <div class="resource-detail-description">
+              <%= simple_format @research_item.description %>
+            </div>
+          <% end %>
+        </article>
+
+        <%# Admin actions %>
+        <div class="resource-detail-actions">
+          <%= link_to "Edit", edit_research_item_path(@research_item), class: "btn btn-resource-edit" %>
+          <%= button_to "Delete", @research_item,
+                method: :delete,
+                class: "btn btn-resource-delete",
+                data: { turbo_confirm: "Delete \"#{@research_item.title}\"? This cannot be undone." } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,230 @@
+// Blog index page styles
+
+// ===== HERO =====
+.blog-hero {
+  padding: 5rem 0 3.5rem;
+  border-bottom: 1px solid $border-dark;
+
+  .blog-hero-inner {
+    max-width: 640px;
+  }
+
+  .blog-hero-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $teal;
+    margin-bottom: 1rem;
+  }
+
+  .blog-hero-title {
+    font-family: $headers-font;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: $font-color;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .blog-hero-subtitle {
+    font-size: 1rem;
+    color: $font-muted;
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+}
+
+// ===== GRID SECTION =====
+.blog-grid-section {
+  padding: 4rem 0 6rem;
+}
+
+// ===== CARD =====
+.blog-card-link {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+
+  &:hover .blog-card {
+    transform: translateY(-5px);
+    border-color: rgba(137, 214, 204, 0.35) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  &:hover .blog-card-image {
+    transform: scale(1.05);
+  }
+}
+
+// Bootstrap `card` base handles bg ($card-bg = $secondary-color) + border-radius.
+// We override the border and add overflow + transition on top.
+.blog-card {
+  border: 1px solid $border-dark !important;
+  border-radius: 0.75rem !important;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+// Rounded top corners on the image container matching the card's radius
+.blog-card-img-top {
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+// The image inside `ratio` — Bootstrap sets position/inset/width/height.
+// We only need the hover zoom transition.
+.blog-card-image {
+  transition: transform 0.4s ease;
+}
+
+// Placeholder shown when no featured image
+.blog-card-placeholder {
+  background: linear-gradient(135deg, $surface 0%, $secondary-color 100%);
+  width: 100%;
+  height: 100%;
+}
+
+.blog-card-placeholder-icon {
+  font-size: 2rem;
+  color: rgba(137, 214, 204, 0.25);
+}
+
+// Status badge color variants — positioning handled by Bootstrap utilities
+// (position-absolute top-0 end-0 m-2 badge rounded-pill in HTML)
+.blog-status-published {
+  background-color: rgba(137, 214, 204, 0.15) !important;
+  color: $teal !important;
+  border: 1px solid rgba(137, 214, 204, 0.35);
+}
+
+.blog-status-scheduled {
+  background-color: rgba(251, 191, 36, 0.15) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.blog-status-draft {
+  background-color: rgba(156, 163, 175, 0.12) !important;
+  color: $font-muted !important;
+  border: 1px solid rgba(156, 163, 175, 0.2);
+}
+
+// Card image link — no underline, just fills the image container
+.blog-card-img-link {
+  display: block;
+  text-decoration: none;
+}
+
+// Card title — Playfair Display, 2-line clamp
+.blog-card-title {
+  font-family: $headers-font;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $font-color;
+  line-height: 1.45;
+  margin-bottom: 0.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Clickable title link — inherits color, teal on hover
+.blog-card-title-link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: $teal;
+  }
+}
+
+// Date + meta line
+.blog-card-meta {
+  font-size: 0.8rem;
+  color: $font-muted;
+  margin-bottom: 0.5rem;
+}
+
+// Excerpt preview — 2-line clamp
+.blog-card-excerpt {
+  font-size: 0.85rem;
+  color: rgba(226, 226, 226, 0.6);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Footer row — read more + AI badge + manage button
+.blog-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid $border-dark;
+}
+
+// "Read more" link
+.blog-card-read-more {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $teal;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.8;
+    color: $teal;
+  }
+}
+
+// AI robot badge — shown on index cards
+.blog-card-ai-badge {
+  font-size: 0.75rem;
+  color: #a5b4fc;
+  opacity: 0.85;
+}
+
+// Empty state
+.blog-empty {
+  padding: 5rem 0;
+}
+
+// ===== SPLIT PUBLISH BUTTON =====
+// The main action label gets more padding; the chevron side is narrow.
+.btn-publish-main {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.btn-publish-chevron {
+  padding-left: 0.65rem;
+  padding-right: 0.65rem;
+}
+
+// Dark-theme dropdown menu for the publish picker
+.btn-group .dropdown-menu {
+  background-color: $surface;
+  border: 1px solid $border-dark;
+  min-width: 14rem;
+
+  .dropdown-item {
+    color: $font-color;
+    font-size: 0.875rem;
+    padding: 0.55rem 1rem;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.06);
+      color: $font-color;
+    }
+  }
+
+  .dropdown-divider {
+    border-color: $border-dark;
+  }
+}

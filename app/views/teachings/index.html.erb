@@ -1,16 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Teaching — Isara Khanjanasthiti" %>
 
-<% content_for :title, "Teachings" %>
+<%# ===== HERO ===== %>
+<section class="resource-hero">
+  <div class="container">
+    <div class="resource-hero-inner">
+      <p class="resource-hero-label">Education</p>
+      <h1 class="resource-hero-title">Teaching</h1>
+      <p class="resource-hero-subtitle">
+        Courses taught, subjects coordinated, and academic teaching experience.
+      </p>
+      <div class="mt-4">
+        <%= link_to "Add Teaching", new_teaching_path, class: "btn btn-resource-add" %>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h1>Teachings</h1>
+<%# ===== GRID ===== %>
+<section class="resource-grid-section">
+  <div class="container">
+    <% if @teachings.any? %>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% @teachings.each do |item| %>
+          <div class="col">
+            <article class="resource-card card">
+              <div class="card-body">
+                <h2 class="resource-card-title"><%= item.title %></h2>
 
-<div id="teachings">
-  <% @teachings.each do |teaching| %>
-    <%= render teaching %>
-    <p>
-      <%= link_to "Show this teaching", teaching %>
-    </p>
-  <% end %>
-</div>
+                <% if item.institution.present? || item.year.present? %>
+                  <p class="resource-card-meta">
+                    <% if item.institution.present? %>
+                      <i class="fa-solid fa-graduation-cap me-1"></i><%= item.institution %>
+                    <% end %>
+                    <% if item.institution.present? && item.year.present? %> &middot; <% end %>
+                    <% if item.year.present? %><%= item.year %><% end %>
+                  </p>
+                <% end %>
 
-<%= link_to "New teaching", new_teaching_path %>
+                <% if item.description.present? %>
+                  <p class="resource-card-description"><%= item.description %></p>
+                <% end %>
+
+                <div class="resource-card-footer">
+                  <%= link_to "View Details →", teaching_path(item), class: "btn btn-resource-manage btn-sm" %>
+                </div>
+              </div>
+            </article>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="resource-empty text-center">
+        <p class="text-muted mb-3">No teaching entries yet.</p>
+        <%= link_to "Add your first entry", new_teaching_path, class: "btn btn-resource-add" %>
+      </div>
+    <% end %>
+  </div>
+</section>

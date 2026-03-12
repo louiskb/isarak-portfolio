@@ -100,13 +100,29 @@ class BlogPostsController < ApplicationController
 
   # POST /blog_posts/create_with_ai
   # Creates a new blog post using the AI service from a user prompt.
+  # Supports draft, publish, and schedule via the split button (status + scheduled_at params).
   def create_with_ai
     begin
+      requested_status, scheduled_at = resolve_publish_intent(
+        ai_params[:status],
+        ai_params[:scheduled_at]
+      )
+
       service = BlogPostAiService.new(current_user)
-      @blog_post = service.create_from_prompt(ai_params[:prompt], featured_image: ai_params[:featured_image])
+      @blog_post = service.create_from_prompt(
+        ai_params[:prompt],
+        featured_image: ai_params[:featured_image],
+        status: requested_status,
+        scheduled_at: scheduled_at
+      )
 
       if @blog_post.persisted?
-        redirect_to @blog_post, notice: "Blog post created with AI. Review and publish when ready."
+        notice = case requested_status
+        when :published then "Blog post created with AI and published."
+        when :scheduled then "Blog post created with AI and scheduled for #{scheduled_at.strftime("%d %b %Y at %H:%M")}."
+        else "Blog post created with AI. Review and publish when ready."
+        end
+        redirect_to @blog_post, notice: notice
       else
         flash.now[:alert] = "The AI response couldn't be saved: #{@blog_post.errors.full_messages.to_sentence}"
         @prompt = ai_params[:prompt]
@@ -154,11 +170,28 @@ class BlogPostsController < ApplicationController
 
   # ai_generated is intentionally excluded — the AI service sets it automatically.
   def blog_post_params
-    params.expect(blog_post: [ :title, :author, :status, :scheduled_at, :slug, :blog_post_erb_content, :body, :featured_image, photos: [] ])
+    params.expect(blog_post: [ :title, :author, :status, :scheduled_at, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, photos: [] ])
   end
 
   def ai_params
-    params.expect(blog_post: [ :prompt, :featured_image, :keep_featured_image ])
+    params.expect(blog_post: [ :prompt, :featured_image, :keep_featured_image, :status, :scheduled_at ])
+  end
+
+  # Parses the status + scheduled_at coming from the split button.
+  # Returns [status_symbol, scheduled_at_or_nil].
+  # Falls back to :draft if the scheduled time is missing or in the past.
+  def resolve_publish_intent(raw_status, raw_scheduled_at)
+    status = (raw_status.presence || "draft").to_sym
+
+    if status == :scheduled
+      parsed = raw_scheduled_at.present? ? Time.zone.parse(raw_scheduled_at.to_s) : nil
+      if parsed.nil? || parsed <= Time.current
+        return [ :draft, nil ]
+      end
+      return [ :scheduled, parsed ]
+    end
+
+    [ status, nil ]
   end
 
   def handle_ai_error(error, render_action)

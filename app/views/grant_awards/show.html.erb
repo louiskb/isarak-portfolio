@@ -1,10 +1,60 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@grant_award.title} — Grants & Awards" %>
 
-<%= render @grant_award %>
+<div class="resource-detail">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-<div>
-  <%= link_to "Edit this grant award", edit_grant_award_path(@grant_award) %> |
-  <%= link_to "Back to grant awards", grant_awards_path %>
+        <%# Breadcrumb %>
+        <div class="resource-breadcrumb">
+          <%= link_to "← Back to Grants & Awards", grant_awards_path, class: "resource-back-link" %>
+        </div>
 
-  <%= button_to "Destroy this grant award", @grant_award, method: :delete %>
+        <%= render "shared/flashes" %>
+
+        <article>
+          <div class="resource-detail-header">
+            <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+              <span class="resource-card-category resource-badge-<%= @grant_award.category %>">
+                <%= @grant_award.category.capitalize %>
+              </span>
+            </div>
+
+            <h1 class="resource-detail-title"><%= @grant_award.title %></h1>
+
+            <div class="resource-detail-meta">
+              <% if @grant_award.awarding_body.present? %>
+                <span>
+                  <i class="fa-solid fa-building-columns me-1"></i>
+                  <%= @grant_award.awarding_body %>
+                </span>
+              <% end %>
+              <% if @grant_award.year.present? %>
+                <span>
+                  <i class="fa-regular fa-calendar me-1"></i>
+                  <%= @grant_award.year %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <% if @grant_award.description.present? %>
+            <div class="resource-detail-description">
+              <%= simple_format @grant_award.description %>
+            </div>
+          <% end %>
+        </article>
+
+        <%# Admin actions %>
+        <div class="resource-detail-actions">
+          <%= link_to "Edit", edit_grant_award_path(@grant_award), class: "btn btn-resource-edit" %>
+          <%= button_to "Delete", @grant_award,
+                method: :delete,
+                class: "btn btn-resource-delete",
+                data: { turbo_confirm: "Delete \"#{@grant_award.title}\"? This cannot be undone." } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

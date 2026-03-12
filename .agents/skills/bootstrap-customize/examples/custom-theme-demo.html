@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap Custom Theme Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    /*
+     * CSS Variable Customization Demo
+     *
+     * This demonstrates runtime theming without Sass compilation.
+     * Override Bootstrap's CSS variables at :root, component, or element level.
+     */
+
+    /* Theme: Default Bootstrap (no changes) */
+    [data-custom-theme="default"] {
+      /* Uses Bootstrap defaults */
+    }
+
+    /* Theme: Ocean - Cool blue-green palette */
+    [data-custom-theme="ocean"] {
+      --bs-primary: #0077b6;
+      --bs-primary-rgb: 0, 119, 182;
+      --bs-secondary: #00b4d8;
+      --bs-secondary-rgb: 0, 180, 216;
+      --bs-success: #2a9d8f;
+      --bs-success-rgb: 42, 157, 143;
+      --bs-body-font-family: 'Segoe UI', system-ui, sans-serif;
+      --bs-border-radius: 0.5rem;
+      --bs-border-radius-lg: 0.75rem;
+      --bs-border-radius-sm: 0.375rem;
+    }
+
+    /* Theme: Sunset - Warm orange-red palette */
+    [data-custom-theme="sunset"] {
+      --bs-primary: #e76f51;
+      --bs-primary-rgb: 231, 111, 81;
+      --bs-secondary: #f4a261;
+      --bs-secondary-rgb: 244, 162, 97;
+      --bs-success: #2a9d8f;
+      --bs-success-rgb: 42, 157, 143;
+      --bs-warning: #e9c46a;
+      --bs-warning-rgb: 233, 196, 106;
+      --bs-body-font-family: Georgia, 'Times New Roman', serif;
+      --bs-border-radius: 0;
+      --bs-border-radius-lg: 0;
+      --bs-border-radius-sm: 0;
+    }
+
+    /* Theme: Forest - Natural green palette */
+    [data-custom-theme="forest"] {
+      --bs-primary: #2d6a4f;
+      --bs-primary-rgb: 45, 106, 79;
+      --bs-secondary: #40916c;
+      --bs-secondary-rgb: 64, 145, 108;
+      --bs-success: #52b788;
+      --bs-success-rgb: 82, 183, 136;
+      --bs-info: #74c69d;
+      --bs-info-rgb: 116, 198, 157;
+      --bs-body-font-family: 'Trebuchet MS', sans-serif;
+      --bs-border-radius: 1rem;
+      --bs-border-radius-lg: 1.5rem;
+      --bs-border-radius-sm: 0.5rem;
+    }
+
+    /* Component-Level CSS Variable Override Example */
+    .custom-card {
+      --bs-card-bg: linear-gradient(135deg, var(--bs-primary), var(--bs-secondary));
+      --bs-card-color: #fff;
+      --bs-card-border-color: transparent;
+      background: linear-gradient(135deg, var(--bs-primary), var(--bs-secondary));
+    }
+
+    .custom-card .card-header {
+      background: rgba(0, 0, 0, 0.1);
+      border-bottom-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Custom Button with CSS Variables */
+    .btn-brand {
+      --bs-btn-bg: var(--bs-primary);
+      --bs-btn-border-color: var(--bs-primary);
+      --bs-btn-color: #fff;
+      --bs-btn-hover-bg: color-mix(in srgb, var(--bs-primary) 85%, black);
+      --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-primary) 85%, black);
+      --bs-btn-hover-color: #fff;
+      --bs-btn-active-bg: color-mix(in srgb, var(--bs-primary) 75%, black);
+      --bs-btn-active-border-color: color-mix(in srgb, var(--bs-primary) 75%, black);
+      --bs-btn-active-color: #fff;
+      background-color: var(--bs-btn-bg);
+      border-color: var(--bs-btn-border-color);
+      color: var(--bs-btn-color);
+    }
+
+    .btn-brand:hover {
+      background-color: var(--bs-btn-hover-bg);
+      border-color: var(--bs-btn-hover-border-color);
+      color: var(--bs-btn-hover-color);
+    }
+
+    /* Transition for smooth theme switching */
+    body {
+      transition: background-color 0.3s ease;
+    }
+
+    .card, .btn, .alert, .form-control, .form-select {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body data-custom-theme="default">
+  <div class="container py-5">
+    <div class="row mb-4">
+      <div class="col">
+        <h1 class="display-5">Custom Theme Demo</h1>
+        <p class="lead text-body-secondary">
+          Demonstrates runtime CSS variable theming without Sass compilation.
+          Switch themes to see how Bootstrap components adapt instantly.
+        </p>
+      </div>
+    </div>
+
+    <!-- Theme Picker -->
+    <div class="row mb-5">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Theme Picker</h5>
+          </div>
+          <div class="card-body">
+            <div class="btn-group" role="group" aria-label="Theme selection">
+              <input type="radio" class="btn-check" name="custom-theme" id="theme-default" value="default" checked autocomplete="off">
+              <label class="btn btn-outline-secondary" for="theme-default">Default</label>
+
+              <input type="radio" class="btn-check" name="custom-theme" id="theme-ocean" value="ocean" autocomplete="off">
+              <label class="btn btn-outline-secondary" for="theme-ocean">Ocean</label>
+
+              <input type="radio" class="btn-check" name="custom-theme" id="theme-sunset" value="sunset" autocomplete="off">
+              <label class="btn btn-outline-secondary" for="theme-sunset">Sunset</label>
+
+              <input type="radio" class="btn-check" name="custom-theme" id="theme-forest" value="forest" autocomplete="off">
+              <label class="btn btn-outline-secondary" for="theme-forest">Forest</label>
+            </div>
+            <p class="text-body-secondary mt-3 mb-0">
+              <small>Each theme overrides <code>--bs-primary</code>, <code>--bs-secondary</code>, font family, and border radius via CSS variables.</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button Showcase -->
+    <div class="row mb-5">
+      <div class="col">
+        <h4>Buttons</h4>
+        <p class="text-body-secondary">Buttons automatically use the overridden CSS variables.</p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <button type="button" class="btn btn-primary">Primary</button>
+          <button type="button" class="btn btn-secondary">Secondary</button>
+          <button type="button" class="btn btn-success">Success</button>
+          <button type="button" class="btn btn-warning">Warning</button>
+          <button type="button" class="btn btn-info">Info</button>
+          <button type="button" class="btn btn-outline-primary">Outline Primary</button>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+          <button type="button" class="btn btn-brand">Custom Brand Button</button>
+          <small class="text-body-secondary align-self-center">Uses component-level CSS variables</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards Showcase -->
+    <div class="row g-4 mb-5">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-header">Standard Card</div>
+          <div class="card-body">
+            <h5 class="card-title">Theme-Aware</h5>
+            <p class="card-text">This card uses Bootstrap's default styling with the current theme's border radius.</p>
+            <a href="#" class="btn btn-primary">Action</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 custom-card text-white">
+          <div class="card-header">Gradient Card</div>
+          <div class="card-body">
+            <h5 class="card-title">Custom Styled</h5>
+            <p class="card-text">Uses component-level CSS variables to create a gradient from primary to secondary colors.</p>
+            <a href="#" class="btn btn-light">Action</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-primary">
+          <div class="card-header bg-primary text-white">Primary Header</div>
+          <div class="card-body">
+            <h5 class="card-title">Colored Border</h5>
+            <p class="card-text">The border and header color adapt to the theme's primary color.</p>
+            <a href="#" class="btn btn-outline-primary">Action</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Elements -->
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <h4>Form Controls</h4>
+        <p class="text-body-secondary">Focus states use the theme's primary color.</p>
+        <form>
+          <div class="mb-3">
+            <label for="nameInput" class="form-label">Name</label>
+            <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+          </div>
+          <div class="mb-3">
+            <label for="emailInput" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="categorySelect" class="form-label">Category</label>
+            <select class="form-select" id="categorySelect">
+              <option selected>Choose a category</option>
+              <option value="1">Technology</option>
+              <option value="2">Design</option>
+              <option value="3">Business</option>
+            </select>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="termsCheck">
+            <label class="form-check-label" for="termsCheck">
+              I agree to the terms
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <h4>Alerts</h4>
+        <p class="text-body-secondary">Alert variants with theme-aware subtle backgrounds.</p>
+        <div class="alert alert-primary" role="alert">
+          Primary alert message
+        </div>
+        <div class="alert alert-secondary" role="alert">
+          Secondary alert message
+        </div>
+        <div class="alert alert-success" role="alert">
+          Success alert message
+        </div>
+
+        <h4 class="mt-4">Badges</h4>
+        <p>
+          <span class="badge bg-primary">Primary</span>
+          <span class="badge bg-secondary">Secondary</span>
+          <span class="badge bg-success">Success</span>
+          <span class="badge bg-warning text-dark">Warning</span>
+          <span class="badge bg-info">Info</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Progress Bars -->
+    <div class="row mb-5">
+      <div class="col">
+        <h4>Progress Bars</h4>
+        <p class="text-body-secondary">Progress bar colors adapt to theme colors.</p>
+        <div class="progress mb-2" role="progressbar" aria-label="Primary progress" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" style="width: 75%">75%</div>
+        </div>
+        <div class="progress mb-2" role="progressbar" aria-label="Secondary progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-secondary" style="width: 50%">50%</div>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Success progress" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-success" style="width: 100%">100%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSS Variables Reference -->
+    <div class="row">
+      <div class="col">
+        <h4>CSS Variables Being Overridden</h4>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Default</th>
+                <th scope="col">Ocean</th>
+                <th scope="col">Sunset</th>
+                <th scope="col">Forest</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>--bs-primary</code></td>
+                <td>#0d6efd</td>
+                <td>#0077b6</td>
+                <td>#e76f51</td>
+                <td>#2d6a4f</td>
+              </tr>
+              <tr>
+                <td><code>--bs-secondary</code></td>
+                <td>#6c757d</td>
+                <td>#00b4d8</td>
+                <td>#f4a261</td>
+                <td>#40916c</td>
+              </tr>
+              <tr>
+                <td><code>--bs-border-radius</code></td>
+                <td>0.375rem</td>
+                <td>0.5rem</td>
+                <td>0</td>
+                <td>1rem</td>
+              </tr>
+              <tr>
+                <td><code>--bs-body-font-family</code></td>
+                <td>system-ui</td>
+                <td>Segoe UI</td>
+                <td>Georgia</td>
+                <td>Trebuchet MS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      // Theme switching logic
+      const setCustomTheme = (theme) => {
+        document.body.setAttribute('data-custom-theme', theme);
+      };
+
+      // Set up event listeners for theme radio buttons
+      document.querySelectorAll('[name="custom-theme"]').forEach((radio) => {
+        radio.addEventListener('change', (e) => {
+          setCustomTheme(e.target.value);
+        });
+      });
+
+      // Initialize with default theme
+      setCustomTheme('default');
+    })();
+  </script>
+</body>
+</html>

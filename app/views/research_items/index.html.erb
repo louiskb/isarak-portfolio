@@ -1,16 +1,72 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Research — Isara Khanjanasthiti" %>
 
-<% content_for :title, "Research items" %>
+<%# ===== HERO ===== %>
+<section class="resource-hero">
+  <div class="container">
+    <div class="resource-hero-inner">
+      <p class="resource-hero-label">Research</p>
+      <h1 class="resource-hero-title">Research & Publications</h1>
+      <p class="resource-hero-subtitle">
+        Urban planning, aviation policy, housing governance, and university teaching & learning.
+      </p>
+      <% if user_signed_in? %>
+        <div class="mt-4">
+          <%= link_to "Add Research Item", new_research_item_path, class: "btn btn-resource-add" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
 
-<h1>Research items</h1>
+<%# ===== GRID ===== %>
+<section class="resource-grid-section">
+  <div class="container">
+    <% if @research_items.any? %>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% @research_items.each do |item| %>
+          <div class="col">
+            <article class="resource-card card">
+              <div class="card-body">
+                <%# Category badge %>
+                <span class="resource-card-category resource-badge-<%= item.category %>">
+                  <%= item.category.capitalize %>
+                  <% if item.featured? %>
+                    &nbsp;<i class="fa-solid fa-star" title="Featured"></i>
+                  <% end %>
+                </span>
 
-<div id="research_items">
-  <% @research_items.each do |research_item| %>
-    <%= render research_item %>
-    <p>
-      <%= link_to "Show this research item", research_item %>
-    </p>
-  <% end %>
-</div>
+                <h2 class="resource-card-title"><%= item.title %></h2>
 
-<%= link_to "New research item", new_research_item_path %>
+                <% if item.published_at.present? %>
+                  <p class="resource-card-meta">
+                    <i class="fa-regular fa-calendar me-1"></i>
+                    <%= item.published_at.strftime("%B %Y") %>
+                  </p>
+                <% end %>
+
+                <% if item.description.present? %>
+                  <p class="resource-card-description"><%= item.description %></p>
+                <% end %>
+
+                <div class="resource-card-footer">
+                  <% if user_signed_in? %>
+                    <%= link_to "Manage →", research_item_path(item), class: "btn btn-resource-manage btn-sm" %>
+                  <% elsif item.external_url.present? %>
+                    <%= link_to "View →", item.external_url, class: "btn btn-resource-link btn-sm", target: "_blank", rel: "noopener noreferrer" %>
+                  <% end %>
+                </div>
+              </div>
+            </article>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="resource-empty text-center">
+        <p class="text-muted mb-3">No research items yet.</p>
+        <% if user_signed_in? %>
+          <%= link_to "Add your first item", new_research_item_path, class: "btn btn-resource-add" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -1,6 +1,56 @@
 {
   "version": 1,
   "skills": {
+    "bootstrap": {
+      "source": "mindrally/skills",
+      "sourceType": "github",
+      "computedHash": "99c121c1791cbbadcb16b0ff4d3928c08d402e999a6611d2cbece613d98e7e97"
+    },
+    "bootstrap-components": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "30f77f606efd8b406a0b61c0e2db7e502b1d4362bb467695eec9569c4147a939"
+    },
+    "bootstrap-content": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "24a0ec61c18c9b4bee790711b74f352e5f8782de121f2d5b72cb9af8616282d7"
+    },
+    "bootstrap-customize": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "b724782e7579d79c9e5b198abe69842b65df0f3cba40d7d8cc0a3d9f542ad16d"
+    },
+    "bootstrap-forms": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "4ccf8d2f6244a0dfc5f779b3ac7c42697175a4864a41de59f8933f5f2dbaebff"
+    },
+    "bootstrap-helpers": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "7cc8a75ea5af49c02f3fb94abb5c3768cb8b843a08432a1dce7c1b25d6063117"
+    },
+    "bootstrap-icons": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "bb55b320dfa1f989f129dac44d89d52cc4595ce4ac0ac0e261a21ee38ee80da4"
+    },
+    "bootstrap-layout": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "d08276080b80479dff60697edd11166e84dbbb416e1ecd2132a1d3bb80b37d21"
+    },
+    "bootstrap-overview": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "819dd57cc1facae0bc341cc3c96f0ebb1fc9d22d238115c46bbfdc4920c927f5"
+    },
+    "bootstrap-utilities": {
+      "source": "sjnims/bootstrap-expert",
+      "sourceType": "github",
+      "computedHash": "e70124c8fba84992ae641c06fa6fa3124f0fda5cb832bef66a053fcfc672af5c"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",

@@ -1,91 +1,127 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-isarak">
-  <div class="container-fluid px-4">
+<nav class="navbar navbar-expand-lg navbar-isarak" data-bs-theme="dark">
+  <div class="container">
 
-    <%# Logo / Brand — left side %>
-    <%= link_to root_path, class: "navbar-brand" do %>
-      Isara
-    <% end %>
+    <% if user_signed_in? %>
+      <%# ===== SIGNED-IN (ISARA) NAV ===== %>
 
-    <%# Mobile hamburger toggle %>
-    <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <%# Mobile: toggler on far left %>
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <%# Nav links — right side %>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-center gap-1">
-
-        <% if user_signed_in? %>
-          <%# ==================== SIGNED-IN USER NAV ==================== %>
-
+      <%# Collapsible center nav — Portfolio | Research | Teaching | Awards | Blog (dropdown) %>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto nav-links-pill align-items-center gap-1">
           <li class="nav-item">
-            <%= link_to "Portfolio", root_path, class: "nav-link" %>
+            <%= link_to "Portfolio", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Research", research_items_path, class: nav_link_class(research_items_path), "aria-current": (request.path.start_with?(research_items_path) ? "page" : nil) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Teaching", teachings_path, class: nav_link_class(teachings_path), "aria-current": (request.path.start_with?(teachings_path) ? "page" : nil) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Awards", grant_awards_path, class: nav_link_class(grant_awards_path), "aria-current": (request.path.start_with?(grant_awards_path) ? "page" : nil) %>
           </li>
 
-          <%# Career dropdown — all resource types %>
+          <%# Blog — dropdown with sub-links for post management %>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
-              Career
+            <a class="<%= nav_link_class(blog_posts_path) %> dropdown-toggle"
+               href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false"
+               <%= request.path.start_with?(blog_posts_path) ? "aria-current=\"page\"" : "" %>>
+              Blog
             </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><%= link_to "Research", "#", class: "dropdown-item" %></li>
-              <li><%= link_to "Grants & Awards", "#", class: "dropdown-item" %></li>
-              <li><%= link_to "Teaching", "#", class: "dropdown-item" %></li>
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <%= link_to "Blog", "#", class: "nav-link" %>
-          </li>
-
-          <%# Avatar circle with profile/logout dropdown %>
-          <li class="nav-item dropdown ms-2">
-            <a class="nav-link p-0 d-flex align-items-center" href="#" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
-              <div class="avatar-initials">
-                <%= current_user.email[0].upcase %>
-              </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><%= link_to "Profile", edit_user_registration_path, class: "dropdown-item" %></li>
+            <ul class="dropdown-menu">
+              <li><%= link_to "All Posts", blog_posts_path, class: "dropdown-item" %></li>
               <li><hr class="dropdown-divider"></li>
-              <li>
-                <%= button_to "Logout", destroy_user_session_path,
-                    method: :delete,
-                    class: "dropdown-item text-start border-0 bg-transparent w-100",
-                    form: { "data-turbo": "false" } %>
-              </li>
+              <li><%= link_to "New Post", new_blog_post_path, class: "dropdown-item" %></li>
+              <li><%= link_to "✨ Create with AI", ai_new_blog_posts_path, class: "dropdown-item" %></li>
             </ul>
           </li>
+        </ul>
 
-        <% else %>
-          <%# ==================== VISITOR NAV ==================== %>
+        <%# Mobile — stacked profile/logout inside collapse %>
+        <div class="d-lg-none mt-2 pt-2 border-top border-secondary">
+          <%= link_to "Profile", profile_path, class: "nav-link py-2" %>
+          <%= button_to "Logout", destroy_user_session_path,
+              method: :delete,
+              class: "nav-link text-start border-0 bg-transparent w-100 py-2",
+              form: { "data-turbo": "false" } %>
+        </div>
+      </div>
 
-          <li class="nav-item">
-            <%= link_to "Portfolio", root_path, class: "nav-link" %>
-          </li>
+      <%# Right: Avatar dropdown + Logo (always visible on all screen sizes) %>
+      <div class="d-flex align-items-center gap-2">
+        <div class="nav-item dropdown">
+          <a class="nav-link p-0 d-flex align-items-center gap-1" href="#" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="avatar-initials">
+              <% if current_user.avatar.attached? %>
+                <%= image_tag current_user.avatar, class: "avatar-img", alt: current_user.name || "" %>
+              <% else %>
+                <%= (current_user.name.present? ? current_user.name[0] : current_user.email[0]).upcase %>
+              <% end %>
+            </div>
+            <i class="fa-solid fa-chevron-down avatar-chevron"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><%= link_to "Profile", profile_path, class: "dropdown-item" %></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= button_to "Logout", destroy_user_session_path,
+                  method: :delete,
+                  class: "dropdown-item text-start border-0 bg-transparent w-100",
+                  form: { "data-turbo": "false" } %>
+            </li>
+          </ul>
+        </div>
 
-          <li class="nav-item">
-            <%= link_to "Research", "#", class: "nav-link" %>
-          </li>
-
-          <li class="nav-item">
-            <%= link_to "Blog", "#", class: "nav-link" %>
-          </li>
-
-          <%# Contact Me CTA button %>
-          <li class="nav-item ms-2">
-            <%= link_to "Contact Me", "#contact", class: "btn-nav-cta" %>
-          </li>
-
+        <%= link_to root_path, class: "navbar-brand mb-0" do %>
+          <div class="navbar-logo-mark">IK</div>
         <% end %>
+      </div>
 
-      </ul>
-    </div>
+    <% else %>
+      <%# ===== VISITOR NAV ===== %>
+
+      <%# Left: Contact Me (always visible) %>
+      <%= link_to "Contact Me", "#contact", class: "btn-nav-cta btn-nav-cta-sm d-lg-none" %>
+      <%= link_to "Contact Me", "#contact", class: "btn-nav-cta d-none d-lg-block" %>
+
+      <%# Mobile: toggler %>
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <%# Collapsible center nav %>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto nav-links-pill align-items-center gap-1">
+          <li class="nav-item">
+            <%= link_to "Portfolio", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Research", "#research", class: nav_link_class("#research") %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path), "aria-current": (request.path.start_with?(blog_posts_path) ? "page" : nil) %>
+          </li>
+        </ul>
+      </div>
+
+      <%# Right: Logo (always visible) %>
+      <%= link_to root_path, class: "navbar-brand mb-0" do %>
+        <div class="navbar-logo-mark">IK</div>
+      <% end %>
+
+    <% end %>
 
   </div>
 </nav>

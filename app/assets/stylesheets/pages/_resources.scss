@@ -1,0 +1,420 @@
+// ===================================================
+// Resource Pages — Research, Grants & Awards, Teaching
+// Shared styles for all three resource types
+// ===================================================
+
+// ===== HERO =====
+.resource-hero {
+  padding: 4rem 0 2.5rem;
+  border-bottom: 1px solid $border-dark;
+
+  .resource-hero-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $teal;
+    margin-bottom: 0.75rem;
+  }
+
+  .resource-hero-title {
+    font-family: $headers-font;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: $font-color;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .resource-hero-subtitle {
+    font-size: 1rem;
+    color: $font-muted;
+    max-width: 56ch;
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+}
+
+// ===== GRID =====
+.resource-grid-section {
+  padding: 3rem 0 5rem;
+}
+
+// ===== CARD =====
+.resource-card {
+  background-color: $surface !important;
+  border: 1px solid $border-dark !important;
+  border-radius: 0.75rem !important;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(137, 214, 204, 0.35) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    height: 100%;
+  }
+}
+
+.resource-card-category {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 2rem;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.resource-card-title {
+  font-family: $headers-font;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $font-color;
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.resource-card-meta {
+  font-size: 0.8rem;
+  color: $font-muted;
+  margin-bottom: 0.5rem;
+}
+
+.resource-card-description {
+  font-size: 0.875rem;
+  color: rgba(226, 226, 226, 0.65);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+  margin-bottom: 1rem;
+}
+
+.resource-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid $border-dark;
+  margin-top: auto;
+}
+
+// ===== CATEGORY BADGE COLOURS =====
+.resource-badge-project {
+  background: rgba(137, 214, 204, 0.12);
+  color: $teal;
+  border: 1px solid rgba(137, 214, 204, 0.3);
+}
+
+.resource-badge-paper {
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.resource-badge-publication {
+  background: rgba(249, 115, 22, 0.12);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.resource-badge-grant {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.resource-badge-award {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c4b5fd;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+// ===== CARD BUTTONS =====
+.btn-resource-add {
+  background-color: $teal;
+  color: $black;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  border: none;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $teal-hover;
+    color: $black;
+  }
+}
+
+.btn-resource-manage {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $teal;
+  background: transparent;
+  border: 1px solid rgba(137, 214, 204, 0.4);
+  border-radius: 2rem;
+  padding: 0.3rem 0.85rem;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(137, 214, 204, 0.1);
+    border-color: $teal;
+    color: $teal;
+  }
+}
+
+.btn-resource-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $font-muted;
+  background: transparent;
+  border: 1px solid $border-dark;
+  border-radius: 2rem;
+  padding: 0.3rem 0.85rem;
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    color: $teal;
+    border-color: rgba(137, 214, 204, 0.4);
+  }
+}
+
+// ===== EMPTY STATE =====
+.resource-empty {
+  padding: 5rem 0;
+  color: $font-muted;
+}
+
+// ===== SHOW / DETAIL PAGE =====
+.resource-detail {
+  padding: 3rem 0 5rem;
+}
+
+.resource-breadcrumb {
+  margin-bottom: 2rem;
+}
+
+.resource-back-link {
+  font-size: 0.875rem;
+  color: $font-muted;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $teal;
+  }
+}
+
+.resource-detail-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $border-dark;
+}
+
+.resource-detail-title {
+  font-family: $headers-font;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: $font-color;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.resource-detail-meta {
+  font-size: 0.875rem;
+  color: $font-muted;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+
+  a {
+    color: $teal;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.resource-featured-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  padding: 0.25rem 0.65rem;
+  border-radius: 2rem;
+}
+
+.resource-detail-description {
+  margin-top: 1.5rem;
+  font-size: 0.975rem;
+  color: rgba(226, 226, 226, 0.85);
+  line-height: 1.8;
+}
+
+.resource-detail-actions {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border-dark;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+// ===== SHARED ACTION BUTTONS (used on show pages + blog show) =====
+.btn-resource-edit {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $font-color;
+  background: transparent;
+  border: 1px solid $border-dark;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: rgba(226, 226, 226, 0.5);
+    color: $font-color;
+  }
+}
+
+.btn-resource-delete {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(248, 113, 113, 0.85);
+  background: transparent;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(248, 113, 113, 0.08);
+    border-color: rgba(248, 113, 113, 0.6);
+    color: #f87171;
+  }
+}
+
+// ===== BLOG SHOW PAGE =====
+.blog-show {
+  padding: 3rem 0 5rem;
+}
+
+.blog-show-title {
+  font-family: $headers-font;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: $font-color;
+  line-height: 1.3;
+}
+
+.blog-show-meta {
+  font-size: 0.85rem;
+  color: $font-muted;
+}
+
+.blog-show-ai-badge {
+  font-size: 0.8rem;
+  color: $teal;
+}
+
+.blog-show-image {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.blog-show-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border-dark;
+}
+
+.blog-show-actions-divider {
+  width: 1px;
+  height: 1.25rem;
+  background: $border-dark;
+  display: inline-block;
+  margin: 0 0.25rem;
+}
+
+.btn-blog-publish {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $black;
+  background: $teal;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: $teal-hover;
+    color: $black;
+  }
+}
+
+.btn-blog-schedule {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $teal;
+  background: transparent;
+  border: 1px solid rgba(137, 214, 204, 0.4);
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(137, 214, 204, 0.08);
+    border-color: $teal;
+  }
+}
+
+.btn-blog-ai {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #a5b4fc;
+  background: transparent;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.6);
+    color: #a5b4fc;
+  }
+}

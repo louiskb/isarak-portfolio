@@ -1,0 +1,209 @@
+// =============================================================================
+// Custom Bootstrap Theme Example
+// =============================================================================
+// This file demonstrates how to create a custom Bootstrap theme by overriding
+// Sass variables before importing Bootstrap.
+
+// 1. Include functions first (required for variable manipulation)
+@import "bootstrap/scss/functions";
+
+// =============================================================================
+// 2. Custom Variable Overrides
+// =============================================================================
+// Set your custom variables BEFORE importing Bootstrap's variables
+
+// Brand Colors
+$brand-primary: #1a73e8;    // Google Blue
+$brand-secondary: #5f6368;  // Google Gray
+
+// Theme Colors
+$primary:   $brand-primary;
+$secondary: $brand-secondary;
+$success:   #34a853;
+$info:      #4285f4;
+$warning:   #fbbc04;
+$danger:    #ea4335;
+$light:     #f8f9fa;
+$dark:      #202124;
+
+// Custom Colors (will generate .bg-*, .text-*, .btn-* utilities)
+$custom-colors: (
+  "google-blue": #4285f4,
+  "google-red": #ea4335,
+  "google-yellow": #fbbc04,
+  "google-green": #34a853
+);
+
+// Typography
+$font-family-sans-serif: 'Roboto', system-ui, -apple-system, sans-serif;
+$font-family-monospace: 'Roboto Mono', SFMono-Regular, monospace;
+$font-size-base: 0.9375rem;  // 15px
+$font-weight-base: 400;
+$line-height-base: 1.6;
+
+$headings-font-family: 'Google Sans', 'Roboto', sans-serif;
+$headings-font-weight: 500;
+
+// Spacing (tighter)
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 2,
+  6: $spacer * 3,
+  7: $spacer * 4,
+  8: $spacer * 5
+);
+
+// Border Radius (rounded)
+$border-radius:     .5rem;
+$border-radius-sm:  .375rem;
+$border-radius-lg:  .75rem;
+$border-radius-xl:  1rem;
+$border-radius-xxl: 1.5rem;
+
+// Shadows (subtle Material-style)
+$box-shadow-sm:  0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+$box-shadow:     0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+$box-shadow-lg:  0 1px 3px 0 rgba(60, 64, 67, 0.3), 0 8px 16px 6px rgba(60, 64, 67, 0.15);
+
+// Enable features
+$enable-rounded: true;
+$enable-shadows: true;
+$enable-gradients: false;
+$enable-transitions: true;
+$enable-negative-margins: true;
+$enable-dark-mode: true;
+
+// Grid
+$grid-gutter-width: 1.5rem;
+$container-padding-x: 1rem;
+
+// Buttons
+$btn-padding-y: .625rem;
+$btn-padding-x: 1.5rem;
+$btn-font-weight: 500;
+$btn-border-radius: $border-radius;
+
+// Forms
+$input-padding-y: .75rem;
+$input-padding-x: 1rem;
+$input-border-radius: $border-radius;
+$input-focus-border-color: $primary;
+
+// Cards
+$card-border-radius: $border-radius-lg;
+$card-border-color: rgba(0, 0, 0, 0.08);
+$card-cap-bg: transparent;
+
+// Modals
+$modal-content-border-radius: $border-radius-lg;
+
+// Navbar
+$navbar-padding-y: .75rem;
+
+// =============================================================================
+// 3. Import Bootstrap (after variable overrides)
+// =============================================================================
+
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+// Merge custom colors into theme-colors map
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+
+// =============================================================================
+// 4. Import Bootstrap Components
+// =============================================================================
+
+@import "bootstrap/scss/utilities";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas";
+@import "bootstrap/scss/placeholders";
+
+@import "bootstrap/scss/helpers";
+@import "bootstrap/scss/utilities/api";
+
+// =============================================================================
+// 5. Custom Styles (after Bootstrap)
+// =============================================================================
+
+// Custom button variant
+.btn-google {
+  @include button-variant(
+    $background: #4285f4,
+    $border: #4285f4,
+    $hover-background: darken(#4285f4, 7.5%),
+    $hover-border: darken(#4285f4, 10%),
+    $active-background: darken(#4285f4, 10%),
+    $active-border: darken(#4285f4, 12.5%)
+  );
+  color: $white;
+}
+
+// Custom card variant
+.card-elevated {
+  border: none;
+  box-shadow: $box-shadow;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+// Material-style floating action button
+.btn-fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $box-shadow;
+
+  &:hover {
+    box-shadow: $box-shadow-lg;
+  }
+}
+
+// Custom focus styles
+*:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}

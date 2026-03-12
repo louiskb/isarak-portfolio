@@ -1,12 +1,16 @@
-<%= simple_form_for(@blog_post) do |f| %>
+<%= simple_form_for(@blog_post,
+      html: { multipart: true, data: { controller: "publish-form" } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
     <%= f.input :title %>
+    <%= f.input :blog_excerpt,
+          label: "Excerpt",
+          hint: "A 1–2 sentence preview shown on the blog index. Leave blank and the AI will generate one automatically.",
+          as: :text,
+          input_html: { rows: 3 } %>
     <%= f.input :author %>
-    <%= f.input :status, collection: BlogPost.statuses.keys %>
-    <%= f.input :scheduled_at %>
 
     <div class="mb-3">
       <%= f.label :featured_image, "Featured image", class: "form-label" %>
@@ -16,7 +20,7 @@
         </div>
       <% end %>
       <%= f.input :featured_image, label: false, as: :file, input_html: { accept: "image/*" } %>
-      <small class="text-muted">Leave blank to keep the existing image (or let AI use an Unsplash photo).</small>
+      <small class="text-muted">Leave blank to keep the existing image.</small>
     </div>
 
     <% if @blog_post.blog_post_erb_content.present? %>
@@ -40,7 +44,98 @@
     <% end %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
+  <input type="hidden"
+         name="blog_post[status]"
+         value="<%= @blog_post.status || "draft" %>"
+         data-publish-form-target="statusInput">
+  <input type="hidden"
+         name="blog_post[scheduled_at]"
+         value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
+         data-publish-form-target="scheduledAtInput">
+
+  <%# ===== SPLIT PUBLISH BUTTON ===== %>
+  <div class="form-actions d-flex align-items-center gap-3 flex-wrap mt-4">
+    <div class="btn-group dropup">
+
+      <%# Default action button — context-aware label %>
+      <% if @blog_post.new_record? %>
+        <button type="button" class="btn btn-blog-publish btn-publish-main"
+                data-action="click->publish-form#saveDraft">
+          Save as draft
+        </button>
+      <% else %>
+        <button type="button" class="btn btn-blog-publish btn-publish-main"
+                data-action="click->publish-form#saveChanges">
+          Save changes
+        </button>
+      <% end %>
+
+      <%# Chevron — opens the upward dropdown %>
+      <button type="button"
+              class="btn btn-blog-publish btn-publish-chevron dropdown-toggle dropdown-toggle-split"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+        <span class="visually-hidden">More publishing options</span>
+      </button>
+
+      <ul class="dropdown-menu dropdown-menu-end">
+        <% unless @blog_post.new_record? %>
+          <li>
+            <button type="button" class="dropdown-item"
+                    data-action="click->publish-form#saveDraft">
+              <i class="fa-regular fa-file me-2 text-muted"></i>Save as draft
+            </button>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+        <% end %>
+        <li>
+          <button type="button" class="dropdown-item"
+                  data-action="click->publish-form#publishNow">
+            <i class="fa-solid fa-globe me-2 text-muted"></i>Publish now
+          </button>
+        </li>
+        <li>
+          <button type="button" class="dropdown-item"
+                  data-bs-toggle="modal" data-bs-target="#schedulePostModal">
+            <i class="fa-regular fa-clock me-2 text-muted"></i>Schedule&hellip;
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
+
+  <%# ===== SCHEDULE MODAL ===== %>
+  <div class="modal fade" id="schedulePostModal" tabindex="-1"
+       aria-labelledby="schedulePostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="schedulePostModalLabel">
+            <i class="fa-regular fa-clock me-2"></i>Schedule post
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-3">Choose when this post will go live automatically.</p>
+          <label class="form-label fw-semibold" for="schedule-post-datetime">Publish at</label>
+          <input type="datetime-local"
+                 id="schedule-post-datetime"
+                 class="form-control"
+                 min="<%= Time.current.strftime("%Y-%m-%dT%H:%M") %>"
+                 value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
+                 data-publish-form-target="scheduleInput"
+                 required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary"
+                  data-action="click->publish-form#confirmSchedule">
+            Schedule post
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <% end %>
