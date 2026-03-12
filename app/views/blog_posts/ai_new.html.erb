@@ -1,0 +1,44 @@
+<% content_for :title, "Create blog post with AI" %>
+
+<h1>✨ Create blog post with AI</h1>
+
+<p class="text-muted mb-4">
+  Describe what you'd like to write about. The AI will draft a full blog post for you — you can review and edit it before publishing.
+</p>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<%= simple_form_for :blog_post, url: create_with_ai_blog_posts_path, method: :post,
+      html: { data: { controller: "load-button" } } do |f| %>
+
+  <div class="mb-4">
+    <%= f.label :prompt, "What should the post be about?", class: "form-label fw-semibold" %>
+    <small class="text-muted d-block mb-2">
+      Examples: "Write a post about the impact of Gold Coast Airport on cross-border regional planning" —
+      "Summarise key challenges in university teaching and learning for urban planning students" —
+      "Discuss housing affordability issues in Sydney from an urban planning perspective"
+    </small>
+    <%= f.text_area :prompt,
+          value: @prompt,
+          rows: 6,
+          class: "form-control",
+          placeholder: "Describe the blog post topic, angle, or key points you want covered..." %>
+  </div>
+
+  <div class="d-flex gap-3 align-items-center">
+    <%= f.submit "Generate with AI",
+          class: "btn btn-primary btn-lg",
+          data: { action: "click->load-button#loader",
+                  "load-button-loading-text-value": "Generating your post..." } %>
+    <%= link_to "Write manually instead", new_blog_post_path, class: "btn btn-outline-secondary" %>
+  </div>
+
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to blog posts", blog_posts_path %>
+</div>

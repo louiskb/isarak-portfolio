@@ -12,4 +12,12 @@ class BlogPost < ApplicationRecord
 
   validates :title, presence: true
   validates :status, presence: true
-end
+  validate :one_content_field_only
+
+  private
+
+  def one_content_field_only
+    if blog_post_erb_content.present? && body.present?
+      errors.add(:base, "A post can only have rich text content or HTML content, not both.")
+    end
+  end

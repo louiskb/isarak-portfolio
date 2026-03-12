@@ -2,6 +2,14 @@
 
 <h1>New blog post</h1>
 
+<p class="text-muted mb-4">
+  Write your post manually using the rich text editor, or let AI draft one for you.
+</p>
+
+<div class="mb-4">
+  <%= link_to "✨ Create with AI instead", ai_new_blog_posts_path, class: "btn btn-outline-primary" %>
+</div>
+
 <%= render "form", blog_post: @blog_post %>
 
 <br>

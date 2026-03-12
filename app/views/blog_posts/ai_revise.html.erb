@@ -1,0 +1,76 @@
+<% content_for :title, "Revise with AI — #{@blog_post.title}" %>
+
+<h1>✨ Revise with AI</h1>
+<h2 class="h4 text-muted mb-4"><%= @blog_post.title %></h2>
+
+<% if @has_rich_text_body %>
+  <%# Warning: this is a manual post being transitioned to AI management %>
+  <div class="alert alert-warning" role="alert">
+    <strong>⚠️ This post was written manually with the rich text editor.</strong>
+    <p class="mb-1 mt-2">
+      When you submit this revision, the AI will use your current rich text content as a starting point,
+      then replace it with AI-generated HTML. After this:
+    </p>
+    <ul class="mb-0">
+      <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
+      <li>You can still edit the raw HTML directly, or keep revising with AI.</li>
+    </ul>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<%# Show current content as context for Isara before submitting revision prompt %>
+<div class="card mb-4">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span class="fw-semibold">Current content</span>
+    <% if @blog_post.ai_generated? %>
+      <span class="badge bg-primary">AI Generated</span>
+    <% end %>
+  </div>
+  <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+    <% if @blog_post.blog_post_erb_content.present? %>
+      <%= raw @blog_post.blog_post_erb_content %>
+    <% elsif @blog_post.body.present? %>
+      <%= @blog_post.body %>
+    <% else %>
+      <p class="text-muted fst-italic">No content yet.</p>
+    <% end %>
+  </div>
+</div>
+
+<%= simple_form_for :blog_post, url: revise_with_ai_blog_post_path(@blog_post), method: :patch,
+      html: { data: { controller: "load-button" } } do |f| %>
+
+  <div class="mb-4">
+    <%= f.label :prompt, "How should the AI revise this post?", class: "form-label fw-semibold" %>
+    <small class="text-muted d-block mb-2">
+      Examples: "Make the tone more accessible to a general audience" —
+      "Add a section on policy implications" —
+      "Shorten it to around 400 words and make it punchier" —
+      "Restructure with clearer section headings"
+    </small>
+    <%= f.text_area :prompt,
+          value: @prompt,
+          rows: 5,
+          class: "form-control",
+          placeholder: "Describe what changes you'd like the AI to make..." %>
+  </div>
+
+  <div class="d-flex gap-3 align-items-center">
+    <%= f.submit "Revise with AI",
+          class: "btn btn-primary btn-lg",
+          data: { action: "click->load-button#loader",
+                  "load-button-loading-text-value": "Revising your post..." } %>
+    <%= link_to "Cancel", @blog_post, class: "btn btn-outline-secondary" %>
+  </div>
+
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to blog posts", blog_posts_path %>
+</div>

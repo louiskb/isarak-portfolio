@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-11 (contact form)
+> Created: 2026-03-08 | Last updated: 2026-03-12 (AI blog builder)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -40,13 +40,23 @@ Phase 3 — Blog (pair programming, Louis leads)
 ## Phase 3 — Blog + AI Blog Builder
 - [x] BlogPost model — title, author, status enum, ai_generated, scheduled_at, slug, blog_post_erb_content
 - [x] Action Text — has_rich_text :body (optional rich text editor)
+- [x] has_many_attached :photos on BlogPost (Active Storage → Cloudinary)
 - [x] FriendlyId slug on BlogPost
-- [x] Strong params wired (body, blog_post_erb_content, all fields)
-- [ ] Blog post form (new/edit) — Louis building
+- [x] Strong params wired (body, blog_post_erb_content, photos, all fields)
+- [x] Model guard — one_content_field_only validation (body OR blog_post_erb_content, never both)
+- [x] Blog post form (_form.html.erb) — mode-aware: Trix for manual, HTML textarea for AI posts
+- [x] Public blog show view — sanitize + html-inject Stimulus controller for AI content; body for rich text
+- [x] AI blog post generator (RubyLLM) — BlogPostAiService + BlogPostSchema
+  - [x] create_from_prompt — creates new post from natural language prompt
+  - [x] revise_blog_post — revises existing post; clears body if transitioning from manual
+  - [x] Warning modal on manual→AI transition (edit + show pages)
+  - [x] ai_new + ai_revise views with load-button Stimulus spinner
+  - [x] Unsplash integration — auto feature image prepended with photographer attribution
+  - [x] sanitize initializer — figure, figcaption, style added to allowlist
+- [ ] featured_image on BlogPost — `has_one_attached :featured_image`; shown on index cards + show page; Isara can upload manually; AI uses Unsplash only if left blank (NEXT SESSION)
+- [ ] Add UNSPLASH_ACCESS_KEY to .env (Louis to do — get free key from unsplash.com/developers)
 - [ ] Public blog index view
-- [ ] Public blog show view — render body OR blog_post_erb_content depending on which is set
 - [ ] Scheduled posts via Solid Queue background jobs
-- [ ] AI blog post generator (RubyLLM) — sets ai_generated: true, populates blog_post_erb_content
 - [ ] Pagination on blog index (Pagy)
 
 ---

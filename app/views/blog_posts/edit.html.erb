@@ -6,7 +6,46 @@
 
 <br>
 
-<div>
-  <%= link_to "Show this blog post", @blog_post %> |
+<div class="d-flex gap-3 align-items-center flex-wrap">
+  <%= link_to "Show this blog post", @blog_post %>
+  |
   <%= link_to "Back to blog posts", blog_posts_path %>
+  |
+
+  <% if @blog_post.body.present? && @blog_post.blog_post_erb_content.blank? %>
+    <%# Manual rich text post — show warning modal before going to AI revision %>
+    <button type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#aiReviseWarningModal">
+      ✨ Revise with AI
+    </button>
+
+    <div class="modal fade" id="aiReviseWarningModal" tabindex="-1" aria-labelledby="aiReviseWarningModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aiReviseWarningModalLabel">⚠️ Before you continue</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>This post was written manually using the rich text editor.</p>
+            <p>If you revise it with AI, the rich text content will be <strong>permanently replaced</strong> with AI-generated HTML. After this:</p>
+            <ul>
+              <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
+              <li>You can still edit the raw HTML directly, or keep using AI to revise it further.</li>
+            </ul>
+            <p class="text-muted mb-0">The AI will use your current rich text content as its starting point for the revision.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= link_to "Continue to AI Revision", ai_revise_blog_post_path(@blog_post), class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%# AI post or empty post — link directly, no warning needed %>
+    <%= link_to "✨ Revise with AI", ai_revise_blog_post_path(@blog_post), class: "btn btn-outline-primary btn-sm" %>
+  <% end %>
 </div>

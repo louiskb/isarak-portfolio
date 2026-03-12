@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
-  resources :blog_posts
+  resources :blog_posts do
+    collection do
+      # `collection` — routes that act on the whole collection (no specific record needed)
+      # These don't have an :id in the URL because you're not working with an existing post — you're creating something new or listing something.
+      get  "ai_new"
+      post "create_with_ai"
+    end
+    member do
+      # `member` — routes that act on a specific record (needs an id).
+      # These have :id in the URL because you need to know which post to revise.
+      get   "ai_revise"
+      patch "revise_with_ai"
+    end
+  end
   resources :teachings
   resources :grant_awards
   resources :research_items
