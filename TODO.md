@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-12 (publish/schedule edge cases; Pagy pagination; container layout on all views)
+> Created: 2026-03-08 | Last updated: 2026-03-13 (navbar fixed; Bootstrap JS loading fixed)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 3 — Blog (pair programming, Louis leads)
+Phase 3 complete ✅ — Ready to start Phase 4 (Landing Page)
 
 ---
 
@@ -14,6 +14,10 @@ Phase 3 — Blog (pair programming, Louis leads)
 - [x] CLAUDE.md, README.md
 - [ ] Confirm .gitignore covers `.env`, `.mcp.json` tokens, `settings.local.json`
 - [x] Navbar
+  - [x] Logo moved to left side
+  - [x] Blog dropdown (signed-in) — All Posts / New Post / Create with AI
+  - [x] Avatar dropdown (signed-in) — Profile / Logout
+  - [x] Bootstrap JS loading fixed — `pin "bootstrap"` + `pin "@popperjs/core"` added to importmap.rb
 - [x] Footer
 - [x] Add footer render to application layout
 
