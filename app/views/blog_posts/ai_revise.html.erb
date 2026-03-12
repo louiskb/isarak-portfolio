@@ -1,193 +1,199 @@
 <% content_for :title, "Revise with AI — #{@blog_post.title}" %>
 
-<h1>✨ Revise with AI</h1>
-<h2 class="h4 text-muted mb-4"><%= @blog_post.title %></h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="mb-1">✨ Revise with AI</h1>
+      <h2 class="h4 text-muted mb-4"><%= @blog_post.title %></h2>
 
-<% if @has_rich_text_body %>
-  <%# Warning: this is a manual post being transitioned to AI management %>
-  <div class="alert alert-warning" role="alert">
-    <strong>⚠️ This post was written manually with the rich text editor.</strong>
-    <p class="mb-1 mt-2">
-      When you submit this revision, the AI will use your current rich text content as a starting point,
-      then replace it with AI-generated HTML. After this:
-    </p>
-    <ul class="mb-0">
-      <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
-      <li>You can still edit the raw HTML directly, or keep revising with AI.</li>
-    </ul>
-  </div>
-<% end %>
-
-<% if flash[:alert] %>
-  <div class="alert alert-danger"><%= flash[:alert] %></div>
-<% end %>
-
-<%# Show current content as context for Isara before submitting revision prompt %>
-<div class="card mb-4">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <span class="fw-semibold">Current content</span>
-    <% if @blog_post.ai_generated? %>
-      <span class="badge bg-primary">AI Generated</span>
-    <% end %>
-  </div>
-  <div class="card-body" style="max-height: 300px; overflow-y: auto;">
-    <% if @blog_post.blog_post_erb_content.present? %>
-      <%= raw @blog_post.blog_post_erb_content %>
-    <% elsif @blog_post.body.present? %>
-      <%= @blog_post.body %>
-    <% else %>
-      <p class="text-muted fst-italic">No content yet.</p>
-    <% end %>
-  </div>
-</div>
-
-<%= simple_form_for :blog_post, url: revise_with_ai_blog_post_path(@blog_post), method: :patch,
-      html: { multipart: true, data: {
-        controller: "publish-form load-button",
-        "publish-form-current-status-value": @blog_post.status
-      } } do |f| %>
-
-  <div class="mb-3">
-    <%= f.label :featured_image, "Featured image", class: "form-label fw-semibold" %>
-    <% if @blog_post.featured_image.attached? %>
-      <div class="d-flex align-items-start gap-3 mb-2">
-        <%= image_tag @blog_post.featured_image,
-              class: "img-fluid rounded flex-shrink-0",
-              style: "max-height:100px;max-width:160px;object-fit:cover;" %>
-        <div>
-          <div class="form-check">
-            <%= f.check_box :keep_featured_image, class: "form-check-input" %>
-            <%= f.label :keep_featured_image, "Keep this image", class: "form-check-label fw-semibold" %>
-          </div>
-          <small class="text-muted">
-            By default the AI fetches a fresh Unsplash photo — check this to keep your current image instead.
-          </small>
-        </div>
-      </div>
-      <small class="text-muted d-block mb-1">Or upload a different image:</small>
-    <% else %>
-      <small class="text-muted d-block mb-2">Upload an image, or leave blank — the AI will find a relevant Unsplash photo.</small>
-    <% end %>
-    <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :prompt, "How should the AI revise this post?", class: "form-label fw-semibold" %>
-    <small class="text-muted d-block mb-2">
-      Examples: "Make the tone more accessible to a general audience" —
-      "Add a section on policy implications" —
-      "Shorten it to around 400 words and make it punchier" —
-      "Restructure with clearer section headings"
-    </small>
-    <%= f.text_area :prompt,
-          value: @prompt,
-          rows: 5,
-          class: "form-control",
-          placeholder: "Describe what changes you'd like the AI to make..." %>
-  </div>
-
-  <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
-  <input type="hidden"
-         name="blog_post[status]"
-         value="<%= @blog_post.status %>"
-         data-publish-form-target="statusInput">
-  <input type="hidden"
-         name="blog_post[scheduled_at]"
-         value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
-         data-publish-form-target="scheduledAtInput">
-
-  <%# ===== SPLIT PUBLISH BUTTON ===== %>
-  <% if @blog_post.scheduled? %>
-    <p class="small text-warning mb-2">
-      <i class="fa-regular fa-clock me-1"></i>
-      Scheduled to publish on <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
-      &mdash; use the dropdown to reschedule or change status.
-    </p>
-  <% end %>
-  <div class="d-flex align-items-center gap-3 flex-wrap">
-    <div class="btn-group dropup">
-
-      <%# Default: revise and keep current status %>
-      <button type="button" class="btn btn-primary btn-lg btn-publish-main"
-              data-action="click->load-button#loader click->publish-form#saveChanges"
-              data-load-button-loading-text-value="Revising your post...">
-        Revise post
-      </button>
-
-      <%# Chevron — opens upward dropdown %>
-      <button type="button"
-              class="btn btn-primary btn-lg btn-publish-chevron dropdown-toggle dropdown-toggle-split"
-              data-bs-toggle="dropdown"
-              aria-expanded="false">
-        <span class="visually-hidden">More publishing options</span>
-      </button>
-
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-          <button type="button" class="dropdown-item"
-                  data-action="click->load-button#loader click->publish-form#saveDraft"
-                  data-load-button-loading-text-value="Revising your post...">
-            <i class="fa-regular fa-file me-2 text-muted"></i>Revise &amp; save as draft
-          </button>
-        </li>
-        <li><hr class="dropdown-divider"></li>
-        <li>
-          <button type="button" class="dropdown-item"
-                  data-action="click->load-button#loader click->publish-form#publishNow"
-                  data-load-button-loading-text-value="Revising &amp; publishing...">
-            <i class="fa-solid fa-globe me-2 text-muted"></i>Revise &amp; publish now
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item"
-                  data-bs-toggle="modal" data-bs-target="#schedulePostModal">
-            <i class="fa-regular fa-clock me-2 text-muted"></i>Revise &amp; schedule&hellip;
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <%= link_to "Cancel", @blog_post, class: "btn btn-outline-secondary btn-lg" %>
-  </div>
-
-  <%# ===== SCHEDULE MODAL ===== %>
-  <div class="modal fade" id="schedulePostModal" tabindex="-1"
-       aria-labelledby="schedulePostModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="schedulePostModalLabel">
-            <i class="fa-regular fa-clock me-2"></i>Schedule post
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="text-muted mb-3">
-            The AI will revise the post, then schedule it to go live at the time you choose.
+      <% if @has_rich_text_body %>
+        <%# Warning: this is a manual post being transitioned to AI management %>
+        <div class="alert alert-warning" role="alert">
+          <strong>⚠️ This post was written manually with the rich text editor.</strong>
+          <p class="mb-1 mt-2">
+            When you submit this revision, the AI will use your current rich text content as a starting point,
+            then replace it with AI-generated HTML. After this:
           </p>
-          <label class="form-label fw-semibold" for="schedule-post-datetime">Publish at</label>
-          <input type="datetime-local"
-                 id="schedule-post-datetime"
-                 class="form-control"
-                 min="<%= Time.current.strftime("%Y-%m-%dT%H:%M") %>"
-                 value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
-                 data-publish-form-target="scheduleInput"
-                 required>
+          <ul class="mb-0">
+            <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
+            <li>You can still edit the raw HTML directly, or keep revising with AI.</li>
+          </ul>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary"
-                  data-action="click->load-button#loader click->publish-form#confirmSchedule"
-                  data-load-button-loading-text-value="Revising your post...">
-            Revise &amp; schedule
-          </button>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div class="alert alert-danger"><%= flash[:alert] %></div>
+      <% end %>
+
+      <%# Show current content as context for Isara before submitting revision prompt %>
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span class="fw-semibold">Current content</span>
+          <% if @blog_post.ai_generated? %>
+            <span class="badge bg-primary">AI Generated</span>
+          <% end %>
         </div>
+        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+          <% if @blog_post.blog_post_erb_content.present? %>
+            <%= raw @blog_post.blog_post_erb_content %>
+          <% elsif @blog_post.body.present? %>
+            <%= @blog_post.body %>
+          <% else %>
+            <p class="text-muted fst-italic">No content yet.</p>
+          <% end %>
+        </div>
+      </div>
+
+      <%= simple_form_for :blog_post, url: revise_with_ai_blog_post_path(@blog_post), method: :patch,
+            html: { multipart: true, data: {
+              controller: "publish-form load-button",
+              "publish-form-current-status-value": @blog_post.status
+            } } do |f| %>
+
+        <div class="mb-3">
+          <%= f.label :featured_image, "Featured image", class: "form-label fw-semibold" %>
+          <% if @blog_post.featured_image.attached? %>
+            <div class="d-flex align-items-start gap-3 mb-2">
+              <%= image_tag @blog_post.featured_image,
+                    class: "img-fluid rounded flex-shrink-0",
+                    style: "max-height:100px;max-width:160px;object-fit:cover;" %>
+              <div>
+                <div class="form-check">
+                  <%= f.check_box :keep_featured_image, class: "form-check-input" %>
+                  <%= f.label :keep_featured_image, "Keep this image", class: "form-check-label fw-semibold" %>
+                </div>
+                <small class="text-muted">
+                  By default the AI fetches a fresh Unsplash photo — check this to keep your current image instead.
+                </small>
+              </div>
+            </div>
+            <small class="text-muted d-block mb-1">Or upload a different image:</small>
+          <% else %>
+            <small class="text-muted d-block mb-2">Upload an image, or leave blank — the AI will find a relevant Unsplash photo.</small>
+          <% end %>
+          <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :prompt, "How should the AI revise this post?", class: "form-label fw-semibold" %>
+          <small class="text-muted d-block mb-2">
+            Examples: "Make the tone more accessible to a general audience" —
+            "Add a section on policy implications" —
+            "Shorten it to around 400 words and make it punchier" —
+            "Restructure with clearer section headings"
+          </small>
+          <%= f.text_area :prompt,
+                value: @prompt,
+                rows: 5,
+                class: "form-control",
+                placeholder: "Describe what changes you'd like the AI to make..." %>
+        </div>
+
+        <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
+        <input type="hidden"
+               name="blog_post[status]"
+               value="<%= @blog_post.status %>"
+               data-publish-form-target="statusInput">
+        <input type="hidden"
+               name="blog_post[scheduled_at]"
+               value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
+               data-publish-form-target="scheduledAtInput">
+
+        <%# ===== SPLIT PUBLISH BUTTON ===== %>
+        <% if @blog_post.scheduled? %>
+          <p class="small text-warning mb-2">
+            <i class="fa-regular fa-clock me-1"></i>
+            Scheduled to publish on <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
+            &mdash; use the dropdown to reschedule or change status.
+          </p>
+        <% end %>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <div class="btn-group dropup">
+
+            <%# Default: revise and keep current status %>
+            <button type="button" class="btn btn-primary btn-lg btn-publish-main"
+                    data-action="click->load-button#loader click->publish-form#saveChanges"
+                    data-load-button-loading-text-value="Revising your post...">
+              Revise post
+            </button>
+
+            <%# Chevron — opens upward dropdown %>
+            <button type="button"
+                    class="btn btn-primary btn-lg btn-publish-chevron dropdown-toggle dropdown-toggle-split"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              <span class="visually-hidden">More publishing options</span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <button type="button" class="dropdown-item"
+                        data-action="click->load-button#loader click->publish-form#saveDraft"
+                        data-load-button-loading-text-value="Revising your post...">
+                  <i class="fa-regular fa-file me-2 text-muted"></i>Revise &amp; save as draft
+                </button>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <button type="button" class="dropdown-item"
+                        data-action="click->load-button#loader click->publish-form#publishNow"
+                        data-load-button-loading-text-value="Revising &amp; publishing...">
+                  <i class="fa-solid fa-globe me-2 text-muted"></i>Revise &amp; publish now
+                </button>
+              </li>
+              <li>
+                <button type="button" class="dropdown-item"
+                        data-bs-toggle="modal" data-bs-target="#schedulePostModal">
+                  <i class="fa-regular fa-clock me-2 text-muted"></i>Revise &amp; schedule&hellip;
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <%= link_to "Cancel", @blog_post, class: "btn btn-outline-secondary btn-lg" %>
+        </div>
+
+        <%# ===== SCHEDULE MODAL ===== %>
+        <div class="modal fade" id="schedulePostModal" tabindex="-1"
+             aria-labelledby="schedulePostModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="schedulePostModalLabel">
+                  <i class="fa-regular fa-clock me-2"></i>Schedule post
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="text-muted mb-3">
+                  The AI will revise the post, then schedule it to go live at the time you choose.
+                </p>
+                <label class="form-label fw-semibold" for="schedule-post-datetime">Publish at</label>
+                <input type="datetime-local"
+                       id="schedule-post-datetime"
+                       class="form-control"
+                       min="<%= Time.current.strftime("%Y-%m-%dT%H:%M") %>"
+                       value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
+                       data-publish-form-target="scheduleInput"
+                       required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary"
+                        data-action="click->load-button#loader click->publish-form#confirmSchedule"
+                        data-load-button-loading-text-value="Revising your post...">
+                  Revise &amp; schedule
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+      <div class="mt-3">
+        <%= link_to "← Back to blog posts", blog_posts_path %>
       </div>
     </div>
   </div>
-
-<% end %>
-
-<div class="mt-3">
-  <%= link_to "← Back to blog posts", blog_posts_path %>
 </div>

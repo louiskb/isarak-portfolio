@@ -1,127 +1,133 @@
 <% content_for :title, "Create blog post with AI" %>
 
-<h1>✨ Create blog post with AI</h1>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="mb-3">✨ Create blog post with AI</h1>
 
-<p class="text-muted mb-4">
-  Describe what you'd like to write about. The AI will draft a full blog post for you — you can review and edit it before publishing.
-</p>
+      <p class="text-muted mb-4">
+        Describe what you'd like to write about. The AI will draft a full blog post for you — you can review and edit it before publishing.
+      </p>
 
-<% if flash[:alert] %>
-  <div class="alert alert-danger"><%= flash[:alert] %></div>
-<% end %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger"><%= flash[:alert] %></div>
+      <% end %>
 
-<%= simple_form_for :blog_post, url: create_with_ai_blog_posts_path, method: :post,
-      html: { multipart: true,
-              data: { controller: "publish-form load-button" } } do |f| %>
+      <%= simple_form_for :blog_post, url: create_with_ai_blog_posts_path, method: :post,
+            html: { multipart: true,
+                    data: { controller: "publish-form load-button" } } do |f| %>
 
-  <div class="mb-3">
-    <%= f.label :featured_image, "Featured image (optional)", class: "form-label fw-semibold" %>
-    <small class="text-muted d-block mb-2">
-      Upload your own image, or leave blank — the AI will automatically find a relevant Unsplash photo.
-    </small>
-    <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :prompt, "What should the post be about?", class: "form-label fw-semibold" %>
-    <small class="text-muted d-block mb-2">
-      Examples: "Write a post about the impact of Gold Coast Airport on cross-border regional planning" —
-      "Summarise key challenges in university teaching and learning for urban planning students" —
-      "Discuss housing affordability issues in Sydney from an urban planning perspective"
-    </small>
-    <%= f.text_area :prompt,
-          value: @prompt,
-          rows: 6,
-          class: "form-control",
-          placeholder: "Describe the blog post topic, angle, or key points you want covered..." %>
-  </div>
-
-  <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
-  <input type="hidden"
-         name="blog_post[status]"
-         value="draft"
-         data-publish-form-target="statusInput">
-  <input type="hidden"
-         name="blog_post[scheduled_at]"
-         value=""
-         data-publish-form-target="scheduledAtInput">
-
-  <%# ===== SPLIT PUBLISH BUTTON ===== %>
-  <div class="d-flex align-items-center gap-3 flex-wrap mb-4">
-    <div class="btn-group dropup">
-
-      <%# Default: generate and save as draft %>
-      <button type="button" class="btn btn-primary btn-lg btn-publish-main"
-              data-action="click->load-button#loader click->publish-form#saveDraft"
-              data-load-button-loading-text-value="Generating your post...">
-        Generate &amp; save as draft
-      </button>
-
-      <%# Chevron — opens upward dropdown %>
-      <button type="button"
-              class="btn btn-primary btn-lg btn-publish-chevron dropdown-toggle dropdown-toggle-split"
-              data-bs-toggle="dropdown"
-              aria-expanded="false">
-        <span class="visually-hidden">More publishing options</span>
-      </button>
-
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li>
-          <button type="button" class="dropdown-item"
-                  data-action="click->load-button#loader click->publish-form#publishNow"
-                  data-load-button-loading-text-value="Generating &amp; publishing...">
-            <i class="fa-solid fa-globe me-2 text-muted"></i>Generate &amp; publish now
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item"
-                  data-bs-toggle="modal" data-bs-target="#schedulePostModal">
-            <i class="fa-regular fa-clock me-2 text-muted"></i>Generate &amp; schedule&hellip;
-          </button>
-        </li>
-      </ul>
-    </div>
-
-    <%= link_to "Write manually instead", new_blog_post_path, class: "btn btn-outline-secondary btn-lg" %>
-  </div>
-
-  <%# ===== SCHEDULE MODAL ===== %>
-  <div class="modal fade" id="schedulePostModal" tabindex="-1"
-       aria-labelledby="schedulePostModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="schedulePostModalLabel">
-            <i class="fa-regular fa-clock me-2"></i>Schedule post
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="mb-3">
+          <%= f.label :featured_image, "Featured image (optional)", class: "form-label fw-semibold" %>
+          <small class="text-muted d-block mb-2">
+            Upload your own image, or leave blank — the AI will automatically find a relevant Unsplash photo.
+          </small>
+          <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
         </div>
-        <div class="modal-body">
-          <p class="text-muted mb-3">
-            The AI will generate the post, then schedule it to go live at the time you choose.
-          </p>
-          <label class="form-label fw-semibold" for="schedule-post-datetime">Publish at</label>
-          <input type="datetime-local"
-                 id="schedule-post-datetime"
-                 class="form-control"
-                 min="<%= Time.current.strftime("%Y-%m-%dT%H:%M") %>"
-                 data-publish-form-target="scheduleInput"
-                 required>
+
+        <div class="mb-4">
+          <%= f.label :prompt, "What should the post be about?", class: "form-label fw-semibold" %>
+          <small class="text-muted d-block mb-2">
+            Examples: "Write a post about the impact of Gold Coast Airport on cross-border regional planning" —
+            "Summarise key challenges in university teaching and learning for urban planning students" —
+            "Discuss housing affordability issues in Sydney from an urban planning perspective"
+          </small>
+          <%= f.text_area :prompt,
+                value: @prompt,
+                rows: 6,
+                class: "form-control",
+                placeholder: "Describe the blog post topic, angle, or key points you want covered..." %>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary"
-                  data-action="click->load-button#loader click->publish-form#confirmSchedule"
-                  data-load-button-loading-text-value="Generating your post...">
-            Generate &amp; schedule
-          </button>
+
+        <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
+        <input type="hidden"
+               name="blog_post[status]"
+               value="draft"
+               data-publish-form-target="statusInput">
+        <input type="hidden"
+               name="blog_post[scheduled_at]"
+               value=""
+               data-publish-form-target="scheduledAtInput">
+
+        <%# ===== SPLIT PUBLISH BUTTON ===== %>
+        <div class="d-flex align-items-center gap-3 flex-wrap mb-4">
+          <div class="btn-group dropup">
+
+            <%# Default: generate and save as draft %>
+            <button type="button" class="btn btn-primary btn-lg btn-publish-main"
+                    data-action="click->load-button#loader click->publish-form#saveDraft"
+                    data-load-button-loading-text-value="Generating your post...">
+              Generate &amp; save as draft
+            </button>
+
+            <%# Chevron — opens upward dropdown %>
+            <button type="button"
+                    class="btn btn-primary btn-lg btn-publish-chevron dropdown-toggle dropdown-toggle-split"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              <span class="visually-hidden">More publishing options</span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <button type="button" class="dropdown-item"
+                        data-action="click->load-button#loader click->publish-form#publishNow"
+                        data-load-button-loading-text-value="Generating &amp; publishing...">
+                  <i class="fa-solid fa-globe me-2 text-muted"></i>Generate &amp; publish now
+                </button>
+              </li>
+              <li>
+                <button type="button" class="dropdown-item"
+                        data-bs-toggle="modal" data-bs-target="#schedulePostModal">
+                  <i class="fa-regular fa-clock me-2 text-muted"></i>Generate &amp; schedule&hellip;
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <%= link_to "Write manually instead", new_blog_post_path, class: "btn btn-outline-secondary btn-lg" %>
         </div>
+
+        <%# ===== SCHEDULE MODAL ===== %>
+        <div class="modal fade" id="schedulePostModal" tabindex="-1"
+             aria-labelledby="schedulePostModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="schedulePostModalLabel">
+                  <i class="fa-regular fa-clock me-2"></i>Schedule post
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="text-muted mb-3">
+                  The AI will generate the post, then schedule it to go live at the time you choose.
+                </p>
+                <label class="form-label fw-semibold" for="schedule-post-datetime">Publish at</label>
+                <input type="datetime-local"
+                       id="schedule-post-datetime"
+                       class="form-control"
+                       min="<%= Time.current.strftime("%Y-%m-%dT%H:%M") %>"
+                       data-publish-form-target="scheduleInput"
+                       required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary"
+                        data-action="click->load-button#loader click->publish-form#confirmSchedule"
+                        data-load-button-loading-text-value="Generating your post...">
+                  Generate &amp; schedule
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+
+      <div class="mt-3">
+        <%= link_to "← Back to blog posts", blog_posts_path %>
       </div>
     </div>
   </div>
-
-<% end %>
-
-<div class="mt-3">
-  <%= link_to "← Back to blog posts", blog_posts_path %>
 </div>

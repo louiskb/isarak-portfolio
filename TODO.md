@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-12 (ERD updated to match schema; Contact model added; BlogPost attachments corrected)
+> Created: 2026-03-08 | Last updated: 2026-03-12 (publish/schedule edge cases; Pagy pagination; container layout on all views)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -57,9 +57,9 @@ Phase 3 — Blog (pair programming, Louis leads)
   - [x] sanitize initializer — figure, figcaption, style added to allowlist
   - [x] Inline Unsplash images — AI puts `<!-- IMAGE: query -->` placeholders; service replaces with real Unsplash figures
 - [x] featured_image on BlogPost — `has_one_attached :featured_image`; shown on show page; upload on all forms (manual + AI new + AI revise); on AI revision defaults to fresh Unsplash; "Keep this image" checkbox on ai_revise to opt out; ENV.fetch used project-wide
-- [ ] Show featured_image on public blog index cards (once index view is built)
+- [x] Show featured_image on public blog index cards ✅
 - [x] Add UNSPLASH_ACCESS_KEY to .env — done (access key only; secret key not needed)
-- [ ] Public blog index view
+- [x] Public blog index view ✅
 - [x] Scheduled posts via Solid Queue background jobs
   - [x] PublishScheduledPostsJob — finds scheduled posts past scheduled_at, calls published!
   - [x] recurring.yml — job runs every minute in development + production
@@ -74,8 +74,10 @@ Phase 3 — Blog (pair programming, Louis leads)
   - [x] Publish now modal — scheduled posts; warns schedule will be cancelled
   - [x] Edit scheduled post modal — update scheduled_at or revert to draft
   - [x] cancel_schedule action — sets status: draft, clears scheduled_at
-  - [ ] Show status badge on public blog index cards (Isara only) — do when building index view
-- [ ] Pagination on blog index (Pagy)
+  - [x] Show status badge on public blog index cards (Isara only) ✅
+- [x] Publish/schedule edge cases — consistent `resolve_publish_intent` across all 4 save actions; `publish_notice` flash helper; split-button dropup on all create/edit forms (manual + AI) ✅
+- [x] Pagination — Pagy wired on all 4 resource indexes (blog_posts, research_items, teachings, grant_awards); limit=9 globally ✅
+- [x] Container layout — all new/edit/form views wrapped in `container py-5 > row justify-content-center > col-lg-8` ✅
 
 ---
 

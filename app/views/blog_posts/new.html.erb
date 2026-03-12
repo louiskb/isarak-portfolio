@@ -1,19 +1,23 @@
 <% content_for :title, "New blog post" %>
 
-<h1>New blog post</h1>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="mb-3">New blog post</h1>
 
-<p class="text-muted mb-4">
-  Write your post manually using the rich text editor, or let AI draft one for you.
-</p>
+      <p class="text-muted mb-4">
+        Write your post manually using the rich text editor, or let AI draft one for you.
+      </p>
 
-<div class="mb-4">
-  <%= link_to "✨ Create with AI instead", ai_new_blog_posts_path, class: "btn btn-outline-primary" %>
-</div>
+      <div class="mb-4">
+        <%= link_to "✨ Create with AI instead", ai_new_blog_posts_path, class: "btn btn-outline-primary" %>
+      </div>
 
-<%= render "form", blog_post: @blog_post %>
+      <%= render "form", blog_post: @blog_post %>
 
-<br>
-
-<div>
-  <%= link_to "Back to blog posts", blog_posts_path %>
+      <div class="mt-3">
+        <%= link_to "← Back to blog posts", blog_posts_path %>
+      </div>
+    </div>
+  </div>
 </div>

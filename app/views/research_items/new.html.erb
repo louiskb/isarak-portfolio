@@ -1,11 +1,15 @@
 <% content_for :title, "New research item" %>
 
-<h1>New research item</h1>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="mb-4">New research item</h1>
 
-<%= render "form", research_item: @research_item %>
+      <%= render "form", research_item: @research_item %>
 
-<br>
-
-<div>
-  <%= link_to "Back to research items", research_items_path %>
+      <div class="mt-3">
+        <%= link_to "← Back to research items", research_items_path %>
+      </div>
+    </div>
+  </div>
 </div>
