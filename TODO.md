@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-12 (Cloudinary wiring verified; `dig()` and `&.` covered)
+> Created: 2026-03-08 | Last updated: 2026-03-12 (ERD updated to match schema; Contact model added; BlogPost attachments corrected)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -29,6 +29,7 @@ Phase 3 — Blog (pair programming, Louis leads)
 - [x] CV attachment on User (has_one_attached :cv)
   - [ ] CV page-1 preview — use Cloudinary's PDF-to-image transformation to show a thumbnail of page 1 of Isara's CV (e.g. on landing page or a dedicated CV section)
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
+- [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented
 - [ ] Admin management views — restyle scaffold views to match dark theme
 - [ ] Seed data for development
 - [x] Contact form — model, controller, mailer, routes, invisible_captcha spam protection, load-button Stimulus controller, form partial wired to homepage
