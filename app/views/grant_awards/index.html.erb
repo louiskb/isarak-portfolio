@@ -44,8 +44,8 @@
                   <p class="resource-card-description"><%= item.description %></p>
                 <% end %>
 
-                <div class="resource-card-footer">
-                  <%= link_to "View Details →", grant_award_path(item), class: "btn btn-resource-manage btn-sm" %>
+                <div class="d-flex justify-content-end align-items-center resource-card-footer">
+                  <%= link_to "Manage →", grant_award_path(item), class: "btn btn-resource-manage btn-sm" %>
                 </div>
               </div>
             </article>

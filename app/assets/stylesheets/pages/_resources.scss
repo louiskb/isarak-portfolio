@@ -297,6 +297,8 @@
   transition: border-color 0.2s ease, color 0.2s ease;
 
   &:hover {
+    // background: rgba(226, 226, 226, 0.08);
+    background: rgba(226, 226, 226, 0.12);
     border-color: rgba(226, 226, 226, 0.5);
     color: $font-color;
   }
@@ -403,9 +405,9 @@
 .btn-blog-ai {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #a5b4fc;
+  color: $teal;
   background: transparent;
-  border: 1px solid rgba(99, 102, 241, 0.35);
+  border: 1px solid hwb(175 34% 16% / 0.35);
   border-radius: 0.5rem;
   padding: 0.4rem 1rem;
   text-decoration: none;
@@ -413,8 +415,8 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background: rgba(99, 102, 241, 0.08);
-    border-color: rgba(99, 102, 241, 0.6);
-    color: #a5b4fc;
+    background: hwb(175 34% 16% / 0.12);
+    border-color: hwb(175 34% 16% / 0.75);
+    color: #a0e8e2;
   }
 }

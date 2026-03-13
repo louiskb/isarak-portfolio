@@ -50,9 +50,12 @@
 
                 <div class="resource-card-footer">
                   <% if user_signed_in? %>
-                    <%= link_to "Manage →", research_item_path(item), class: "btn btn-resource-manage btn-sm" %>
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                      <%= link_to "Learn more →", item.external_url, class: "btn btn-resource-link btn-sm", target: "_blank", rel: "noopener noreferrer" %>
+                      <%= link_to "Manage →", research_item_path(item), class: "btn btn-resource-manage btn-sm" %>
+                    </div>
                   <% elsif item.external_url.present? %>
-                    <%= link_to "View →", item.external_url, class: "btn btn-resource-link btn-sm", target: "_blank", rel: "noopener noreferrer" %>
+                    <%= link_to "Learn more →", item.external_url, class: "btn btn-resource-link btn-sm", target: "_blank", rel: "noopener noreferrer" %>
                   <% end %>
                 </div>
               </div>

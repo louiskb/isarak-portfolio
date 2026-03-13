@@ -10,7 +10,7 @@
         <%# Discrete login — only shown on the research page, when not signed in %>
         <% if !user_signed_in? && request.path.start_with?(research_items_path) %>
           &ensp;&middot;&ensp;
-          <%= link_to "Login", new_user_session_path, class: "footer-login-link" %>
+          <%= link_to "Login", new_user_session_path %>
         <% end %>
       </div>
 
