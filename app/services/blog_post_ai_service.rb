@@ -1,5 +1,6 @@
 require "net/http"
 require "json"
+require "openssl"
 
 class BlogPostAiService
   UNSPLASH_API_URL = "https://api.unsplash.com/photos/random"
@@ -130,7 +131,9 @@ class BlogPostAiService
       client_id: access_key
     )
 
-    response = Net::HTTP.get_response(uri)
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
+      http.get(uri.request_uri)
+    end
     return "" unless response.is_a?(Net::HTTPSuccess)
 
     data = JSON.parse(response.body)
