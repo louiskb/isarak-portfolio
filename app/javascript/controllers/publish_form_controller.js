@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import { Modal } from "bootstrap"
 
 // Manages the split publish button on blog post forms.
 // Controls hidden status + scheduled_at fields so the UI can drive
@@ -49,6 +48,7 @@ export default class extends Controller {
 
     const modalEl = this.element.querySelector("#schedulePostModal")
     if (modalEl) {
+      const Modal = window.bootstrap?.Modal
       const bsModal = Modal.getInstance(modalEl) || new Modal(modalEl)
       modalEl.addEventListener("hidden.bs.modal", () => {
         this.element.requestSubmit()

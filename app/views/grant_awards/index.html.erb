@@ -60,6 +60,6 @@
       </div>
     <% end %>
 
-    <%= raw @pagy.bootstrap_series_nav if @pagy.pages > 1 %>
+    <%= raw @pagy.series_nav(:bootstrap) if @pagy.pages > 1 %>
   </div>
 </section>
