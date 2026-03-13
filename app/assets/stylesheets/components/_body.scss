@@ -8,3 +8,8 @@ body {
 main {
   flex: 1;
 }
+
+// Three CSS rules to always fix the footer to the bottom of the page:
+// 1) body → display: flex; flex-direction: column; min-height: 100vh — the page is always at least the full viewport height, laid out as a column
+// 2) main → flex: 1 — the content area stretches to fill whatever space is left between the navbar and footer
+// 3) The footer will now always sit at the bottom of the viewport on short pages, and naturally push down on tall pages — no position: fixed or position: sticky needed (which would overlay content).
