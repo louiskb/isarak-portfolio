@@ -39,3 +39,6 @@
 # Ignore Mac and Linux files system files
 *.swp
 .DS_Store
+
+# Playwright screenshots
+.playwright-mcp/
