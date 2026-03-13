@@ -181,11 +181,12 @@
   }
 }
 
-// AI robot badge — shown on index cards
-.blog-card-ai-badge {
-  font-size: 0.75rem;
+// AI label — shown inline with date on index cards
+.blog-card-ai-label {
+  font-size: 0.72rem;
+  font-weight: 500;
   color: #a5b4fc;
-  opacity: 0.85;
+  white-space: nowrap;
 }
 
 // Empty state

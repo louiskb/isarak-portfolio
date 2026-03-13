@@ -1,0 +1,52 @@
+// =====================================================
+// Dark theme overrides for Bootstrap modals
+// =====================================================
+
+.modal-content {
+  background-color: $surface;
+  border: 1px solid $border-dark;
+  color: $font-color;
+}
+
+.modal-header {
+  border-bottom-color: $border-dark;
+
+  .modal-title {
+    color: $font-color;
+  }
+
+  // × close button — white version for dark backgrounds
+  .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.modal-body {
+  color: rgba(226, 226, 226, 0.85);
+
+  .text-muted {
+    color: rgba(226, 226, 226, 0.5) !important;
+  }
+}
+
+.modal-footer {
+  border-top-color: $border-dark;
+
+  // Cancel / dismiss button — light outline style
+  .btn-secondary {
+    color: rgba(226, 226, 226, 0.8);
+    background: transparent;
+    border-color: rgba(226, 226, 226, 0.3);
+
+    &:hover {
+      color: $font-color;
+      background: rgba(226, 226, 226, 0.08);
+      border-color: rgba(226, 226, 226, 0.55);
+    }
+  }
+}

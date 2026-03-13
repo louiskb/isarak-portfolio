@@ -40,15 +40,17 @@
           <% end %>
 
           <%# Meta %>
-          <p class="blog-show-meta mb-4">
-            <i class="fa-regular fa-calendar me-1"></i>
-            <%= @blog_post.created_at.strftime("%B %-d, %Y") %>
-            <% if @blog_post.ai_generated? %>
-              &nbsp;&middot;&nbsp;<span class="blog-show-ai-badge">
-                <i class="fa-solid fa-robot me-1"></i>AI-generated
+          <div class="d-flex align-items-center justify-content-start gap-3 mb-4">
+            <p class="blog-show-meta mb-0">
+              <i class="fa-regular fa-calendar me-1"></i>
+              <%= @blog_post.created_at.strftime("%B %-d, %Y") %>
+            </p>
+            <% if user_signed_in? && @blog_post.ai_label %>
+              <span class="blog-card-ai-label">
+                <i class="fa-solid fa-wand-magic-sparkles me-1"></i><%= @blog_post.ai_label %>
               </span>
             <% end %>
-          </p>
+          </div>
 
           <%# Featured image %>
           <% if @blog_post.featured_image.attached? %>
@@ -99,7 +101,9 @@
               </button>
             <% end %>
 
-            <span class="blog-show-actions-divider"></span>
+            <% if @blog_post.draft? || @blog_post.scheduled? %>
+              <span class="blog-show-actions-divider"></span>
+            <% end %>
 
             <%# Edit / AI Revise %>
             <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "btn btn-resource-edit btn-sm" %>
@@ -215,13 +219,19 @@
               <div class="modal-content">
                 <div class="modal-header">
 
-                  <h5 class="modal-title" id="aiReviseWarningModalLabel">⚠️ Before you continue</h5>
+                  <h5 class="modal-title" id="aiReviseWarningModalLabel"><i class="fa-solid fa-triangle-exclamation text-warning"></i> Before you continue</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <p>This post was written manually using the rich text editor.</p>
-                  <p>If you revise it with AI, the content will be <strong>permanently replaced</strong> with AI-generated HTML. After this, you won't be able to edit it in the Trix editor.</p>
-                  <p class="text-muted mb-0">The AI will use your current content as its starting point.</p>
+                  <p>
+                    This post was written manually using the rich text editor.
+                  </p>
+                  <p>
+                    If you revise it with AI, the content will be permanently replaced with AI-generated HTML. After this, you won't be able to edit it in the rich text editor anymore. You can still edit the raw HTML directly, or keep revising with AI.
+                  </p>
+                  <p class="mb-0">
+                    The AI will use your current content as its starting point.
+                  </p>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

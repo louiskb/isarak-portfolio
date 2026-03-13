@@ -15,6 +15,15 @@ class BlogPost < ApplicationRecord
   validates :status, presence: true
   validate :one_content_field_only
 
+  # Returns a display label for AI involvement, shown to Isara only.
+  # nil when no AI was involved (pure manual, or manual with no AI revision).
+  # human_generated alone (!ai_generated) → nil (nothing shown)
+  def ai_label
+    return "Revised with AI" if ai_generated? && human_generated?
+    return "Created with AI" if ai_generated?
+    nil
+  end
+
   private
 
   def one_content_field_only

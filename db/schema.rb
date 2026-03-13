@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_12_132050) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_13_040916) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_12_132050) do
     t.text "blog_excerpt"
     t.text "blog_post_erb_content"
     t.datetime "created_at", null: false
+    t.boolean "human_generated", default: false, null: false
     t.datetime "scheduled_at"
     t.string "slug"
     t.integer "status"

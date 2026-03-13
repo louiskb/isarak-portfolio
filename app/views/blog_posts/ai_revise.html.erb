@@ -6,20 +6,6 @@
       <h1 class="mb-1">✨ Revise with AI</h1>
       <h2 class="h4 text-muted mb-4"><%= @blog_post.title %></h2>
 
-      <% if @has_rich_text_body %>
-        <%# Warning: this is a manual post being transitioned to AI management %>
-        <div class="alert alert-warning" role="alert">
-          <strong>⚠️ This post was written manually with the rich text editor.</strong>
-          <p class="mb-1 mt-2">
-            When you submit this revision, the AI will use your current rich text content as a starting point,
-            then replace it with AI-generated HTML. After this:
-          </p>
-          <ul class="mb-0">
-            <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
-            <li>You can still edit the raw HTML directly, or keep revising with AI.</li>
-          </ul>
-        </div>
-      <% end %>
 
       <% if flash[:alert] %>
         <div class="alert alert-danger"><%= flash[:alert] %></div>

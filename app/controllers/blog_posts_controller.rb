@@ -28,7 +28,7 @@ class BlogPostsController < ApplicationController
       params.dig(:blog_post, :scheduled_at)
     )
     @blog_post = current_user.blog_posts.new(
-      blog_post_params.merge(status: status, scheduled_at: scheduled_at)
+      blog_post_params.merge(status: status, scheduled_at: scheduled_at, human_generated: true)
     )
 
     respond_to do |format|
