@@ -82,7 +82,7 @@
 
         <% if @isara&.cv&.attached? %>
           <div class="mt-4">
-            <%= link_to "Download CV", rails_storage_proxy_path(@isara.cv, disposition: "attachment"), class: "btn home-btn-outline" %>
+            <%= link_to "Download CV", download_cv_path, class: "btn home-btn-outline" %>
           </div>
         <% end %>
       </div>

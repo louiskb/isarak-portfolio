@@ -1,5 +1,18 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :home ]
+  skip_before_action :authenticate_user!, only: [ :home, :download_cv ]
+
+  def download_cv
+    isara = User.first
+    if isara&.cv&.attached?
+      blob = isara.cv.blob
+      send_data blob.download,
+                filename: "Isara_Khanjanasthiti_CV.pdf",
+                type: blob.content_type,
+                disposition: "attachment"
+    else
+      redirect_to root_path, alert: "CV not available."
+    end
+  end
 
   def home
     @isara = User.first
