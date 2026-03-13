@@ -24,6 +24,12 @@ input[type="file"]::file-selector-button {
   margin-bottom: 1.5rem;
 }
 
+// Invert the native calendar/clock picker icon so it's white on dark backgrounds
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
 // Hover must be on the input itself — ::file-selector-button:hover is not supported
 input[type="file"]:hover::file-selector-button {
   background-color: lighten($surface, 10%);
