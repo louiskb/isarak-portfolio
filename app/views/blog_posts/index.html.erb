@@ -104,6 +104,8 @@
       </div>
     <% end %>
 
-    <%= raw @pagy.series_nav(:bootstrap) if @pagy.pages > 1 %>
+    <div class="mt-5">
+      <%= raw @pagy.series_nav(:bootstrap) if @pagy.pages > 1 %>
+    </div>
   </div>
 </section>

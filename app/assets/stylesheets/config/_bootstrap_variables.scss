@@ -61,14 +61,17 @@ $table-bg:                transparent;
 $table-border-color:      $border-dark;
 
 // Pagination
-$pagination-bg:           $secondary-color;
-$pagination-color:        $font-color;
-$pagination-border-color: $border-dark;
-$pagination-hover-bg:     $black;
-$pagination-hover-color:  $teal;
-$pagination-active-bg:    $teal;
-$pagination-active-border-color: $teal;
-$pagination-active-color: $black;
+$pagination-bg:                    $secondary-color;
+$pagination-color:                 $font-color;
+$pagination-border-color:          $border-dark;
+$pagination-hover-bg:              $black;
+$pagination-hover-color:           $teal;
+$pagination-active-bg:             $teal;
+$pagination-active-border-color:   $teal;
+$pagination-active-color:          $black;
+$pagination-disabled-bg:           $secondary-color;
+$pagination-disabled-color:        rgba(226, 226, 226, 0.25);
+$pagination-disabled-border-color: $border-dark;
 
 // Modals
 $modal-content-bg:        $secondary-color;

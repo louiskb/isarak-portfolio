@@ -218,6 +218,12 @@
   }
 }
 
+// ===== PAGINATION =====
+// Ensure the chevron is dark and visible during the :active click flash
+.pagination .page-link:active {
+  color: $black;
+}
+
 // ===== EMPTY STATE =====
 .resource-empty {
   padding: 5rem 0;
