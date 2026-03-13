@@ -1,1 +1,463 @@
-// Specific CSS for your home-page
+// ==========================================================
+// Landing Page — home.html.erb
+// ==========================================================
+
+// ===== HERO =====
+.home-hero {
+  padding: 7rem 0 5rem;
+  border-bottom: 1px solid $border-dark;
+}
+
+.home-hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $teal;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.home-hero-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: $teal;
+  opacity: 0.5;
+}
+
+.home-hero-title {
+  font-family: $headers-font;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: $font-color;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.home-hero-subtitle {
+  font-size: 1.1rem;
+  color: $font-muted;
+  line-height: 1.75;
+  max-width: 52ch;
+  margin-bottom: 2.5rem;
+}
+
+.home-hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+// ===== HERO PHOTO =====
+.home-hero-photo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-hero-photo {
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid $border-dark;
+  box-shadow:
+    0 0 0 10px rgba(137, 214, 204, 0.07),
+    0 24px 64px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 991.98px) {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+// ===== CTA BUTTONS =====
+.home-btn-primary {
+  background-color: $teal;
+  color: $black;
+  font-weight: 600;
+  font-size: 0.925rem;
+  padding: 0.65rem 1.75rem;
+  border-radius: 2rem;
+  border: none;
+  text-decoration: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: $teal-hover;
+    color: $black;
+    box-shadow: 0 4px 16px rgba(137, 214, 204, 0.3);
+  }
+}
+
+.home-btn-outline {
+  background: transparent;
+  color: $teal;
+  font-weight: 500;
+  font-size: 0.925rem;
+  padding: 0.65rem 1.75rem;
+  border-radius: 2rem;
+  border: 1.5px solid rgba(137, 214, 204, 0.5);
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(137, 214, 204, 0.08);
+    border-color: $teal;
+    color: $teal;
+  }
+}
+
+.home-btn-ghost {
+  background: transparent;
+  color: $font-muted;
+  font-weight: 500;
+  font-size: 0.925rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 2rem;
+  border: none;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $font-color;
+  }
+}
+
+// ===== ABOUT =====
+.home-about {
+  padding: 6rem 0;
+  border-bottom: 1px solid $border-dark;
+}
+
+.home-about-bio {
+  margin-bottom: 0;
+}
+
+.home-about-text {
+  font-size: 1rem;
+  color: rgba(226, 226, 226, 0.8);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.home-about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.home-tag {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: $teal;
+  background: $teal-subtle;
+  border: 1px solid rgba(137, 214, 204, 0.2);
+  padding: 0.3rem 0.85rem;
+  border-radius: 2rem;
+}
+
+// Sidebar facts card
+.home-about-sidebar {
+  background: $surface;
+  border: 1px solid $border-dark;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-about-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.home-about-fact-icon {
+  color: $teal;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.home-about-fact-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $font-muted;
+  margin-bottom: 0.2rem;
+}
+
+.home-about-fact-value {
+  font-size: 0.9rem;
+  color: $font-color;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.home-about-fact-link {
+  color: $teal;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    color: $teal;
+  }
+}
+
+// ===== SHARED SECTION PATTERNS =====
+.home-section {
+  padding: 5rem 0;
+  border-bottom: 1px solid $border-dark;
+}
+
+.home-section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $teal;
+  margin-bottom: 0.5rem;
+}
+
+.home-section-title {
+  font-family: $headers-font;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: $font-color;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+.home-section-viewall {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $teal;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.75;
+    color: $teal;
+  }
+}
+
+// ===== CONTACT SECTION =====
+.home-contact {
+  padding: 6rem 0 5rem;
+}
+
+.home-contact-sub {
+  font-size: 1rem;
+  color: $font-muted;
+  line-height: 1.75;
+}
+
+.home-contact-email-link {
+  color: $teal;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    color: $teal;
+  }
+}
+
+// ===== HOMEPAGE RESOURCE CARDS (Research, Teaching, Grants) =====
+.home-resource-card {
+  background: $surface;
+  border: 1px solid $border-dark;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba(137, 214, 204, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.home-resource-card-img-wrap {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.home-resource-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.home-resource-card-title {
+  font-family: $headers-font;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $font-color;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home-resource-card-meta {
+  font-size: 0.8rem;
+  color: $font-muted;
+  margin-bottom: 0.5rem;
+}
+
+.home-resource-card-desc {
+  font-size: 0.85rem;
+  color: rgba(226, 226, 226, 0.6);
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.home-resource-card-footer {
+  padding-top: 1rem;
+  margin-top: auto;
+}
+
+.home-resource-card-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $teal;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.8;
+    color: $teal;
+  }
+}
+
+// ===== HOMEPAGE BLOG CARDS =====
+.home-blog-card {
+  background: $surface;
+  border: 1px solid $border-dark;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.25s ease;
+
+  &:hover {
+    border-color: rgba(137, 214, 204, 0.35);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+  }
+}
+
+.home-blog-card-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.home-blog-card-placeholder {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, $surface 0%, $secondary-color 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 2rem;
+    color: rgba(137, 214, 204, 0.2);
+  }
+}
+
+.home-blog-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.home-blog-card-date {
+  font-size: 0.78rem;
+  color: $font-muted;
+  margin-bottom: 0.5rem;
+}
+
+.home-blog-card-title {
+  font-family: $headers-font;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $font-color;
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home-blog-card-title-link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: $teal;
+  }
+}
+
+.home-blog-card-excerpt {
+  font-size: 0.85rem;
+  color: rgba(226, 226, 226, 0.6);
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+  margin-bottom: 0.75rem;
+}
+
+.home-blog-card-footer {
+  padding-top: 0.75rem;
+  border-top: 1px solid $border-dark;
+  margin-top: auto;
+}
+
+.home-blog-read-more {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $teal;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.8;
+    color: $teal;
+  }
+}

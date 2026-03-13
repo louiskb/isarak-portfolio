@@ -1,16 +1,316 @@
-<%# TODO: Build full landing page here (Phase 4 — reference Figma) %>
+<% content_for :title, "Dr Isara Khanjanasthiti — Urban Planner, Educator & Researcher" %>
 
-<%#
-  # ABOUT SECTION — Phase 4
-  # Render the user's `about` bio here using:
+<%# ===== HERO ===== %>
+<section class="home-hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
 
-  #   isara = User.first
-  #   if isara&.about.present?
-  #     p isara.about
-  #   end
+      <%# Left — text block %>
+      <div class="col-lg-7">
+        <p class="home-hero-eyebrow">
+          <span>Urban Planner</span>
+          <span class="home-hero-dot"></span>
+          <span>Educator</span>
+          <span class="home-hero-dot"></span>
+          <span>Researcher</span>
+        </p>
 
-  # The bio is editable by Isara from the Profile page (/profile).
-  # See Figma node for the About section layout.
-%>
+        <h1 class="home-hero-title">
+          Dr Isara<br>Khanjanasthiti
+        </h1>
 
+        <p class="home-hero-subtitle">
+          Aviation policy, housing governance, and university teaching &amp; learning
+          at the University of New England, Sydney.
+        </p>
+
+        <div class="home-hero-ctas">
+          <%= link_to "View Research", research_items_path, class: "btn home-btn-primary" %>
+          <% if @isara&.cv&.attached? %>
+            <%= link_to "Download CV", url_for(@isara.cv), class: "btn home-btn-outline", target: "_blank", rel: "noopener noreferrer" %>
+          <% end %>
+          <a href="#contact" class="btn home-btn-ghost">Contact Me</a>
+        </div>
+      </div>
+
+      <%# Right — profile photo %>
+      <div class="col-lg-5 d-flex justify-content-center">
+        <div class="home-hero-photo-wrap">
+          <% if @isara&.avatar&.attached? %>
+            <%= image_tag @isara.avatar, class: "home-hero-photo", alt: "Dr Isara Khanjanasthiti" %>
+          <% else %>
+            <%= image_tag "pug1.jpg", class: "home-hero-photo", alt: "Profile photo placeholder" %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%# ===== ABOUT ===== %>
+<section class="home-about" id="about">
+  <div class="container">
+    <div class="row align-items-start g-5">
+
+      <%# Left — bio text %>
+      <div class="col-lg-7">
+        <p class="home-section-label">About Me</p>
+        <h2 class="home-section-title mb-4">Urban planner with a<br>global perspective</h2>
+
+        <div class="home-about-bio">
+          <% if @isara&.about.present? %>
+            <%= simple_format @isara.about, class: "home-about-text" %>
+          <% else %>
+            <p class="home-about-text">
+              I am an urban and regional planning academic at the University of New England (UNE),
+              based at the Sydney campus. My doctoral research examined economic development and
+              cross-border planning around second-tier airports through a case study of
+              Gold Coast Airport.
+            </p>
+            <p class="home-about-text">
+              Born in Bangkok, Thailand, and now calling Sydney home, my research interests span
+              aviation policy, cross-border governance, housing, and university teaching and learning.
+            </p>
+          <% end %>
+        </div>
+
+        <div class="home-about-tags mt-4">
+          <span class="home-tag">Aviation Policy</span>
+          <span class="home-tag">Housing Governance</span>
+          <span class="home-tag">Urban & Regional Planning</span>
+          <span class="home-tag">Cross-border Governance</span>
+          <span class="home-tag">University Teaching & Learning</span>
+        </div>
+
+        <% if @isara&.cv&.attached? %>
+          <div class="mt-4">
+            <%= link_to "Download CV", url_for(@isara.cv), class: "btn home-btn-outline",
+                  target: "_blank", rel: "noopener noreferrer" %>
+          </div>
+        <% end %>
+      </div>
+
+      <%# Right — quick facts card %>
+      <div class="col-lg-5">
+        <div class="home-about-sidebar">
+          <div class="home-about-fact">
+            <i class="fa-solid fa-graduation-cap home-about-fact-icon"></i>
+            <div>
+              <p class="home-about-fact-label">Institution</p>
+              <p class="home-about-fact-value">University of New England, Sydney Campus</p>
+            </div>
+          </div>
+          <div class="home-about-fact">
+            <i class="fa-solid fa-location-dot home-about-fact-icon"></i>
+            <div>
+              <p class="home-about-fact-label">Based in</p>
+              <p class="home-about-fact-value">Sydney, Australia</p>
+            </div>
+          </div>
+          <div class="home-about-fact">
+            <i class="fa-solid fa-magnifying-glass home-about-fact-icon"></i>
+            <div>
+              <p class="home-about-fact-label">Research Focus</p>
+              <p class="home-about-fact-value">Aviation, Housing, Urban & Regional Planning</p>
+            </div>
+          </div>
+          <div class="home-about-fact">
+            <i class="fa-solid fa-earth-asia home-about-fact-icon"></i>
+            <div>
+              <p class="home-about-fact-label">Background</p>
+              <p class="home-about-fact-value">Bangkok, Thailand &rarr; Sydney, Australia</p>
+            </div>
+          </div>
+          <div class="home-about-fact">
+            <i class="fa-regular fa-envelope home-about-fact-icon"></i>
+            <div>
+              <p class="home-about-fact-label">Email</p>
+              <p class="home-about-fact-value">
+                <a href="#contact" class="home-about-fact-link">Send a message &darr;</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<%# ===== FEATURED RESEARCH ===== %>
+<% if @featured_research.any? %>
+  <section class="home-section" id="research">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+          <p class="home-section-label">Research</p>
+          <h2 class="home-section-title">Research &amp; Publications</h2>
+        </div>
+        <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall" %>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% @featured_research.each do |item| %>
+          <div class="col">
+            <article class="home-resource-card">
+              <span class="resource-card-category resource-badge-<%= item.category %>">
+                <%= item.category.capitalize %>
+              </span>
+              <h3 class="home-resource-card-title"><%= item.title %></h3>
+              <% if item.published_at.present? %>
+                <p class="home-resource-card-meta">
+                  <i class="fa-regular fa-calendar me-1"></i><%= item.published_at.strftime("%B %Y") %>
+                </p>
+              <% end %>
+              <% if item.description.present? %>
+                <p class="home-resource-card-desc"><%= item.description %></p>
+              <% end %>
+              <% if item.external_url.present? %>
+                <div class="home-resource-card-footer">
+                  <%= link_to "View publication &rarr;".html_safe, item.external_url,
+                        class: "home-resource-card-link",
+                        target: "_blank", rel: "noopener noreferrer" %>
+                </div>
+              <% end %>
+            </article>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<%# ===== FEATURED TEACHING ===== %>
+<% if @featured_teachings.any? %>
+  <section class="home-section" id="teaching">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+          <p class="home-section-label">Education</p>
+          <h2 class="home-section-title">Teaching</h2>
+        </div>
+        <%= link_to "View all &rarr;".html_safe, teachings_path, class: "home-section-viewall" %>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% @featured_teachings.each do |item| %>
+          <div class="col">
+            <article class="home-resource-card">
+              <% if item.image_url.present? %>
+                <div class="home-resource-card-img-wrap">
+                  <img src="<%= item.image_url %>" alt="<%= item.title %>" class="home-resource-card-img">
+                </div>
+              <% end %>
+              <h3 class="home-resource-card-title"><%= item.title %></h3>
+              <% if item.institution.present? || item.year.present? %>
+                <p class="home-resource-card-meta">
+                  <% if item.institution.present? %>
+                    <i class="fa-solid fa-graduation-cap me-1"></i><%= item.institution %>
+                  <% end %>
+                  <% if item.institution.present? && item.year.present? %> &middot; <% end %>
+                  <% if item.year.present? %><%= item.year %><% end %>
+                </p>
+              <% end %>
+              <% if item.description.present? %>
+                <p class="home-resource-card-desc"><%= item.description %></p>
+              <% end %>
+            </article>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<%# ===== FEATURED GRANTS & AWARDS ===== %>
+<% if @featured_grants.any? %>
+  <section class="home-section" id="grants">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+          <p class="home-section-label">Recognition</p>
+          <h2 class="home-section-title">Grants &amp; Awards</h2>
+        </div>
+        <%= link_to "View all &rarr;".html_safe, grant_awards_path, class: "home-section-viewall" %>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% @featured_grants.each do |item| %>
+          <div class="col">
+            <article class="home-resource-card">
+              <span class="resource-card-category resource-badge-<%= item.category %>">
+                <%= item.category.capitalize %>
+              </span>
+              <h3 class="home-resource-card-title"><%= item.title %></h3>
+              <% if item.awarding_body.present? || item.year.present? %>
+                <p class="home-resource-card-meta">
+                  <% if item.awarding_body.present? %><%= item.awarding_body %><% end %>
+                  <% if item.awarding_body.present? && item.year.present? %> &middot; <% end %>
+                  <% if item.year.present? %><%= item.year %><% end %>
+                </p>
+              <% end %>
+              <% if item.description.present? %>
+                <p class="home-resource-card-desc"><%= item.description %></p>
+              <% end %>
+            </article>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<%# ===== FEATURED BLOG POSTS ===== %>
+<% if @featured_posts.any? %>
+  <section class="home-section" id="blog">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+          <p class="home-section-label">Writing</p>
+          <h2 class="home-section-title">Latest Thinking</h2>
+        </div>
+        <%= link_to "View all posts &rarr;".html_safe, blog_posts_path, class: "home-section-viewall" %>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% @featured_posts.each do |post| %>
+          <div class="col">
+            <article class="home-blog-card">
+              <%# Image %>
+              <%= link_to post do %>
+                <% if post.featured_image.attached? %>
+                  <%= image_tag post.featured_image, class: "home-blog-card-img", alt: post.title %>
+                <% else %>
+                  <div class="home-blog-card-placeholder">
+                    <i class="fa-solid fa-newspaper"></i>
+                  </div>
+                <% end %>
+              <% end %>
+
+              <%# Body %>
+              <div class="home-blog-card-body">
+                <p class="home-blog-card-date">
+                  <i class="fa-regular fa-calendar me-1"></i>
+                  <%= post.created_at.strftime("%b %-d, %Y") %>
+                </p>
+                <h3 class="home-blog-card-title">
+                  <%= link_to post.title, post, class: "home-blog-card-title-link" %>
+                </h3>
+                <% if post.blog_excerpt.present? %>
+                  <p class="home-blog-card-excerpt"><%= post.blog_excerpt %></p>
+                <% end %>
+                <div class="home-blog-card-footer">
+                  <%= link_to "Read more", post, class: "home-blog-read-more" %>
+                </div>
+              </div>
+            </article>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<%# ===== CONTACT ===== %>
 <%= render "pages/contact" %>

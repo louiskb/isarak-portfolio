@@ -1,13 +1,14 @@
 <%# Contact section — anchored for navbar "Contact Me" CTA link %>
-<section id="contact" class="py-5">
+<section id="contact" class="home-contact">
   <div class="container">
-    <div class="card shadow-sm rounded-4 my-3">
-      <div class="card-body p-4 p-md-5">
-        <h2 class="mb-3">Get in Touch</h2>
-        <p class="card-text mb-4">
-          Interested in collaborating on research or have a question?<br><br>
-          Fill out the form below or email me directly at
-          <%= link_to "isara@yourdomain.com", "mailto:isara@yourdomain.com", class: "text-decoration-none" %>.
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <p class="home-section-label">Contact</p>
+        <h2 class="home-section-title mb-3">Get in Touch</h2>
+        <p class="home-contact-sub mb-5">
+          Interested in collaborating on research or have a question? Fill out the form below
+          or email me directly at
+          <%= link_to "isara@yourdomain.com", "mailto:isara@yourdomain.com", class: "home-contact-email-link" %>.
         </p>
 
         <%# Contact form %>
@@ -26,7 +27,7 @@
           <%= invisible_captcha %>
           <%= f.button :submit, "Send Message",
               data: { action: "click->load-button#loader" },
-              class: "btn btn-primary btn-lg rounded-5 mt-4 mb-4" %>
+              class: "btn home-btn-primary mt-4 mb-4" %>
         <% end %>
       </div>
     </div>
