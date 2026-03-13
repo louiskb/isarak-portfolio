@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-13 (blog polish: author, status indicator, pagination fixes)
+> Created: 2026-03-08 | Last updated: 2026-03-13 (session 2: load-button fixes, ai page redesigns, Unsplash SSL, show page polish)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
