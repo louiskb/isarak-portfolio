@@ -4,16 +4,38 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :category %>
-    <%= f.input :description %>
-    <%= f.input :external_url %>
-    <%= f.input :featured %>
-    <%= f.input :published_at %>
-    <%= f.input :slug %>
+    <%= f.input :title,
+          hint: "The full title of the paper, project, or publication." %>
+
+    <%= f.input :category,
+          collection: ResearchItem.categories.keys,
+          label_method: :capitalize,
+          include_blank: "Select a category",
+          hint: "Project, Paper, or Publication." %>
+
+    <%= f.input :description,
+          as: :text,
+          input_html: { rows: 4 },
+          hint: "A short summary shown on the index card (2–4 sentences)." %>
+
+    <%= f.input :external_url,
+          label: "External URL",
+          hint: "Link to the journal, conference proceedings, or hosted project page." %>
+
+    <%= f.input :published_at,
+          as: :date,
+          label: "Published / presented date",
+          hint: "Used to sort and display the month & year on the card." %>
+
+    <%= f.input :featured,
+          label: "Featured item",
+          hint: "Featured items are highlighted with a star on the index." %>
+
+    <%= f.input :slug,
+          hint: "Auto-generated from the title. Edit only if you need a custom URL." %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-resource-add" %>
   </div>
 <% end %>

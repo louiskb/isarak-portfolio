@@ -1,24 +1,26 @@
 <footer class="site-footer">
   <div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="row align-items-center">
 
-      <%# Left: copyright, legal links, discrete login %>
-      <div class="footer-legal">
-        <div>
-          &copy; <%= Date.current.year %> Isara. All rights reserved.
-          &ensp;&middot;&ensp;
-          <%= link_to "Privacy Policy", "#" %>
-          &ensp;&middot;&ensp;
-          <%= link_to "Terms of Service", "#" %>
-        </div>
+      <%# Left: legal links + discrete login %>
+      <div class="col-4 footer-legal">
+        <%= link_to "Privacy Policy", "#" %>
+        &ensp;&middot;&ensp;
+        <%= link_to "Terms of Service", "#" %>
         <%# Discrete login — only shown on the research page, when not signed in %>
         <% if !user_signed_in? && request.path.start_with?(research_items_path) %>
+          &ensp;&middot;&ensp;
           <%= link_to "Login", new_user_session_path, class: "footer-login-link" %>
         <% end %>
       </div>
 
+      <%# Centre: copyright %>
+      <div class="col-4 text-center footer-copyright">
+        &copy; <%= Date.current.year %> Isara. All rights reserved.
+      </div>
+
       <%# Right: social icons — update hrefs with Isara's actual profiles %>
-      <div class="footer-social d-flex align-items-center">
+      <div class="col-4 footer-social d-flex align-items-center justify-content-end">
         <a href="#" title="LinkedIn" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-linkedin"></i>
         </a>

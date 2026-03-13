@@ -1,16 +1,18 @@
-<% content_for :title, "Editing research item" %>
+<% content_for :title, "Edit — #{@research_item.title}" %>
 
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-8">
-      <h1 class="mb-4">Editing research item</h1>
 
+      <div class="resource-breadcrumb">
+        <%= link_to "← Back to Research", research_items_path, class: "resource-back-link" %>
+      </div>
+
+      <h1 class="resource-detail-title mb-4">Edit Research Item</h1>
+
+      <%= render "shared/flashes" %>
       <%= render "form", research_item: @research_item %>
 
-      <div class="d-flex gap-3 mt-3">
-        <%= link_to "View item", @research_item %>
-        <%= link_to "← Back to research items", research_items_path %>
-      </div>
     </div>
   </div>
 </div>

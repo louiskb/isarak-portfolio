@@ -18,13 +18,16 @@
     }
   }
 
+  .footer-copyright {
+    font-size: 0.78rem;
+    color: rgba(226, 226, 226, 0.45);
+  }
+
   // Discrete login link — only appears in footer (not navbar)
   .footer-login-link {
     font-size: 0.72rem;
     color: rgba(226, 226, 226, 0.25);
     text-decoration: none;
-    display: inline-block;
-    margin-top: 0.2rem;
 
     &:hover {
       color: rgba(226, 226, 226, 0.55);
