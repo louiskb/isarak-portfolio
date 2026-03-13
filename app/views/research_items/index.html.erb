@@ -30,9 +30,6 @@
                 <%# Category badge %>
                 <span class="resource-card-category resource-badge-<%= item.category %>">
                   <%= item.category.capitalize %>
-                  <% if item.featured? %>
-                    &nbsp;<i class="fa-solid fa-star" title="Featured"></i>
-                  <% end %>
                 </span>
 
                 <h2 class="resource-card-title"><%= item.title %></h2>
@@ -41,6 +38,7 @@
                   <p class="resource-card-meta">
                     <i class="fa-regular fa-calendar me-1"></i>
                     <%= item.published_at.strftime("%B %Y") %>
+                    <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
                   </p>
                 <% end %>
 

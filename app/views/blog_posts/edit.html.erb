@@ -3,18 +3,24 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-8">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to "Blog", blog_posts_path %></li>
+          <li class="breadcrumb-item"><%= link_to @blog_post.title, @blog_post %></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit post</li>
+        </ol>
+      </nav>
+
       <h1 class="mb-4">Editing blog post</h1>
 
       <%= render "form", blog_post: @blog_post %>
 
       <div class="d-flex gap-3 align-items-center flex-wrap mt-3">
-        <%= link_to "View post", @blog_post %>
-        <%= link_to "← Back to blog posts", blog_posts_path %>
 
         <% if @blog_post.body.present? && @blog_post.blog_post_erb_content.blank? %>
           <%# Manual rich text post — show warning modal before going to AI revision %>
           <button type="button"
-                  class="btn btn-outline-primary btn-sm"
+                  class="btn btn-blog-ai btn-sm"
                   data-bs-toggle="modal"
                   data-bs-target="#aiReviseWarningModal">
             ✨ Revise with AI
@@ -31,7 +37,7 @@
                   <p>This post was written manually using the rich text editor.</p>
                   <p>If you revise it with AI, the rich text content will be <strong>permanently replaced</strong> with AI-generated HTML. After this:</p>
                   <ul>
-                    <li>You <strong>won't be able to edit it</strong> in the Trix rich text editor anymore.</li>
+                    <li>You <strong>won't be able to edit it</strong> in the rich text editor anymore.</li>
                     <li>You can still edit the raw HTML directly, or keep using AI to revise it further.</li>
                   </ul>
                   <p class="text-muted mb-0">The AI will use your current rich text content as its starting point for the revision.</p>
@@ -45,7 +51,7 @@
           </div>
         <% else %>
           <%# AI post or empty post — link directly, no warning needed %>
-          <%= link_to "✨ Revise with AI", ai_revise_blog_post_path(@blog_post), class: "btn btn-outline-primary btn-sm" %>
+          <%= link_to "✨ Revise with AI", ai_revise_blog_post_path(@blog_post), class: "btn btn-blog-ai btn-sm" %>
         <% end %>
       </div>
     </div>

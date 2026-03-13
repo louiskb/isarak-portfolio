@@ -4,9 +4,13 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
 
-      <div class="resource-breadcrumb">
-        <%= link_to "← Back to Research", research_items_path, class: "resource-back-link" %>
-      </div>
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to "Research", research_items_path %></li>
+          <li class="breadcrumb-item"><%= link_to @research_item.title, @research_item %></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+      </nav>
 
       <h1 class="resource-detail-title mb-4">Edit Research Item</h1>
 

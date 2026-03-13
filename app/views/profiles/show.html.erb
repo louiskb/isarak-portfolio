@@ -1,0 +1,79 @@
+<% content_for :title, "Profile — Admin" %>
+
+<%# ===== HERO ===== %>
+<%
+  pug_images = %w[pug1.jpg pug2.jpg pug3.jpg pug4.jpg pug5.jpg pug6.jpg pug7.jpg pug8.jpg pug9.jpg pug10.jpg pug11.jpg pug12.jpg].sample(5)
+  rotations  = ["-3deg", "2.5deg", "-1.5deg", "3.5deg", "-2deg"]
+%>
+<section class="resource-hero profile-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <p class="resource-hero-label">Admin</p>
+        <h1 class="resource-hero-title">Your Profile</h1>
+        <p class="resource-hero-subtitle">Update your name, bio, avatar, and CV.</p>
+      </div>
+      <div class="col-lg-5 mt-4 mt-lg-0">
+        <div class="profile-hero-photos justify-content-start justify-content-lg-end">
+          <% pug_images.each_with_index do |img, i| %>
+            <%= image_tag img,
+                  class: "profile-hero-photo#{i > 2 ? " d-none d-lg-block" : ""}",
+                  style: "transform: rotate(#{rotations[i]})",
+                  alt: "" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%# ===== FORM ===== %>
+<section class="resource-grid-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+
+        <%= render "shared/flashes" %>
+
+        <%= simple_form_for current_user, url: profile_path, method: :patch, html: { multipart: true } do |f| %>
+
+          <%= f.input :name, label: "Display name", placeholder: "Dr Isara Khanjanasthiti" %>
+          <%= f.input :about,
+                as: :text,
+                label: "About / Bio",
+                placeholder: "A short bio shown on the site…",
+                input_html: { rows: 6 } %>
+
+          <%= link_to "Change email or password", edit_user_registration_path,
+                class: "btn btn-resource-edit border border-2 mb-3" %>
+
+          <div class="mb-3 mt-4">
+            <% if current_user.avatar.attached? %>
+              <div class="mb-2">
+                <%= image_tag current_user.avatar,
+                      class: "rounded-circle mb-3",
+                      style: "width: 72px; height: 72px; object-fit: cover;",
+                      alt: "Current avatar" %>
+              </div>
+            <% end %>
+            <%= f.input :avatar, as: :file, label: "Avatar" %>
+          </div>
+
+          <div>
+            <%= f.input :cv, as: :file, label: "CV (PDF)", hint: "CV available for visitors to download on the Portfolio homepage." %>
+            <% if current_user.cv.attached? %>
+              <p class="text-muted small mb-2">
+                Current CV:
+                <%= link_to current_user.cv.filename, url_for(current_user.cv),
+                      target: "_blank", class: "resource-link" %>
+              </p>
+<% end %>
+          </div>
+
+          <%= f.button :submit, "Save changes", class: "btn btn-resource-add mt-4" %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -63,6 +63,9 @@
                     <% if user_signed_in? && post.scheduled? && post.scheduled_at %>
                       &nbsp;· Scheduled <%= post.scheduled_at.strftime("%b %-d") %>
                     <% end %>
+                    <% if post.featured? %>
+                      &nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i>
+                    <% end %>
                   </span>
                   <% if user_signed_in? && post.ai_label %>
                     <span class="blog-card-ai-label">

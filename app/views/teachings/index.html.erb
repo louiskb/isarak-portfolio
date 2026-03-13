@@ -34,6 +34,7 @@
                     <% end %>
                     <% if item.institution.present? && item.year.present? %> &middot; <% end %>
                     <% if item.year.present? %><%= item.year %><% end %>
+                    <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
                   </p>
                 <% end %>
 

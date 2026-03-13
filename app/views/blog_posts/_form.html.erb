@@ -10,10 +10,12 @@
     <%= f.input :title %>
     <%= f.input :blog_excerpt,
           label: "Excerpt",
-          hint: "A 1–2 sentence preview shown on the blog index. Leave blank and the AI will generate one automatically.",
+          hint: "A 1–2 sentence preview shown on the Blog page.",
           as: :text,
           input_html: { rows: 3 } %>
-    <%= f.input :author %>
+    <%= f.input :featured,
+          label: "Featured post",
+          hint: "Featured posts are highlighted on the Blog page." %>
 
     <div class="mb-3">
       <%= f.label :featured_image, "Featured image", class: "form-label" %>
@@ -31,7 +33,7 @@
       <div class="mb-3">
         <%= f.label :blog_post_erb_content, "Content (HTML)", class: "form-label" %>
         <small class="text-muted d-block mb-1">
-          This post is managed as HTML. Edit directly or use <strong>Revise with AI</strong> to generate a new version.
+          This post is managed as HTML. Edit directly or use <strong>✨ Revise with AI</strong> to generate a new version.
         </small>
         <%= f.input :blog_post_erb_content,
               label: false,
@@ -59,12 +61,26 @@
 
   <%# ===== SPLIT PUBLISH BUTTON ===== %>
   <div class="form-actions d-flex align-items-center gap-3 flex-wrap mt-4">
-    <% if @blog_post.persisted? && @blog_post.scheduled? %>
-      <p class="small text-warning w-100 mb-1">
-        <i class="fa-regular fa-clock me-1"></i>
-        Scheduled to publish on <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
-        &mdash; use the dropdown to reschedule or change status.
-      </p>
+    <% if @blog_post.persisted? %>
+      <% if @blog_post.scheduled? %>
+        <p class="small text-warning w-100 mb-1">
+          <i class="fa-regular fa-clock me-1"></i>
+          Scheduled to publish on <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
+          &mdash; use the dropdown to reschedule or change status.
+        </p>
+      <% elsif @blog_post.published? %>
+        <p class="small text-success w-100 mb-1">
+          <i class="fa-solid fa-circle-check me-1"></i>
+          This post is published and visible to everyone
+          &mdash; use the dropdown to reschedule or change status.
+        </p>
+      <% else %>
+        <p class="small text-muted w-100 mb-1">
+          <i class="fa-regular fa-file me-1"></i>
+          This post is a draft and not visible to the public
+          &mdash; use the dropdown to reschedule or change status.
+        </p>
+      <% end %>
     <% end %>
     <div class="btn-group dropup">
 

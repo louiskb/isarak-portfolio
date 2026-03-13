@@ -11,6 +11,8 @@ class BlogPost < ApplicationRecord
   has_one_attached :featured_image
   has_many_attached :photos
 
+  before_validation :set_author
+
   validates :title, presence: true
   validates :status, presence: true
   validate :one_content_field_only
@@ -25,6 +27,10 @@ class BlogPost < ApplicationRecord
   end
 
   private
+
+  def set_author
+    self.author = "Isara Khanjanasthiti"
+  end
 
   def one_content_field_only
     if blog_post_erb_content.present? && body.present?

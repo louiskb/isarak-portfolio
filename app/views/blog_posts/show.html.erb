@@ -5,10 +5,12 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
 
-        <%# Breadcrumb %>
-        <div class="resource-breadcrumb">
-          <%= link_to "← Back to Blog", blog_posts_path, class: "resource-back-link" %>
-        </div>
+        <nav aria-label="breadcrumb" class="mb-4">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><%= link_to "Blog", blog_posts_path %></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= @blog_post.title %></li>
+          </ol>
+        </nav>
 
         <%= render "shared/flashes" %>
 
@@ -31,7 +33,7 @@
                 Scheduled for <%= @blog_post.scheduled_at.strftime("%d %b %Y at %H:%M") %>
               </small>
               <button type="button"
-                      class="btn btn-outline-secondary btn-sm"
+                      class="btn btn-resource-edit btn-sm"
                       data-bs-toggle="modal"
                       data-bs-target="#editScheduleModal">
                 Edit schedule
@@ -39,12 +41,19 @@
             </div>
           <% end %>
 
+          <p class="blog-show-author">By <%= @blog_post.author %></p>
+
           <%# Meta %>
           <div class="d-flex align-items-center justify-content-start gap-3 mb-4">
             <p class="blog-show-meta mb-0">
               <i class="fa-regular fa-calendar me-1"></i>
               <%= @blog_post.created_at.strftime("%B %-d, %Y") %>
             </p>
+            <% if @blog_post.featured? %>
+              <span class="resource-featured-badge">
+                <i class="fa-solid fa-star me-1"></i>Featured
+              </span>
+            <% end %>
             <% if user_signed_in? && @blog_post.ai_label %>
               <span class="blog-card-ai-label">
                 <i class="fa-solid fa-wand-magic-sparkles me-1"></i><%= @blog_post.ai_label %>

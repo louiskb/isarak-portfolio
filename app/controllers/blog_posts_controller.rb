@@ -187,7 +187,7 @@ class BlogPostsController < ApplicationController
   # - ai_generated is set by the AI service
   # - status/scheduled_at are resolved via resolve_publish_intent and merged in explicitly
   def blog_post_params
-    params.expect(blog_post: [ :title, :author, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, photos: [] ])
+    params.expect(blog_post: [ :title, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, :featured, photos: [] ])
   end
 
   def ai_params

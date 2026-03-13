@@ -3,14 +3,18 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-8">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to "Grants & Awards", grant_awards_path %></li>
+          <li class="breadcrumb-item"><%= link_to @grant_award.title, @grant_award %></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+      </nav>
+
       <h1 class="mb-4">Editing grant award</h1>
 
       <%= render "form", grant_award: @grant_award %>
 
-      <div class="d-flex gap-3 mt-3">
-        <%= link_to "View grant award", @grant_award %>
-        <%= link_to "← Back to grant awards", grant_awards_path %>
-      </div>
     </div>
   </div>
 </div>

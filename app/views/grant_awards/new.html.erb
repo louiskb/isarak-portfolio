@@ -3,13 +3,17 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-lg-8">
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><%= link_to "Grants & Awards", grant_awards_path %></li>
+          <li class="breadcrumb-item active" aria-current="page">New grant award</li>
+        </ol>
+      </nav>
+
       <h1 class="mb-4">New grant award</h1>
 
       <%= render "form", grant_award: @grant_award %>
 
-      <div class="mt-3">
-        <%= link_to "← Back to grant awards", grant_awards_path %>
-      </div>
     </div>
   </div>
 </div>

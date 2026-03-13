@@ -66,6 +66,6 @@ class GrantAwardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def grant_award_params
-      params.expect(grant_award: [ :title, :description, :year, :awarding_body, :category, :slug ])
+      params.expect(grant_award: [ :title, :description, :year, :awarding_body, :category, :slug, :featured ])
     end
 end

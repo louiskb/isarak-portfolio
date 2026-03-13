@@ -5,10 +5,12 @@
     <div class="row justify-content-center">
       <div class="col-lg-8">
 
-        <%# Breadcrumb %>
-        <div class="resource-breadcrumb">
-          <%= link_to "← Back to Research", research_items_path, class: "resource-back-link" %>
-        </div>
+        <nav aria-label="breadcrumb" class="mb-4">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><%= link_to "Research", research_items_path %></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= @research_item.title %></li>
+          </ol>
+        </nav>
 
         <%= render "shared/flashes" %>
 
@@ -18,11 +20,6 @@
               <span class="resource-card-category resource-badge-<%= @research_item.category %>">
                 <%= @research_item.category.capitalize %>
               </span>
-              <% if @research_item.featured? %>
-                <span class="resource-featured-badge">
-                  <i class="fa-solid fa-star me-1"></i>Featured
-                </span>
-              <% end %>
             </div>
 
             <h1 class="resource-detail-title"><%= @research_item.title %></h1>
@@ -32,6 +29,11 @@
                 <span>
                   <i class="fa-regular fa-calendar me-1"></i>
                   <%= @research_item.published_at.strftime("%B %Y") %>
+                </span>
+              <% end %>
+              <% if @research_item.featured? %>
+                <span class="resource-featured-badge">
+                  <i class="fa-solid fa-star me-1"></i>Featured
                 </span>
               <% end %>
               <% if @research_item.external_url.present? %>

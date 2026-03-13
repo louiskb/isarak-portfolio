@@ -35,6 +35,29 @@
   }
 }
 
+// ===== PROFILE HERO PHOTOS =====
+// Polaroid-style photo strip in the hero banner.
+// Padding matches blog-hero (5rem 0 3.5rem) for consistent height.
+.resource-hero.profile-hero {
+  padding: 5rem 0 3.5rem;
+}
+
+.profile-hero-photos {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.profile-hero-photo {
+  width: auto;
+  height: 160px;
+  object-fit: cover;
+  border: 7px solid #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+  flex-shrink: 0;
+}
+
 // ===== GRID =====
 .resource-grid-section {
   padding: 3rem 0 5rem;
@@ -84,6 +107,10 @@
   font-size: 0.8rem;
   color: $font-muted;
   margin-bottom: 0.5rem;
+
+  .fa-star {
+    color: #f5c518;
+  }
 }
 
 .resource-card-description {
