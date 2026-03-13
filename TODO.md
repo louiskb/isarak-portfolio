@@ -112,6 +112,7 @@ Phase 4 complete ✅ — Landing page live. Next: mobile responsive check, anima
 - High-quality AI-generated imagery (Louis has access to generators)
 - Dark mode toggle
 - RSS feed for blog
+- Teaching section carousel/slider on landing page — replace static card grid with Bootstrap Carousel or Stimulus-driven Splide/Swiper; defer until Isara's content is in and layout reviewed
 
 ---
 
