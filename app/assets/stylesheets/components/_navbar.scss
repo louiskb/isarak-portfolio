@@ -73,8 +73,13 @@
   }
 
   // Center pill container — desktop only
+  // `position: relative; z-index` required because backdrop-filter creates a stacking
+  // context — without it the Blog dropdown is trapped inside the pill's context and
+  // rendered behind page content. The Avatar dropdown (outside the pill) is unaffected.
   @include media-breakpoint-up(lg) {
     .nav-links-pill {
+      position: relative;
+      z-index: 1031;
       background-color: rgba(45, 45, 45, 0.75);
       border: 1px solid rgba(61, 61, 61, 0.8);
       border-radius: 2rem;

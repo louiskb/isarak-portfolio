@@ -61,15 +61,15 @@
           <div class="btn-group dropup">
 
             <%# Default: generate and save as draft %>
-            <button type="button" class="btn btn-primary btn-lg btn-publish-main"
+            <button type="button" class="btn btn-primary btn-sm btn-publish-main"
                     data-action="click->load-button#loader click->publish-form#saveDraft"
                     data-load-button-loading-text-value="Generating your post...">
-              Generate &amp; save as draft
+              Generate and save as draft
             </button>
 
             <%# Chevron — opens upward dropdown %>
             <button type="button"
-                    class="btn btn-primary btn-lg btn-publish-chevron dropdown-toggle dropdown-toggle-split"
+                    class="btn btn-primary btn-sm btn-publish-chevron dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
               <span class="visually-hidden">More publishing options</span>
@@ -79,20 +79,20 @@
               <li>
                 <button type="button" class="dropdown-item"
                         data-action="click->load-button#loader click->publish-form#publishNow"
-                        data-load-button-loading-text-value="Generating &amp; publishing...">
-                  <i class="fa-solid fa-globe me-2 text-muted"></i>Generate &amp; publish now
+                        data-load-button-loading-text-value="Generating and publishing...">
+                  <i class="fa-solid fa-globe me-2 text-muted"></i>Generate and publish now
                 </button>
               </li>
               <li>
                 <button type="button" class="dropdown-item"
                         data-bs-toggle="modal" data-bs-target="#schedulePostModal">
-                  <i class="fa-regular fa-clock me-2 text-muted"></i>Generate &amp; schedule&hellip;
+                  <i class="fa-regular fa-clock me-2 text-muted"></i>Generate and schedule&hellip;
                 </button>
               </li>
             </ul>
           </div>
 
-          <%= link_to "Write manually instead", new_blog_post_path, class: "btn btn-outline-secondary btn-lg" %>
+          <%= link_to "Write manually instead", new_blog_post_path, class: "btn btn-blog-ai btn-sm" %>
         </div>
 
         <%# ===== SCHEDULE MODAL ===== %>
@@ -123,7 +123,7 @@
                 <button type="button" class="btn btn-primary"
                         data-action="click->load-button#loader click->publish-form#confirmSchedule"
                         data-load-button-loading-text-value="Generating your post...">
-                  Generate &amp; schedule
+                  Generate and schedule
                 </button>
               </div>
             </div>
