@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-13 (session 3: Phase 4 landing page built, teaching/grants form polish, hero CTA reorder, auth-gated view-all links)
+> Created: 2026-03-08 | Last updated: 2026-03-13 (session 4: CV download debugging, IK favicon, carousel added to ideas)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -101,9 +101,11 @@ Phase 4 complete ✅ — Landing page live. Next: mobile responsive check, anima
 - [x] Resource sections — Featured Research (3-col), Teaching (4-col, view-all auth-gated), Grants & Awards (4-col, view-all auth-gated), Blog Posts (3-col cards with images)
 - [x] Contact form section — restyled to match dark theme, Bootstrap card wrapper removed
 - [x] Teaching & Grants "View all →" links — hidden from public visitors; only shown to signed-in Isara
-- [ ] Animations / scroll effects (deferred — see Ideas section)
-- [ ] Mobile responsive check
+- [x] Favicon — IK monogram (dark bg, teal text) replacing default Rails icon; swap when Isara has a real logo
+- [ ] CV Download button — UNRESOLVED; dedicated route + send_data wired but still failing; debug next session (check blob.content_type in console, inspect HTTP response in devtools, consider Cloudinary fl_attachment or disabling strict delivery)
 - [ ] Get Isara's real content in (bio, avatar, CV, featured items marked)
+- [ ] Mobile responsive check
+- [ ] Animations / scroll effects (deferred — see Ideas section)
 
 ---
 
