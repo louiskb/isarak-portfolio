@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-13 (navbar fixed; Bootstrap JS loading fixed)
+> Created: 2026-03-08 | Last updated: 2026-03-13 (blog polish: author, status indicator, pagination fixes)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -82,6 +82,15 @@ Phase 3 complete ✅ — Ready to start Phase 4 (Landing Page)
 - [x] Publish/schedule edge cases — consistent `resolve_publish_intent` across all 4 save actions; `publish_notice` flash helper; split-button dropup on all create/edit forms (manual + AI) ✅
 - [x] Pagination — Pagy wired on all 4 resource indexes (blog_posts, research_items, teachings, grant_awards); limit=9 globally ✅
 - [x] Container layout — all new/edit/form views wrapped in `container py-5 > row justify-content-center > col-lg-8` ✅
+- [x] Author hardcoded on BlogPost — `before_validation :set_author` always sets "Isara Khanjanasthiti"; removed from forms; "By [author]" shown on show page above meta row ✅
+- [x] Blog edit form — status indicator for all 3 statuses (draft / scheduled / published) with contextual message + "use the dropdown" nudge ✅
+- [x] Fixed form submission bug — Bootstrap UMD bundle incompatible with ESM named imports; Stimulus controller was crashing silently on `import { Modal } from "bootstrap"`; fix: removed import, use `window.bootstrap?.Modal` inline ✅
+- [x] Fixed double flash on new post save — show.html.erb had a duplicate `render "shared/flashes"`; removed (layout already renders it globally) ✅
+- [x] Fixed Pagy v9 API — `@pagy.series_nav(:bootstrap)` replaces `@pagy.bootstrap_series_nav` (now protected in Pagy v43+); updated all 4 index views ✅
+- [x] Blog index status badge — moved from image overlay (position-absolute) to card body above date row; more visible and less design noise ✅
+- [x] Pagination spacing — wrapped pagination in `div.mt-4` on all 4 index views so it doesn't stick to the cards ✅
+- [x] Pagination disabled state — `$pagination-disabled-bg/color/border-color` overridden in `_bootstrap_variables.scss`; Bootstrap default used `$white` bg (invisible chevron on dark theme); now stays charcoal with dimmed text ✅
+- [x] Pagination active click state — `.pagination .page-link:active { color: $black }` in `_resources.scss` prevents white chevron during click flash ✅
 
 ---
 
