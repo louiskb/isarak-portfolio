@@ -17,19 +17,21 @@ class BlogPostAiService
   def create_from_prompt(prompt, featured_image: nil, status: :draft, scheduled_at: nil)
     chat = RubyLLM.chat(model: "gpt-4o")
     chat.with_instructions(creation_system_prompt)
+    chat.with_schema(BlogPostSchema)
 
-    response = chat.ask(prompt, with: BlogPostSchema)
+    response = chat.ask(prompt)
+    parsed = response.content
 
     # Replace any <!-- IMAGE: query --> placeholders the AI placed in the content
-    content = inject_inline_images(response.content)
+    content = inject_inline_images(parsed["content"])
 
     # Feature image: skip Unsplash if Isara uploaded their own
-    image_html = featured_image.present? ? "" : fetch_image_html(response.image_query)
+    image_html = featured_image.present? ? "" : fetch_image_html(parsed["image_query"])
     full_content = "#{image_html}#{content}"
 
     blog_post = @user.blog_posts.build(
-      title: response.title,
-      blog_excerpt: response.excerpt,
+      title: parsed["title"],
+      blog_excerpt: parsed["excerpt"],
       blog_post_erb_content: full_content,
       ai_generated: true,
       status: status,
@@ -58,10 +60,12 @@ class BlogPostAiService
 
     chat = RubyLLM.chat(model: "gpt-4o")
     chat.with_instructions(revision_system_prompt(blog_post, current_content))
+    chat.with_schema(BlogPostSchema)
 
-    response = chat.ask(revision_prompt, with: BlogPostSchema)
+    response = chat.ask(revision_prompt)
+    parsed = response.content
 
-    content = inject_inline_images(response.content)
+    content = inject_inline_images(parsed["content"])
 
     # Feature image priority: new upload > keep flag > Unsplash (default replaces existing)
     if featured_image.present?
@@ -75,16 +79,17 @@ class BlogPostAiService
       # Default: revision may have changed the topic, so fetch a fresh Unsplash photo.
       # Purge any previously attached featured_image so the show page doesn't show a stale one.
       blog_post.featured_image.purge_later if blog_post.featured_image.attached?
-      image_html = fetch_image_html(response.image_query)
+      image_html = fetch_image_html(parsed["image_query"])
     end
 
     full_content = "#{image_html}#{content}"
 
     attrs = {
-      title: response.title,
-      blog_excerpt: response.excerpt,
+      title: parsed["title"],
+      blog_excerpt: parsed["excerpt"],
       blog_post_erb_content: full_content,
-      ai_generated: true
+      ai_generated: true,
+      human_generated: true
     }
     if status
       attrs[:status] = status

@@ -11,6 +11,8 @@ class BlogPost < ApplicationRecord
   has_one_attached :featured_image
   has_many_attached :photos
 
+  attr_accessor :keep_featured_image
+
   before_validation :set_author
 
   validates :title, presence: true
