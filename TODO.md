@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-13 (session 2: load-button fixes, ai page redesigns, Unsplash SSL, show page polish)
+> Created: 2026-03-08 | Last updated: 2026-03-13 (session 3: Phase 4 landing page built, teaching/grants form polish, hero CTA reorder, auth-gated view-all links)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 3 complete ✅ — Ready to start Phase 4 (Landing Page)
+Phase 4 complete ✅ — Landing page live. Next: mobile responsive check, animations, and getting Isara's real content in.
 
 ---
 
@@ -95,14 +95,15 @@ Phase 3 complete ✅ — Ready to start Phase 4 (Landing Page)
 ---
 
 ## Phase 4 — Landing Page
-- [ ] Build from Figma: https://www.figma.com/design/urlKYDQaoyIghxaQg69bYC/isarak-portfolio
-- [ ] Hero section
-- [ ] About / bio section
-- [ ] Resource sections (ResearchItem, GrantAward, Teaching) — dynamically populated
-- [x] Contact form section — backend done, form partial rendered at bottom of homepage
-  - [ ] Restyle contact section to match Figma design (Phase 4 visual pass)
-- [ ] Animations / scroll effects
+- [x] Build from Figma: https://www.figma.com/design/urlKYDQaoyIghxaQg69bYC/isarak-portfolio
+- [x] Hero section — name, eyebrow labels, circular photo (avatar or pug placeholder), Contact Me (primary) + View Research (outline)
+- [x] About / bio section — `User.about` bio with placeholder fallback, research interest tags, Download CV (if attached), facts sidebar
+- [x] Resource sections — Featured Research (3-col), Teaching (4-col, view-all auth-gated), Grants & Awards (4-col, view-all auth-gated), Blog Posts (3-col cards with images)
+- [x] Contact form section — restyled to match dark theme, Bootstrap card wrapper removed
+- [x] Teaching & Grants "View all →" links — hidden from public visitors; only shown to signed-in Isara
+- [ ] Animations / scroll effects (deferred — see Ideas section)
 - [ ] Mobile responsive check
+- [ ] Get Isara's real content in (bio, avatar, CV, featured items marked)
 
 ---
 
