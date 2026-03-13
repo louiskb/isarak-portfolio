@@ -4,18 +4,37 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :description %>
-    <%= f.input :year %>
-    <%= f.input :awarding_body %>
-    <%= f.input :category %>
-    <%= f.input :slug %>
+    <%= f.input :title,
+          placeholder: "e.g. ARC Discovery Project Grant",
+          hint: "The full name of the grant or award as it should appear on your portfolio." %>
+
+    <%= f.input :category,
+          label: "Type",
+          as: :select,
+          collection: GrantAward.categories.keys.map { |k| [k.capitalize, k] },
+          hint: "Select Grant for funding you received, or Award for recognition of your work." %>
+
+    <%= f.input :awarding_body,
+          label: "Awarding body / Funder",
+          placeholder: "e.g. Australian Research Council",
+          hint: "The organisation that granted the funding or presented the award." %>
+
+    <%= f.input :year,
+          placeholder: "e.g. 2023 or 2021–2023",
+          hint: "The year the grant was awarded or the award was received." %>
+
+    <%= f.input :description,
+          label: "Description (optional)",
+          hint: "Briefly describe the scope, value, or significance of this grant or award.",
+          as: :text,
+          input_html: { rows: 4 } %>
+
     <%= f.input :featured,
           label: "Featured item",
-          hint: "Featured items are shown in the Portfolio homepage and highlighted with a star on the Grants & Awards page." %>
+          hint: "Featured items are highlighted on your Portfolio homepage. Tick this for grants or awards you want to showcase prominently." %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-primary" %>
   </div>
 <% end %>

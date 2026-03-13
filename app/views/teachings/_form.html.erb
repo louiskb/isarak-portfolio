@@ -4,18 +4,36 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :description %>
-    <%= f.input :institution %>
-    <%= f.input :year %>
-    <%= f.input :image_url %>
-    <%= f.input :slug %>
+    <%= f.input :title,
+          placeholder: "e.g. Urban Planning Studio, PLAN3001",
+          hint: "The course name or teaching role as it should appear on your portfolio." %>
+
+    <%= f.input :institution,
+          label: "Institution",
+          placeholder: "e.g. University of New England",
+          hint: "The university or organisation where this teaching took place." %>
+
+    <%= f.input :year,
+          placeholder: "e.g. 2024 or 2022–2024",
+          hint: "The year or year range this course was delivered." %>
+
+    <%= f.input :description,
+          label: "Description",
+          hint: "Summarise the course content and your teaching role. Shown as a blurb on your Teaching page.",
+          as: :text,
+          input_html: { rows: 4 } %>
+
+    <%= f.input :image_url,
+          label: "Course image URL (optional)",
+          placeholder: "https://example.com/image.jpg",
+          hint: "Paste a direct link to a JPEG or PNG image. This will appear on your Teaching page. Leave blank to show no image." %>
+
     <%= f.input :featured,
           label: "Featured item",
-          hint: "Featured items are shown in the Portfolio homepage and highlighted with a star on the Teaching page." %>
+          hint: "Featured items are highlighted on your Portfolio homepage. Tick this for courses you want to showcase prominently." %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-primary" %>
   </div>
 <% end %>

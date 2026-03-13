@@ -10,6 +10,11 @@
         Ideas and reflections from urban planning, housing policy, and university teaching.
       </p>
       <% if user_signed_in? %>
+        <p class="blog-hero-subtitle mt-2" style="font-size: 0.85rem; opacity: 0.65;">
+          <i class="fa-solid fa-star me-1"></i>Posts marked as <strong>Featured</strong> will appear on your Portfolio homepage (top 3–6 shown).
+        </p>
+      <% end %>
+      <% if user_signed_in? %>
         <div class="d-flex gap-2 mt-4">
           <%= link_to "New post", new_blog_post_path, class: "btn btn-resource-add" %>
           <%= link_to ai_new_blog_posts_path, class: "btn btn-outline-primary rounded-5" do %>

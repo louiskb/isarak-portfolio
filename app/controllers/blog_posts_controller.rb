@@ -5,7 +5,7 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts or /blog_posts.json
   def index
     scope = user_signed_in? ? BlogPost.all : BlogPost.published
-    @pagy, @blog_posts = pagy(scope)
+    @pagy, @blog_posts = pagy(scope.order(created_at: :desc))
   end
 
   # GET /blog_posts/1 or /blog_posts/1.json
