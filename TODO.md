@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-13 (session 4: CV download debugging, IK favicon, carousel added to ideas)
+> Created: 2026-03-08 | Last updated: 2026-03-14 (session 5: navbar + hero entrance animations polished)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live. Next: mobile responsive check, animations, and getting Isara's real content in.
+Phase 4 complete ✅ — Landing page live with animations. Next: About section + working down the portfolio page sections.
 
 ---
 
@@ -105,7 +105,10 @@ Phase 4 complete ✅ — Landing page live. Next: mobile responsive check, anima
 - [ ] CV Download button — UNRESOLVED; dedicated route + send_data wired but still failing; debug next session (check blob.content_type in console, inspect HTTP response in devtools, consider Cloudinary fl_attachment or disabling strict delivery)
 - [ ] Get Isara's real content in (bio, avatar, CV, featured items marked)
 - [ ] Mobile responsive check
-- [ ] Animations / scroll effects (deferred — see Ideas section)
+- [x] Hero entrance animations — navbar slides down, name/subtitle fade in together, CTAs slide up, socials stagger left-to-right, tags stagger right-to-left, chevron last; all use ease-out for smooth cinematic feel ✅ (2026-03-14)
+- [ ] Scroll-triggered animations for below-fold sections (AOS or CSS)
+- [ ] About section — wire up real content, photo, bio, research interest tags, CV download
+- [ ] Resource sections — Featured Research, Teaching, Grants & Awards, Blog posts (review layout + content)
 
 ---
 

@@ -1,6 +1,11 @@
 // Isarak Portfolio — Color Scheme
 // Inspired by GMK Delta Light: dark background, mint teal accent, light text
 
+// Layout constants
+:root {
+  --navbar-height: 74px; // fallback — overwritten at runtime by navbar-height Stimulus controller
+}
+
 // Brand accent
 $teal:            #89D6CC;  // Primary mint teal — CTAs, links, highlights
 $teal-hover:      #6BC4BA;  // Teal hover/active state

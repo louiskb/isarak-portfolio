@@ -23,9 +23,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="<%= content_for(:body_class) %>">
 
-    <header>
+    <header data-controller="navbar-height">
       <%= render "shared/navbar" %>
     </header>
 

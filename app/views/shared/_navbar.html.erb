@@ -114,7 +114,7 @@
             <%= link_to "Portfolio", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
           </li>
           <li class="nav-item">
-            <%= link_to "Research", research_items_path, class: nav_link_class("#research") %>
+            <%= link_to "Research", research_items_path, class: nav_link_class(research_items_path) %>
           </li>
           <li class="nav-item">
             <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path) %>
@@ -123,8 +123,8 @@
       </div>
 
       <%# Right: Contact Me CTA (always visible) %>
-      <%= link_to "Contact Me", "#contact", class: "btn-nav-cta btn-nav-cta-sm d-lg-none" %>
-      <%= link_to "Contact Me", "#contact", class: "btn-nav-cta d-none d-lg-block" %>
+      <%= link_to "Contact Me", "#contact", class: "btn btn-grad btn-nav-cta-sm d-lg-none" %>
+      <%= link_to "Contact Me", "#contact", class: "btn btn-grad d-none d-lg-block" %>
 
     <% end %>
 

@@ -33,7 +33,7 @@ export default class extends Controller {
       event?.currentTarget?.dataset?.loadButtonLoadingTextValue ||
       this.loadingTextValue;
 
-    const spinner = `<div class="mt-2"><span class="btn btn-primary btn-sm disabled"><i class="fa-solid fa-hourglass fa-spin me-1"></i> ${text}</span></div>`;
+    const spinner = `<div class="mt-4 mb-4"><span class="btn btn-grad" style="pointer-events:none;cursor:default"><i class="fa-solid fa-hourglass fa-spin me-1"></i> ${text}</span></div>`;
 
     if (this.hasButtonsTarget) {
       this.buttonsTarget.classList.add("d-none");

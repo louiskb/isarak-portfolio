@@ -1,95 +1,71 @@
 <% content_for :title, "Dr Isara Khanjanasthiti — Urban Planner, Educator & Researcher" %>
+<% content_for :body_class, "page-home" %>
 
 <%# ===== HERO ===== %>
 <section class="home-hero">
-  <div class="container">
-    <div class="row align-items-center g-5">
+  <div class="home-hero-overlay"></div>
+  <a href="#about" class="home-hero-scroll-hint" aria-label="Scroll to About">
+    <i class="fa-solid fa-chevron-down"></i>
+  </a>
 
-      <%# Left — text block %>
-      <div class="col-lg-7">
-        <p class="home-hero-eyebrow">
-          <span>Urban Planner</span>
-          <span class="home-hero-dot"></span>
-          <span>Educator</span>
-          <span class="home-hero-dot"></span>
-          <span>Researcher</span>
-        </p>
+  <div class="container position-relative home-hero-container">
 
-        <h1 class="home-hero-title">
-          Dr Isara<br>Khanjanasthiti
-        </h1>
-
-        <p class="home-hero-subtitle">
-          Aviation policy, housing governance, and university teaching &amp; learning
-          at the University of New England, Sydney.
-        </p>
-
-        <div class="home-hero-ctas">
-          <a href="#contact" class="btn home-btn-primary">Contact Me</a>
-          <%= link_to "View Research", research_items_path, class: "btn home-btn-outline" %>
-        </div>
+    <%# Top left — name, subtitle, CTAs %>
+    <div class="home-hero-top">
+      <h1 class="home-hero-title">
+        Dr Isara<br>Khanjanasthiti
+      </h1>
+      <p class="home-hero-subtitle">
+        Aviation policy, housing governance, and university teaching &amp; learning
+        at the University of New England, Sydney.
+      </p>
+      <div class="home-hero-ctas">
+        <a href="#contact" class="btn btn-grad">Contact Me</a>
+        <%= link_to "View Research", research_items_path, class: "btn home-btn-outline" %>
       </div>
-
-      <%# Right — profile photo %>
-      <div class="col-lg-5 d-flex justify-content-center">
-        <div class="home-hero-photo-wrap">
-          <% if @isara&.avatar&.attached? %>
-            <%= image_tag @isara.avatar, class: "home-hero-photo", alt: "Dr Isara Khanjanasthiti" %>
-          <% else %>
-            <%= image_tag "pug1.jpg", class: "home-hero-photo", alt: "Profile photo placeholder" %>
-          <% end %>
-        </div>
-      </div>
-
     </div>
+
+    <%# Bottom row — socials left, tags right %>
+    <div class="home-hero-bottom">
+      <div class="home-hero-socials">
+        <a href="#" class="home-hero-social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="mailto:isara@example.com" class="home-hero-social-link" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+        <a href="#" class="home-hero-social-link" aria-label="Twitter / X" target="_blank" rel="noopener">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+      </div>
+      <div class="home-hero-tags">
+        <span class="home-hero-tag">Urban Planner</span>
+        <span class="home-hero-tag">Educator</span>
+        <span class="home-hero-tag">Researcher</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <%# ===== ABOUT ===== %>
 <section class="home-about" id="about">
   <div class="container">
-    <div class="row align-items-start g-5">
+    <div class="row align-items-start g-4 g-lg-5">
 
-      <%# Left — bio text %>
-      <div class="col-lg-7">
-        <p class="home-section-label">About Me</p>
-        <h2 class="home-section-title mb-4">Urban planner with a<br>global perspective</h2>
-
-        <div class="home-about-bio">
-          <% if @isara&.about.present? %>
-            <%= simple_format @isara.about, class: "home-about-text" %>
+      <%# Left — photo + quick facts %>
+      <div class="col-lg-5">
+        <div class="home-about-photo-wrap">
+          <% if @isara&.avatar&.attached? %>
+            <%= image_tag @isara.avatar, class: "home-about-photo", alt: "Dr Isara Khanjanasthiti" %>
           <% else %>
-            <p class="home-about-text">
-              I am an urban and regional planning academic at the University of New England (UNE),
-              based at the Sydney campus. My doctoral research examined economic development and
-              cross-border planning around second-tier airports through a case study of
-              Gold Coast Airport.
-            </p>
-            <p class="home-about-text">
-              Born in Bangkok, Thailand, and now calling Sydney home, my research interests span
-              aviation policy, cross-border governance, housing, and university teaching and learning.
-            </p>
+            <div class="home-about-photo-placeholder">
+              <i class="fa-solid fa-user"></i>
+            </div>
           <% end %>
         </div>
 
-        <div class="home-about-tags mt-4">
-          <span class="home-tag">Aviation Policy</span>
-          <span class="home-tag">Housing Governance</span>
-          <span class="home-tag">Urban & Regional Planning</span>
-          <span class="home-tag">Cross-border Governance</span>
-          <span class="home-tag">University Teaching & Learning</span>
-        </div>
-
-        <% if @isara&.cv&.attached? %>
-          <div class="mt-4">
-            <%= link_to "Download CV", download_cv_path, class: "btn home-btn-outline" %>
-          </div>
-        <% end %>
-      </div>
-
-      <%# Right — quick facts card %>
-      <div class="col-lg-5">
-        <div class="home-about-sidebar">
+        <div class="home-about-sidebar mt-4">
           <div class="home-about-fact">
             <i class="fa-solid fa-graduation-cap home-about-fact-icon"></i>
             <div>
@@ -128,6 +104,43 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <%# Right — bio, tags, CV download %>
+      <div class="col-lg-7">
+        <p class="home-section-label">About Me</p>
+        <h2 class="home-section-title mb-4">Urban planner with a<br>global perspective</h2>
+
+        <div class="home-about-bio">
+          <% if @isara&.about.present? %>
+            <%= simple_format @isara.about, class: "home-about-text" %>
+          <% else %>
+            <p class="home-about-text">
+              I am an urban and regional planning academic at the University of New England (UNE),
+              based at the Sydney campus. My doctoral research examined economic development and
+              cross-border planning around second-tier airports through a case study of
+              Gold Coast Airport.
+            </p>
+            <p class="home-about-text">
+              Born in Bangkok, Thailand, and now calling Sydney home, my research interests span
+              aviation policy, cross-border governance, housing, and university teaching and learning.
+            </p>
+          <% end %>
+        </div>
+
+        <div class="home-about-tags mt-4">
+          <span class="home-tag">Aviation Policy</span>
+          <span class="home-tag">Housing Governance</span>
+          <span class="home-tag">Urban & Regional Planning</span>
+          <span class="home-tag">Cross-border Governance</span>
+          <span class="home-tag">University Teaching & Learning</span>
+        </div>
+
+        <% if @isara&.cv&.attached? %>
+          <div class="mt-4">
+            <%= link_to "Download CV", download_cv_path, class: "btn home-btn-outline" %>
+          </div>
+        <% end %>
       </div>
 
     </div>

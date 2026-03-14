@@ -4,8 +4,191 @@
 
 // ===== HERO =====
 .home-hero {
-  padding: 7rem 0 5rem;
+  position: relative;
+  min-height: 100vh;
+  margin-top: calc(-1 * var(--navbar-height));
+  padding-top: calc(var(--navbar-height) + 3rem);
+  padding-bottom: 4rem;
+  display: flex;
+  align-items: stretch;
+  background-image: image-url("airport-sunset.jpg");
+  background-size: cover;
+  background-position: center 60%;
   border-bottom: 1px solid $border-dark;
+
+  @media (max-width: 767.98px) {
+    min-height: 100svh;
+    padding-top: calc(var(--navbar-height) + 2rem);
+    padding-bottom: 3rem;
+    background-position: center center;
+  }
+}
+
+// Inner container acts as the full-height flex column
+.home-hero-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+// Top-left block: name, subtitle, CTAs
+.home-hero-top {
+  max-width: 56ch;
+  padding-top: 3rem;
+}
+
+// Bottom row: socials left, tags right
+.home-hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+
+  @media (max-width: 767.98px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+}
+
+// Social links — bottom left
+.home-hero-socials {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.home-hero-social-link {
+  color: rgba(226, 226, 226, 0.5);
+  font-size: 1.15rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $teal;
+  }
+}
+
+// Tags — bottom right
+.home-hero-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  @media (max-width: 767.98px) {
+    justify-content: flex-start;
+  }
+}
+
+.home-hero-tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(226, 226, 226, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.3rem 0.85rem;
+  border-radius: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.home-hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(226, 226, 226, 0.5);
+  font-size: 1.25rem;
+  text-decoration: none;
+  z-index: 2;
+  animation: hero-bounce 2s ease-in-out infinite;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $teal;
+  }
+}
+
+@keyframes hero-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+// ===== HERO ENTRANCE ANIMATIONS =====
+// Respects prefers-reduced-motion — wraps all entrance animations
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hero-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes hero-slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes hero-fade-from-left {
+    from { opacity: 0; transform: translateX(-14px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes hero-fade-from-right {
+    from { opacity: 0; transform: translateX(14px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .home-hero-title {
+    animation: hero-fade-in 1.2s ease-out 0.3s both;
+  }
+
+  .home-hero-subtitle {
+    animation: hero-fade-in 1.2s ease-out 0.3s both;
+  }
+
+  .home-hero-ctas {
+    animation: hero-slide-up 1.0s ease-out 0.4s both;
+  }
+
+  // Socials — staggered left-to-right fade
+  .home-hero-social-link:nth-child(1) {
+    animation: hero-fade-from-left 0.8s ease-out 0.75s both;
+  }
+
+  .home-hero-social-link:nth-child(2) {
+    animation: hero-fade-from-left 0.8s ease-out 0.95s both;
+  }
+
+  .home-hero-social-link:nth-child(3) {
+    animation: hero-fade-from-left 0.8s ease-out 1.15s both;
+  }
+
+  // Tags — staggered right-to-left fade (mirrors socials, points toward chevron)
+  .home-hero-tag:nth-child(3) {
+    animation: hero-fade-from-right 0.8s ease-out 0.75s both;
+  }
+
+  .home-hero-tag:nth-child(2) {
+    animation: hero-fade-from-right 0.8s ease-out 0.95s both;
+  }
+
+  .home-hero-tag:nth-child(1) {
+    animation: hero-fade-from-right 0.8s ease-out 1.15s both;
+  }
+
+  // Scroll hint appears shortly after the last bottom element
+  .home-hero-scroll-hint {
+    animation: hero-bounce 2s ease-in-out 1.2s infinite,
+               hero-fade-in 0.8s ease-out 1.2s both;
+  }
+}
+
+.home-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8, 8, 8, 0.3) 0%, transparent 12%),
+    linear-gradient(to right, rgba(8, 8, 8, 0.88) 0%, rgba(8, 8, 8, 0.7) 55%, rgba(8, 8, 8, 0.35) 100%);
 }
 
 .home-hero-eyebrow {
@@ -55,27 +238,59 @@
   flex-wrap: wrap;
 }
 
-// ===== HERO PHOTO =====
-.home-hero-photo-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+// ===== ABOUT PHOTO =====
+.home-about-photo-wrap {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid $border-dark;
 }
 
-.home-hero-photo {
-  width: 340px;
-  height: 340px;
-  border-radius: 50%;
+.home-about-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
-  border: 4px solid $border-dark;
-  box-shadow:
-    0 0 0 10px rgba(137, 214, 204, 0.07),
-    0 24px 64px rgba(0, 0, 0, 0.5);
+  object-position: top center;
+  display: block;
 
   @media (max-width: 991.98px) {
-    width: 220px;
-    height: 220px;
+    aspect-ratio: 3 / 2;
+    object-position: center 20%;
+  }
+}
+
+.home-about-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: $surface;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 4rem;
+    color: rgba(137, 214, 204, 0.15);
+  }
+}
+
+// ===== GRADIENT CTA (hero Contact Me) =====
+.btn-grad {
+  background-image: linear-gradient(to right, #2C3E50 0%, #4CA1AF 51%, #2C3E50 100%);
+  background-size: 200% auto;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.925rem;
+  padding: 0.65rem 1.75rem;
+  border-radius: 2rem;
+  border: none;
+  text-decoration: none;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  transition: background-position 0.5s ease;
+  outline: none;
+
+  &:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
   }
 }
 
@@ -136,6 +351,10 @@
 .home-about {
   padding: 6rem 0;
   border-bottom: 1px solid $border-dark;
+
+  @media (max-width: 991.98px) {
+    padding: 4rem 0;
+  }
 }
 
 .home-about-bio {

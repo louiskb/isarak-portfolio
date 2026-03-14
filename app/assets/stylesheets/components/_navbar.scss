@@ -1,8 +1,8 @@
 .navbar-isarak {
-  // Transparent — blends into the page background
+  // Transparent — pill lives on the inner container
   background-color: transparent;
   border-bottom: none;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 
   // Logo — monogram mark + text
   .navbar-brand {
@@ -72,30 +72,62 @@
     }
   }
 
-  // Center pill container — desktop only
-  // `position: relative; z-index` required because backdrop-filter creates a stacking
-  // context — without it the Blog dropdown is trapped inside the pill's context and
-  // rendered behind page content. The Avatar dropdown (outside the pill) is unaffected.
+  // Keep the dropdown toggle highlighted while the menu is open.
+  // Bootstrap adds .show directly to the <a> toggle element itself (not just the
+  // parent <li>), so we target .nav-link.show rather than .dropdown.show > .nav-link.
+  .nav-link.show,
+  .nav-link.show:focus,
+  .nav-link.show:hover {
+    color: $font-color !important;
+    --bs-nav-link-color: #{$font-color};
+    --bs-nav-link-hover-color: #{$font-color};
+  }
+
+  // Full-width frosted-glass pill — wraps logo + nav links + avatar on desktop.
+  // Applied to the .container so the pill stretches edge-to-edge within Bootstrap's
+  // responsive gutter. backdrop-filter creates a stacking context, so dropdowns
+  // need z-index: 1032+ to escape it — handled below.
   @include media-breakpoint-up(lg) {
+    .container {
+      // background: rgba(255, 255, 255, 0.10);
+      // background: linear-gradient(90deg, hsla(172, 48%, 69%, 0.1) 0%, hsla(0, 0%, 100%, 0.1) 100%);
+      background: linear-gradient(90deg,
+          rgba(48, 197, 210, 0.1),
+          rgba(71, 16, 105, 0.1));
+
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 3rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      // padding-left: 1.70rem;
+      // padding-right: 1.25rem;
+      padding-left: 1.10rem;
+      padding-right: 0.5rem;
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    // Dropdowns must escape the stacking context created by backdrop-filter
+    .dropdown-menu {
+      z-index: 1032;
+    }
+
+    // Center nav links — keep mx-auto centering, no longer a pill themselves
     .nav-links-pill {
-      position: relative;
-      z-index: 1031;
-      background-color: rgba(45, 45, 45, 0.75);
-      border: 1px solid rgba(61, 61, 61, 0.8);
-      border-radius: 2rem;
-      padding: 0.3rem 0.5rem;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      // just layout helpers — pill styling moved to .container
     }
   }
 
   // Dropdown
   .dropdown-menu {
-    background-color: $surface;
-    border: 1px solid $border-dark;
-    border-radius: 0.5rem;
+    background: linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.75rem;
     margin-top: 0.5rem;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 
     .dropdown-item {
       color: rgba(226, 226, 226, 0.8);
@@ -105,7 +137,7 @@
 
       &:hover,
       &:focus {
-        background-color: $secondary-color;
+        background-color: transparent;
         color: $teal;
       }
     }
@@ -115,7 +147,13 @@
     }
   }
 
-  // Contact Me CTA
+  // Slightly smaller gradient button variant for the mobile navbar slot
+  .btn-nav-cta-sm {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.9rem;
+  }
+
+  // Contact Me CTA — kept for any legacy references
   .btn-nav-cta {
     background-color: $teal;
     color: $black;
@@ -170,4 +208,30 @@
     border-radius: 50%;
     display: block;
   }
+}
+
+// Navbar entrance animation — slides down from above on page load
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes navbar-slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .navbar-isarak {
+    animation: navbar-slide-down 1.2s ease-out both;
+  }
+}
+
+// On the home page the hero image is behind the navbar. Same opacity as the
+// default dropdown but with extra blur to compensate for the busy background.
+.page-home .navbar-isarak .dropdown-menu {
+  background: linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15));
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
 }

@@ -5,6 +5,11 @@ body {
   min-height: 100vh;
 }
 
+header {
+  position: relative;
+  z-index: 1031;
+}
+
 main {
   flex: 1;
 }
