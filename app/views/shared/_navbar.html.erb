@@ -19,16 +19,19 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
 
-        <%# Center nav — Portfolio | Research | Teaching | Awards | Blog (dropdown) %>
+        <%# Center nav — Home | Teaching | Research | Service | Awards | Blog (dropdown) %>
         <ul class="navbar-nav mx-auto nav-links-pill align-items-center gap-1">
           <li class="nav-item">
-            <%= link_to "Portfolio", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+            <%= link_to "Home", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Teaching", teachings_path, class: nav_link_class(teachings_path) %>
           </li>
           <li class="nav-item">
             <%= link_to "Research", research_items_path, class: nav_link_class(research_items_path) %>
           </li>
           <li class="nav-item">
-            <%= link_to "Teaching", teachings_path, class: nav_link_class(teachings_path) %>
+            <%= link_to "Service", service_path, class: nav_link_class(service_path) %>
           </li>
           <li class="nav-item">
             <%= link_to "Awards", grant_awards_path, class: nav_link_class(grant_awards_path) %>
@@ -109,12 +112,22 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
+        <%# Visitors: Teaching + Awards link to homepage anchor sections %>
         <ul class="navbar-nav mx-auto nav-links-pill align-items-center gap-1">
           <li class="nav-item">
-            <%= link_to "Portfolio", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+            <%= link_to "Home", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Teaching", root_path(anchor: "teaching"), class: "nav-link" %>
           </li>
           <li class="nav-item">
             <%= link_to "Research", research_items_path, class: nav_link_class(research_items_path) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Service", service_path, class: nav_link_class(service_path) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Awards", root_path(anchor: "awards"), class: "nav-link" %>
           </li>
           <li class="nav-item">
             <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path) %>

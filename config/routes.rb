@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :update]
   root to: "pages#home"
   get "cv/download", to: "pages#download_cv", as: :download_cv
+  get "service", to: "pages#service", as: :service
 
   resources :contacts, only: [ :new, :create ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-14 (session 5: navbar + hero entrance animations polished)
+> Created: 2026-03-08 | Last updated: 2026-03-14 (session 5: animations, navbar reorder, Service page added)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. Next: About section + working down the portfolio page sections.
+Phase 4 complete ✅ — Landing page live with animations. Next session: About section + working down the portfolio page sections.
 
 ---
 
@@ -18,6 +18,9 @@ Phase 4 complete ✅ — Landing page live with animations. Next: About section 
   - [x] Blog dropdown (signed-in) — All Posts / New Post / Create with AI
   - [x] Avatar dropdown (signed-in) — Profile / Logout
   - [x] Bootstrap JS loading fixed — `pin "bootstrap"` + `pin "@popperjs/core"` added to importmap.rb
+  - [x] Reordered: Home | Teaching | Research | Service | Awards | Blog ✅ (2026-03-14)
+  - [x] Visitor nav — Teaching + Awards link to homepage anchor sections (#teaching, #awards) ✅
+  - [x] Service page — static route + PagesController action + placeholder view ✅
 - [x] Footer
 - [x] Add footer render to application layout
 

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :home, :download_cv ]
+  skip_before_action :authenticate_user!, only: [ :home, :download_cv, :service ]
 
   def download_cv
     isara = User.first
@@ -11,6 +11,8 @@ class PagesController < ApplicationController
       redirect_to root_path, alert: "CV not available."
     end
   end
+
+  def service; end
 
   def home
     @isara = User.first
