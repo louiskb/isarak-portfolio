@@ -227,13 +227,21 @@
   }
 }
 
-// Homepage only — navbar pill uses the same gradient as the Contact Me button
+// Homepage only — restore the glassy blur effect on navbar pill and dropdown.
+// Other pages skip blur (solid/transparent base reads cleanly over dark content).
 .page-home .navbar-isarak {
   @include media-breakpoint-up(lg) {
     .container {
-      background:
-        linear-gradient(to right, #2C3E50 0%, #4CA1AF 51%, #2C3E50 100%),
-        #080808;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
+  }
+
+  .dropdown-menu {
+    background:
+      linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15)),
+      transparent;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
   }
 }
