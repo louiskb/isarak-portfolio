@@ -17,8 +17,8 @@ class PagesController < ApplicationController
     @service            = @isara&.service
     @featured_research  = ResearchItem.where(featured: true).order(published_at: :desc, created_at: :desc).limit(4)
     @featured_teachings = Teaching.where(featured: true).limit(3)
-    @featured_grants    = GrantAward.where(featured: true).limit(12)
-    @featured_posts     = BlogPost.published.where(featured: true).order(created_at: :desc).limit(6)
+    @featured_grants    = GrantAward.where(featured: true)
+    @featured_posts     = BlogPost.published.where(featured: true).order(created_at: :desc).limit(3)
     @contact = Contact.new
   end
 end
