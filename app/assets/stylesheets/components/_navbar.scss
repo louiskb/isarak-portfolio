@@ -223,7 +223,7 @@
   }
 }
 
-// Navbar entrance animation — slides down from above on page load
+// Navbar entrance animation — slides down from above on every page load
 @media (prefers-reduced-motion: no-preference) {
   @keyframes navbar-slide-down {
     from {
@@ -237,8 +237,8 @@
     }
   }
 
-  .page-home .navbar-isarak {
-    animation: navbar-slide-down 1.2s ease-out both;
+  .navbar-isarak {
+    animation: navbar-slide-down 0.8s ease-out both;
   }
 }
 
