@@ -152,34 +152,61 @@
 
   // Socials — staggered left-to-right fade
   .home-hero-social-link:nth-child(1) {
-    animation: hero-fade-from-left 0.8s ease-out 0.75s both;
+    animation: hero-fade-from-left 0.65s ease-out 0.55s both;
   }
 
   .home-hero-social-link:nth-child(2) {
-    animation: hero-fade-from-left 0.8s ease-out 0.95s both;
+    animation: hero-fade-from-left 0.65s ease-out 0.72s both;
   }
 
   .home-hero-social-link:nth-child(3) {
-    animation: hero-fade-from-left 0.8s ease-out 1.15s both;
+    animation: hero-fade-from-left 0.65s ease-out 0.90s both;
   }
 
   // Tags — staggered right-to-left fade (mirrors socials, points toward chevron)
   .home-hero-tag:nth-child(3) {
-    animation: hero-fade-from-right 0.8s ease-out 0.75s both;
+    animation: hero-fade-from-right 0.65s ease-out 0.55s both;
   }
 
   .home-hero-tag:nth-child(2) {
-    animation: hero-fade-from-right 0.8s ease-out 0.95s both;
+    animation: hero-fade-from-right 0.65s ease-out 0.72s both;
   }
 
   .home-hero-tag:nth-child(1) {
-    animation: hero-fade-from-right 0.8s ease-out 1.15s both;
+    animation: hero-fade-from-right 0.65s ease-out 0.90s both;
   }
 
   // Scroll hint appears shortly after the last bottom element
   .home-hero-scroll-hint {
-    animation: hero-bounce 2s ease-in-out 1.2s infinite,
-               hero-fade-in 0.8s ease-out 1.2s both;
+    animation: hero-bounce 2s ease-in-out 1.0s infinite,
+               hero-fade-in 0.65s ease-out 1.0s both;
+  }
+}
+
+// ===== ABOUT SECTION SCROLL-REVEAL =====
+// Columns start hidden and slide in from opposite sides when the section
+// enters the viewport. scroll_reveal_controller.js adds .reveal-visible.
+@media (prefers-reduced-motion: no-preference) {
+  [data-scroll-reveal-target="fromLeft"] {
+    opacity: 0;
+    transform: translateX(-48px);
+    transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+
+    &.reveal-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  [data-scroll-reveal-target="fromRight"] {
+    opacity: 0;
+    transform: translateX(48px);
+    transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+
+    &.reveal-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
 

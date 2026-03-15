@@ -1,3 +1,8 @@
+// Smooth anchor scrolling site-wide
+html {
+  scroll-behavior: smooth;
+}
+
 // Sticky footer — body fills the full viewport height; main grows to fill any empty space
 body {
   display: flex;
