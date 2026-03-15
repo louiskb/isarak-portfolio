@@ -124,6 +124,7 @@ class BlogPostsController < ApplicationController
       @blog_post = service.create_from_prompt(
         ai_params[:prompt],
         featured_image: ai_params[:featured_image],
+        image_url: ai_params[:image_url],
         status: status,
         scheduled_at: scheduled_at
       )
@@ -160,6 +161,7 @@ class BlogPostsController < ApplicationController
       keep = ai_params[:keep_featured_image] == "1"
       @blog_post = service.revise_blog_post(@blog_post, ai_params[:prompt],
         featured_image: ai_params[:featured_image],
+        image_url: ai_params[:image_url],
         keep_featured_image: keep,
         status: status,
         scheduled_at: scheduled_at)

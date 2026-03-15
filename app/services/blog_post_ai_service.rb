@@ -15,7 +15,7 @@ class BlogPostAiService
   # status: desired publish state (:draft, :published, or :scheduled) — defaults to :draft.
   # scheduled_at: a Time object; required when status is :scheduled.
   # Returns the BlogPost instance (persisted if successful, unpersisted with errors if not).
-  def create_from_prompt(prompt, featured_image: nil, status: :draft, scheduled_at: nil)
+  def create_from_prompt(prompt, featured_image: nil, image_url: nil, status: :draft, scheduled_at: nil)
     chat = RubyLLM.chat(model: "gpt-4o")
     chat.with_instructions(creation_system_prompt)
     chat.with_schema(BlogPostSchema)
@@ -34,6 +34,7 @@ class BlogPostAiService
       title: parsed["title"],
       blog_excerpt: parsed["excerpt"],
       blog_post_erb_content: full_content,
+      image_url: image_url,
       ai_generated: true,
       status: status,
       scheduled_at: scheduled_at
@@ -50,7 +51,7 @@ class BlogPostAiService
   # keep_featured_image: if true, preserve the existing attached image and skip Unsplash.
   # Priority: new upload > keep_featured_image flag > Unsplash (default, replaces any existing image).
   # Returns the BlogPost instance.
-  def revise_blog_post(blog_post, revision_prompt, featured_image: nil, keep_featured_image: false, status: nil, scheduled_at: nil)
+  def revise_blog_post(blog_post, revision_prompt, featured_image: nil, image_url: nil, keep_featured_image: false, status: nil, scheduled_at: nil)
     current_content = if blog_post.blog_post_erb_content.present?
       blog_post.blog_post_erb_content
     elsif blog_post.body.present?
@@ -89,6 +90,7 @@ class BlogPostAiService
       title: parsed["title"],
       blog_excerpt: parsed["excerpt"],
       blog_post_erb_content: full_content,
+      image_url: image_url,
       ai_generated: true,
       human_generated: true
     }
