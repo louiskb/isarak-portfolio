@@ -466,6 +466,175 @@
 }
 
 // ===== SHARED SECTION PATTERNS =====
+// ===== TEACHING SPOTLIGHT =====
+
+// Grid stacking — all panels occupy the same cell; opacity controls visibility.
+// Only the image wrapper drives height via aspect-ratio.
+// The card wrapper stretches to match via align-items-stretch on the row.
+.teaching-spotlight-cards {
+  display: grid;
+  width: 100%;
+  height: 100%;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.teaching-spotlight-images {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.teaching-spotlight-card {
+  background: $surface;
+  border: 1px solid $border-dark;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  // Fill the wrapper — wrapper drives the aspect-ratio, not the card itself
+  height: 100%;
+
+  &.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.teaching-spotlight-card-body {
+  flex: 1;
+}
+
+.teaching-spotlight-title {
+  font-family: $headers-font;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: $font-color;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.teaching-spotlight-desc {
+  font-size: 0.9rem;
+  color: $font-muted;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.teaching-spotlight-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid $border-dark;
+}
+
+.teaching-spotlight-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.teaching-spotlight-meta-primary {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $font-color;
+  margin: 0;
+}
+
+.teaching-spotlight-meta-secondary {
+  font-size: 0.75rem;
+  color: $font-muted;
+  margin: 0;
+}
+
+.teaching-spotlight-arrows {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+// Image panels — same grid-stacking + fade pattern
+.teaching-spotlight-image-panel {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  &.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.teaching-spotlight-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 1rem;
+}
+
+.teaching-spotlight-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: $surface;
+  border: 1px solid $border-dark;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $font-muted;
+  font-size: 3rem;
+}
+
+// Bottom pills
+.teaching-spotlight-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.teaching-spotlight-pill {
+  background: transparent;
+  border: 1px solid $border-dark;
+  border-radius: 2rem;
+  color: $font-muted;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    border-color: $teal;
+    color: $teal;
+  }
+
+  &.is-active {
+    border-color: $teal;
+    background-color: $teal-subtle;
+    color: $teal;
+  }
+}
+
+// =====
+
 .home-section {
   padding: 5rem 0;
   border-bottom: 1px solid $border-dark;
@@ -613,12 +782,10 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.25s ease;
+  transition: border-color 0.2s ease;
 
   &:hover {
     border-color: rgba(137, 214, 204, 0.35);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-    transform: translateY(-4px);
   }
 }
 
@@ -704,6 +871,145 @@
 
   &:hover {
     opacity: 0.8;
+    color: $teal;
+  }
+}
+
+// ===== AWARDS SLIDER =====
+.awards-slider-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+
+  // Hide scrollbar — navigation is via arrows
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.awards-slider-card {
+  flex: 0 0 360px;
+  scroll-snap-align: start;
+  background: $surface;
+  border: 1px solid $border-dark;
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: rgba(137, 214, 204, 0.3);
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex: 0 0 calc(100vw - 3rem);
+  }
+}
+
+.awards-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $teal-subtle;
+  color: $teal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.awards-card-category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $teal;
+}
+
+.awards-card-title {
+  font-family: $headers-font;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $font-color;
+  line-height: 1.45;
+  margin: 0;
+  flex: 1;
+}
+
+.awards-card-desc {
+  font-size: 0.875rem;
+  color: $font-muted;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.awards-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid $border-dark;
+}
+
+.awards-card-footer-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $teal-subtle;
+  color: $teal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+}
+
+.awards-card-footer-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $font-color;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.awards-card-footer-year {
+  font-size: 0.75rem;
+  color: $font-muted;
+  margin: 0;
+}
+
+// Slider nav arrows
+.awards-slider-nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.awards-slider-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid $border-dark;
+  color: $font-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: $teal;
     color: $teal;
   }
 }

@@ -1,5 +1,5 @@
 
-<%= simple_form_for(@teaching, html: { data: { controller: "load-button" } }) do |f| %>
+<%= simple_form_for(@teaching, html: { multipart: true, data: { controller: "load-button" } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -23,10 +23,16 @@
           as: :text,
           input_html: { rows: 4 } %>
 
+    <%= f.input :image,
+          as: :file,
+          label: "Course image (optional)",
+          hint: "Upload a JPG or PNG. Shown on the homepage spotlight. Overrides the image URL below if both are set.",
+          input_html: { accept: "image/*", class: "form-control form-control-dark" } %>
+
     <%= f.input :image_url,
           label: "Course image URL (optional)",
           placeholder: "https://example.com/image.jpg",
-          hint: "Paste a direct link to a JPEG or PNG image. This will appear on your Teaching page. Leave blank to show no image." %>
+          hint: "Fallback if no image is uploaded above." %>
 
     <%= f.input :featured,
           label: "Featured item",

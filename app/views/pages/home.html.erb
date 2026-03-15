@@ -149,10 +149,12 @@
   </div>
 </section>
 
-<%# ===== FEATURED TEACHING ===== %>
+<%# ===== FEATURED TEACHING SPOTLIGHT ===== %>
 <% if @featured_teachings.any? %>
-  <section class="home-section" id="teaching">
+  <section class="home-section" id="teaching" data-controller="teaching-spotlight">
     <div class="container">
+
+      <%# Header row %>
       <div class="d-flex justify-content-between align-items-end mb-5">
         <div>
           <p class="home-section-label">Education</p>
@@ -161,32 +163,90 @@
         <%= link_to "View all &rarr;".html_safe, teachings_path, class: "home-section-viewall" %>
       </div>
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
-        <% @featured_teachings.each do |item| %>
-          <div class="col">
-            <article class="home-resource-card">
-              <% if item.image_url.present? %>
-                <div class="home-resource-card-img-wrap">
-                  <img src="<%= item.image_url %>" alt="<%= item.title %>" class="home-resource-card-img">
-                </div>
-              <% end %>
-              <h3 class="home-resource-card-title"><%= item.title %></h3>
-              <% if item.institution.present? || item.year.present? %>
-                <p class="home-resource-card-meta">
-                  <% if item.institution.present? %>
-                    <i class="fa-solid fa-graduation-cap me-1"></i><%= item.institution %>
+      <%# Spotlight — card left, image right %>
+      <div class="row g-4 g-lg-5 align-items-stretch">
+
+        <%# Left: stacked text cards %>
+        <div class="col-lg-5">
+          <div class="teaching-spotlight-cards">
+            <% @featured_teachings.each_with_index do |item, i| %>
+              <div class="teaching-spotlight-card <%= i == 0 ? "is-active" : "" %>"
+                   data-teaching-spotlight-target="card"
+                   data-index="<%= i %>">
+
+                <div class="teaching-spotlight-card-body">
+                  <p class="home-section-label mb-2">
+                    <i class="fa-solid fa-chalkboard-user me-1"></i> Course
+                  </p>
+                  <h3 class="teaching-spotlight-title"><%= item.title %></h3>
+                  <% if item.description.present? %>
+                    <p class="teaching-spotlight-desc"><%= item.description %></p>
                   <% end %>
-                  <% if item.institution.present? && item.year.present? %> &middot; <% end %>
-                  <% if item.year.present? %><%= item.year %><% end %>
-                </p>
-              <% end %>
-              <% if item.description.present? %>
-                <p class="home-resource-card-desc"><%= item.description %></p>
-              <% end %>
-            </article>
+                </div>
+
+                <div class="teaching-spotlight-card-footer">
+                  <div class="teaching-spotlight-meta">
+                    <% if item.institution.present? %>
+                      <p class="teaching-spotlight-meta-primary"><%= item.institution %></p>
+                    <% end %>
+                    <% if item.year.present? %>
+                      <p class="teaching-spotlight-meta-secondary"><%= item.year %></p>
+                    <% end %>
+                  </div>
+                  <% if @featured_teachings.size > 1 %>
+                    <div class="teaching-spotlight-arrows">
+                      <button class="awards-slider-btn" data-action="click->teaching-spotlight#prev" aria-label="Previous">
+                        <i class="fa-solid fa-arrow-left"></i>
+                      </button>
+                      <button class="awards-slider-btn" data-action="click->teaching-spotlight#next" aria-label="Next">
+                        <i class="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  <% end %>
+                </div>
+
+              </div>
+            <% end %>
           </div>
-        <% end %>
+        </div>
+
+        <%# Right: stacked images %>
+        <div class="col-lg-7">
+          <div class="teaching-spotlight-images">
+            <% @featured_teachings.each_with_index do |item, i| %>
+              <div class="teaching-spotlight-image-panel <%= i == 0 ? "is-active" : "" %>"
+                   data-teaching-spotlight-target="image"
+                   data-index="<%= i %>">
+                <% if item.image.attached? %>
+                  <%= image_tag item.image, class: "teaching-spotlight-img", alt: item.title %>
+                <% elsif item.image_url.present? %>
+                  <img src="<%= item.image_url %>" class="teaching-spotlight-img" alt="<%= item.title %>">
+                <% else %>
+                  <div class="teaching-spotlight-img-placeholder">
+                    <i class="fa-solid fa-chalkboard"></i>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
       </div>
+
+      <%# Bottom pills — one per teaching %>
+      <% if @featured_teachings.size > 1 %>
+        <div class="teaching-spotlight-pills mt-5">
+          <% @featured_teachings.each_with_index do |item, i| %>
+            <button class="teaching-spotlight-pill <%= i == 0 ? "is-active" : "" %>"
+                    data-teaching-spotlight-target="pill"
+                    data-action="click->teaching-spotlight#select"
+                    data-index="<%= i %>">
+              <%= truncate(item.title, length: 40) %>
+            </button>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
   </section>
 <% end %>
@@ -238,60 +298,85 @@
 <% if @service&.description.present? %>
   <section class="home-section" id="service">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
+      <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
           <p class="home-section-label">Academic Service</p>
-          <h2 class="home-section-title mb-4">Service</h2>
-          <div class="home-about-text trix-content">
-            <%= @service.description %>
-          </div>
-          <% if user_signed_in? %>
-            <div class="mt-4">
-              <%= link_to "Edit Service", edit_service_path, class: "btn btn-resource-edit" %>
-            </div>
-          <% end %>
+          <h2 class="home-section-title">Service</h2>
         </div>
+        <% if user_signed_in? %>
+          <%= link_to "View service &rarr;".html_safe, edit_service_path, class: "home-section-viewall" %>
+        <% end %>
+      </div>
+      <div class="home-about-text trix-content">
+        <%= @service.description %>
       </div>
     </div>
   </section>
 <% end %>
 
-<%# ===== FEATURED GRANTS & AWARDS ===== %>
+<%# ===== FEATURED GRANTS & AWARDS SLIDER ===== %>
 <% if @featured_grants.any? %>
-  <section class="home-section" id="awards">
+  <section class="home-section" id="awards" data-controller="awards-slider">
     <div class="container">
       <div class="d-flex justify-content-between align-items-end mb-5">
         <div>
           <p class="home-section-label">Recognition</p>
           <h2 class="home-section-title">Grants &amp; Awards</h2>
         </div>
-        <% if user_signed_in? %>
-          <%= link_to "View all &rarr;".html_safe, grant_awards_path, class: "home-section-viewall" %>
-        <% end %>
+        <div class="awards-slider-nav">
+          <button class="awards-slider-btn" data-action="click->awards-slider#prev" aria-label="Previous">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button class="awards-slider-btn" data-action="click->awards-slider#next" aria-label="Next">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+      <div class="awards-slider-track" data-awards-slider-target="track">
         <% @featured_grants.each do |item| %>
-          <div class="col">
-            <article class="home-resource-card">
-              <span class="resource-card-category resource-badge-<%= item.category %>">
-                <%= item.category.capitalize %>
-              </span>
-              <h3 class="home-resource-card-title"><%= item.title %></h3>
-              <% if item.awarding_body.present? || item.year.present? %>
-                <p class="home-resource-card-meta">
-                  <% if item.awarding_body.present? %><%= item.awarding_body %><% end %>
-                  <% if item.awarding_body.present? && item.year.present? %> &middot; <% end %>
-                  <% if item.year.present? %><%= item.year %><% end %>
-                </p>
-              <% end %>
-              <% if item.description.present? %>
-                <p class="home-resource-card-desc"><%= item.description %></p>
-              <% end %>
-            </article>
+          <div class="awards-slider-card">
+
+            <%# Top — icon + category label %>
+            <div class="d-flex align-items-center gap-2">
+              <div class="awards-card-icon">
+                <i class="fa-solid <%= item.category == "award" ? "fa-trophy" : "fa-hand-holding-dollar" %>"></i>
+              </div>
+              <span class="awards-card-category"><%= item.category.capitalize %></span>
+            </div>
+
+            <%# Title %>
+            <h3 class="awards-card-title"><%= item.title %></h3>
+
+            <%# Description %>
+            <% if item.description.present? %>
+              <p class="awards-card-desc"><%= item.description %></p>
+            <% end %>
+
+            <%# Footer — awarding body + year %>
+            <div class="awards-card-footer">
+              <div class="awards-card-footer-icon">
+                <i class="fa-solid fa-building-columns"></i>
+              </div>
+              <div>
+                <% if item.awarding_body.present? %>
+                  <p class="awards-card-footer-name"><%= item.awarding_body %></p>
+                <% end %>
+                <% if item.year.present? %>
+                  <p class="awards-card-footer-year"><%= item.year %></p>
+                <% end %>
+              </div>
+            </div>
+
           </div>
         <% end %>
       </div>
+
+      <% if user_signed_in? %>
+        <div class="mt-4">
+          <%= link_to "View all &rarr;".html_safe, grant_awards_path, class: "home-section-viewall" %>
+        </div>
+      <% end %>
     </div>
   </section>
 <% end %>

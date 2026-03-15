@@ -29,6 +29,11 @@
         <% @teachings.each do |item| %>
           <div class="col">
             <article class="resource-card card">
+              <% if item.image.attached? %>
+                <%= image_tag item.image, class: "resource-card-img", alt: item.title %>
+              <% elsif item.image_url.present? %>
+                <img src="<%= item.image_url %>" class="resource-card-img" alt="<%= item.title %>">
+              <% end %>
               <div class="card-body">
                 <h2 class="resource-card-title"><%= item.title %></h2>
 

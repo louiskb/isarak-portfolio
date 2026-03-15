@@ -64,6 +64,14 @@
 }
 
 // ===== CARD =====
+// Image at the top of a resource card (Teaching index)
+.resource-card-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
 .resource-card {
   background-color: $surface !important;
   border: 1px solid $border-dark !important;
