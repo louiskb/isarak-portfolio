@@ -91,6 +91,7 @@
 
   @media (max-width: 767.98px) {
     justify-content: center;
+    order: 2;
   }
 }
 
@@ -105,30 +106,29 @@
   letter-spacing: 0.04em;
 }
 
-// Mobile: in-flow below the bottom row, centered with padding
-// Desktop: absolute-positioned at bottom-center of the hero
+// Inline with socials + tags inside .home-hero-bottom on both breakpoints.
+// Desktop: space-between places it centered between socials and tags.
+// Mobile: order 3 pushes it below tags (order 2), with extra top margin.
 .home-hero-scroll-hint {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem 0 2rem;
   color: rgba(226, 226, 226, 0.5);
   font-size: 1.25rem;
   text-decoration: none;
   z-index: 2;
   transition: color 0.2s ease;
+  align-self: flex-end;
 
   &:hover {
     color: $teal;
   }
 
-  @include media-breakpoint-up(md) {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0;
-    display: block;
+  @media (max-width: 767.98px) {
+    order: 3;
+    align-self: center;
+    margin-top: 1.5rem;
+    padding-bottom: 0.5rem;
   }
 }
 
@@ -205,15 +205,10 @@
     animation: hero-fade-from-right 0.65s ease-out 0.90s both;
   }
 
-  // Scroll hint — mobile uses vertical-only bounce; desktop uses the absolute version
+  // Scroll hint — vertical bounce only (element is in-flow on all breakpoints now)
   .home-hero-scroll-hint {
     animation: hero-bounce-v 2s ease-in-out 1.0s infinite,
                hero-fade-in 0.65s ease-out 1.0s both;
-
-    @include media-breakpoint-up(md) {
-      animation: hero-bounce 2s ease-in-out 1.0s infinite,
-                 hero-fade-in 0.65s ease-out 1.0s both;
-    }
   }
 }
 

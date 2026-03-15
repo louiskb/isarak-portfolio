@@ -35,17 +35,18 @@
           <i class="fa-brands fa-x-twitter"></i>
         </a>
       </div>
+      <%# Desktop: center item in the bottom row (space-between puts it between socials + tags) %>
+      <%# Mobile: order 3 pushes it below tags (order 2) via CSS %>
+      <a href="#about" class="home-hero-scroll-hint" aria-label="Scroll to About">
+        <i class="fa-solid fa-chevron-down"></i>
+      </a>
+
       <div class="home-hero-tags">
         <span class="home-hero-tag">Urban Planner</span>
         <span class="home-hero-tag">Educator</span>
         <span class="home-hero-tag">Researcher</span>
       </div>
     </div>
-
-    <%# Scroll hint — absolute on desktop, in-flow on mobile %>
-    <a href="#about" class="home-hero-scroll-hint" aria-label="Scroll to About">
-      <i class="fa-solid fa-chevron-down"></i>
-    </a>
 
   </div>
 </section>
