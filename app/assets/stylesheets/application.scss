@@ -12,13 +12,14 @@
 @import "pages/index";
 
 // ===== GLOBAL PAGE ANIMATIONS =====
-// Main content fades in on every page load / Turbo navigation.
-// Finishes in 0.45s so it completes before any section-level animations begin.
+// Main content glides in on every page load / Turbo navigation.
+// Homepage gets a shorter duration — the hero has its own elaborate animations.
+// All other pages use a slower, more graceful glide.
 @media (prefers-reduced-motion: no-preference) {
   @keyframes page-fade-in {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(16px);
     }
 
     to {
@@ -28,6 +29,12 @@
   }
 
   main {
-    animation: page-fade-in 0.45s ease-out both;
+    animation: page-fade-in 0.7s ease-out both;
+  }
+
+  // Homepage: faster duration — hero entrance animations take over
+  .page-home main {
+    animation-duration: 0.45s;
+    animation-name: page-fade-in;
   }
 }

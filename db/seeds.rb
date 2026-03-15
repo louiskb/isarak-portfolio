@@ -322,4 +322,29 @@ blog_posts_data.each do |attrs|
   puts "  - Blog post: #{attrs[:title][0..60]}..."
 end
 
+# ===== SERVICE =====
+# Single rich-text record — belongs_to :user via has_one :service
+puts "Seeding service..."
+
+service = user.service || user.build_service
+service.description = <<~HTML
+  <h3>University Committees</h3>
+  <p>Member, UNE Faculty of Humanities, Arts, Social Sciences and Education (HASSE) Academic Board (2023–present). Member, UNE School of Humanities Planning and Assessment Committee (2022–present). Participant, UNE Curriculum Review Working Group for the Bachelor of Urban and Regional Planning (2023–2024).</p>
+
+  <h3>Peer Review</h3>
+  <p>Ad-hoc peer reviewer for <em>Urban Policy and Research</em>, <em>Australian Planner</em>, <em>Journal of Transport Geography</em>, and <em>Housing Studies</em>. Reviewer for the State of Australian Cities Conference (SOAC) annual proceedings (2022–present).</p>
+
+  <h3>Professional Bodies</h3>
+  <p>Member, Planning Institute of Australia (PIA) — NSW Chapter. Participant, PIA Education Advisory Panel (2023–present), contributing to national curriculum accreditation standards for planning degree programs. Member, Australian and New Zealand Regional Science Association (ANZRSAI).</p>
+
+  <h3>HDR Supervision</h3>
+  <p>Principal supervisor, one PhD candidate (Urban Governance, UNE, 2023–present). Co-supervisor, one Masters by Research candidate (Housing Policy, UNE, 2024–present). Panel member, two PhD milestone reviews (2022–2023).</p>
+
+  <h3>Industry Engagement</h3>
+  <p>Advisory contributor, NSW Department of Planning, Housing and Infrastructure — Regional Planning Futures Project (2024). Guest speaker, Planning Institute of Australia NSW Chapter seminar series on cross-border governance (2023). Invited panellist, Australian Airport Association Annual Conference (2022).</p>
+HTML
+
+service.save!
+puts "  - Service record ready."
+
 puts "Seed complete."

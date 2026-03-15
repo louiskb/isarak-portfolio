@@ -223,7 +223,8 @@
   }
 }
 
-// Navbar entrance animation — slides down from above on every page load
+// Navbar entrance animation — slides down on every page load.
+// Homepage gets the quicker duration; all other pages use a slower, gliding timing.
 @media (prefers-reduced-motion: no-preference) {
   @keyframes navbar-slide-down {
     from {
@@ -238,7 +239,11 @@
   }
 
   .navbar-isarak {
-    animation: navbar-slide-down 0.8s ease-out both;
+    animation: navbar-slide-down 1.1s ease-out both;
+  }
+
+  .page-home .navbar-isarak {
+    animation-duration: 0.8s;
   }
 }
 
