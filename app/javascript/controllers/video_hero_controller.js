@@ -2,73 +2,77 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="video-hero"
 //
-// Scroll-scrubs the hero background video so scrolling through the hero
-// drives video.currentTime — creating a scroll-triggered time lapse effect.
+// Drives the hero background video by controlling playbackRate (not currentTime).
+// Seeking via currentTime is inherently janky because video codecs must decode
+// from the nearest keyframe — playbackRate lets the browser stream frames
+// sequentially, which is buttery smooth.
 //
-// The full video completes over 70% of the hero height so the transition
-// feels fast and dramatic rather than stretched across the full scroll.
+// Scroll down → video plays forward at scroll-proportional speed.
+// Scroll stops → video pauses (150 ms debounce).
+// Scroll up → ignored (time-lapse only makes sense forward).
 //
 // Falls back gracefully to the static background-image if:
 //   - The video fails to load / errors
 //   - The user prefers reduced motion
-//
-// Production note: for best performance host the video on Cloudinary
-// (CDN delivery, adaptive streaming) and update the <source src>.
 export default class extends Controller {
   static targets = ["video"];
 
   connect() {
-    // Respect reduced-motion preference — static image only
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       this._hideVideo();
       return;
     }
 
+    this._lastScrollY = window.scrollY;
+    this._lastScrollTime = performance.now();
+    this._stopTimer = null;
     this._ticking = false;
-    this._boundScrollHandler = this._onScroll.bind(this);
 
-    this.videoTarget.addEventListener(
-      "loadedmetadata",
-      this._onLoaded.bind(this)
-    );
+    this.videoTarget.addEventListener("canplay", this._onLoaded.bind(this));
     this.videoTarget.addEventListener("error", this._hideVideo.bind(this));
   }
 
   disconnect() {
-    window.removeEventListener("scroll", this._boundScrollHandler);
+    window.removeEventListener("scroll", this._boundScroll);
+    clearTimeout(this._stopTimer);
   }
 
   _onLoaded() {
-    // Fade in the video over the fallback image
     this.element.classList.add("hero-video-ready");
-    // Set correct time immediately in case the page loaded mid-scroll
-    this._updateTime();
-    window.addEventListener("scroll", this._boundScrollHandler, {
-      passive: true,
-    });
+    this._boundScroll = this._onScroll.bind(this);
+    window.addEventListener("scroll", this._boundScroll, { passive: true });
   }
 
   _onScroll() {
-    if (!this._ticking) {
-      requestAnimationFrame(() => {
-        this._updateTime();
-        this._ticking = false;
-      });
-      this._ticking = true;
-    }
-  }
+    if (this._ticking) return;
+    this._ticking = true;
 
-  _updateTime() {
-    // Scrollable range = outer section height minus one viewport height.
-    // At scroll = 0 the sticky panel just entered view; at scroll = scrollRange
-    // the sticky panel is about to leave and the about section appears.
-    const scrollRange = this.element.offsetHeight - window.innerHeight;
-    const scrolled = Math.max(
-      0,
-      -this.element.getBoundingClientRect().top
-    );
-    const progress = Math.min(1, scrolled / scrollRange);
-    this.videoTarget.currentTime = progress * this.videoTarget.duration;
+    requestAnimationFrame(() => {
+      this._ticking = false;
+
+      const now = performance.now();
+      const currentY = window.scrollY;
+      const deltaY = currentY - this._lastScrollY;
+      const deltaT = Math.max(1, now - this._lastScrollTime);
+
+      this._lastScrollY = currentY;
+      this._lastScrollTime = now;
+
+      if (deltaY > 0) {
+        // Scrolling down — map velocity (px/ms) to a playback rate.
+        // Tune the multiplier to taste: higher = video reacts more to fast scrolls.
+        const velocity = deltaY / deltaT;
+        const rate = Math.min(6, Math.max(0.5, velocity * 25));
+        this.videoTarget.playbackRate = rate;
+        this.videoTarget.play().catch(() => {});
+      }
+
+      // Pause the video shortly after scrolling stops
+      clearTimeout(this._stopTimer);
+      this._stopTimer = setTimeout(() => {
+        this.videoTarget.pause();
+      }, 150);
+    });
   }
 
   _hideVideo() {
