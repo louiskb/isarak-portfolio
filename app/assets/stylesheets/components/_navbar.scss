@@ -119,11 +119,12 @@
     }
   }
 
-  // Dropdown
+  // Dropdown — gradient sits on a solid black base so it always looks the same
+  // regardless of what page content is behind the menu.
   .dropdown-menu {
-    background: linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15));
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background:
+      linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15)),
+      #080808;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 0.75rem;
     margin-top: 0.5rem;
@@ -228,10 +229,3 @@
   }
 }
 
-// On the home page the hero image is behind the navbar. Same opacity as the
-// default dropdown but with extra blur to compensate for the busy background.
-.page-home .navbar-isarak .dropdown-menu {
-  background: linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15));
-  backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
-}
