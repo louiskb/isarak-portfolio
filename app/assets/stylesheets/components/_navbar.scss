@@ -245,6 +245,21 @@
   }
 }
 
+// Iron-wall rule: non-homepage pages NEVER get glass, blur, or grey tint — no exceptions.
+// Guards against Turbo Drive cached-page snapshots bleeding the homepage glass state.
+body:not(.page-home) .navbar-isarak {
+  @include media-breakpoint-up(lg) {
+    .container {
+      background:
+        linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
+        #080808 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      transition: none !important;
+    }
+  }
+}
+
 // Homepage — frosted glass pill, only while the user hasn't scrolled past 30% of the hero.
 // The :not() means these styles switch off the moment JS adds .header--scrolled to <header>,
 // so no override battle is needed for the scrolled state below.

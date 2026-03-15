@@ -17,11 +17,17 @@ export default class extends Controller {
     this._boundScroll = this._onScroll.bind(this)
     window.addEventListener("scroll", this._boundScroll, { passive: true })
     this._onScroll()
+
+    // Before Turbo snapshots the page for its cache, reset the scrolled class so
+    // the cached snapshot is always in the clean unscrolled state.
+    this._boundBeforeCache = () => this.element.classList.remove("header--scrolled")
+    document.addEventListener("turbo:before-cache", this._boundBeforeCache)
   }
 
   disconnect() {
     this.resizeObserver?.disconnect()
     window.removeEventListener("scroll", this._boundScroll)
+    document.removeEventListener("turbo:before-cache", this._boundBeforeCache)
   }
 
   update() {
