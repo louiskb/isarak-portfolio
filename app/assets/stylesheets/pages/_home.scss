@@ -249,11 +249,11 @@
     }
   }
 
-  // Blog cards — slide up from below
+  // Slide up from below — used on blog cards, teaching row, and awards slider
   [data-scroll-reveal-target="fromBottom"] {
     opacity: 0;
     transform: translateY(36px);
-    transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+    transition: opacity 0.75s ease-out, transform 0.75s ease-out;
 
     &.reveal-visible {
       opacity: 1;
