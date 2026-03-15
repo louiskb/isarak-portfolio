@@ -32,7 +32,7 @@
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 
   &.back-to-top--visible {
     opacity: 1;

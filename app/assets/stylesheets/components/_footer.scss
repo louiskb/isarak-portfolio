@@ -52,6 +52,10 @@
       &:hover {
         color: $teal;
       }
+
+      @media (max-width: 479.98px) {
+        font-size: 0.9rem;
+      }
     }
   }
 }
