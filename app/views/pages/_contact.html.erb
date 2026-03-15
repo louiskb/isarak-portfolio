@@ -26,7 +26,8 @@
           <%# Honeypot spam protection %>
           <%= invisible_captcha %>
           <%= f.button :submit, "Send Message",
-              data: { action: "click->load-button#loader" },
+              data: { action: "click->load-button#loader",
+                      load_button_loading_text_value: "Sending message..." },
               class: "btn btn-grad mt-4 mb-4" %>
         <% end %>
       </div>

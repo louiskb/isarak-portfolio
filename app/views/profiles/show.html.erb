@@ -105,7 +105,8 @@
             <div data-load-button-target="buttons" class="d-flex gap-3 align-items-center mb-4">
               <%= f.button :submit, "Save changes",
                     class: "btn btn-profile-save",
-                    data: { action: "click->load-button#showSpinner" } %>
+                    data: { action: "click->load-button#showSpinner",
+                            load_button_loading_text_value: "Saving changes..." } %>
             </div>
           </div>
 
