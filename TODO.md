@@ -12,7 +12,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Bootstrap color scheme (teal, grey, white)
 - [x] Google Fonts (Playfair Display + Inter)
 - [x] CLAUDE.md, README.md
-- [ ] Confirm .gitignore covers `.env`, `.mcp.json` tokens, `settings.local.json`
+- [x] Confirm .gitignore covers `.env`, `.mcp.json` tokens, `settings.local.json` — `.env*` double-covered; `.mcp.json` has no tokens (safe to commit); `.claude/settings.local.json` added ✅ (2026-03-15)
 - [x] Navbar
   - [x] Logo moved to left side
   - [x] Blog dropdown (signed-in) — All Posts / New Post / Create with AI
@@ -43,7 +43,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [ ] CV page-1 preview — use Cloudinary's PDF-to-image transformation to show a thumbnail of page 1 of Isara's CV (e.g. on landing page or a dedicated CV section)
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
 - [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented
-- [ ] Admin management views — restyle scaffold views to match dark theme
+- [x] Admin management views — restyle scaffold views to match dark theme
 - [x] Seed data for development — 6 teachings, 8 research, 8 grants/awards, 6 blog posts, 1 service; seeds have descriptive puts output ✅ (2026-03-15)
 - [x] Contact form — model, controller, mailer, routes, invisible_captcha spam protection, load-button Stimulus controller, form partial wired to homepage
   - [x] Configure iCloud SMTP — `smtp.mail.me.com`, port 587, `authentication: :login`, ENV vars wired ✅ (2026-03-15)
@@ -119,8 +119,8 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Back-to-top chevron button — fixed bottom-right, appears at 25% scroll, clears footer on mobile, safe-area inset aware ✅ (2026-03-15)
 - [x] btn-grad border — subtle white border on all gradient buttons (Contact Me, Send Message) ✅ (2026-03-15)
 - [ ] Scroll-triggered animations for below-fold sections (AOS or CSS)
-- [ ] About section — wire up real content, photo, bio, research interest tags, CV download
-- [ ] Resource sections — Featured Research, Teaching, Grants & Awards, Blog posts (review layout + content)
+- [x] About section — wire up real content, photo, bio, research interest tags, CV download
+- [x] Resource sections — Featured Research, Teaching, Grants & Awards, Blog posts (review layout + content)
 
 ---
 
