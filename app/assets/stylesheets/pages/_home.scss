@@ -107,6 +107,11 @@
   padding: 0.3rem 0.85rem;
   border-radius: 2rem;
   letter-spacing: 0.04em;
+
+  @media (max-width: 479.98px) {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.65rem;
+  }
 }
 
 // Inline with socials + tags inside .home-hero-bottom on both breakpoints.
@@ -302,6 +307,8 @@
   line-height: 1.15;
   margin-bottom: 1.5rem;
   letter-spacing: -0.01em;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .home-hero-subtitle {
@@ -310,6 +317,13 @@
   line-height: 1.75;
   max-width: 52ch;
   margin-bottom: 2.5rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  @media (max-width: 479.98px) {
+    max-width: 100%;
+    font-size: 1rem;
+  }
 }
 
 .home-hero-ctas {
@@ -759,6 +773,13 @@
 
   @media (max-width: 767.98px) {
     padding: 3rem 0 4rem;
+  }
+
+  // Enforce 44px minimum touch targets on all form inputs — WCAG 2.5.5.
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    min-height: 44px;
   }
 }
 
