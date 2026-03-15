@@ -265,6 +265,7 @@ blog_posts_data = [
     status: :published,
     featured: true,
     ai_generated: false,
+    image_url: "https://picsum.photos/seed/blog-airport/800/450",
     created_at: 3.months.ago,
     body_html: "<h2>The Challenge of Jurisdictional Overlap</h2><p>Aviation infrastructure does not conform to state borders, yet planning policy in Australia remains stubbornly jurisdictional. My doctoral research examined how Gold Coast Airport — straddling the Queensland–New South Wales boundary — has created a complex governance landscape that neither state is fully equipped to manage alone.</p><h2>Key Findings</h2><p>The case study revealed three recurring tensions: economic competition between councils, inconsistent land-use zoning on either side of the border, and a near-total absence of formal intergovernmental coordination mechanisms.</p><h2>Implications for Australian Planning</h2><p>If Australia is serious about unlocking the economic potential of secondary airports, we need cross-border governance frameworks that match the spatial reality of airport-driven growth.</p>"
   },
@@ -274,6 +275,7 @@ blog_posts_data = [
     status: :published,
     featured: true,
     ai_generated: false,
+    image_url: "https://picsum.photos/seed/blog-housing/800/450",
     created_at: 2.months.ago,
     body_html: "<h2>A Crisis Hiding in Plain Sight</h2><p>Sydney's median house price-to-income ratio now sits above 13 — a figure that would have seemed absurd to planners in the 1980s. Yet housing affordability is still treated as primarily a market problem, with planning cast in a supporting role at best.</p><h2>The Planning Dimension</h2><p>Zoning restrictions, heritage overlays, development contribution frameworks, and slow assessment timelines all act as supply-side constraints that compound affordability pressures. These are planning failures, and they require planning solutions.</p><h2>What Needs to Change</h2><p>Evidence from international comparisons — particularly Tokyo's liberalised zoning and Vienna's social housing model — suggests that planning systems can and do shape housing outcomes at scale.</p>"
   },
@@ -283,6 +285,7 @@ blog_posts_data = [
     status: :published,
     featured: true,
     ai_generated: false,
+    image_url: "https://picsum.photos/seed/blog-education/800/450",
     created_at: 6.weeks.ago,
     body_html: "<h2>The Problem with the 5,000-Word Report</h2><p>Ask any practising urban planner how often they submit a 5,000-word written report in their day-to-day work. The answer, almost universally, is: never. Yet this remains the dominant assessment format in Australian planning schools.</p><h2>What Practitioners Actually Do</h2><p>Planners present to councils, brief ministers, facilitate community engagement workshops, and prepare development assessment reports — none of which map neatly onto a traditional academic essay.</p><h2>Alternatives Worth Trialling</h2><p>In my recent studio units I have experimented with oral examinations, policy briefing notes, community consultation simulations, and peer-assessed design charrettes. The results have been encouraging: students engage more deeply when the output format feels professionally authentic.</p>"
   },
@@ -292,6 +295,7 @@ blog_posts_data = [
     status: :published,
     featured: false,
     ai_generated: false,
+    image_url: "https://picsum.photos/seed/blog-aviation/800/450",
     created_at: 2.weeks.ago,
     body_html: "<h2>The Aviation-Growth Thesis</h2><p>Airports are frequently positioned as engines of regional economic development — catalysts for tourism, logistics, and business investment. This narrative is politically compelling, but the empirical evidence is considerably more mixed.</p><h2>What the Literature Finds</h2><p>Meta-analyses consistently show that projections made by airport proponents overstate induced employment and business activity, often by a factor of two or three.</p><h2>The Second-Tier Case</h2><p>Secondary airports face a particularly challenging evidence base. While some, like Gold Coast and Avalon, have demonstrated genuine catalytic effects in specific niches, the conditions enabling these outcomes are not easily replicated.</p>"
   },
@@ -301,6 +305,7 @@ blog_posts_data = [
     status: :published,
     featured: false,
     ai_generated: true,
+    image_url: "https://picsum.photos/seed/blog-bangkok/800/450",
     created_at: 1.month.ago,
     body_html: "<h2>Bangkok's TOD Transformation</h2><p>When the BTS Skytrain opened in 1999, Bangkok was widely regarded as a cautionary tale of urban sprawl. Two decades later, the corridors around Asok, Phrom Phong, and On Nut tell a different story: dense, walkable, mixed-use precincts that have fundamentally reshaped how middle-class Bangkokians live and move.</p><h2>Why It Worked</h2><p>Several factors converged: concentrated land ownership patterns, private-sector incentives to drive ridership through station-area development, and municipal planning flexible enough to permit density uplifts quickly.</p><h2>What Sydney Can Take From This</h2><p>Australian TOD aspirations are frequently frustrated by land fragmentation, slow rezonings, and infrastructure contribution regimes that make high-density development near stations financially marginal.</p>"
   },
@@ -310,6 +315,7 @@ blog_posts_data = [
     status: :draft,
     featured: false,
     ai_generated: true,
+    image_url: "https://picsum.photos/seed/blog-informal/800/450",
     created_at: 4.days.ago,
     body_html: "<h2>Framing the Problem</h2><p>Mainstream urban planning theory has long struggled with informality. The dominant framing treats informal settlements as deviations from a planned norm: problems to be solved through slum clearance, forced relocation, or progressive upgrading.</p><h2>An Alternative Lens</h2><p>A growing body of scholarship argues that informality is better understood as a mode of urbanisation — not an exception to the rule, but a constitutive feature of how cities grow under rapid urbanisation and housing market exclusion.</p><h2>Implications for Practice</h2><p>Rather than managing informality out of existence, planners should ask how formal systems can adapt to recognise and build upon the self-help housing strategies that millions of urban residents already employ.</p>"
   }
@@ -322,6 +328,7 @@ blog_posts_data.each do |attrs|
     status: attrs[:status],
     featured: attrs[:featured],
     ai_generated: attrs[:ai_generated],
+    image_url: attrs[:image_url],
     created_at: attrs[:created_at]
   )
 

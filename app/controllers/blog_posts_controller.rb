@@ -187,11 +187,11 @@ class BlogPostsController < ApplicationController
   # - ai_generated is set by the AI service
   # - status/scheduled_at are resolved via resolve_publish_intent and merged in explicitly
   def blog_post_params
-    params.expect(blog_post: [ :title, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, :featured, photos: [] ])
+    params.expect(blog_post: [ :title, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, :image_url, :featured, photos: [] ])
   end
 
   def ai_params
-    params.expect(blog_post: [ :prompt, :featured_image, :keep_featured_image, :status, :scheduled_at ])
+    params.expect(blog_post: [ :prompt, :featured_image, :image_url, :keep_featured_image, :status, :scheduled_at ])
   end
 
   # Parses the status + scheduled_at coming from the split button.

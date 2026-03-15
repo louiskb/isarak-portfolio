@@ -34,6 +34,12 @@
         </div>
 
         <div class="mb-5">
+          <%= f.label :image_url, "Fallback image URL", class: "form-label" %>
+          <%= f.text_field :image_url, class: "form-control", placeholder: "https://picsum.photos/seed/example/800/600" %>
+          <div class="form-text">Used when no uploaded image is attached. Paste any public image URL.</div>
+        </div>
+
+        <div class="mb-5">
           <%= f.label :prompt, "What should the post be about?", class: "form-label" %>
           <%= f.text_area :prompt,
                 value: @prompt,

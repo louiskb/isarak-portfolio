@@ -57,13 +57,20 @@
             <% end %>
           </div>
 
-          <%# Featured image %>
+          <%# Featured image — uploaded takes priority, then image_url fallback %>
           <% if @blog_post.featured_image.attached? %>
             <div class="blog-show-image mb-5">
               <%= image_tag @blog_post.featured_image,
                     class: "img-fluid rounded",
                     style: "width:100%;max-height:420px;object-fit:cover;",
                     alt: @blog_post.title %>
+            </div>
+          <% elsif @blog_post.image_url.present? %>
+            <div class="blog-show-image mb-5">
+              <img src="<%= @blog_post.image_url %>"
+                   class="img-fluid rounded"
+                   style="width:100%;max-height:420px;object-fit:cover;"
+                   alt="<%= @blog_post.title %>">
             </div>
           <% end %>
 

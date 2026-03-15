@@ -43,6 +43,8 @@
                       <%= image_tag post.featured_image,
                             alt: post.title,
                             class: "object-fit-cover blog-card-image" %>
+                    <% elsif post.image_url.present? %>
+                      <img src="<%= post.image_url %>" alt="<%= post.title %>" class="object-fit-cover blog-card-image">
                     <% else %>
                       <div class="blog-card-placeholder d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-newspaper blog-card-placeholder-icon"></i>

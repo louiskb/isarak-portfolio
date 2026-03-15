@@ -414,6 +414,8 @@
               <%= link_to post do %>
                 <% if post.featured_image.attached? %>
                   <%= image_tag post.featured_image, class: "home-blog-card-img", alt: post.title %>
+                <% elsif post.image_url.present? %>
+                  <img src="<%= post.image_url %>" class="home-blog-card-img" alt="<%= post.title %>">
                 <% else %>
                   <div class="home-blog-card-placeholder">
                     <i class="fa-solid fa-newspaper"></i>

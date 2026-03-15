@@ -29,6 +29,11 @@
       <small class="text-muted">Leave blank to keep the existing image.</small>
     </div>
 
+    <%= f.input :image_url,
+          label: "Fallback image URL",
+          placeholder: "https://picsum.photos/seed/example/800/600",
+          hint: "Used when no uploaded image is attached. Paste any public image URL." %>
+
     <% if @blog_post.blog_post_erb_content.present? %>
       <%# AI mode: post is managed via raw HTML/ERB content — Trix editor is hidden %>
       <div class="mb-3">
