@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-15 (session 6: navbar/mobile polish, SMTP config, social links, mobile audit, seeds)
+> Created: 2026-03-08 | Last updated: 2026-03-15 (session 7: blog image_url fallback, live image preview Stimulus controller, AI service bug fixes)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -72,6 +72,10 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] Inline Unsplash images — AI puts `<!-- IMAGE: query -->` placeholders; service replaces with real Unsplash figures
 - [x] featured_image on BlogPost — `has_one_attached :featured_image`; shown on show page; upload on all forms (manual + AI new + AI revise); on AI revision defaults to fresh Unsplash; "Keep this image" checkbox on ai_revise to opt out; ENV.fetch used project-wide
 - [x] Show featured_image on public blog index cards ✅
+- [x] image_url fallback on BlogPost — migration, strong params, all 3 forms (manual + ai_new + ai_revise), all 3 views (show + index + home), seeds ✅ (2026-03-15)
+- [x] Live image preview Stimulus controller (`image_preview_controller.js`) — `connect()` auto-shows on page load; `updateUrl` for URL field; `updateFile` for uploads; wired to all blog forms ✅ (2026-03-15)
+- [x] Bug fix — `image_url` wasn't being saved on AI create/revise (ai_params had it but controller never forwarded it to the service; service never set it on the record) ✅ (2026-03-15)
+- [x] Bug fix — duplicate URL preview on manual edit form (`_form.html.erb`) — static server-rendered preview + Stimulus preview both showed; removed static one ✅ (2026-03-15)
 - [x] Add UNSPLASH_ACCESS_KEY to .env — done (access key only; secret key not needed)
 - [x] Public blog index view ✅
 - [x] Scheduled posts via Solid Queue background jobs
