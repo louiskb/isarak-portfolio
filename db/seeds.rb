@@ -4,6 +4,14 @@
 # Usage:
 #   USER_EMAIL="isara@example.com" USER_PASSWORD="securepassword" USER_NAME="Dr Isara Khanjanasthiti" rails db:seed
 
+puts ""
+puts "━" * 50
+puts "  🌱 Seeding isarak-portfolio database"
+puts "━" * 50
+puts ""
+
+# ===== USER =====
+puts "── User ──────────────────────────────────────────"
 email    = ENV.fetch("USER_EMAIL", "admin@example.com")
 password = ENV.fetch("USER_PASSWORD", "password123!")
 name     = ENV.fetch("USER_NAME", "Dr Isara Khanjanasthiti")
@@ -11,11 +19,12 @@ name     = ENV.fetch("USER_NAME", "Dr Isara Khanjanasthiti")
 user = User.find_or_initialize_by(email: email)
 user.assign_attributes(password: password, password_confirmation: password, name: name)
 user.save!
-puts "Seed: user #{email} ready."
+puts "  ✓ User: #{email}"
+puts ""
 
 # ===== TEACHINGS =====
 # 6 seeds, 3 featured (featured items appear in the homepage Teaching spotlight)
-puts "Seeding teachings..."
+puts "── Teachings ─────────────────────────────────────"
 
 teachings_data = [
   {
@@ -72,12 +81,14 @@ teachings_data.each do |attrs|
   record = Teaching.find_or_initialize_by(title: attrs[:title], user: user)
   record.assign_attributes(attrs.except(:title))
   record.save!
-  puts "  - Teaching: #{attrs[:title]}"
+  puts "  ✓ #{attrs[:title]}"
 end
+puts "  → #{teachings_data.length} teachings seeded (#{teachings_data.count { |t| t[:featured] }} featured)"
+puts ""
 
 # ===== RESEARCH ITEMS =====
 # 8 seeds, 4 featured (featured items appear in the homepage Research grid)
-puts "Seeding research items..."
+puts "── Research Items ────────────────────────────────"
 
 research_data = [
   {
@@ -158,12 +169,14 @@ research_data.each do |attrs|
   record = ResearchItem.find_or_initialize_by(title: attrs[:title], user: user)
   record.assign_attributes(attrs.except(:title))
   record.save!
-  puts "  - Research: #{attrs[:title][0..60]}..."
+  puts "  ✓ #{attrs[:title][0..65]}..."
 end
+puts "  → #{research_data.length} research items seeded (#{research_data.count { |r| r[:featured] }} featured)"
+puts ""
 
 # ===== GRANTS & AWARDS =====
 # 8 seeds, 6 featured (featured items all appear on the homepage Awards slider — no limit)
-puts "Seeding grants and awards..."
+puts "── Grants & Awards ───────────────────────────────"
 
 grants_data = [
   {
@@ -236,12 +249,14 @@ grants_data.each do |attrs|
   record = GrantAward.find_or_initialize_by(title: attrs[:title], user: user)
   record.assign_attributes(attrs.except(:title))
   record.save!
-  puts "  - Grant/Award: #{attrs[:title][0..60]}..."
+  puts "  ✓ [#{attrs[:category]}] #{attrs[:title][0..60]}..."
 end
+puts "  → #{grants_data.length} grants/awards seeded (#{grants_data.count { |g| g[:featured] }} featured)"
+puts ""
 
 # ===== BLOG POSTS =====
 # 6 seeds, 3 featured published (featured published posts appear on the homepage Blog section)
-puts "Seeding blog posts..."
+puts "── Blog Posts ────────────────────────────────────"
 
 blog_posts_data = [
   {
@@ -319,12 +334,14 @@ blog_posts_data.each do |attrs|
   end
 
   record.save!
-  puts "  - Blog post: #{attrs[:title][0..60]}..."
+  puts "  ✓ [#{attrs[:status]}] #{attrs[:title][0..60]}..."
 end
+puts "  → #{blog_posts_data.length} blog posts seeded (#{blog_posts_data.count { |b| b[:featured] }} featured)"
+puts ""
 
 # ===== SERVICE =====
 # Single rich-text record — belongs_to :user via has_one :service
-puts "Seeding service..."
+puts "── Service ───────────────────────────────────────"
 
 service = user.service || user.build_service
 service.description = <<~HTML
@@ -345,6 +362,12 @@ service.description = <<~HTML
 HTML
 
 service.save!
-puts "  - Service record ready."
+puts "  ✓ Service record saved"
+puts ""
 
-puts "Seed complete."
+puts "━" * 50
+puts "  ✅ Seed complete!"
+puts "     #{Teaching.count} teachings | #{ResearchItem.count} research items"
+puts "     #{GrantAward.count} grants/awards | #{BlogPost.count} blog posts"
+puts "━" * 50
+puts ""
