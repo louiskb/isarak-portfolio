@@ -7,12 +7,12 @@
 // reaching the about section. The sticky inner div stays locked to the top.
 .home-hero {
   position: relative;
-  height: 160vh;
+  height: 150vh;
   margin-top: calc(-1 * var(--navbar-height));
   border-bottom: 1px solid $border-dark;
 
   @media (max-width: 767.98px) {
-    height: 180svh;
+    height: 160svh;
   }
 }
 
@@ -289,8 +289,8 @@
   height: 100%;
   object-fit: cover;
   object-position: center 60%;
-  // Scale up slightly to cover any black bars baked into the video edges
-  transform: scale(1.15);
+  // Scale up to cover black bars baked into the video edges
+  transform: scale(1.5);
   z-index: 0;
   opacity: 0;
   transition: opacity 1.4s ease;
