@@ -27,16 +27,33 @@
             html: { multipart: true,
                     data: { controller: "publish-form load-button" } } do |f| %>
 
-        <div class="mb-5">
+        <div class="mb-5" data-controller="image-preview">
           <%= f.label :featured_image, "Featured image", class: "form-label" %>
-          <%= f.file_field :featured_image, class: "form-control", accept: "image/*" %>
-          <div class="form-text">Leave blank and the AI will find a relevant photo automatically.</div>
+          <%= f.file_field :featured_image, class: "form-control", accept: "image/*",
+                data: { "image-preview-target": "fileInput", action: "change->image-preview#updateFile" } %>
+          <div class="form-text">
+            Upload a photo and it will be used as the hero image instead of the AI's Unsplash pick.
+            Leave blank and the AI will find a relevant photo automatically.
+          </div>
+          <img class="img-fluid rounded mt-2 d-none"
+               style="max-height:160px;object-fit:cover;"
+               data-image-preview-target="preview"
+               alt="Upload preview">
         </div>
 
-        <div class="mb-5">
+        <div class="mb-5" data-controller="image-preview">
           <%= f.label :image_url, "Fallback image URL", class: "form-label" %>
-          <%= f.text_field :image_url, class: "form-control", placeholder: "https://picsum.photos/seed/example/800/600" %>
-          <div class="form-text">Used when no uploaded image is attached. Paste any public image URL.</div>
+          <%= f.text_field :image_url, class: "form-control",
+                placeholder: "https://picsum.photos/seed/example/800/600",
+                data: { "image-preview-target": "urlInput", action: "input->image-preview#updateUrl" } %>
+          <div class="form-text">
+            Last resort only — shown if no upload was attached <em>and</em> the Unsplash fetch failed or was later cleared.
+            Paste any public image URL.
+          </div>
+          <img class="img-fluid rounded mt-2 d-none"
+               style="max-height:160px;object-fit:cover;"
+               data-image-preview-target="preview"
+               alt="URL preview">
         </div>
 
         <div class="mb-5">
