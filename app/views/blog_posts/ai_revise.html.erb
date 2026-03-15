@@ -120,7 +120,7 @@
           <div class="btn-group dropup">
 
             <%# Default: revise and keep current status %>
-            <button type="button" class="btn btn-primary btn-sm btn-publish-main"
+            <button type="button" class="btn btn-blog-publish btn-publish-main"
                     data-action="click->load-button#loader click->publish-form#saveChanges"
                     data-load-button-loading-text-value="Revising your post...">
               Revise post
@@ -128,7 +128,7 @@
 
             <%# Chevron — opens upward dropdown %>
             <button type="button"
-                    class="btn btn-primary btn-sm btn-publish-chevron dropdown-toggle dropdown-toggle-split"
+                    class="btn btn-blog-publish btn-publish-chevron dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
               <span class="visually-hidden">More publishing options</span>
@@ -159,7 +159,7 @@
             </ul>
           </div>
 
-          <%= link_to "Cancel", @blog_post, class: "btn btn-blog-ai btn-sm" %>
+          <%= link_to "Cancel", @blog_post, class: "btn btn-resource-edit" %>
         </div>
 
         <%# ===== SCHEDULE MODAL ===== %>

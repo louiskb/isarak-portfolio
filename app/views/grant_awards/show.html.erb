@@ -54,10 +54,10 @@
 
         <%# Admin actions %>
         <div class="resource-detail-actions">
-          <%= link_to "Edit", edit_grant_award_path(@grant_award), class: "btn btn-resource-edit" %>
+          <%= link_to "Edit", edit_grant_award_path(@grant_award), class: "btn btn-resource-edit rounded-4" %>
           <%= button_to "Delete", @grant_award,
                 method: :delete,
-                class: "btn btn-resource-delete",
+                class: "btn btn-resource-delete rounded-4",
                 data: { turbo_confirm: "Delete \"#{@grant_award.title}\"? This cannot be undone." } %>
         </div>
 

@@ -57,10 +57,10 @@
 
         <% if user_signed_in? %>
           <div class="resource-detail-actions">
-            <%= link_to "Edit", edit_teaching_path(@teaching), class: "btn btn-resource-edit" %>
+            <%= link_to "Edit", edit_teaching_path(@teaching), class: "btn btn-resource-edit rounded-4" %>
             <%= button_to "Delete", @teaching,
                   method: :delete,
-                  class: "btn btn-resource-delete",
+                  class: "btn btn-resource-delete rounded-4",
                   data: { turbo_confirm: "Delete \"#{@teaching.title}\"? This cannot be undone." } %>
           </div>
         <% end %>
