@@ -2,7 +2,20 @@
 <% content_for :body_class, "page-home" %>
 
 <%# ===== HERO ===== %>
-<section class="home-hero">
+<section class="home-hero" data-controller="video-hero">
+
+  <%# Scroll-scrubbed time lapse video — day → sunset → night as user scrolls.
+      Falls back to static background-image if video fails or is unsupported.
+      For production: host on Cloudinary for CDN delivery and update the src. %>
+  <video class="home-hero-video"
+         data-video-hero-target="video"
+         muted
+         playsinline
+         preload="auto"
+         aria-hidden="true">
+    <source src="/videos/airport-sunset-night-time-lapse.mp4" type="video/mp4">
+  </video>
+
   <div class="home-hero-overlay"></div>
 
   <div class="container position-relative home-hero-container">
