@@ -246,31 +246,12 @@
   }
 }
 
-// Once the user scrolls 30% into the hero, JS adds .header--scrolled to <header>.
-// Use .page-home .header--scrolled (4 classes) to beat the homepage glass rule (3 classes).
-// Solid #080808 base layer keeps the pill fully readable over any page content.
-// When scrolled: match the non-homepage navbar exactly.
-// Swap transparent → #080808 (needed since hero image sits behind the pill).
-// No backdrop-filter — other pages don't use it, and removing it kills the grey tint.
-.page-home .header--scrolled .navbar-isarak {
+// Homepage — frosted glass pill, only while the user hasn't scrolled past 30% of the hero.
+// The :not() means these styles switch off the moment JS adds .header--scrolled to <header>,
+// so no override battle is needed for the scrolled state below.
+.page-home header:not(.header--scrolled) .navbar-isarak {
   @include media-breakpoint-up(lg) {
     .container {
-      background:
-        linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
-        #080808;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-  }
-}
-
-// Homepage only — restore the glassy blur effect on navbar pill and dropdown.
-// Other pages skip blur (solid/transparent base reads cleanly over dark content).
-.page-home .navbar-isarak {
-  @include media-breakpoint-up(lg) {
-    .container {
-      // Light white tint + blur = visible frosted glass over a dark hero.
-      // Dark base (rgba(8,8,8)) is invisible against a dark image — needs white tint to show frost.
       background:
         linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
         rgba(154, 154, 154, 0.15);
@@ -281,11 +262,21 @@
 
   .dropdown-menu {
     background:
-      // linear-gradient(135deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15)),
-      // rgba(255, 255, 255, 0.06);
       linear-gradient(90deg, rgba(48, 197, 210, 0.15), rgba(71, 16, 105, 0.15)),
-        rgba(154, 154, 154, 0.20);
+      rgba(154, 154, 154, 0.20);
     backdrop-filter: blur(48px);
     -webkit-backdrop-filter: blur(48px);
+  }
+}
+
+// Homepage — once scrolled, match the other-pages navbar exactly.
+// #080808 instead of transparent since the hero image is still behind the pill.
+.page-home .header--scrolled .navbar-isarak {
+  @include media-breakpoint-up(lg) {
+    .container {
+      background:
+        linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
+        #080808;
+    }
   }
 }
