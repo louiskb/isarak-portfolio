@@ -20,7 +20,7 @@ export default class extends Controller {
   }
 
   _onScroll() {
-    const threshold = (document.documentElement.scrollHeight - window.innerHeight) * 0.35
+    const threshold = (document.documentElement.scrollHeight - window.innerHeight) * 0.25
     this.element.classList.toggle("back-to-top--visible", window.scrollY > threshold)
   }
 }
