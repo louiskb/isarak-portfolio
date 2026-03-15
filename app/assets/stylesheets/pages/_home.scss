@@ -36,6 +36,10 @@
 .home-hero-top {
   max-width: 56ch;
   padding-top: 3rem;
+
+  @media (max-width: 767.98px) {
+    padding-top: 1rem;
+  }
 }
 
 // Bottom row: socials left, tags right
@@ -242,7 +246,7 @@
 
 .home-hero-title {
   font-family: $headers-font;
-  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
   font-weight: 700;
   color: $font-color;
   line-height: 1.15;
@@ -382,6 +386,10 @@
   @media (max-width: 991.98px) {
     padding: 4rem 0;
   }
+
+  @media (max-width: 767.98px) {
+    padding: 3rem 0;
+  }
 }
 
 .home-about-bio {
@@ -479,6 +487,11 @@
   > * {
     grid-area: 1 / 1;
   }
+
+  @media (max-width: 991.98px) {
+    height: auto;
+    min-height: 280px;
+  }
 }
 
 .teaching-spotlight-images {
@@ -505,6 +518,10 @@
   transition: opacity 0.4s ease;
   // Fill the wrapper — wrapper drives the aspect-ratio, not the card itself
   height: 100%;
+
+  @media (max-width: 991.98px) {
+    height: auto;
+  }
 
   &.is-active {
     opacity: 1;
@@ -638,6 +655,10 @@
 .home-section {
   padding: 5rem 0;
   border-bottom: 1px solid $border-dark;
+
+  @media (max-width: 767.98px) {
+    padding: 3rem 0;
+  }
 }
 
 .home-section-label {
@@ -676,6 +697,10 @@
 // ===== CONTACT SECTION =====
 .home-contact {
   padding: 6rem 0 5rem;
+
+  @media (max-width: 767.98px) {
+    padding: 3rem 0 4rem;
+  }
 }
 
 .home-contact-sub {

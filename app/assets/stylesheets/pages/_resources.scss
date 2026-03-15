@@ -8,6 +8,10 @@
   padding: 4rem 0 2.5rem;
   border-bottom: 1px solid $border-dark;
 
+  @media (max-width: 767.98px) {
+    padding: 2.5rem 0 1.5rem;
+  }
+
   .resource-hero-label {
     font-size: 0.75rem;
     font-weight: 600;

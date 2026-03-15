@@ -5,6 +5,10 @@
   padding: 5rem 0 3.5rem;
   border-bottom: 1px solid $border-dark;
 
+  @media (max-width: 767.98px) {
+    padding: 2.5rem 0 2rem;
+  }
+
   .blog-hero-inner {
     max-width: 640px;
   }
@@ -38,6 +42,10 @@
 // ===== GRID SECTION =====
 .blog-grid-section {
   padding: 4rem 0 6rem;
+
+  @media (max-width: 767.98px) {
+    padding: 2rem 0 4rem;
+  }
 }
 
 // ===== CARD =====
