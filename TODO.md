@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-14 (session 5: animations, navbar reorder, Service page added)
+> Created: 2026-03-08 | Last updated: 2026-03-15 (session 6: navbar/mobile polish, SMTP config, social links, mobile audit, seeds)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. Next session: About section + working down the portfolio page sections.
+Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation audit complete. Next: About section + working down the portfolio page sections. Real content from Isara needed.
 
 ---
 
@@ -21,7 +21,13 @@ Phase 4 complete ✅ — Landing page live with animations. Next session: About 
   - [x] Reordered: Home | Teaching | Research | Service | Awards | Blog ✅ (2026-03-14)
   - [x] Visitor nav — Teaching + Awards link to homepage anchor sections (#teaching, #awards) ✅
   - [x] Service page — static route + PagesController action + placeholder view ✅
+  - [x] Sticky navbar — `position: sticky` on `<header>` ✅ (2026-03-15)
+  - [x] Homepage scroll effect — frosted glass before 30% scroll, dark pill after; iron-wall rule prevents bleed to other pages ✅ (2026-03-15)
+  - [x] Mobile burger menu polish — no border/grey box, pill on scroll, 5px radius, safe padding ✅ (2026-03-15)
+  - [x] Social links added to hero banner (8 links: LinkedIn, ORCID, ResearchGate, Academia, Scholar, X, UNE, Email) ✅ (2026-03-15)
 - [x] Footer
+  - [x] Social links added (same 8) ✅ (2026-03-15)
+  - [x] Layout fixed — links left, copyright center, socials right ✅ (2026-03-15)
 - [x] Add footer render to application layout
 
 ---
@@ -38,11 +44,12 @@ Phase 4 complete ✅ — Landing page live with animations. Next session: About 
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
 - [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented
 - [ ] Admin management views — restyle scaffold views to match dark theme
-- [ ] Seed data for development
+- [x] Seed data for development — 6 teachings, 8 research, 8 grants/awards, 6 blog posts, 1 service; seeds have descriptive puts output ✅ (2026-03-15)
 - [x] Contact form — model, controller, mailer, routes, invisible_captcha spam protection, load-button Stimulus controller, form partial wired to homepage
-  - [ ] Configure SMTP provider + fill in ENV vars when deploying (MAILER_SENDER, SMTP_ADDRESS, SMTP_PORT, SMTP_DOMAIN, SMTP_USERNAME, SMTP_PASSWORD)
+  - [x] Configure iCloud SMTP — `smtp.mail.me.com`, port 587, `authentication: :login`, ENV vars wired ✅ (2026-03-15)
+  - [ ] Set `SMTP_PASSWORD` to Apple app-specific password in `.env` (generate at appleid.apple.com → App-Specific Passwords)
+  - [ ] Set `APP_HOST` to real domain in `.env` before deploying
   - [ ] Enable dev email delivery — uncomment Letter Opener or local SMTP block in development.rb
-  - [ ] Update production.rb `action_mailer.default_url_options` host to real domain
 
 ---
 
@@ -105,10 +112,12 @@ Phase 4 complete ✅ — Landing page live with animations. Next session: About 
 - [x] Contact form section — restyled to match dark theme, Bootstrap card wrapper removed
 - [x] Teaching & Grants "View all →" links — hidden from public visitors; only shown to signed-in Isara
 - [x] Favicon — IK monogram (dark bg, teal text) replacing default Rails icon; swap when Isara has a real logo
-- [ ] CV Download button — UNRESOLVED; dedicated route + send_data wired but still failing; debug next session (check blob.content_type in console, inspect HTTP response in devtools, consider Cloudinary fl_attachment or disabling strict delivery)
+- [x] CV Download button — RESOLVED ✅ (2026-03-14); Cloudinary PDF delivery enabled + `fl_attachment` redirect
 - [ ] Get Isara's real content in (bio, avatar, CV, featured items marked)
-- [ ] Mobile responsive check
+- [x] Mobile responsive check — full audit done (critical/medium/low all fixed) ✅ (2026-03-15)
 - [x] Hero entrance animations — navbar slides down, name/subtitle fade in together, CTAs slide up, socials stagger left-to-right, tags stagger right-to-left, chevron last; all use ease-out for smooth cinematic feel ✅ (2026-03-14)
+- [x] Back-to-top chevron button — fixed bottom-right, appears at 25% scroll, clears footer on mobile, safe-area inset aware ✅ (2026-03-15)
+- [x] btn-grad border — subtle white border on all gradient buttons (Contact Me, Send Message) ✅ (2026-03-15)
 - [ ] Scroll-triggered animations for below-fold sections (AOS or CSS)
 - [ ] About section — wire up real content, photo, bio, research interest tags, CV download
 - [ ] Resource sections — Featured Research, Teaching, Grants & Awards, Blog posts (review layout + content)
