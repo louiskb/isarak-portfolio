@@ -1,5 +1,5 @@
 
-<%= simple_form_for(@teaching) do |f| %>
+<%= simple_form_for(@teaching, html: { data: { controller: "load-button" } }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -33,7 +33,9 @@
           hint: "Featured items are highlighted on your Portfolio homepage. Tick this for courses you want to showcase prominently." %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, class: "btn btn-resource-add rounded-4" %>
+  <div class="form-actions" data-load-button-target="buttons">
+    <%= f.button :submit, class: "btn btn-resource-add rounded-4",
+          data: { action: "click->load-button#showSpinner",
+                  load_button_loading_text_value: "Saving..." } %>
   </div>
 <% end %>

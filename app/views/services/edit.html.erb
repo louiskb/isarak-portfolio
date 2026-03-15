@@ -21,7 +21,8 @@
 
         <%= render "shared/flashes" %>
 
-        <%= form_with model: @service, url: service_path, method: :patch do |f| %>
+        <%= form_with model: @service, url: service_path, method: :patch,
+              data: { controller: "load-button" } do |f| %>
           <div class="profile-card">
             <h2 class="profile-card-title">Service Description</h2>
             <p class="profile-input-hint mb-3">
@@ -34,8 +35,10 @@
                   class: "trix-content-dark" %>
           </div>
 
-          <div class="d-flex gap-3 align-items-center mt-2 mb-5">
-            <%= f.submit "Save Service", class: "btn btn-resource-add rounded-4" %>
+          <div class="d-flex gap-3 align-items-center mt-2 mb-5" data-load-button-target="buttons">
+            <%= f.submit "Save Service", class: "btn btn-resource-add rounded-4",
+                  data: { action: "click->load-button#showSpinner",
+                          load_button_loading_text_value: "Saving..." } %>
             <%= link_to "View on Homepage", root_path(anchor: "service"), class: "btn btn-profile-secondary" %>
           </div>
         <% end %>
