@@ -31,6 +31,10 @@
         <% @research_items.each do |item| %>
           <div class="col">
             <article class="resource-card card">
+              <% img_src = item.image.attached? ? (url_for(item.image) rescue nil) : item.image_url.presence %>
+              <% if img_src %>
+                <img src="<%= img_src %>" class="resource-card-img" alt="<%= item.title %>">
+              <% end %>
               <div class="card-body">
                 <%# Category badge %>
                 <span class="resource-card-category resource-badge-<%= item.category %>">

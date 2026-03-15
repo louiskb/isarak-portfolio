@@ -151,7 +151,7 @@
 
 <%# ===== FEATURED TEACHING SPOTLIGHT ===== %>
 <% if @featured_teachings.any? %>
-  <section class="home-section" id="teaching" data-controller="teaching-spotlight">
+  <section class="home-section" id="teaching" data-controller="teaching-spotlight scroll-reveal">
     <div class="container">
 
       <%# Header row %>
@@ -164,7 +164,7 @@
       </div>
 
       <%# Spotlight — card left, image right %>
-      <div class="row g-4 g-lg-5 align-items-stretch">
+      <div class="row g-4 g-lg-5 align-items-stretch" data-scroll-reveal-target="fromBottom">
 
         <%# Left: stacked text cards %>
         <div class="col-lg-5">
@@ -263,9 +263,9 @@
         <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall" %>
       </div>
 
-      <div class="row g-3" data-scroll-reveal-target="fadeIn">
+      <div class="row g-3">
         <% @featured_research.each do |item| %>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6" data-scroll-reveal-target="fromBottom">
             <% img_src = item.image.attached? ? (url_for(item.image) rescue nil) : item.image_url.presence %>
             <article class="research-grid-card" style="<%= img_src ? "background-image: url('#{img_src}');" : "" %>">
               <div class="research-grid-card-body">
@@ -290,7 +290,7 @@
 
 <%# ===== SERVICE ===== %>
 <% if @service&.description.present? %>
-  <section class="home-section" id="service">
+  <section class="home-section" id="service" data-controller="scroll-reveal">
     <div class="container">
       <div class="d-flex justify-content-between align-items-end mb-4 mb-md-5">
         <div>
@@ -301,7 +301,7 @@
           <%= link_to "View service &rarr;".html_safe, edit_service_path, class: "home-section-viewall" %>
         <% end %>
       </div>
-      <div class="home-about-text trix-content">
+      <div class="home-about-text trix-content" data-scroll-reveal-target="fadeIn">
         <%= @service.description %>
       </div>
     </div>
@@ -329,7 +329,7 @@
 
       <div class="awards-slider-track" data-awards-slider-target="track">
         <% @featured_grants.each do |item| %>
-          <div class="awards-slider-card" data-scroll-reveal-target="fromLeft">
+          <div class="awards-slider-card" data-scroll-reveal-target="fromBottom">
 
             <%# Top — icon + category label %>
             <div class="d-flex align-items-center gap-2">
