@@ -34,8 +34,8 @@ export default class extends Controller {
       this.loadingTextValue;
 
     // Inherit the triggering button's visual classes so the spinner matches.
-    // Strip structural/split-button classes that shouldn't appear on a static span.
-    const STRIP = /\b(btn-publish-main|btn-publish-chevron|dropdown-toggle-split|dropdown-toggle)\b/g;
+    // Strip structural/split-button classes and spacing utilities that don't belong on a static span.
+    const STRIP = /\b(btn-publish-main|btn-publish-chevron|dropdown-toggle-split|dropdown-toggle|[mp][trblxy]?-\d+)\b/g;
     const btnClasses = event?.currentTarget
       ? event.currentTarget.className.replace(STRIP, "").replace(/\s+/g, " ").trim()
       : "btn btn-grad";
