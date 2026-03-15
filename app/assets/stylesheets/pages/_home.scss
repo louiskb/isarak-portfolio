@@ -97,30 +97,43 @@
   letter-spacing: 0.04em;
 }
 
+// Mobile: in-flow below the bottom row, centered with padding
+// Desktop: absolute-positioned at bottom-center of the hero
 .home-hero-scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0 0.25rem;
   color: rgba(226, 226, 226, 0.5);
   font-size: 1.25rem;
   text-decoration: none;
   z-index: 2;
-  animation: hero-bounce 2s ease-in-out infinite;
   transition: color 0.2s ease;
 
   &:hover {
     color: $teal;
   }
 
-  @media (max-width: 767.98px) {
-    display: none;
+  @include media-breakpoint-up(md) {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+    display: block;
   }
 }
 
+// Desktop (absolute): must preserve translateX(-50%) centering
 @keyframes hero-bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+// Mobile (in-flow): vertical bounce only
+@keyframes hero-bounce-v {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
 }
 
 // ===== HERO ENTRANCE ANIMATIONS =====
@@ -184,10 +197,15 @@
     animation: hero-fade-from-right 0.65s ease-out 0.90s both;
   }
 
-  // Scroll hint appears shortly after the last bottom element
+  // Scroll hint — mobile uses vertical-only bounce; desktop uses the absolute version
   .home-hero-scroll-hint {
-    animation: hero-bounce 2s ease-in-out 1.0s infinite,
+    animation: hero-bounce-v 2s ease-in-out 1.0s infinite,
                hero-fade-in 0.65s ease-out 1.0s both;
+
+    @include media-breakpoint-up(md) {
+      animation: hero-bounce 2s ease-in-out 1.0s infinite,
+                 hero-fade-in 0.65s ease-out 1.0s both;
+    }
   }
 }
 
