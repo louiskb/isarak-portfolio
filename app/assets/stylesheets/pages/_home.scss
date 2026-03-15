@@ -3,35 +3,21 @@
 // ==========================================================
 
 // ===== HERO =====
-// Outer section is tall so the user must scroll through the video before
-// reaching the about section. The sticky inner div stays locked to the top.
 .home-hero {
   position: relative;
-  height: 150vh;
+  min-height: 100vh;
   margin-top: calc(-1 * var(--navbar-height));
-  border-bottom: 1px solid $border-dark;
-
-  @media (max-width: 767.98px) {
-    height: 160svh;
-  }
-}
-
-// Sticky inner — visually fills the viewport, clips overflow from scaled video
-.home-hero-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+  padding-top: calc(var(--navbar-height) + 3rem);
+  padding-bottom: 4rem;
   display: flex;
   align-items: stretch;
   background-image: image-url("airport-sunset.jpg");
   background-size: cover;
   background-position: center 60%;
-  padding-top: calc(var(--navbar-height) + 3rem);
-  padding-bottom: 4rem;
+  border-bottom: 1px solid $border-dark;
 
   @media (max-width: 767.98px) {
-    height: 100svh;
+    min-height: 100svh;
     padding-top: calc(var(--navbar-height) + 2rem);
     padding-bottom: 3rem;
     background-position: center center;
@@ -278,28 +264,6 @@
   }
 }
 
-// ===== HERO VIDEO =====
-// Positioned behind the overlay and all content.
-// Starts invisible; JS adds .hero-video-ready to the section once
-// loadedmetadata fires, which fades the video in over the static image.
-.home-hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 60%;
-  // Scale up to cover black bars baked into the video edges
-  transform: scale(1.5);
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 1.4s ease;
-  pointer-events: none;
-}
-
-.hero-video-ready .home-hero-video {
-  opacity: 1;
-}
 
 .home-hero-overlay {
   position: absolute;
