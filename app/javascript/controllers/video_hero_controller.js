@@ -64,9 +64,9 @@ export default class extends Controller {
       0,
       -this.element.getBoundingClientRect().top
     );
-    // Map scroll to video: full duration completes at 70% of hero height
-    // so the day→night transition feels fast and dramatic
-    const progress = Math.min(1, scrolled / (heroHeight * 0.7));
+    // Map scroll to video: full duration completes at 2.5× hero height
+    // so the day→night transition feels gradual rather than rushed
+    const progress = Math.min(1, scrolled / (heroHeight * 2.5));
     this.videoTarget.currentTime = progress * this.videoTarget.duration;
   }
 
