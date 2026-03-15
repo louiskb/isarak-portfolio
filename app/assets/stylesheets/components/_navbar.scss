@@ -110,13 +110,12 @@
 
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 3rem;
-      // padding-left: 1.70rem;
-      // padding-right: 1.25rem;
       padding-left: 1.10rem;
       padding-right: 0.5rem;
       padding-top: 0.35rem;
       padding-bottom: 0.35rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
     }
 
     // Dropdowns must escape the stacking context created by backdrop-filter
@@ -247,17 +246,18 @@
   }
 }
 
-// Once the user scrolls 30% into the hero the header gets .header--scrolled.
-// Switch to a solid dark background so the navbar is always readable.
-// Transition is on the container so the change fades in smoothly.
-.header--scrolled .navbar-isarak {
+// Once the user scrolls 30% into the hero, JS adds .header--scrolled to <header>.
+// Use .page-home .header--scrolled (4 classes) to beat the homepage glass rule (3 classes).
+// Solid #080808 base layer keeps the pill fully readable over any page content.
+.page-home .header--scrolled .navbar-isarak {
   @include media-breakpoint-up(lg) {
     .container {
-      background: rgba(8, 8, 8, 0.92);
+      background:
+        linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
+        #080808;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-color: rgba(255, 255, 255, 0.08);
-      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      border-color: rgba(255, 255, 255, 0.1);
     }
   }
 }
