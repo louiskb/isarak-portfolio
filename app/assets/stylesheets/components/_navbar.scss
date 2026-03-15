@@ -115,7 +115,9 @@
       padding-top: 0.35rem;
       padding-bottom: 0.35rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
     }
 
     // Dropdowns must escape the stacking context created by backdrop-filter
@@ -271,12 +273,15 @@
 
 // Homepage — once scrolled, match the other-pages navbar exactly.
 // #080808 instead of transparent since the hero image is still behind the pill.
+// backdrop-filter: none must be explicit so the transition has a defined end value.
 .page-home .header--scrolled .navbar-isarak {
   @include media-breakpoint-up(lg) {
     .container {
       background:
         linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
         #080808;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
   }
 }
