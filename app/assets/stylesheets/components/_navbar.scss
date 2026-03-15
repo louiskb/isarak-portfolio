@@ -42,22 +42,23 @@
     transform: rotate(180deg);
   }
 
-  // Mobile — open collapse gets a solid dark background so nav links
-  // are always readable regardless of what page content sits behind.
+  // Mobile — open collapse: no background box, links float below the pill.
   @include media-breakpoint-down(lg) {
     .navbar-collapse.show,
     .navbar-collapse.collapsing {
-      background-color: $secondary-color;
-      border: 1px solid $border-dark;
-      border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
-      margin-top: 0.5rem;
+      padding: 0.5rem 0 1.25rem;
+      margin-top: 0.25rem;
+    }
+
+    // Extra top padding on the logo/burger row when the menu is open.
+    &:has(.navbar-collapse.show) {
+      padding-top: 1.25rem;
     }
   }
 
   // Mobile toggler
   .navbar-toggler {
-    border: 1px solid $border-dark;
+    border: none;
     padding: 0.3rem 0.55rem;
 
     .navbar-toggler-icon {
@@ -65,7 +66,7 @@
     }
 
     &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(137, 214, 204, 0.2);
+      box-shadow: none;
     }
   }
 
@@ -296,6 +297,25 @@ body:not(.page-home) .navbar-isarak {
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+  }
+
+  // Mobile — pill appears on the row containing logo + hamburger once scrolled.
+  // Same background as the desktop pill; collapse keeps its own separate styling.
+  // border-radius kept small (not 3rem) — full-width mobile container clips corners otherwise.
+  @include media-breakpoint-down(lg) {
+    .container {
+      background:
+        linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
+        #080808;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0.75rem;
+      padding-left: 1.10rem;
+      padding-right: 0.5rem;
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
   }
 }

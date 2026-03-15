@@ -321,6 +321,11 @@
   @media (max-width: 767.98px) {
     justify-content: center;
   }
+
+  // Hero background makes the shared border appear lighter — compensate slightly.
+  .btn-grad {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
 // ===== ABOUT PHOTO =====
@@ -366,7 +371,7 @@
   font-size: 0.925rem;
   padding: 0.65rem 1.75rem;
   border-radius: 2rem;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.20);
   text-decoration: none;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   transition: background-position 0.5s ease;
