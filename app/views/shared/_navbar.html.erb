@@ -59,8 +59,8 @@
           </li>
         </ul>
 
-        <%# Right nav — Avatar dropdown (desktop) %>
-        <ul class="navbar-nav ms-lg-3 align-items-center">
+        <%# Right nav — Avatar dropdown %>
+        <ul class="navbar-nav ms-lg-3 align-items-center mt-3 mt-lg-0">
           <li class="nav-item dropdown">
             <a href="#"
                class="nav-link p-0 d-flex align-items-center gap-1"
@@ -88,15 +88,6 @@
             </div>
           </li>
         </ul>
-
-        <%# Mobile — stacked profile/logout inside collapse %>
-        <div class="d-lg-none mt-2 pt-2 border-top border-secondary">
-          <%= link_to "Profile", profile_path, class: "nav-link py-2" %>
-          <%= button_to "Logout", destroy_user_session_path,
-              method: :delete,
-              class: "nav-link text-start border-0 bg-transparent w-100 py-2",
-              form: { "data-turbo": "false" } %>
-        </div>
 
       </div>
 
@@ -132,11 +123,14 @@
           <li class="nav-item">
             <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path) %>
           </li>
+          <%# Mobile only — Contact Me inside the collapse grey box %>
+          <li class="nav-item d-lg-none mt-2 pt-2 border-top border-secondary text-center">
+            <%= link_to "Contact Me", "#contact", class: "btn btn-grad btn-nav-cta-sm w-100" %>
+          </li>
         </ul>
       </div>
 
-      <%# Right: Contact Me CTA (always visible) %>
-      <%= link_to "Contact Me", "#contact", class: "btn btn-grad btn-nav-cta-sm d-lg-none" %>
+      <%# Desktop only — Contact Me CTA in the pill %>
       <%= link_to "Contact Me", "#contact", class: "btn btn-grad d-none d-lg-block" %>
 
     <% end %>

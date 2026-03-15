@@ -112,6 +112,10 @@
   &:hover {
     color: $teal;
   }
+
+  @media (max-width: 767.98px) {
+    display: none;
+  }
 }
 
 @keyframes hero-bounce {
@@ -187,10 +191,11 @@
   }
 }
 
-// ===== ABOUT SECTION SCROLL-REVEAL =====
-// Columns start hidden and slide in from opposite sides when the section
-// enters the viewport. scroll_reveal_controller.js adds .reveal-visible.
+// ===== SCROLL-REVEAL ANIMATIONS =====
+// scroll_reveal_controller.js adds .reveal-visible when the section enters
+// the viewport. All animations are gated behind prefers-reduced-motion.
 @media (prefers-reduced-motion: no-preference) {
+  // About section — slide in from opposite sides
   [data-scroll-reveal-target="fromLeft"] {
     opacity: 0;
     transform: translateX(-48px);
@@ -210,6 +215,28 @@
     &.reveal-visible {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  // Research section — simple fade in
+  [data-scroll-reveal-target="fadeIn"] {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+
+    &.reveal-visible {
+      opacity: 1;
+    }
+  }
+
+  // Blog cards — slide up from below
+  [data-scroll-reveal-target="fromBottom"] {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+
+    &.reveal-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

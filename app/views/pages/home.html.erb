@@ -253,7 +253,7 @@
 
 <%# ===== FEATURED RESEARCH ===== %>
 <% if @featured_research.any? %>
-  <section class="home-section" id="research">
+  <section class="home-section" id="research" data-controller="scroll-reveal">
     <div class="container">
       <div class="d-flex justify-content-between align-items-end mb-4 mb-md-5">
         <div>
@@ -263,7 +263,7 @@
         <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall" %>
       </div>
 
-      <div class="row g-3">
+      <div class="row g-3" data-scroll-reveal-target="fadeIn">
         <% @featured_research.each do |item| %>
           <div class="col-12 col-md-6">
             <% img_src = item.image.attached? ? (url_for(item.image) rescue nil) : item.image_url.presence %>
@@ -310,7 +310,7 @@
 
 <%# ===== FEATURED GRANTS & AWARDS SLIDER ===== %>
 <% if @featured_grants.any? %>
-  <section class="home-section" id="awards" data-controller="awards-slider">
+  <section class="home-section" id="awards" data-controller="awards-slider scroll-reveal">
     <div class="container">
       <div class="d-flex justify-content-between align-items-end mb-4 mb-md-5">
         <div>
@@ -329,7 +329,7 @@
 
       <div class="awards-slider-track" data-awards-slider-target="track">
         <% @featured_grants.each do |item| %>
-          <div class="awards-slider-card">
+          <div class="awards-slider-card" data-scroll-reveal-target="fromLeft">
 
             <%# Top — icon + category label %>
             <div class="d-flex align-items-center gap-2">
@@ -377,7 +377,7 @@
 
 <%# ===== FEATURED BLOG POSTS ===== %>
 <% if @featured_posts.any? %>
-  <section class="home-section" id="blog">
+  <section class="home-section" id="blog" data-controller="scroll-reveal">
     <div class="container">
       <div class="d-flex justify-content-between align-items-end mb-4 mb-md-5">
         <div>
@@ -389,7 +389,7 @@
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <% @featured_posts.each do |post| %>
-          <div class="col">
+          <div class="col" data-scroll-reveal-target="fromBottom">
             <article class="home-blog-card">
               <%# Image %>
               <%= link_to post do %>

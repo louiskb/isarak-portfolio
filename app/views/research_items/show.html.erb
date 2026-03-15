@@ -50,6 +50,20 @@
               <%= simple_format @research_item.description %>
             </div>
           <% end %>
+
+          <% if @research_item.image.attached? || @research_item.image_url.present? %>
+            <div class="mt-4">
+              <% if @research_item.image.attached? %>
+                <%= image_tag @research_item.image, alt: @research_item.title,
+                      class: "img-fluid rounded",
+                      style: "max-height: 420px; object-fit: cover; width: 100%;" %>
+              <% else %>
+                <%= image_tag @research_item.image_url, alt: @research_item.title,
+                      class: "img-fluid rounded",
+                      style: "max-height: 420px; object-fit: cover; width: 100%;" %>
+              <% end %>
+            </div>
+          <% end %>
         </article>
 
         <%# Admin actions %>
