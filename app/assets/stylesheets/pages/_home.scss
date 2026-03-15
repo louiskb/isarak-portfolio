@@ -925,6 +925,16 @@
   justify-content: center;
   flex-shrink: 0;
   font-size: 1.1rem;
+
+  &.awards-card-icon--grant {
+    background: rgba(74, 222, 128, 0.12);
+    color: #4ade80;
+  }
+
+  &.awards-card-icon--award {
+    background: rgba(250, 204, 21, 0.12);
+    color: #facc15;
+  }
 }
 
 .awards-card-category {
@@ -1006,11 +1016,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 
   &:hover {
+    background: rgba(137, 214, 204, 0.08);
     border-color: $teal;
-    color: $teal;
+    color: $font-color;
   }
 }
 
@@ -1077,7 +1088,7 @@
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    background: $teal;
+    background: rgba(137, 214, 204, 0.08);
     border-color: $teal;
     color: #fff;
     transform: translateX(3px);

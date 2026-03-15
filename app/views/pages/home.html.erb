@@ -273,10 +273,11 @@
                 <% if item.published_at.present? %>
                   <p class="research-grid-card-date"><%= item.published_at.strftime("%B %Y") %></p>
                 <% end %>
-                <% link_target = item.external_url.presence || research_item_path(item) %>
-                <% link_opts = item.external_url.present? ? { target: "_blank", rel: "noopener noreferrer" } : {} %>
-                <%= link_to link_target, class: "research-grid-card-arrow", **link_opts do %>
-                  <i class="fa-solid fa-arrow-right"></i>
+                <% if item.external_url.present? %>
+                  <%= link_to item.external_url, class: "research-grid-card-arrow",
+                        target: "_blank", rel: "noopener noreferrer" do %>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  <% end %>
                 <% end %>
               </div>
             </article>
@@ -332,7 +333,7 @@
 
             <%# Top — icon + category label %>
             <div class="d-flex align-items-center gap-2">
-              <div class="awards-card-icon">
+              <div class="awards-card-icon awards-card-icon--<%= item.category %>">
                 <i class="fa-solid <%= item.category == "award" ? "fa-trophy" : "fa-hand-holding-dollar" %>"></i>
               </div>
               <span class="awards-card-category"><%= item.category.capitalize %></span>
