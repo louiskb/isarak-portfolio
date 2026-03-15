@@ -93,7 +93,7 @@
       // background: linear-gradient(90deg, hsla(172, 48%, 69%, 0.1) 0%, hsla(0, 0%, 100%, 0.1) 100%);
       background:
         linear-gradient(90deg, rgba(48, 197, 210, 0.1), rgba(71, 16, 105, 0.1)),
-        #080808;
+        transparent;
 
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 3rem;
@@ -222,7 +222,7 @@
     }
   }
 
-  .navbar-isarak {
+  .page-home .navbar-isarak {
     animation: navbar-slide-down 1.2s ease-out both;
   }
 }
