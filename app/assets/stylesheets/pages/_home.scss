@@ -3,22 +3,35 @@
 // ==========================================================
 
 // ===== HERO =====
+// Outer section is tall so the user must scroll through the video before
+// reaching the about section. The sticky inner div stays locked to the top.
 .home-hero {
   position: relative;
-  overflow: hidden;
-  min-height: 100vh;
+  height: 250vh;
   margin-top: calc(-1 * var(--navbar-height));
-  padding-top: calc(var(--navbar-height) + 3rem);
-  padding-bottom: 4rem;
+  border-bottom: 1px solid $border-dark;
+
+  @media (max-width: 767.98px) {
+    height: 280svh;
+  }
+}
+
+// Sticky inner — visually fills the viewport, clips overflow from scaled video
+.home-hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: stretch;
   background-image: image-url("airport-sunset.jpg");
   background-size: cover;
   background-position: center 60%;
-  border-bottom: 1px solid $border-dark;
+  padding-top: calc(var(--navbar-height) + 3rem);
+  padding-bottom: 4rem;
 
   @media (max-width: 767.98px) {
-    min-height: 100svh;
+    height: 100svh;
     padding-top: calc(var(--navbar-height) + 2rem);
     padding-bottom: 3rem;
     background-position: center center;

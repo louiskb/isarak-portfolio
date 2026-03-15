@@ -4,63 +4,69 @@
 <%# ===== HERO ===== %>
 <section class="home-hero" data-controller="video-hero">
 
-  <%# Scroll-scrubbed time lapse video — day → sunset → night as user scrolls.
-      Falls back to static background-image if video fails or is unsupported.
-      For production: host on Cloudinary for CDN delivery and update the src. %>
-  <video class="home-hero-video"
-         data-video-hero-target="video"
-         muted
-         playsinline
-         preload="auto"
-         aria-hidden="true">
-    <source src="/videos/airport-sunset-night-time-lapse.mp4" type="video/mp4">
-  </video>
+  <%# Sticky inner — visually fills the viewport while the outer section scrolls.
+      The outer section is 250vh tall; this div stays pinned to the top,
+      so the user must scroll through ~150vh before the about section appears. %>
+  <div class="home-hero-sticky">
 
-  <div class="home-hero-overlay"></div>
+    <%# Scroll-scrubbed time lapse video — day → sunset → night as user scrolls.
+        Falls back to static background-image if video fails or is unsupported.
+        For production: host on Cloudinary for CDN delivery and update the src. %>
+    <video class="home-hero-video"
+           data-video-hero-target="video"
+           muted
+           playsinline
+           preload="auto"
+           aria-hidden="true">
+      <source src="/videos/airport-sunset-night-time-lapse.mp4" type="video/mp4">
+    </video>
 
-  <div class="container position-relative home-hero-container">
+    <div class="home-hero-overlay"></div>
 
-    <%# Top left — name, subtitle, CTAs %>
-    <div class="home-hero-top">
-      <h1 class="home-hero-title">
-        Dr Isara<br>Khanjanasthiti
-      </h1>
-      <p class="home-hero-subtitle">
-        Aviation policy, housing governance, and university teaching &amp; learning
-        at the University of New England, Sydney.
-      </p>
-      <div class="home-hero-ctas">
-        <a href="#contact" class="btn btn-grad">Contact Me</a>
-        <%= link_to "View Research", research_items_path, class: "btn home-btn-outline" %>
+    <div class="container position-relative home-hero-container">
+
+      <%# Top left — name, subtitle, CTAs %>
+      <div class="home-hero-top">
+        <h1 class="home-hero-title">
+          Dr Isara<br>Khanjanasthiti
+        </h1>
+        <p class="home-hero-subtitle">
+          Aviation policy, housing governance, and university teaching &amp; learning
+          at the University of New England, Sydney.
+        </p>
+        <div class="home-hero-ctas">
+          <a href="#contact" class="btn btn-grad">Contact Me</a>
+          <%= link_to "View Research", research_items_path, class: "btn home-btn-outline" %>
+        </div>
       </div>
+
+      <%# Bottom row — socials left, tags right %>
+      <div class="home-hero-bottom">
+        <div class="home-hero-socials">
+          <a href="#" class="home-hero-social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+          <a href="mailto:isara@example.com" class="home-hero-social-link" aria-label="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a href="#" class="home-hero-social-link" aria-label="Twitter / X" target="_blank" rel="noopener">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+        </div>
+        <%# Desktop: center item in the bottom row (space-between puts it between socials + tags) %>
+        <%# Mobile: order 3 pushes it below tags (order 2) via CSS %>
+        <a href="#about" class="home-hero-scroll-hint" aria-label="Scroll to About">
+          <i class="fa-solid fa-chevron-down"></i>
+        </a>
+
+        <div class="home-hero-tags">
+          <span class="home-hero-tag">Urban Planner</span>
+          <span class="home-hero-tag">Educator</span>
+          <span class="home-hero-tag">Researcher</span>
+        </div>
+      </div>
+
     </div>
-
-    <%# Bottom row — socials left, tags right %>
-    <div class="home-hero-bottom">
-      <div class="home-hero-socials">
-        <a href="#" class="home-hero-social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
-        <a href="mailto:isara@example.com" class="home-hero-social-link" aria-label="Email">
-          <i class="fa-solid fa-envelope"></i>
-        </a>
-        <a href="#" class="home-hero-social-link" aria-label="Twitter / X" target="_blank" rel="noopener">
-          <i class="fa-brands fa-x-twitter"></i>
-        </a>
-      </div>
-      <%# Desktop: center item in the bottom row (space-between puts it between socials + tags) %>
-      <%# Mobile: order 3 pushes it below tags (order 2) via CSS %>
-      <a href="#about" class="home-hero-scroll-hint" aria-label="Scroll to About">
-        <i class="fa-solid fa-chevron-down"></i>
-      </a>
-
-      <div class="home-hero-tags">
-        <span class="home-hero-tag">Urban Planner</span>
-        <span class="home-hero-tag">Educator</span>
-        <span class="home-hero-tag">Researcher</span>
-      </div>
-    </div>
-
   </div>
 </section>
 

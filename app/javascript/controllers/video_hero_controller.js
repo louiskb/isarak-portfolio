@@ -59,14 +59,15 @@ export default class extends Controller {
   }
 
   _updateTime() {
-    const heroHeight = this.element.offsetHeight;
+    // Scrollable range = outer section height minus one viewport height.
+    // At scroll = 0 the sticky panel just entered view; at scroll = scrollRange
+    // the sticky panel is about to leave and the about section appears.
+    const scrollRange = this.element.offsetHeight - window.innerHeight;
     const scrolled = Math.max(
       0,
       -this.element.getBoundingClientRect().top
     );
-    // Map scroll to video: full duration completes at 2.5× hero height
-    // so the day→night transition feels gradual rather than rushed
-    const progress = Math.min(1, scrolled / (heroHeight * 2.5));
+    const progress = Math.min(1, scrolled / scrollRange);
     this.videoTarget.currentTime = progress * this.videoTarget.duration;
   }
 
