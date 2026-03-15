@@ -59,23 +59,19 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Set APP_HOST to your production domain before deploying (e.g. "isara.com.au").
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com") }
 
-  # Outgoing SMTP — set these ENV vars in your production environment before deploying.
-  # SMTP_ADDRESS     — e.g. "smtp.sendgrid.net" or "smtp.mailgun.org"
-  # SMTP_PORT        — e.g. "587"
-  # SMTP_DOMAIN      — e.g. "yourdomain.com"
-  # SMTP_USERNAME    — your SMTP account username
-  # SMTP_PASSWORD    — your SMTP account password / API key
-  # MAILER_SENDER    — the from/reply address, e.g. "isara@yourdomain.com"
+  # Outgoing SMTP via iCloud Mail (smtp.mail.me.com)
+  # See .env for the full list of required ENV vars and instructions.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch("SMTP_ADDRESS", nil),
-    port: ENV.fetch("SMTP_PORT", nil),
+    port: ENV.fetch("SMTP_PORT", "587").to_i,
     domain: ENV.fetch("SMTP_DOMAIN", nil),
     user_name: ENV.fetch("SMTP_USERNAME", nil),
     password: ENV.fetch("SMTP_PASSWORD", nil),
-    authentication: :plain,
+    authentication: :login,
     enable_starttls_auto: true,
     open_timeout: 5,
     read_timeout: 5
