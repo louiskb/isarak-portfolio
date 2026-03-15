@@ -38,14 +38,6 @@
               "data-image-preview-target": "urlInput",
               "data-action": "input->image-preview#updateUrl"
             } %>
-      <% if @blog_post.persisted? && @blog_post.image_url.present? %>
-        <div class="mb-3">
-          <p class="profile-input-hint mb-1">Current image URL:</p>
-          <%= link_to @blog_post.image_url, target: "_blank", rel: "noopener noreferrer" do %>
-            <%= image_tag @blog_post.image_url, class: "img-fluid rounded", style: "max-height:160px;object-fit:cover;" %>
-          <% end %>
-        </div>
-      <% end %>
       <img class="img-fluid rounded mt-2 d-none"
            style="max-height:160px;object-fit:cover;"
            data-image-preview-target="preview"
