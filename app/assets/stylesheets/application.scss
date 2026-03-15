@@ -11,6 +11,31 @@
 @import "components/index";
 @import "pages/index";
 
+// ===== BACK TO TOP BUTTON =====
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1050;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  &.back-to-top--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
 // ===== GLOBAL PAGE ANIMATIONS =====
 // Main content glides in on every page load / Turbo navigation.
 // Homepage gets a shorter duration — the hero has its own elaborate animations.

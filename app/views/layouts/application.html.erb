@@ -38,5 +38,12 @@
       <%= render "shared/footer" %>
     </footer>
 
+    <button class="btn btn-primary back-to-top"
+            data-controller="back-to-top"
+            data-action="click->back-to-top#scrollToTop"
+            aria-label="Back to top">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
   </body>
 </html>
