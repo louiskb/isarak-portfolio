@@ -7,6 +7,8 @@ friendly_id :email, use: :slugged # Use email as slug (unique)
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_rich_text :about
+
   has_one_attached :cv
   has_one_attached :avatar
 
@@ -31,12 +33,19 @@ friendly_id :email, use: :slugged # Use email as slug (unique)
     # `:nullify` is useful when the child should survive without a parent — e.g. if a `Comment` could exist even after its `Post` is deleted, you'd nullify `post_id` rather than destroy the comment.
   #
   #
+  has_one :service, dependent: :destroy
   has_many :research_items, dependent: :destroy
   has_many :grant_awards, dependent: :destroy
   has_many :teachings, dependent: :destroy
   has_many :blog_posts, dependent: :destroy
 
+  after_create :create_default_service
+
   private
+
+  def create_default_service
+    create_service(description: "")
+  end
 
   def single_user_only
     errors.add(:base, "Registration is closed — this site has one account only.") if User.exists?

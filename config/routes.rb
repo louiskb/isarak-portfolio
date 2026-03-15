@@ -21,10 +21,10 @@ Rails.application.routes.draw do
   resources :research_items
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
   devise_for :users
-  resource :profile, only: [:show, :update]
+  resource :profile, only: [ :show, :update ]
+  resource :service, only: [ :edit, :update ]
   root to: "pages#home"
   get "cv/download", to: "pages#download_cv", as: :download_cv
-  get "service", to: "pages#service", as: :service
 
   resources :contacts, only: [ :new, :create ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

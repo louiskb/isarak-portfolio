@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :home, :download_cv, :service ]
+  skip_before_action :authenticate_user!, only: [ :home, :download_cv ]
 
   def download_cv
     isara = User.first
@@ -12,10 +12,9 @@ class PagesController < ApplicationController
     end
   end
 
-  def service; end
-
   def home
     @isara = User.first
+    @service            = @isara&.service
     @featured_research  = ResearchItem.where(featured: true).order(published_at: :desc, created_at: :desc).limit(6)
     @featured_teachings = Teaching.where(featured: true).limit(6)
     @featured_grants    = GrantAward.where(featured: true).limit(6)

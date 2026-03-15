@@ -1,10 +1,10 @@
 class TeachingsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_teaching, only: %i[ show edit update destroy ]
 
   # GET /teachings or /teachings.json
   def index
-    @pagy, @teachings = pagy(current_user.teachings.all)
+    @pagy, @teachings = pagy(Teaching.all.order(created_at: :desc))
   end
 
   # GET /teachings/1 or /teachings/1.json

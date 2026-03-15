@@ -1,15 +1,16 @@
-<% content_for :title, "Profile — Admin" %>
+<% content_for :title, "Profile — Isara Khanjanasthiti" %>
 
-<%# ===== HERO ===== %>
 <%
   pug_images = %w[pug1.jpg pug2.jpg pug3.jpg pug4.jpg pug5.jpg pug6.jpg pug7.jpg pug8.jpg pug9.jpg pug10.jpg pug11.jpg pug12.jpg].sample(5)
   rotations  = ["-3deg", "2.5deg", "-1.5deg", "3.5deg", "-2deg"]
 %>
+
+<%# ===== HERO ===== %>
 <section class="resource-hero profile-hero">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-7">
-        <p class="resource-hero-label">Admin</p>
+        <p class="resource-hero-label">Account</p>
         <h1 class="resource-hero-title">Your Profile</h1>
         <p class="resource-hero-subtitle">Update your name, bio, avatar, and CV.</p>
       </div>
@@ -31,47 +32,91 @@
 <section class="resource-grid-section">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-7">
+      <div class="col-lg-8">
 
         <%= render "shared/flashes" %>
 
         <%= simple_form_for current_user, url: profile_path, method: :patch, html: { multipart: true } do |f| %>
 
-          <%= f.input :name, label: "Display name", placeholder: "Dr Isara Khanjanasthiti" %>
-          <%= f.input :about,
-                as: :text,
-                label: "About / Bio",
-                placeholder: "A short bio shown on the site…",
-                input_html: { rows: 6 } %>
+          <%# ===== AVATAR ===== %>
+          <div class="profile-card">
+            <h2 class="profile-card-title">Avatar</h2>
+            <div class="d-flex align-items-center gap-4 flex-wrap">
+              <div class="avatar-preview-lg">
+                <% if current_user.avatar.attached? %>
+                  <%= image_tag current_user.avatar, alt: current_user.name || "Avatar" %>
+                <% else %>
+                  <%= (current_user.name.present? ? current_user.name[0] : current_user.email[0]).upcase %>
+                <% end %>
+              </div>
+              <div class="flex-grow-1">
+                <%= f.input :avatar,
+                      as: :file,
+                      label: "Upload new avatar",
+                      hint: "Shown in the navbar and public Homepage About section. JPG or PNG, square crop recommended.",
+                      input_html: { accept: "image/*", class: "form-control form-control-dark" } %>
+              </div>
+            </div>
+          </div>
 
-          <%= link_to "Change email or password", edit_user_registration_path,
-                class: "btn btn-resource-edit border border-2 mb-3" %>
+          <%# ===== NAME ===== %>
+          <div class="profile-card">
+            <h2 class="profile-card-title">Display Name</h2>
+            <%= f.input :name,
+                  label: "Name",
+                  placeholder: "Dr Isara Khanjanasthiti",
+                  input_html: { class: "form-control form-control-dark" } %>
+          </div>
 
-          <div class="mb-3 mt-4">
-            <% if current_user.avatar.attached? %>
-              <div class="mb-2">
-                <%= image_tag current_user.avatar,
-                      class: "rounded-circle mb-3",
-                      style: "width: 72px; height: 72px; object-fit: cover;",
-                      alt: "Current avatar" %>
+          <%# ===== ABOUT ME ===== %>
+          <div class="profile-card">
+            <h2 class="profile-card-title">About Me</h2>
+            <p class="profile-input-hint mb-3">
+              This bio appears in the <strong>About</strong> section of your public Homepage.
+            </p>
+            <label class="profile-input-label" for="user_about">Bio</label>
+            <%= f.rich_text_area :about, id: "user_about", class: "trix-content-dark" %>
+          </div>
+
+          <%# ===== CV ===== %>
+          <div class="profile-card">
+            <h2 class="profile-card-title">Curriculum Vitae</h2>
+            <% if current_user.cv.attached? %>
+              <div class="profile-cv-existing d-flex align-items-center gap-3 mb-3">
+                <i class="fa-regular fa-file-pdf profile-cv-icon"></i>
+                <div>
+                  <p class="mb-0 profile-cv-filename"><%= current_user.cv.filename %></p>
+                  <p class="mb-0 profile-input-hint">
+                    <%= number_to_human_size(current_user.cv.byte_size) %> &middot;
+                    Uploaded <%= current_user.cv.created_at.strftime("%b %-d, %Y") %>
+                  </p>
+                </div>
               </div>
             <% end %>
-            <%= f.input :avatar, as: :file, label: "Avatar" %>
+            <%= f.input :cv,
+                  as: :file,
+                  label: current_user.cv.attached? ? "Replace CV" : "Upload CV",
+                  hint: "PDF only. Available as a download link on your public portfolio.",
+                  input_html: { accept: ".pdf", class: "form-control form-control-dark" } %>
           </div>
 
-          <div>
-            <%= f.input :cv, as: :file, label: "CV (PDF)", hint: "CV available for visitors to download on the Portfolio homepage." %>
-            <% if current_user.cv.attached? %>
-              <p class="text-muted small mb-2">
-                Current CV:
-                <%= link_to current_user.cv.filename, url_for(current_user.cv),
-                      target: "_blank", class: "resource-link" %>
-              </p>
-<% end %>
+          <%# ===== SAVE ===== %>
+          <div data-controller="load-button">
+            <div data-load-button-target="buttons" class="d-flex gap-3 align-items-center mb-4">
+              <%= f.button :submit, "Save changes",
+                    class: "btn btn-profile-save",
+                    data: { action: "click->load-button#showSpinner" } %>
+            </div>
           </div>
 
-          <%= f.button :submit, "Save changes", class: "btn btn-resource-add mt-4" %>
         <% end %>
+
+        <%# ===== ACCOUNT SECURITY ===== %>
+        <div class="profile-card mt-2">
+          <h2 class="profile-card-title">Email & Password</h2>
+          <p class="profile-input-hint mb-3">Change your login email or password via the account settings page.</p>
+          <%= link_to "Change email or password →", edit_user_registration_path, class: "btn btn-profile-secondary" %>
+        </div>
 
       </div>
     </div>

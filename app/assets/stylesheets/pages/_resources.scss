@@ -37,9 +37,9 @@
 
 // ===== PROFILE HERO PHOTOS =====
 // Polaroid-style photo strip in the hero banner.
-// Padding matches blog-hero (5rem 0 3.5rem) for consistent height.
+// Top padding increased to clear the avatar dropdown in the navbar.
 .resource-hero.profile-hero {
-  padding: 5rem 0 3.5rem;
+  padding: 8rem 0 3.5rem;
 }
 
 .profile-hero-photos {

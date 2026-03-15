@@ -1,0 +1,46 @@
+<% content_for :title, "Service — Isara Khanjanasthiti" %>
+
+<%# ===== HERO ===== %>
+<section class="resource-hero">
+  <div class="container">
+    <div class="resource-hero-inner">
+      <p class="resource-hero-label">Academic Service</p>
+      <h1 class="resource-hero-title">Service</h1>
+      <p class="resource-hero-subtitle">
+        Your academic and community service contributions, shown as a section on your public homepage.
+      </p>
+    </div>
+  </div>
+</section>
+
+<%# ===== FORM ===== %>
+<section class="resource-grid-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <%= render "shared/flashes" %>
+
+        <%= form_with model: @service, url: service_path, method: :patch do |f| %>
+          <div class="profile-card">
+            <h2 class="profile-card-title">Service Description</h2>
+            <p class="profile-input-hint mb-3">
+              Describe your roles on committees, editorial boards, reviewing panels,
+              community engagement, or other professional service contributions.
+            </p>
+            <label class="profile-input-label" for="service_description">Description</label>
+            <%= f.rich_text_area :description,
+                  id: "service_description",
+                  class: "trix-content-dark" %>
+          </div>
+
+          <div class="d-flex gap-3 align-items-center mt-2 mb-5">
+            <%= f.submit "Save Service", class: "btn btn-primary" %>
+            <%= link_to "View on Homepage", root_path(anchor: "service"), class: "btn btn-profile-secondary" %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</section>
