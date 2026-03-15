@@ -152,8 +152,8 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <%= f.submit "Schedule post", class: "btn btn-primary" %>
+                    <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                    <%= f.submit "Schedule post", class: "btn btn-blog-publish" %>
                   </div>
                 <% end %>
               </div>
@@ -175,9 +175,9 @@
                   <p class="mb-0">Publishing now will <strong>cancel that schedule</strong> and make the post live immediately.</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keep schedule</button>
+                  <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Keep schedule</button>
                   <%= form_with url: publish_blog_post_path(@blog_post), method: :patch do |f| %>
-                    <%= f.submit "Publish now", class: "btn btn-success" %>
+                    <%= f.submit "Publish now", class: "btn btn-blog-publish" %>
                   <% end %>
                 </div>
               </div>
@@ -208,11 +208,11 @@
                   <%= button_to "Revert to draft",
                         cancel_schedule_blog_post_path(@blog_post),
                         method: :patch,
-                        class: "btn btn-outline-warning btn-sm",
+                        class: "btn btn-resource-edit",
                         form: { class: "m-0" } %>
                   <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" form="edit-schedule-form" class="btn btn-primary">Update schedule</button>
+                    <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="edit-schedule-form" class="btn btn-blog-publish">Update schedule</button>
                   </div>
                 </div>
               </div>
@@ -242,8 +242,8 @@
                   </p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <%= link_to "Continue to AI Revision", ai_revise_blog_post_path(@blog_post), class: "btn btn-primary" %>
+                  <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                  <%= link_to "Continue to AI Revision", ai_revise_blog_post_path(@blog_post), class: "btn btn-blog-publish" %>
                 </div>
               </div>
             </div>
