@@ -7,12 +7,12 @@
 // reaching the about section. The sticky inner div stays locked to the top.
 .home-hero {
   position: relative;
-  height: 250vh;
+  height: 160vh;
   margin-top: calc(-1 * var(--navbar-height));
   border-bottom: 1px solid $border-dark;
 
   @media (max-width: 767.98px) {
-    height: 280svh;
+    height: 180svh;
   }
 }
 

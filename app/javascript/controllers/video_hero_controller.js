@@ -60,9 +60,9 @@ export default class extends Controller {
 
       if (deltaY > 0) {
         // Scrolling down — map velocity (px/ms) to a playback rate.
-        // Tune the multiplier to taste: higher = video reacts more to fast scrolls.
+        // Floor of 4 keeps the video moving even during slow scrolls.
         const velocity = deltaY / deltaT;
-        const rate = Math.min(6, Math.max(0.5, velocity * 25));
+        const rate = Math.min(12, Math.max(4, velocity * 60));
         this.videoTarget.playbackRate = rate;
         this.videoTarget.play().catch(() => {});
       }
