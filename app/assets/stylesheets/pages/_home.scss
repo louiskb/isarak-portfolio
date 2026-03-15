@@ -70,7 +70,8 @@
 .home-hero-socials {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .home-hero-social-link {
@@ -181,18 +182,15 @@
     animation: hero-slide-up 1.0s ease-out 0.4s both;
   }
 
-  // Socials — staggered left-to-right fade
-  .home-hero-social-link:nth-child(1) {
-    animation: hero-fade-from-left 0.65s ease-out 0.55s both;
-  }
-
-  .home-hero-social-link:nth-child(2) {
-    animation: hero-fade-from-left 0.65s ease-out 0.72s both;
-  }
-
-  .home-hero-social-link:nth-child(3) {
-    animation: hero-fade-from-left 0.65s ease-out 0.90s both;
-  }
+  // Socials — staggered left-to-right fade (8 links, 0.12s apart)
+  .home-hero-social-link:nth-child(1) { animation: hero-fade-from-left 0.65s ease-out 0.55s both; }
+  .home-hero-social-link:nth-child(2) { animation: hero-fade-from-left 0.65s ease-out 0.67s both; }
+  .home-hero-social-link:nth-child(3) { animation: hero-fade-from-left 0.65s ease-out 0.79s both; }
+  .home-hero-social-link:nth-child(4) { animation: hero-fade-from-left 0.65s ease-out 0.91s both; }
+  .home-hero-social-link:nth-child(5) { animation: hero-fade-from-left 0.65s ease-out 1.03s both; }
+  .home-hero-social-link:nth-child(6) { animation: hero-fade-from-left 0.65s ease-out 1.15s both; }
+  .home-hero-social-link:nth-child(7) { animation: hero-fade-from-left 0.65s ease-out 1.27s both; }
+  .home-hero-social-link:nth-child(8) { animation: hero-fade-from-left 0.65s ease-out 1.39s both; }
 
   // Tags — staggered right-to-left fade (mirrors socials, points toward chevron)
   .home-hero-tag:nth-child(3) {
