@@ -8,6 +8,10 @@
     color: rgba(226, 226, 226, 0.45);
     line-height: 1.6;
 
+    @media (max-width: 479.98px) {
+      font-size: 0.85rem;
+    }
+
     a {
       color: rgba(226, 226, 226, 0.45);
       text-decoration: none;
@@ -21,6 +25,10 @@
   .footer-copyright {
     font-size: 0.78rem;
     color: rgba(226, 226, 226, 0.45);
+
+    @media (max-width: 479.98px) {
+      font-size: 0.85rem;
+    }
   }
 
   // Discrete login link — only appears in footer (not navbar)
