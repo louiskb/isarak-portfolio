@@ -80,6 +80,14 @@
           <%= f.label :image_url, "Fallback image URL", class: "form-label" %>
           <%= f.text_field :image_url, class: "form-control", value: @blog_post.image_url, placeholder: "https://picsum.photos/seed/example/800/600" %>
           <div class="form-text">Used when no uploaded image is attached. Paste any public image URL.</div>
+          <% if @blog_post.image_url.present? %>
+            <div class="mt-3">
+              <p class="profile-input-hint mb-1">Current image URL:</p>
+              <%= link_to @blog_post.image_url, target: "_blank", rel: "noopener noreferrer" do %>
+                <%= image_tag @blog_post.image_url, class: "img-fluid rounded", style: "max-height:160px;object-fit:cover;" %>
+              <% end %>
+            </div>
+          <% end %>
         </div>
 
         <div class="mb-5">

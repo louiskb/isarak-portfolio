@@ -33,6 +33,14 @@
           label: "Fallback image URL",
           placeholder: "https://picsum.photos/seed/example/800/600",
           hint: "Used when no uploaded image is attached. Paste any public image URL." %>
+    <% if @blog_post.persisted? && @blog_post.image_url.present? %>
+      <div class="mb-3">
+        <p class="profile-input-hint mb-1">Current image URL:</p>
+        <%= link_to @blog_post.image_url, target: "_blank", rel: "noopener noreferrer" do %>
+          <%= image_tag @blog_post.image_url, class: "img-fluid rounded", style: "max-height:160px;object-fit:cover;" %>
+        <% end %>
+      </div>
+    <% end %>
 
     <% if @blog_post.blog_post_erb_content.present? %>
       <%# AI mode: post is managed via raw HTML/ERB content — Trix editor is hidden %>
