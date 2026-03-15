@@ -227,3 +227,13 @@
   }
 }
 
+// Homepage only — navbar pill uses the same gradient as the Contact Me button
+.page-home .navbar-isarak {
+  @include media-breakpoint-up(lg) {
+    .container {
+      background:
+        linear-gradient(to right, #2C3E50 0%, #4CA1AF 51%, #2C3E50 100%),
+        #080808;
+    }
+  }
+}
