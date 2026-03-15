@@ -263,29 +263,22 @@
         <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall" %>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="row g-3">
         <% @featured_research.each do |item| %>
-          <div class="col">
-            <article class="home-resource-card">
-              <span class="resource-card-category resource-badge-<%= item.category %>">
-                <%= item.category.capitalize %>
-              </span>
-              <h3 class="home-resource-card-title"><%= item.title %></h3>
-              <% if item.published_at.present? %>
-                <p class="home-resource-card-meta">
-                  <i class="fa-regular fa-calendar me-1"></i><%= item.published_at.strftime("%B %Y") %>
-                </p>
-              <% end %>
-              <% if item.description.present? %>
-                <p class="home-resource-card-desc"><%= item.description %></p>
-              <% end %>
-              <% if item.external_url.present? %>
-                <div class="home-resource-card-footer">
-                  <%= link_to "View publication &rarr;".html_safe, item.external_url,
-                        class: "home-resource-card-link",
-                        target: "_blank", rel: "noopener noreferrer" %>
-                </div>
-              <% end %>
+          <div class="col-12 col-md-6">
+            <% img_src = item.image.attached? ? (url_for(item.image) rescue nil) : item.image_url.presence %>
+            <article class="research-grid-card" style="<%= img_src ? "background-image: url('#{img_src}');" : "" %>">
+              <div class="research-grid-card-body">
+                <h3 class="research-grid-card-title"><%= item.title %></h3>
+                <% if item.published_at.present? %>
+                  <p class="research-grid-card-date"><%= item.published_at.strftime("%B %Y") %></p>
+                <% end %>
+                <% link_target = item.external_url.presence || research_item_path(item) %>
+                <% link_opts = item.external_url.present? ? { target: "_blank", rel: "noopener noreferrer" } : {} %>
+                <%= link_to link_target, class: "research-grid-card-arrow", **link_opts do %>
+                  <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
+              </div>
             </article>
           </div>
         <% end %>

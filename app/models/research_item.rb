@@ -5,6 +5,7 @@ class ResearchItem < ApplicationRecord
   enum :category, { project: 0, paper: 1, publication: 2 }
 
   belongs_to :user
+  has_one_attached :image
 
   validates :title, presence: true
   validates :category, presence: true

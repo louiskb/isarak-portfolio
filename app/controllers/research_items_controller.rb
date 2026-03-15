@@ -67,6 +67,6 @@ class ResearchItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def research_item_params
-      params.expect(research_item: [ :title, :category, :description, :external_url, :featured, :published_at, :slug ])
+      params.expect(research_item: [ :title, :category, :description, :external_url, :image_url, :image, :featured, :published_at, :slug ])
     end
 end
