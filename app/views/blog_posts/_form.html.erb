@@ -21,7 +21,8 @@
       <%= f.label :featured_image, "Featured image", class: "form-label" %>
       <% if @blog_post.featured_image.attached? %>
         <div class="mb-2">
-          <%= image_tag @blog_post.featured_image, class: "img-fluid rounded", style: "max-height:180px;object-fit:cover;" %>
+          <p class="profile-input-hint mb-1">Current image:</p>
+          <%= image_tag @blog_post.featured_image, class: "img-fluid rounded", style: "max-height:160px;object-fit:cover;" %>
         </div>
       <% end %>
       <%= f.input :featured_image, label: false, as: :file, input_html: { accept: "image/*" } %>

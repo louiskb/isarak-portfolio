@@ -28,11 +28,30 @@
           label: "Course image (optional)",
           hint: "Upload a JPG or PNG. Shown on the homepage spotlight. Overrides the image URL below if both are set.",
           input_html: { accept: "image/*", class: "form-control form-control-dark" } %>
+    <% if f.object.persisted? && f.object.image.attached? %>
+      <% attached_url = url_for(f.object.image) rescue nil %>
+      <% if attached_url %>
+        <div class="mb-3">
+          <p class="profile-input-hint mb-1">Current uploaded image:</p>
+          <%= link_to attached_url, target: "_blank", rel: "noopener noreferrer" do %>
+            <%= image_tag attached_url, class: "img-fluid rounded", style: "max-height: 160px; object-fit: cover;" %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
 
     <%= f.input :image_url,
           label: "Course image URL (optional)",
           placeholder: "https://example.com/image.jpg",
           hint: "Fallback if no image is uploaded above." %>
+    <% if f.object.persisted? && f.object.image_url.present? %>
+      <div class="mb-3">
+        <p class="profile-input-hint mb-1">Current image URL:</p>
+        <%= link_to f.object.image_url, target: "_blank", rel: "noopener noreferrer" do %>
+          <%= image_tag f.object.image_url, class: "img-fluid rounded", style: "max-height: 160px; object-fit: cover;" %>
+        <% end %>
+      </div>
+    <% end %>
 
     <%= f.input :featured,
           label: "Featured item",

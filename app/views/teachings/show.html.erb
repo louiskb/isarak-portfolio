@@ -45,12 +45,19 @@
             </div>
           <% end %>
 
-          <% if @teaching.image_url.present? %>
+          <% if @teaching.image.attached? || @teaching.image_url.present? %>
             <div class="mt-4">
-              <%= image_tag @teaching.image_url,
-                    alt: @teaching.title,
-                    class: "img-fluid rounded",
-                    style: "max-height: 360px; object-fit: cover; width: 100%;" %>
+              <% if @teaching.image.attached? %>
+                <%= image_tag @teaching.image,
+                      alt: @teaching.title,
+                      class: "img-fluid rounded",
+                      style: "max-height: 360px; object-fit: cover; width: 100%;" %>
+              <% else %>
+                <%= image_tag @teaching.image_url,
+                      alt: @teaching.title,
+                      class: "img-fluid rounded",
+                      style: "max-height: 360px; object-fit: cover; width: 100%;" %>
+              <% end %>
             </div>
           <% end %>
         </article>
