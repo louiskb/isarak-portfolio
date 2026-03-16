@@ -13,6 +13,7 @@
     }
 
     a {
+      font-size: inherit;
       color: rgba(226, 226, 226, 0.45);
       text-decoration: none;
 
@@ -28,17 +29,6 @@
 
     @media (max-width: 479.98px) {
       font-size: 0.85rem;
-    }
-  }
-
-  // Discrete login link — only appears in footer (not navbar)
-  .footer-login-link {
-    font-size: 0.72rem;
-    color: rgba(226, 226, 226, 0.25);
-    text-decoration: none;
-
-    &:hover {
-      color: rgba(226, 226, 226, 0.55);
     }
   }
 
