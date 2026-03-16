@@ -2,15 +2,15 @@
   background-color: $secondary-color;
   border-top: 1px solid $border-dark;
   padding: 1rem 0;
+  font-size: 0.8rem;
+  color: rgba(226, 226, 226, 0.45);
+
+  @media (max-width: 479.98px) {
+    font-size: 0.85rem;
+  }
 
   .footer-legal {
-    font-size: 0.78rem;
-    color: rgba(226, 226, 226, 0.45);
     line-height: 1.6;
-
-    @media (max-width: 479.98px) {
-      font-size: 0.85rem;
-    }
 
     a {
       font-size: inherit;
@@ -24,27 +24,18 @@
   }
 
   .footer-copyright {
-    font-size: 0.78rem;
-    color: rgba(226, 226, 226, 0.45);
-
-    @media (max-width: 479.98px) {
-      font-size: 0.85rem;
-    }
+    // inherits font-size and color from .site-footer
   }
 
   .footer-social {
     a {
+      font-size: inherit;
       color: rgba(226, 226, 226, 0.45);
-      font-size: 1rem;
       transition: color 0.2s ease;
       text-decoration: none;
 
       &:hover {
         color: $teal;
-      }
-
-      @media (max-width: 479.98px) {
-        font-size: 0.9rem;
       }
     }
   }
