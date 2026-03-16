@@ -8,13 +8,11 @@ class PagesController < ApplicationController
     if isara&.cv&.attached?
       blob = isara.cv.blob
       public_id = "#{Rails.env}/#{blob.key}"
-      url = Cloudinary::Utils.cloudinary_url(
+      url = Cloudinary::Utils.private_download_url(
         public_id,
+        blob.filename.extension_without_delimiter,
         resource_type: "image",
-        format: blob.filename.extension_without_delimiter,
-        secure: true,
-        sign_url: true,
-        flags: "attachment:Isara_Khanjanasthiti_CV"
+        attachment: true
       )
       redirect_to url, allow_other_host: true
     else
