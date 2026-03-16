@@ -27,7 +27,7 @@
 - [ ] **Reading time estimate** — calculate words ÷ 200 wpm on BlogPost; display "5 min read" on show page and index cards
 - [ ] **Related posts** — show 2–3 posts at the bottom of each blog show page (same category or recent); keeps visitors on site longer
 - [ ] **Table of contents** — auto-generate from `<h2>` / `<h3>` tags in AI-generated posts; show as sticky sidebar or collapsible block at the top of long posts
-- [ ] **Blog post tags** — many-to-many tags on BlogPost (e.g. "Urban Planning", "Aviation", "Teaching"); filter by tag on the blog index
+- [ ] **Blog post tags / category filtering** — many-to-many tags on BlogPost (e.g. "Urban Planning", "Aviation", "Teaching", "Opinion"); render filter pills on the blog index ("All", "Research", "Teaching", etc.); use Stimulus + CSS show/hide for a no-reload feel, or a simple query param approach
 - [ ] **Reading progress bar** — thin teal bar at top of viewport that fills as user scrolls through a blog post; elegant signal for long-form content
 
 ### Animations & Polish
