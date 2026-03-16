@@ -94,8 +94,10 @@
                 <%= link_to purge_cv_profile_path,
                       class: "profile-cv-delete",
                       title: "Remove CV",
-                      data: { turbo_method: :delete, turbo_confirm: "Remove your CV? The download link will disappear from your homepage." } do %>
-                  <i class="fa-solid fa-xmark"></i>
+                      data: { controller: "link-spinner",
+                              turbo_method: :delete,
+                              turbo_confirm: "Remove your CV? The download link will disappear from your homepage." } do %>
+                  <i data-link-spinner-target="icon" class="fa-solid fa-xmark"></i>
                 <% end %>
               </div>
             <% end %>
