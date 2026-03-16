@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-15 (session 7: blog image_url fallback, live image preview Stimulus controller, AI service bug fixes)
+> Created: 2026-03-08 | Last updated: 2026-03-16 (session 8: blog modal stacking context fix, contact form refactor by Codex, contact form spinner fix)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -47,9 +47,10 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Seed data for development — 6 teachings, 8 research, 8 grants/awards, 6 blog posts, 1 service; seeds have descriptive puts output ✅ (2026-03-15)
 - [x] Contact form — model, controller, mailer, routes, invisible_captcha spam protection, load-button Stimulus controller, form partial wired to homepage
   - [x] Configure iCloud SMTP — `smtp.mail.me.com`, port 587, `authentication: :login`, ENV vars wired ✅ (2026-03-15)
+  - [x] Contact form refactored by Codex ✅ (2026-03-16) — controller uses transaction so failed delivery never persists a Contact; validation errors re-render homepage with inline errors; HomePageContent concern extracted; admin email uses "Sender via Dr Isara" label with reply-to; dev SMTP auto-configured from ENV vars with file fallback; regression tests added
+  - [x] Contact form spinner fix ✅ (2026-03-16) — button wrapped in `buttons` target div; `type="button"` + `load-button#loader` so spinner correctly replaces button with matching `btn-grad` style
   - [ ] Set `SMTP_PASSWORD` to Apple app-specific password in `.env` (generate at appleid.apple.com → App-Specific Passwords)
   - [ ] Set `APP_HOST` to real domain in `.env` before deploying
-  - [ ] Enable dev email delivery — uncomment Letter Opener or local SMTP block in development.rb
 
 ---
 
@@ -99,6 +100,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Author hardcoded on BlogPost — `before_validation :set_author` always sets "Isara Khanjanasthiti"; removed from forms; "By [author]" shown on show page above meta row ✅
 - [x] Blog edit form — status indicator for all 3 statuses (draft / scheduled / published) with contextual message + "use the dropdown" nudge ✅
 - [x] Fixed form submission bug — Bootstrap UMD bundle incompatible with ESM named imports; Stimulus controller was crashing silently on `import { Modal } from "bootstrap"`; fix: removed import, use `window.bootstrap?.Modal` inline ✅
+- [x] Fixed Bootstrap modal stacking context ✅ (2026-03-16) — `page-fade-in` transform animation permanently promoted `<main>` to a GPU compositing layer in Chrome, trapping modals below the backdrop; fix: `animationend` on `<main>` sets `animation: none` to force layer demotion; `turbo:before-cache` cleans the inline style; `turbo:before-render` removes leftover backdrop/modal-open state
 - [x] Fixed double flash on new post save — show.html.erb had a duplicate `render "shared/flashes"`; removed (layout already renders it globally) ✅
 - [x] Fixed Pagy v9 API — `@pagy.series_nav(:bootstrap)` replaces `@pagy.bootstrap_series_nav` (now protected in Pagy v43+); updated all 4 index views ✅
 - [x] Blog index status badge — moved from image overlay (position-absolute) to card body above date row; more visible and less design noise ✅
