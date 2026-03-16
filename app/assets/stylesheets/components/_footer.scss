@@ -29,13 +29,17 @@
 
   .footer-social {
     a {
-      font-size: inherit;
+      font-size: 1rem;
       color: rgba(226, 226, 226, 0.45);
       transition: color 0.2s ease;
       text-decoration: none;
 
       &:hover {
         color: $teal;
+      }
+
+      @media (max-width: 479.98px) {
+        font-size: 0.9rem;
       }
     }
   }
