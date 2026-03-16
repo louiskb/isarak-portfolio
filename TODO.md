@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-17 (session 10: CV delete button, CV download filename fix, app timezone set to Sydney, blog card scheduled datetime display, link_spinner Stimulus controller)
+> Created: 2026-03-08 | Last updated: 2026-03-17 (session 11: footer font consistency, Privacy Policy + Terms of Service pages, copy link button on blog show pages)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -28,6 +28,9 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Footer
   - [x] Social links added (same 8) ✅ (2026-03-15)
   - [x] Layout fixed — links left, copyright center, socials right ✅ (2026-03-15)
+  - [x] Font consistency — all footer text unified at `0.8rem`; social icons restored to `1rem`; font-size set on `.site-footer` so all children inherit ✅ (2026-03-17)
+  - [x] Login link font size matches Privacy Policy + Terms of Service links (`font-size: inherit` on `.footer-legal a`) ✅ (2026-03-17)
+  - [x] Privacy Policy + Terms of Service pages — `.legal-hero` + `.legal-body` layout; `_legal.scss` styles; routes + PagesController actions; linked from footer ✅ (2026-03-17)
 - [x] Add footer render to application layout
 
 ---
@@ -115,6 +118,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Pagination spacing — wrapped pagination in `div.mt-4` on all 4 index views so it doesn't stick to the cards ✅
 - [x] Pagination disabled state — `$pagination-disabled-bg/color/border-color` overridden in `_bootstrap_variables.scss`; Bootstrap default used `$white` bg (invisible chevron on dark theme); now stays charcoal with dimmed text ✅
 - [x] Pagination active click state — `.pagination .page-link:active { color: $black }` in `_resources.scss` prevents white chevron during click flash ✅
+- [x] Copy link button on blog post show page — `copy_link_controller.js` Stimulus controller; `fa-link` icon in meta row (`ms-auto` right-aligned); copies `window.location.href` to clipboard; icon swaps to `fa-check` for 2s as confirmation ✅ (2026-03-17)
 
 ---
 
