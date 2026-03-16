@@ -4,9 +4,9 @@
 
       <%# Left: legal links + discrete login %>
       <div class="col-12 col-md-4 footer-legal text-center text-md-start">
-        <%= link_to "Privacy Policy", "#" %>
+        <%= link_to "Privacy Policy", privacy_policy_path %>
         &ensp;&middot;&ensp;
-        <%= link_to "Terms of Service", "#" %>
+        <%= link_to "Terms of Service", terms_of_service_path %>
         <%# Discrete login — only shown on the research page, when not signed in %>
         <% if !user_signed_in? && request.path.start_with?(research_items_path) %>
           &ensp;&middot;&ensp;

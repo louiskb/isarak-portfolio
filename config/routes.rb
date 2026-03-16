@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   resource :service, only: [ :edit, :update ]
   root to: "pages#home"
   get "cv/download", to: "pages#download_cv", as: :download_cv
+  get "privacy-policy", to: "pages#privacy_policy", as: :privacy_policy
+  get "terms-of-service", to: "pages#terms_of_service", as: :terms_of_service
 
   resources :contacts, only: [ :new, :create ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

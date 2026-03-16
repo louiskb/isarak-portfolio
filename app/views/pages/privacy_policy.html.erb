@@ -1,0 +1,98 @@
+<% content_for :title, "Privacy Policy — Isara Khanjanasthiti" %>
+
+<%# ===== HERO ===== %>
+<section class="legal-hero">
+  <div class="container">
+    <p class="legal-hero-label">Legal</p>
+    <h1 class="legal-hero-title">Privacy Policy</h1>
+    <p class="legal-hero-meta">Last updated: 17 March 2026</p>
+  </div>
+</section>
+
+<%# ===== CONTENT ===== %>
+<section class="legal-body">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Overview</h2>
+          <p class="legal-text">
+            This website is the personal academic portfolio of Dr Isara Khanjanasthiti, Urban Planner and Researcher at the University of New England (UNE). This Privacy Policy explains what information is collected when you visit this site and how it is used.
+          </p>
+          <p class="legal-text">
+            This site does not sell, rent, or share your personal information with third parties for commercial purposes.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Information We Collect</h2>
+          <p class="legal-text">This site collects personal information only when you voluntarily submit the contact form. The following information may be collected:</p>
+          <ul class="legal-list">
+            <li>First name and last name</li>
+            <li>Email address</li>
+            <li>The content of your message</li>
+          </ul>
+          <p class="legal-text">
+            No information is collected passively. This site does not use tracking cookies, analytics scripts, or advertising pixels.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">How Your Information Is Used</h2>
+          <p class="legal-text">Information submitted via the contact form is used solely to respond to your enquiry. It is not used for marketing, profiling, or any other purpose.</p>
+          <p class="legal-text">Contact form submissions are stored in a secure database hosted on Heroku (a Salesforce platform) and are accessible only to the site administrator.</p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Data Storage & Security</h2>
+          <p class="legal-text">This site is hosted on Heroku and uses PostgreSQL for its database. File uploads (including CVs and images) are stored via Cloudinary, a cloud media management service. Both services implement industry-standard security practices.</p>
+          <p class="legal-text">While reasonable precautions are taken to protect your data, no method of transmission over the internet is 100% secure.</p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Cookies & Session Data</h2>
+          <p class="legal-text">
+            This site uses only essential session cookies required for the site to function (for example, to maintain a signed-in session for the site administrator). No tracking or advertising cookies are used. No cookie consent banner is displayed because no non-essential cookies are set.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Third-Party Links</h2>
+          <p class="legal-text">
+            This site contains links to external platforms including LinkedIn, ORCID, ResearchGate, Academia.edu, Google Scholar, X (Twitter), and the University of New England. Once you leave this site, this Privacy Policy no longer applies. Please review the privacy policies of any external sites you visit.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Your Rights</h2>
+          <p class="legal-text">You have the right to request access to, correction of, or deletion of any personal information you have submitted through this site. To make such a request, please use the contact form or email directly.</p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Changes to This Policy</h2>
+          <p class="legal-text">
+            This Privacy Policy may be updated from time to time. Any changes will be reflected on this page with a revised "Last updated" date.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h2 class="legal-section-title">Contact</h2>
+          <p class="legal-text">
+            For any questions regarding this Privacy Policy, please reach out via the
+            <%= link_to "contact form", root_path(anchor: "contact") %> on the homepage.
+          </p>
+        </div>
+
+        <hr class="legal-divider">
+
+        <p class="legal-text" style="font-size: 0.82rem;">
+          <%= link_to "← Back to homepage", root_path %>
+          &ensp;&middot;&ensp;
+          <%= link_to "Terms of Service", terms_of_service_path %>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>

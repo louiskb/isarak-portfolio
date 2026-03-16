@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   include HomePageContent
 
-  skip_before_action :authenticate_user!, only: [ :home, :download_cv ]
+  skip_before_action :authenticate_user!, only: [ :home, :download_cv, :privacy_policy, :terms_of_service ]
 
   def download_cv
     isara = User.first
@@ -16,5 +16,11 @@ class PagesController < ApplicationController
   def home
     load_home_page_content
     @contact = Contact.new
+  end
+
+  def privacy_policy
+  end
+
+  def terms_of_service
   end
 end

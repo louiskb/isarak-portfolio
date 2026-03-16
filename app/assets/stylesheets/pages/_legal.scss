@@ -1,0 +1,99 @@
+// ===================================================
+// Legal Pages — Privacy Policy & Terms of Service
+// ===================================================
+
+.legal-hero {
+  padding: 4rem 0 2.5rem;
+  border-bottom: 1px solid $border-dark;
+
+  @media (max-width: 767.98px) {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .legal-hero-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $teal;
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-hero-title {
+    font-family: $headers-font;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: $font-color;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-hero-meta {
+    font-size: 0.85rem;
+    color: $font-muted;
+  }
+}
+
+.legal-body {
+  padding: 3.5rem 0 5rem;
+
+  @media (max-width: 767.98px) {
+    padding: 2.5rem 0 3.5rem;
+  }
+}
+
+.legal-section {
+  margin-bottom: 2.75rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.legal-section-title {
+  font-family: $headers-font;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: $teal;
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $border-dark;
+}
+
+.legal-text {
+  font-size: 0.95rem;
+  color: $font-muted;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  a {
+    color: $teal;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.legal-list {
+  font-size: 0.95rem;
+  color: $font-muted;
+  line-height: 1.8;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+
+  li {
+    margin-bottom: 0.35rem;
+  }
+}
+
+.legal-divider {
+  border-color: $border-dark;
+  margin: 3rem 0;
+  opacity: 1;
+}
