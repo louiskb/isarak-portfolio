@@ -5,7 +5,8 @@
         <div class="card-body p-4 p-md-5">
           <h2 class="card-title text-primary mb-4">Sign up</h2>
 
-          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name),
+                              html: { data: { controller: "load-button" } }) do |f| %>
             <%= f.error_notification %>
             <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -21,7 +22,11 @@
                         required: true,
                         input_html: { autocomplete: "new-password" } %>
 
-            <%= f.button :submit, "Sign up", class: "btn btn-primary w-100 mt-2" %>
+            <div data-load-button-target="buttons">
+              <%= f.button :submit, "Sign up", class: "btn btn-primary w-100 mt-2",
+                           data: { action: "click->load-button#showSpinner",
+                                   load_button_loading_text_value: "Creating account..." } %>
+            </div>
           <% end %>
         </div>
       </div>

@@ -6,7 +6,8 @@
           <h2 class="card-title text-primary mb-1">Unlock your account</h2>
           <p class="text-muted mb-4">We'll send unlock instructions to your email address.</p>
 
-          <%= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+          <%= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name),
+                              html: { method: :post, data: { controller: "load-button" } }) do |f| %>
             <%= f.error_notification %>
             <%= f.full_error :unlock_token %>
 
@@ -15,7 +16,11 @@
                         autofocus: true,
                         input_html: { autocomplete: "email" } %>
 
-            <%= f.button :submit, "Resend unlock instructions", class: "btn btn-primary w-100 mt-2" %>
+            <div data-load-button-target="buttons">
+              <%= f.button :submit, "Resend unlock instructions", class: "btn btn-primary w-100 mt-2",
+                           data: { action: "click->load-button#showSpinner",
+                                   load_button_loading_text_value: "Sending instructions..." } %>
+            </div>
           <% end %>
         </div>
       </div>
