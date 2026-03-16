@@ -38,10 +38,21 @@ export default class extends Controller {
   // Called by the "Schedule post" button inside the schedule modal.
   // Validates the datetime, sets the hidden fields, closes the modal,
   // then submits the form.
+  //
+  // Safe to use alongside load-button#showSpinner (which fires first in
+  // action order). If validation fails, _restoreLoadButtonState() undoes
+  // the spinner so the user isn't left with a frozen UI.
   confirmSchedule(event) {
     event.preventDefault()
     const val = this.scheduleInputTarget.value
-    if (!val) return
+
+    if (!val) {
+      // showSpinner may have already hidden the buttons — restore them
+      // so the user can still interact with the form.
+      this._restoreLoadButtonState()
+      this.scheduleInputTarget.reportValidity()
+      return
+    }
 
     this.statusInputTarget.value = "scheduled"
     this.scheduledAtInputTarget.value = val
@@ -49,13 +60,30 @@ export default class extends Controller {
     const modalEl = this.element.querySelector("#schedulePostModal")
     if (modalEl) {
       const Modal = window.bootstrap?.Modal
-      const bsModal = Modal.getInstance(modalEl) || new Modal(modalEl)
-      modalEl.addEventListener("hidden.bs.modal", () => {
+      // getInstance returns the existing shown instance.
+      // If it's somehow null (edge case), fall back to submitting immediately
+      // rather than creating a never-shown Modal whose hide() is a no-op.
+      const bsModal = Modal?.getInstance(modalEl)
+      if (bsModal) {
+        modalEl.addEventListener("hidden.bs.modal", () => {
+          this.element.requestSubmit()
+        }, { once: true })
+        bsModal.hide()
+      } else {
         this.element.requestSubmit()
-      }, { once: true })
-      bsModal.hide()
+      }
     } else {
       this.element.requestSubmit()
     }
+  }
+
+  // Undoes the spinner that load-button#showSpinner inserted before this
+  // controller had a chance to validate. Called on early-exit paths only.
+  _restoreLoadButtonState() {
+    const buttonsEl = this.element.querySelector("[data-load-button-target='buttons']")
+    if (!buttonsEl) return
+    buttonsEl.classList.remove("d-none")
+    const spinner = buttonsEl.nextElementSibling
+    if (spinner?.querySelector?.(".fa-hourglass")) spinner.remove()
   }
 }

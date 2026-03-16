@@ -34,11 +34,13 @@ export default class extends Controller {
       this.loadingTextValue;
 
     // Inherit the triggering button's visual classes so the spinner matches.
-    // Strip structural/split-button classes and spacing utilities that don't belong on a static span.
-    const STRIP = /\b(btn-publish-main|btn-publish-chevron|dropdown-toggle-split|dropdown-toggle|[mp][trblxy]?-\d+)\b/g;
-    const btnClasses = event?.currentTarget
+    // Strip structural/split-button classes, dropdown-item, and spacing utilities that don't belong on a static span.
+    // If stripping leaves nothing (e.g. a bare dropdown-item click), fall back to the primary publish button style.
+    const STRIP = /\b(btn-publish-main|btn-publish-chevron|dropdown-toggle-split|dropdown-toggle|dropdown-item|[mp][trblxy]?-\d+)\b/g;
+    const stripped = event?.currentTarget
       ? event.currentTarget.className.replace(STRIP, "").replace(/\s+/g, " ").trim()
-      : "btn btn-grad";
+      : "";
+    const btnClasses = stripped || "btn btn-blog-publish";
 
     const spinner = `<div class="mt-4 mb-4"><span class="${btnClasses}" style="pointer-events:none;cursor:default"><i class="fa-solid fa-hourglass fa-spin me-1"></i> ${text}</span></div>`;
 
