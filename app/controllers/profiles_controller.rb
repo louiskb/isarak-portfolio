@@ -5,7 +5,9 @@ class ProfilesController < ApplicationController
   end
 
   def purge_cv
-    current_user.cv.purge_later
+    blob = current_user.cv.blob
+    current_user.cv.detach
+    blob&.purge_later
     redirect_to profile_path, notice: "CV removed."
   end
 

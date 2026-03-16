@@ -91,11 +91,12 @@
                     Uploaded <%= current_user.cv.created_at.strftime("%b %-d, %Y") %>
                   </p>
                 </div>
-                <%= button_to purge_cv_profile_path,
-                      method: :delete,
-                      class: "btn-close btn-close-white ms-auto",
+                <%= link_to purge_cv_profile_path,
+                      class: "profile-cv-delete",
                       title: "Remove CV",
-                      data: { turbo_confirm: "Remove your CV? The download link will disappear from your homepage." } %>
+                      data: { turbo_method: :delete, turbo_confirm: "Remove your CV? The download link will disappear from your homepage." } do %>
+                  <i class="fa-solid fa-xmark"></i>
+                <% end %>
               </div>
             <% end %>
             <%= f.input :cv,
