@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-17 (session 11: footer font consistency, Privacy Policy + Terms of Service pages, copy link button on blog show pages)
+> Created: 2026-03-08 | Last updated: 2026-03-17 (session 12: navbar Contact Me link fix)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -23,6 +23,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] Service page — static route + PagesController action + placeholder view ✅
   - [x] Sticky navbar — `position: sticky` on `<header>` ✅ (2026-03-15)
   - [x] Homepage scroll effect — frosted glass before 30% scroll, dark pill after; iron-wall rule prevents bleed to other pages ✅ (2026-03-15)
+  - [x] Contact Me navbar link — fixed to use `root_path(anchor: "contact")` so it navigates to homepage first (was `#contact`, only worked on the homepage itself) ✅ (2026-03-17)
   - [x] Mobile burger menu polish — no border/grey box, pill on scroll, 5px radius, safe padding ✅ (2026-03-15)
   - [x] Social links added to hero banner (8 links: LinkedIn, ORCID, ResearchGate, Academia, Scholar, X, UNE, Email) ✅ (2026-03-15)
 - [x] Footer
