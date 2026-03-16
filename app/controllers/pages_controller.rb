@@ -6,10 +6,7 @@ class PagesController < ApplicationController
   def download_cv
     isara = User.first
     if isara&.cv&.attached?
-      send_data isara.cv.download,
-                filename: "Isara_Khanjanasthiti_CV.pdf",
-                type: "application/pdf",
-                disposition: "attachment"
+      redirect_to isara.cv.url, allow_other_host: true
     else
       redirect_to root_path, alert: "CV not available."
     end
