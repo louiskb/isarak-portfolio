@@ -40,23 +40,29 @@ Rails.application.configure do
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
-  # --- Email delivery (development) ---
-  # Option A: Letter Opener — opens emails in browser (no SMTP needed).
-  # Toggle gem "letter_opener" in Gemfile, run `bundle install`, then uncomment below.
-  # Don't forget to restart server after toggling. Comment out Option B when using this.
-  # config.action_mailer.delivery_method = :letter_opener
-
-  # Option B: Local SMTP (e.g. ProtonMail Bridge or Mailhog).
-  # Comment out when using Letter Opener (Option A). Restart server after changes.
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   address: "127.0.0.1",
-  #   port: 1025,                            # Replace with your local SMTP port
-  #   user_name: ENV["SMTP_DEV_USERNAME"],   # Add to .env file
-  #   password: ENV["SMTP_DEV_PASSWORD"],    # Add to .env file
-  #   authentication: :plain,
-  #   enable_starttls_auto: false
-  # }
+  # Deliver through SMTP when credentials are present so the contact form behaves
+  # the same way locally as it does in production.
+  if ENV["SMTP_ADDRESS"].present? && ENV["SMTP_USERNAME"].present? && ENV["SMTP_PASSWORD"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_settings = {
+      address: ENV["SMTP_ADDRESS"],
+      port: ENV.fetch("SMTP_PORT", "587").to_i,
+      domain: ENV["SMTP_DOMAIN"],
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: :login,
+      enable_starttls_auto: true,
+      # Development-only workaround for local SSL certificate verification issues.
+      # Do not carry this setting into production; production should verify normally.
+      openssl_verify_mode: ENV.fetch("SMTP_OPENSSL_VERIFY_MODE", "none"),
+      open_timeout: 5,
+      read_timeout: 5
+    }
+  else
+    config.action_mailer.delivery_method = :file
+    config.action_mailer.file_settings = { location: Rails.root.join("tmp/mails") }
+  end
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

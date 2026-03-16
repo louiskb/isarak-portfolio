@@ -3,6 +3,7 @@ class ContactMailer < ApplicationMailer
     @contact = params[:contact]
     mail(
       to: ENV.fetch("MAILER_SENDER", nil),
+      from: %("#{[@contact.first_name, @contact.last_name].join(" ").strip} via Dr Isara Khanjanasthiti" <#{ENV.fetch("MAILER_SENDER", nil)}>),
       subject: "New Contact: #{@contact.first_name} #{@contact.last_name}",
       reply_to: @contact.email
     )

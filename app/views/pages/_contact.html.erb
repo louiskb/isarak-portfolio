@@ -12,7 +12,12 @@
         </p>
 
         <%# Contact form %>
-        <%= simple_form_for @contact, url: contacts_path, local: true, data: { controller: "load-button" }, class: "mb-2" do |f| %>
+        <%= simple_form_for @contact,
+            url: contacts_path,
+            local: true,
+            data: { controller: "load-button", turbo: false },
+            class: "mb-2" do |f| %>
+          <%= f.error_notification %>
           <div class="row">
             <div class="col-12 col-md-6">
               <%= f.input :first_name, label: "First Name" %>
@@ -25,10 +30,14 @@
           <%= f.input :message, as: :text, rows: 6, label: "Message" %>
           <%# Honeypot spam protection %>
           <%= invisible_captcha %>
-          <%= f.button :submit, "Send Message",
-              data: { action: "click->load-button#loader",
-                      load_button_loading_text_value: "Sending message..." },
-              class: "btn btn-grad mt-4 mb-4" %>
+          <div data-load-button-target="buttons" class="mt-4 mb-4">
+            <button type="button"
+                    class="btn btn-grad"
+                    data-action="click->load-button#loader"
+                    data-load-button-loading-text-value="Sending message...">
+              Send Message
+            </button>
+          </div>
         <% end %>
       </div>
     </div>

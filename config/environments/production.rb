@@ -63,6 +63,8 @@ Rails.application.configure do
 
   # Outgoing SMTP via iCloud Mail (smtp.mail.me.com)
   # See .env for the full list of required ENV vars and instructions.
+  # Keep normal SSL certificate verification enabled in production.
+  # Do not copy the development `openssl_verify_mode: "none"` workaround here.
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch("SMTP_ADDRESS", nil),
