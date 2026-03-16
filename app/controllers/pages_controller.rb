@@ -6,9 +6,10 @@ class PagesController < ApplicationController
   def download_cv
     isara = User.first
     if isara&.cv&.attached?
-      cloudinary_url = isara.cv.url
-      download_url = cloudinary_url.sub("/upload/", "/upload/fl_attachment:Isara_Khanjanasthiti_CV/")
-      redirect_to download_url, allow_other_host: true
+      send_data isara.cv.download,
+                filename: "Isara_Khanjanasthiti_CV.pdf",
+                type: "application/pdf",
+                disposition: "attachment"
     else
       redirect_to root_path, alert: "CV not available."
     end
