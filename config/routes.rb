@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   resources :research_items
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
   devise_for :users
-  resource :profile, only: [ :show, :update ]
+  resource :profile, only: [ :show, :update ] do
+    delete "purge_cv", on: :member
+  end
   resource :service, only: [ :edit, :update ]
   root to: "pages#home"
   get "cv/download", to: "pages#download_cv", as: :download_cv

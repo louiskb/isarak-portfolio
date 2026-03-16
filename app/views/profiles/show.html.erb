@@ -84,13 +84,18 @@
             <% if current_user.cv.attached? %>
               <div class="profile-cv-existing d-flex align-items-center gap-3 mb-3">
                 <i class="fa-regular fa-file-pdf profile-cv-icon"></i>
-                <div>
+                <div class="flex-grow-1">
                   <p class="mb-0 profile-cv-filename"><%= current_user.cv.filename %></p>
                   <p class="mb-0 profile-input-hint">
                     <%= number_to_human_size(current_user.cv.byte_size) %> &middot;
                     Uploaded <%= current_user.cv.created_at.strftime("%b %-d, %Y") %>
                   </p>
                 </div>
+                <%= button_to purge_cv_profile_path,
+                      method: :delete,
+                      class: "btn-close btn-close-white ms-auto",
+                      title: "Remove CV",
+                      data: { turbo_confirm: "Remove your CV? The download link will disappear from your homepage." } %>
               </div>
             <% end %>
             <%= f.input :cv,
