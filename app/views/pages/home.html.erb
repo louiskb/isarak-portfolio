@@ -282,7 +282,7 @@
         <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall" %>
       </div>
 
-      <div class="row g-3">
+      <div class="row g-4">
         <% @featured_research.each do |item| %>
           <div class="col-12 col-md-6" data-scroll-reveal-target="fromBottom">
             <% img_src = item.image.attached? ? (url_for(item.image) rescue nil) : item.image_url.presence %>
