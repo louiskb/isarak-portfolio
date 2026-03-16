@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-16 (session 9: Devise mailer wired, :confirmable added, load-button spinners on all Devise views, research card borders + spacing, teaching image borders)
+> Created: 2026-03-08 | Last updated: 2026-03-17 (session 10: CV delete button, CV download filename fix, app timezone set to Sydney, blog card scheduled datetime display, link_spinner Stimulus controller)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -40,6 +40,8 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] belongs_to :user on all resources + has_many on User with dependent: :destroy
 - [x] Auth gates — authenticate_user! on all controllers (BlogPost index/show public)
 - [x] CV attachment on User (has_one_attached :cv)
+  - [x] CV download filename — `fl_attachment:isara_khanjanasthiti_cv` via URL sub in `download_cv` action ✅ (2026-03-17)
+  - [x] CV delete button on profile page — `link_to` with `data-turbo-method: :delete`; `detach` + `blob.purge_later` for immediate UI update; `link_spinner_controller.js` shows hourglass after confirm ✅ (2026-03-17)
   - [ ] CV page-1 preview — use Cloudinary's PDF-to-image transformation to show a thumbnail of page 1 of Isara's CV (e.g. on landing page or a dedicated CV section)
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
 - [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented
@@ -86,10 +88,11 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Scheduled posts via Solid Queue background jobs
   - [x] PublishScheduledPostsJob — finds scheduled posts past scheduled_at, calls published!
   - [x] recurring.yml — job runs every minute in development + production
-  - [x] bin/dev + Procfile.dev — foreman starts Rails server + Solid Queue worker together
+  - [x] bin/dev + Procfile.dev — foreman starts Rails server + Solid Queue worker together (rails server alone does NOT start the worker)
   - [x] database.yml — development queue database added (isarak_portfolio_development_queue)
   - [x] development.rb — Solid Queue adapter + connects_to :queue configured
   - [x] db:schema:load required on fresh clone to set up queue_schema.rb (secondary DB)
+  - [x] App timezone set to "Sydney" ✅ (2026-03-17) — was defaulting to UTC, causing scheduled times to be 11hrs off for Isara in Sydney; `config.time_zone = "Sydney"` in application.rb
 - [x] Blog post status management (show page — Isara only)
   - [x] Status badge (green=published, yellow=scheduled, grey=draft) — Isara only
   - [x] Publish now button — draft posts (turbo confirm)
@@ -108,6 +111,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Fixed double flash on new post save — show.html.erb had a duplicate `render "shared/flashes"`; removed (layout already renders it globally) ✅
 - [x] Fixed Pagy v9 API — `@pagy.series_nav(:bootstrap)` replaces `@pagy.bootstrap_series_nav` (now protected in Pagy v43+); updated all 4 index views ✅
 - [x] Blog index status badge — moved from image overlay (position-absolute) to card body above date row; more visible and less design noise ✅
+- [x] Blog index cards — status badge + AI label in same row (gap-3); scheduled date shows full datetime e.g. `Scheduled 17 Mar 2026 at 10:09` ✅ (2026-03-17)
 - [x] Pagination spacing — wrapped pagination in `div.mt-4` on all 4 index views so it doesn't stick to the cards ✅
 - [x] Pagination disabled state — `$pagination-disabled-bg/color/border-color` overridden in `_bootstrap_variables.scss`; Bootstrap default used `$white` bg (invisible chevron on dark theme); now stays charcoal with dimmed text ✅
 - [x] Pagination active click state — `.pagination .page-link:active { color: $black }` in `_resources.scss` prevents white chevron during click flash ✅
