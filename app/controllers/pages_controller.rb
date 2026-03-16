@@ -6,7 +6,17 @@ class PagesController < ApplicationController
   def download_cv
     isara = User.first
     if isara&.cv&.attached?
-      redirect_to isara.cv.url, allow_other_host: true
+      blob = isara.cv.blob
+      public_id = "#{Rails.env}/#{blob.key}"
+      url = Cloudinary::Utils.cloudinary_url(
+        public_id,
+        resource_type: "image",
+        format: blob.filename.extension_without_delimiter,
+        secure: true,
+        sign_url: true,
+        flags: "attachment:Isara_Khanjanasthiti_CV"
+      )
+      redirect_to url, allow_other_host: true
     else
       redirect_to root_path, alert: "CV not available."
     end
