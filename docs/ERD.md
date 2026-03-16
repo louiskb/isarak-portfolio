@@ -9,6 +9,10 @@ erDiagram
         string reset_password_token
         datetime reset_password_sent_at
         datetime remember_created_at
+        string confirmation_token
+        datetime confirmed_at
+        datetime confirmation_sent_at
+        string unconfirmed_email
         string name
         string slug
         datetime created_at

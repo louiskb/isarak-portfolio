@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-16 (session 8: blog modal stacking context fix, contact form refactor by Codex, contact form spinner fix)
+> Created: 2026-03-08 | Last updated: 2026-03-16 (session 9: Devise mailer wired, :confirmable added, load-button spinners on all Devise views, research card borders + spacing, teaching image borders)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -51,6 +51,10 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] Contact form spinner fix ✅ (2026-03-16) — button wrapped in `buttons` target div; `type="button"` + `load-button#loader` so spinner correctly replaces button with matching `btn-grad` style
   - [ ] Set `SMTP_PASSWORD` to Apple app-specific password in `.env` (generate at appleid.apple.com → App-Specific Passwords)
   - [ ] Set `APP_HOST` to real domain in `.env` before deploying
+- [x] Devise mailer wired to SMTP ✅ (2026-03-16) — `config.mailer_sender` set to `MAILER_SENDER` ENV var; shares iCloud SMTP config with contact mailer
+- [x] Devise `:confirmable` added ✅ (2026-03-16) — email change verification; migration adds 4 columns + index; existing user auto-confirmed; `reconfirmable: true` already set
+- [x] `send_email_changed_notification` + `send_password_change_notification` enabled ✅ (2026-03-16)
+- [x] Load-button spinners on all Devise views ✅ (2026-03-16) — sessions, passwords (new + edit), registrations (new + edit), confirmations, unlocks; profile page already had it
 
 ---
 
@@ -127,6 +131,8 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [ ] Scroll-triggered animations for below-fold sections (AOS or CSS)
 - [x] About section — wire up real content, photo, bio, research interest tags, CV download
 - [x] Resource sections — Featured Research, Teaching, Grants & Awards, Blog posts (review layout + content)
+- [x] Research cards — `g-3` → `g-4` gutter spacing; `#3D3D3D` solid border ✅ (2026-03-16)
+- [x] Teaching image panels — `#3D3D3D` solid border on `.teaching-spotlight-image-panel` ✅ (2026-03-16)
 
 ---
 

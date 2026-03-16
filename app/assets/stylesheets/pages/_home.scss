@@ -663,6 +663,7 @@
   transition: opacity 0.4s ease;
   border-radius: 1rem;
   overflow: hidden;
+  border: 1px solid #3D3D3D;
 
   &.is-active {
     opacity: 1;
@@ -1152,6 +1153,7 @@
   background-color: $surface;
   background-size: cover;
   background-position: center;
+  border: 1px solid #3D3D3D;
 
   // Dark gradient overlay so text is always legible
   &::after {
