@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-17 (session 12: navbar Contact Me link fix)
+> Created: 2026-03-08 | Last updated: 2026-03-17 (session 13: README rewrite — correct university, full setup guide, env vars, gotchas)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
