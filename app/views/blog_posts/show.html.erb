@@ -55,6 +55,12 @@
                 <i class="fa-solid fa-wand-magic-sparkles me-1"></i><%= @blog_post.ai_label %>
               </span>
             <% end %>
+            <button class="blog-copy-link ms-auto"
+                    data-controller="copy-link"
+                    data-action="click->copy-link#copy"
+                    title="Copy link">
+              <i data-copy-link-target="icon" class="fa-solid fa-link"></i>
+            </button>
           </div>
 
           <%# Featured image — uploaded takes priority, then image_url fallback %>

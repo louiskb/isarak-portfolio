@@ -383,6 +383,21 @@
   color: $teal;
 }
 
+.blog-copy-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: $font-muted;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: $teal;
+  }
+}
+
 .blog-show-image {
   border-radius: 0.75rem;
   overflow: hidden;
