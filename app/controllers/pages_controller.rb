@@ -6,7 +6,8 @@ class PagesController < ApplicationController
   def download_cv
     isara = User.first
     if isara&.cv&.attached?
-      redirect_to isara.cv.url, allow_other_host: true
+      url = isara.cv.url.sub("/upload/", "/upload/fl_attachment:isara_khanjanasthiti_cv/")
+      redirect_to url, allow_other_host: true
     else
       redirect_to root_path, alert: "CV not available."
     end
