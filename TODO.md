@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-17 (session 15: hero banner UI polish, btn-grad on add buttons, social icon animation timing fix)
+> Created: 2026-03-08 | Last updated: 2026-03-18 (session 16: blog tag system with search + filter, AI tag selection, seed fixes, search icon focus behaviour)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -106,6 +106,18 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] development.rb — Solid Queue adapter + connects_to :queue configured
   - [x] db:schema:load required on fresh clone to set up queue_schema.rb (secondary DB)
   - [x] App timezone set to "Sydney" ✅ (2026-03-17) — was defaulting to UTC, causing scheduled times to be 11hrs off for Isara in Sydney; `config.time_zone = "Sydney"` in application.rb
+- [x] Blog tag system ✅ (2026-03-18, session 16)
+  - [x] `Tag` model — name, case-insensitive uniqueness, `before_save` capitalise preserving hyphens
+  - [x] `BlogPostTag` join table — many-to-many between BlogPost and Tag
+  - [x] Tag checkboxes on new/edit forms with inline creator (Stimulus `tag_manager_controller`) — POST/DELETE to `/tags` JSON endpoint, no page reload
+  - [x] Tag filter pills on blog index — teal ghost style, multiple selectable, active state, submit on change (Stimulus `blog_filter_controller`)
+  - [x] Search bar on blog index — ILIKE title search, debounced 400ms, auto-submit
+  - [x] Combined search + tag filter — GET form, URL params, Turbo Drive `replace`
+  - [x] Tags shown on show page as clickable teal pills linking to filtered index
+  - [x] AI tag selection — AI chooses from existing tags only (tag list injected into system prompt); `filter_valid_tag_ids` guard strips hallucinated IDs
+  - [x] Seed data — 10 urban planning tags; tag assignments for all 6 blog posts
+  - [x] Seed fixes — ResearchItem categories fixed; GrantAward `featured:` keys removed; Teaching `year` changed to strings
+  - [x] Search icon turns teal on focus (`:focus-within` CSS); clear button plain grey (no hover effect)
 - [x] Blog post status management (show page — Isara only)
   - [x] Status badge (green=published, yellow=scheduled, grey=draft) — Isara only
   - [x] Publish now button — draft posts (turbo confirm)

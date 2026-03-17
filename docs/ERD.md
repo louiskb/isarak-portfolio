@@ -136,6 +136,21 @@ erDiagram
         string variation_digest
     }
 
+    TAG {
+        int id PK
+        string name
+        datetime created_at
+        datetime updated_at
+    }
+
+    BLOG_POST_TAG {
+        int id PK
+        int blog_post_id FK
+        int tag_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
     USER ||--o{ RESEARCH_ITEM : "has many"
     USER ||--o{ GRANT_AWARD : "has many"
     USER ||--o{ TEACHING : "has many"
@@ -148,6 +163,8 @@ erDiagram
     BLOG_POST ||--o{ ACTIVE_STORAGE_ATTACHMENT : "has many (photos)"
     ACTIVE_STORAGE_ATTACHMENT }o--|| ACTIVE_STORAGE_BLOB : "belongs to"
     ACTIVE_STORAGE_BLOB ||--o{ ACTIVE_STORAGE_VARIANT_RECORD : "has variants"
+    BLOG_POST ||--o{ BLOG_POST_TAG : "has many"
+    TAG ||--o{ BLOG_POST_TAG : "has many"
 ```
 
 ## Notes
@@ -176,4 +193,6 @@ erDiagram
 - `Contact` — standalone model; no FK to User; stores contact form submissions only
 - Active Storage uses Cloudinary as the backend in both development and production (`config.active_storage.service = :cloudinary`)
 - `active_storage_variant_records` stores Cloudinary transformation references (not local files)
+- `Tag.name` — unique case-insensitively; `before_save` normalises capitalisation using `\b[a-z]` regex (preserves hyphens, unlike `titleize`)
+- `BlogPostTag` — join table; unique composite index on `[blog_post_id, tag_id]`; `has_many :through` from both sides
 - Mermaid can't model polymorphic associations precisely — `ACTIVE_STORAGE_ATTACHMENT.record_type` holds the owner class name (`"User"`, `"BlogPost"`, `"Service"`, etc.) and `record_id` holds the owner's PK

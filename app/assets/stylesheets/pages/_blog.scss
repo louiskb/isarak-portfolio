@@ -250,9 +250,10 @@
     color: $font-color;
   }
 
-  // Remove native clear button styling differences
+  // Native clear (×) button
   &::-webkit-search-cancel-button {
     filter: invert(0.5);
+    cursor: pointer;
   }
 }
 
@@ -264,6 +265,12 @@
   color: $font-muted;
   font-size: 0.8rem;
   pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+// Turn search icon teal when the input inside the wrapper is focused
+.blog-search-wrapper:focus-within .blog-search-icon {
+  color: $teal;
 }
 
 // ===== TAG PILLS (blog post show page) =====
