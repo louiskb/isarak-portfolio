@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_124407) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_053101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -94,7 +94,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_124407) do
   end
 
   create_table "research_items", force: :cascade do |t|
-    t.integer "category"
+    t.string "category"
     t.datetime "created_at", null: false
     t.text "description"
     t.string "external_url"
@@ -125,7 +125,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_124407) do
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.integer "year"
+    t.string "year"
     t.index ["user_id"], name: "index_teachings_on_user_id"
   end
 

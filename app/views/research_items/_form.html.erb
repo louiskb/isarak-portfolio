@@ -8,10 +8,9 @@
           hint: "The full title of the paper, project, or publication." %>
 
     <%= f.input :category,
-          collection: ResearchItem.categories.keys,
-          label_method: :capitalize,
+          collection: ResearchItem::CATEGORY_LABELS.map { |k, v| [v, k] },
           include_blank: "Select a category",
-          hint: "Project, Paper, or Publication." %>
+          hint: "Select the type that best describes this research item." %>
 
     <%= f.input :description,
           as: :text,

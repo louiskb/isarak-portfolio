@@ -501,7 +501,7 @@
   background: $surface;
   border: 1px solid $border-dark;
   border-radius: 1rem;
-  padding: 1.75rem;
+  padding: 1.75rem 1.75rem 1.75rem 3.25rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -517,6 +517,8 @@
   color: $teal;
   font-size: 1.05rem;
   flex-shrink: 0;
+  width: 1.25rem;
+  text-align: center;
   margin-top: 0.1rem;
 }
 
