@@ -48,6 +48,38 @@
     color: $teal;
     font-weight: 600;
   }
+
+  .hi-teaching {
+    background: linear-gradient(90deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+
+  .hi-research {
+    background: linear-gradient(90deg, #ff1b6b, #45caff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+
+  .hi-awards {
+    background: linear-gradient(90deg, #84ffc9, #aab2ff, #eca0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
+
+  .hi-blog {
+    background: linear-gradient(90deg, #bf0fff, #cbff49);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 600;
+  }
 }
 
 // ===== PROFILE HERO PHOTOS =====
