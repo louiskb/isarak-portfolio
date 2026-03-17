@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-17 (session 14: drag-and-drop reordering, category badges, grant awards overhaul, hero banner explanations)
+> Created: 2026-03-08 | Last updated: 2026-03-17 (session 15: hero banner UI polish — page-specific gradients, btn-grad on add buttons, home-btn-outline on AI/outline buttons)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -55,6 +55,9 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Grant Awards overhaul — removed `featured` column entirely; all awards show on homepage in drag order; `default_scope` removed from all models (drag only affects index page, not homepage queries) ✅ (2026-03-17)
 - [x] Homepage featured ordering — Teaching + Research now use `updated_at: :desc` (most recently edited floats up); GrantAward uses drag position; `default_scope` removed from all three models to prevent bleed ✅ (2026-03-17)
 - [x] Hero banner explanations — consistent `resource-hero-info` + `hi-teal` CSS classes across Teaching, Research, Awards, Blog index pages; yellow star + Featured styling on Teaching/Research/Blog ✅ (2026-03-17)
+- [x] Hero banner gradient highlights — shared `.hi-grad` class (mint→purple→pink gradient) applied to 2nd highlighted span on Teaching, Research, Blog; awards drag sentence also uses `.hi-grad` + underline ✅ (2026-03-17)
+- [x] Add buttons (hero) — Teaching, Research, Awards, Blog all use `btn-grad` (animated gradient) for primary add/new actions ✅ (2026-03-17)
+- [x] Blog hero "Create with AI" button — switched to `home-btn-outline` (teal ghost) to match "View Research" / "Download CV" style; "New post" uses `btn-grad` as primary CTA ✅ (2026-03-17)
 - [x] Admin management views — restyle scaffold views to match dark theme
 - [x] Seed data for development — 6 teachings, 8 research, 8 grants/awards, 6 blog posts, 1 service; seeds have descriptive puts output ✅ (2026-03-15)
 - [x] Contact form — model, controller, mailer, routes, invisible_captcha spam protection, load-button Stimulus controller, form partial wired to homepage
