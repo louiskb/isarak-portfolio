@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-17 (session 15: hero banner UI polish — page-specific gradients, btn-grad on add buttons, home-btn-outline on AI/outline buttons)
+> Created: 2026-03-08 | Last updated: 2026-03-17 (session 15: hero banner UI polish, btn-grad on add buttons, social icon animation timing fix)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -144,6 +144,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [ ] Get Isara's real content in (bio, avatar, CV, featured items marked)
 - [x] Mobile responsive check — full audit done (critical/medium/low all fixed) ✅ (2026-03-15)
 - [x] Hero entrance animations — navbar slides down, name/subtitle fade in together, CTAs slide up, socials stagger left-to-right, tags stagger right-to-left, chevron last; all use ease-out for smooth cinematic feel ✅ (2026-03-14)
+- [x] Social icons animation timing fix — compressed stagger from 0.12s to 0.06s apart so last icon (8th) cues at 0.97s, in sync with chevron start at 1.0s ✅ (2026-03-17)
 - [x] Back-to-top chevron button — fixed bottom-right, appears at 25% scroll, clears footer on mobile, safe-area inset aware ✅ (2026-03-15)
 - [x] btn-grad border — subtle white border on all gradient buttons (Contact Me, Send Message) ✅ (2026-03-15)
 - [ ] Scroll-triggered animations for below-fold sections (AOS or CSS)
