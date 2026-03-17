@@ -16,9 +16,15 @@ Rails.application.routes.draw do
       patch "cancel_schedule"
     end
   end
-  resources :teachings
-  resources :grant_awards
-  resources :research_items
+  resources :teachings do
+    collection { patch :reorder }
+  end
+  resources :grant_awards do
+    collection { patch :reorder }
+  end
+  resources :research_items do
+    collection { patch :reorder }
+  end
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
   devise_for :users
   resource :profile, only: [ :show, :update ] do

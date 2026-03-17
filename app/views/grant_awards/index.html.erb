@@ -9,8 +9,8 @@
       <p class="resource-hero-subtitle">
         Research grants, academic awards, and funding received throughout my career.
       </p>
-      <p class="resource-hero-subtitle mt-2" style="font-size: 0.85rem; opacity: 0.65;">
-        <i class="fa-solid fa-star me-1"></i>Items marked as <strong>Featured</strong> will also appear on your Portfolio homepage.
+      <p class="resource-hero-subtitle resource-hero-info mt-2">
+        <i class="fa-solid fa-grip-vertical me-1"></i><span class="hi-teal">All grants &amp; awards appear on the homepage</span> — no featured toggle needed. <span class="hi-teal">Drag to set their order</span> here and on the homepage slider. New items added will appear at the bottom — drag them up to promote them.
       </p>
       <div class="mt-4">
         <%= link_to "Add Grant / Award", new_grant_award_path, class: "btn btn-resource-add" %>
@@ -20,16 +20,21 @@
 </section>
 
 <%# ===== GRID ===== %>
-<section class="resource-grid-section">
+<section class="resource-grid-section grant-awards-grid">
   <div class="container">
     <% if @grant_awards.any? %>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+           data-controller="sortable" data-sortable-url-value="<%= reorder_grant_awards_path %>">
         <% @grant_awards.each do |item| %>
-          <div class="col">
+          <div class="col" data-id="<%= item.id %>">
             <article class="resource-card card">
+              <div class="drag-handle" title="Drag to reorder">
+                <i class="fa-solid fa-grip-vertical"></i>
+              </div>
               <div class="card-body">
                 <%# Category badge %>
                 <span class="resource-card-category resource-badge-<%= item.category %>">
+                  <i class="fa-solid <%= item.category == "award" ? "fa-trophy" : "fa-hand-holding-dollar" %> me-1"></i>
                   <%= item.category.capitalize %>
                 </span>
 
@@ -40,7 +45,6 @@
                     <% if item.awarding_body.present? %><%= item.awarding_body %><% end %>
                     <% if item.awarding_body.present? && item.year.present? %> &middot; <% end %>
                     <% if item.year.present? %><%= item.year %><% end %>
-                    <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
                   </p>
                 <% end %>
 

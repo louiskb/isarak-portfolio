@@ -4,7 +4,14 @@ class GrantAwardsController < ApplicationController
 
   # GET /grant_awards or /grant_awards.json
   def index
-    @pagy, @grant_awards = pagy(current_user.grant_awards.all)
+    @pagy, @grant_awards = pagy(current_user.grant_awards.order(:position, :created_at))
+  end
+
+  def reorder
+    params[:ids].each_with_index do |id, index|
+      GrantAward.where(id: id).update_all(position: index)
+    end
+    head :ok
   end
 
   # GET /grant_awards/1 or /grant_awards/1.json

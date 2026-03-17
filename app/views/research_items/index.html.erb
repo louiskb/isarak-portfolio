@@ -10,8 +10,8 @@
         Urban planning, aviation policy, housing governance, and university teaching & learning.
       </p>
       <% if user_signed_in? %>
-        <p class="resource-hero-subtitle mt-2" style="font-size: 0.85rem; opacity: 0.65;">
-          <i class="fa-solid fa-star me-1"></i>Items marked as <strong>Featured</strong> will appear on your Portfolio homepage (top 3–6 shown).
+        <p class="resource-hero-subtitle resource-hero-info mt-2">
+          <i class="fa-solid fa-star me-1" style="color: #facc15;"></i>Tick <strong>`Featured`</strong> on an item to include it in the homepage Research section — <span class="hi-teal">max 4 shown, most recently updated first</span>. If you feature more than 4, the most recently edited items take priority. <span class="hi-teal">Drag reorders this page only</span> — it does not affect the homepage.
         </p>
       <% end %>
       <% if user_signed_in? %>
@@ -27,10 +27,16 @@
 <section class="resource-grid-section">
   <div class="container">
     <% if @research_items.any? %>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+           <% if user_signed_in? %>data-controller="sortable" data-sortable-url-value="<%= reorder_research_items_path %>"<% end %>>
         <% @research_items.each do |item| %>
-          <div class="col">
+          <div class="col" data-id="<%= item.id %>">
             <article class="resource-card card">
+              <% if user_signed_in? %>
+                <div class="drag-handle" title="Drag to reorder">
+                  <i class="fa-solid fa-grip-vertical"></i>
+                </div>
+              <% end %>
               <% img_src = item.image.attached? ? (url_for(item.image) rescue nil) : item.image_url.presence %>
               <% if img_src %>
                 <img src="<%= img_src %>" class="resource-card-img" alt="<%= item.title %>">
@@ -38,7 +44,7 @@
               <div class="card-body">
                 <%# Category badge %>
                 <span class="resource-card-category resource-badge-<%= item.category %>">
-                  <%= item.category.capitalize %>
+                  <%= ResearchItem::CATEGORY_LABELS[item.category] %>
                 </span>
 
                 <h2 class="resource-card-title"><%= item.title %></h2>

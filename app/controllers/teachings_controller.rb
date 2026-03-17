@@ -4,7 +4,14 @@ class TeachingsController < ApplicationController
 
   # GET /teachings or /teachings.json
   def index
-    @pagy, @teachings = pagy(Teaching.all.order(created_at: :desc))
+    @pagy, @teachings = pagy(Teaching.order(:position, :created_at))
+  end
+
+  def reorder
+    params[:ids].each_with_index do |id, index|
+      Teaching.where(id: id).update_all(position: index)
+    end
+    head :ok
   end
 
   # GET /teachings/1 or /teachings/1.json

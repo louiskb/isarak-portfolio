@@ -23,13 +23,14 @@ erDiagram
         int id PK
         int user_id FK
         string title
-        int category
+        string category
         text description
         string external_url
         string image_url
         boolean featured
         date published_at
         string slug
+        int position
         datetime created_at
         datetime updated_at
     }
@@ -39,11 +40,11 @@ erDiagram
         int user_id FK
         string title
         text description
-        int year
+        string year
         string awarding_body
         int category
-        boolean featured
         string slug
+        int position
         datetime created_at
         datetime updated_at
     }
@@ -54,10 +55,11 @@ erDiagram
         string title
         text description
         string institution
-        int year
+        string year
         string image_url
         boolean featured
         string slug
+        int position
         datetime created_at
         datetime updated_at
     }
@@ -151,9 +153,9 @@ erDiagram
 ## Notes
 
 - All owned resources (`ResearchItem`, `GrantAward`, `Teaching`, `BlogPost`, `Service`) have a `user_id` FK — each belongs to User (Isara)
-- `category` is a Rails enum (stored as `int`, mapped to labels):
-  - `ResearchItem`: `project / paper / publication`
-  - `GrantAward`: `grant / award`
+- `category` is a Rails enum:
+  - `ResearchItem`: string-backed — 10 categories: `journal_article / edited_book / book / book_chapter / thesis / conference_paper / white_paper / conference_presentation / article / project`
+  - `GrantAward`: integer-backed — `grant (0) / award (1)`
 - `BlogPost.status` enum: `draft / scheduled / published`
 - `BlogPost.body` — Action Text rich text (Trix editor). Stored in `action_text_rich_texts`, not in `blog_posts` table directly
 - `BlogPost.blog_post_erb_content` — plain text column for AI-generated HTML/ERB content
@@ -164,8 +166,10 @@ erDiagram
 - `BlogPost.photos` — Active Storage `has_many_attached`; available for manual uploads
 - `BlogPost.human_generated` — boolean flag (default false); mirrors `ai_generated` for filtering
 - `Service.description` — Action Text rich text stored in `action_text_rich_texts`; single record per user
-- `GrantAward.featured` — flags awards for display on the homepage Awards slider
-- `Teaching.featured` — flags teachings for display on the homepage Teaching spotlight
+- `GrantAward.featured` — REMOVED; all awards appear on homepage ordered by `position`; drag order on index = homepage order
+- `Teaching.featured` — flags teachings for display on the homepage Teaching spotlight (max 3, ordered by `updated_at: :desc`)
+- `ResearchItem.featured` — flags items for homepage Research section (max 4, ordered by `updated_at: :desc`)
+- `position` (int) — on Teaching, ResearchItem, GrantAward; controls drag-and-drop display order on index pages only (does not affect homepage for Teaching/Research)
 - `User.cv` — Active Storage `has_one_attached`; stored in Cloudinary via Active Storage
 - `User.name` — display name (e.g. "Dr Isara Khanjanasthiti")
 - `User.slug` — FriendlyId slug (based on email); used for readable URLs

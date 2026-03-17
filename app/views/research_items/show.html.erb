@@ -18,7 +18,7 @@
           <div class="resource-detail-header">
             <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
               <span class="resource-card-category resource-badge-<%= @research_item.category %>">
-                <%= @research_item.category.capitalize %>
+                <%= ResearchItem::CATEGORY_LABELS[@research_item.category] %>
               </span>
             </div>
 

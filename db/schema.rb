@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_053101) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_092934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -84,7 +84,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_053101) do
     t.integer "category"
     t.datetime "created_at", null: false
     t.text "description"
-    t.boolean "featured"
+    t.integer "position"
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false
@@ -100,6 +100,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_053101) do
     t.string "external_url"
     t.boolean "featured"
     t.string "image_url"
+    t.integer "position"
     t.date "published_at"
     t.string "slug"
     t.string "title"
@@ -121,6 +122,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_053101) do
     t.boolean "featured"
     t.string "image_url"
     t.string "institution"
+    t.integer "position"
     t.string "slug"
     t.string "title"
     t.datetime "updated_at", null: false

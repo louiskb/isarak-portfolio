@@ -39,6 +39,17 @@
   }
 }
 
+.resource-hero-info {
+  font-size: 0.85rem !important;
+  opacity: 0.65;
+  line-height: 1.6;
+
+  .hi-teal {
+    color: $teal;
+    font-weight: 600;
+  }
+}
+
 // ===== PROFILE HERO PHOTOS =====
 // Polaroid-style photo strip in the hero banner.
 // Top padding increased to clear the avatar dropdown in the navbar.
@@ -82,6 +93,15 @@
   border-radius: 0.75rem !important;
   overflow: hidden;
   height: 100%;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: rgba($teal, 0.5) !important;
+
+    .drag-handle {
+      opacity: 1;
+    }
+  }
 
   .card-body {
     display: flex;
@@ -99,6 +119,7 @@
   padding: 0.25rem 0.65rem;
   border-radius: 2rem;
   display: inline-block;
+  align-self: flex-start;
   margin-bottom: 0.75rem;
 }
 
@@ -147,34 +168,76 @@
 }
 
 // ===== CATEGORY BADGE COLOURS =====
+.resource-badge-journal_article {
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.resource-badge-edited_book {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.resource-badge-book {
+  background: rgba(249, 115, 22, 0.12);
+  color: #fdba74;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.resource-badge-book_chapter {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.resource-badge-thesis {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c4b5fd;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.resource-badge-conference_paper {
+  background: rgba(59, 130, 246, 0.12);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.resource-badge-white_paper {
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.resource-badge-conference_presentation {
+  background: rgba(34, 211, 238, 0.12);
+  color: #67e8f9;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+}
+
+.resource-badge-article {
+  background: rgba(134, 239, 172, 0.12);
+  color: #86efac;
+  border: 1px solid rgba(134, 239, 172, 0.3);
+}
+
 .resource-badge-project {
   background: rgba(137, 214, 204, 0.12);
   color: $teal;
   border: 1px solid rgba(137, 214, 204, 0.3);
 }
 
-.resource-badge-paper {
-  background: rgba(99, 102, 241, 0.12);
-  color: #a5b4fc;
-  border: 1px solid rgba(99, 102, 241, 0.3);
-}
-
-.resource-badge-publication {
-  background: rgba(249, 115, 22, 0.12);
-  color: #fdba74;
-  border: 1px solid rgba(249, 115, 22, 0.3);
-}
-
 .resource-badge-grant {
-  background: rgba(251, 191, 36, 0.12);
-  color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.25);
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
 }
 
 .resource-badge-award {
-  background: rgba(168, 85, 247, 0.12);
-  color: #c4b5fd;
-  border: 1px solid rgba(168, 85, 247, 0.25);
+  background: rgba(250, 204, 21, 0.12);
+  color: #facc15;
+  border: 1px solid rgba(250, 204, 21, 0.3);
 }
 
 // ===== CARD BUTTONS =====
@@ -471,5 +534,49 @@
     background: hwb(175 34% 16% / 0.12);
     border-color: hwb(175 34% 16% / 0.75);
     color: #a0e8e2;
+  }
+}
+
+// ===== DRAG & DROP =====
+.drag-handle {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 10;
+  color: #fff;
+  font-size: 1.25rem;
+  cursor: grab;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.4rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: color 0.15s ease, background 0.15s ease, opacity 0.2s ease;
+
+  @media (max-width: 767px) {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: $teal;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.sortable-ghost {
+  opacity: 0.35;
+  outline: 2px dashed $teal;
+  border-radius: 0.75rem;
+}
+
+// Awards index — smaller grip on desktop only (mobile keeps full size for touch)
+@media (min-width: 768px) {
+  .grant-awards-grid .drag-handle {
+    font-size: 1rem;
+    padding: 0.25rem 0.4rem;
   }
 }

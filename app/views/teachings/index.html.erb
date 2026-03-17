@@ -10,8 +10,8 @@
         Courses taught, subjects coordinated, and academic teaching experience.
       </p>
       <% if user_signed_in? %>
-        <p class="resource-hero-subtitle mt-2" style="font-size: 0.85rem; opacity: 0.65;">
-          <i class="fa-solid fa-star me-1"></i>Items marked as <strong>Featured</strong> will also appear on your Portfolio homepage.
+        <p class="resource-hero-subtitle resource-hero-info mt-2">
+          <i class="fa-solid fa-star me-1" style="color: #facc15;"></i>Tick <strong>`Featured`</strong> on an item to include it in the homepage Teaching spotlight — <span class="hi-teal">max 3 shown, most recently updated first</span>. If you feature more than 3, the most recently edited items take priority. <span class="hi-teal">Drag reorders this page only</span> — it does not affect the homepage.
         </p>
         <div class="mt-4">
           <%= link_to "Add Teaching", new_teaching_path, class: "btn btn-resource-add" %>
@@ -25,10 +25,16 @@
 <section class="resource-grid-section">
   <div class="container">
     <% if @teachings.any? %>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+           <% if user_signed_in? %>data-controller="sortable" data-sortable-url-value="<%= reorder_teachings_path %>"<% end %>>
         <% @teachings.each do |item| %>
-          <div class="col">
+          <div class="col" data-id="<%= item.id %>">
             <article class="resource-card card">
+              <% if user_signed_in? %>
+                <div class="drag-handle" title="Drag to reorder">
+                  <i class="fa-solid fa-grip-vertical"></i>
+                </div>
+              <% end %>
               <% if item.image.attached? %>
                 <%= image_tag item.image, class: "resource-card-img", alt: item.title %>
               <% elsif item.image_url.present? %>
