@@ -16,8 +16,8 @@
       <% end %>
       <% if user_signed_in? %>
         <div class="d-flex gap-2 mt-4">
-          <%= link_to "New post", new_blog_post_path, class: "btn btn-resource-add" %>
-          <%= link_to ai_new_blog_posts_path, class: "btn btn-outline-primary rounded-5" do %>
+          <%= link_to "New post", new_blog_post_path, class: "btn btn-grad" %>
+          <%= link_to ai_new_blog_posts_path, class: "btn home-btn-outline" do %>
               <i class="fa-solid fa-wand-magic-sparkles"></i> Create with AI
             <% end %>
         </div>
