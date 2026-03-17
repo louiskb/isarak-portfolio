@@ -6,6 +6,9 @@ class BlogPost < ApplicationRecord
 
   belongs_to :user
 
+  has_many :blog_post_tags, dependent: :destroy
+  has_many :tags, through: :blog_post_tags
+
   has_rich_text :body
 
   has_one_attached :featured_image

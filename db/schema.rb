@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_17_092934) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_163828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_092934) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "blog_post_tags", force: :cascade do |t|
+    t.bigint "blog_post_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_post_id", "tag_id"], name: "index_blog_post_tags_on_blog_post_id_and_tag_id", unique: true
+    t.index ["blog_post_id"], name: "index_blog_post_tags_on_blog_post_id"
+    t.index ["tag_id"], name: "index_blog_post_tags_on_tag_id"
   end
 
   create_table "blog_posts", force: :cascade do |t|
@@ -116,6 +126,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_092934) do
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "teachings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -153,6 +170,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_092934) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "blog_post_tags", "blog_posts"
+  add_foreign_key "blog_post_tags", "tags"
   add_foreign_key "blog_posts", "users"
   add_foreign_key "grant_awards", "users"
   add_foreign_key "research_items", "users"

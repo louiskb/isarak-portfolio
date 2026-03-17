@@ -25,9 +25,14 @@ class BlogPostSchema
           image_query: {
             type: "string",
             description: "A short, descriptive Unsplash search query (2-4 words) to find a relevant header image. E.g. 'urban planning city', 'airport aviation', 'housing suburb'. Avoid abstract or people-focused queries — prefer landscapes, architecture, and urban environments."
+          },
+          tag_ids: {
+            type: "array",
+            items: { type: "integer" },
+            description: "IDs of pre-existing tags that are relevant to this post. Choose only from the list provided in the system prompt. Return an empty array if none apply. Do NOT invent IDs that were not in the list."
           }
         },
-        required: ["title", "excerpt", "content", "image_query"],
+        required: ["title", "excerpt", "content", "image_query", "tag_ids"],
         additionalProperties: false
       }
     }

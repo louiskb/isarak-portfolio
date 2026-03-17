@@ -41,7 +41,7 @@
 
 // ===== GRID SECTION =====
 .blog-grid-section {
-  padding: 4rem 0 6rem;
+  padding: 1.5rem 0 6rem;
 
   @media (max-width: 767.98px) {
     padding: 2rem 0 4rem;
@@ -214,6 +214,209 @@
   &[aria-expanded="true"] {
     background-color: rgba(255, 255, 255, 0.05);
   }
+}
+
+// ===== SEARCH + FILTER BAR (between hero and grid) =====
+
+.blog-filter-section {
+  padding: 2rem 0 0.75rem;
+}
+
+// ===== BLOG SEARCH BAR =====
+
+.blog-search-wrapper {
+  position: relative;
+  max-width: 420px;
+}
+
+.blog-search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border-dark;
+  border-radius: 2rem;
+  color: $font-color;
+  font-size: 0.875rem;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+
+  &::placeholder {
+    color: $font-muted;
+  }
+
+  &:focus {
+    border-color: rgba(137, 214, 204, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+    color: $font-color;
+  }
+
+  // Remove native clear button styling differences
+  &::-webkit-search-cancel-button {
+    filter: invert(0.5);
+  }
+}
+
+.blog-search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $font-muted;
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+// ===== TAG PILLS (blog post show page) =====
+
+.blog-show-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid $border-dark;
+}
+
+.blog-show-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border-radius: 2rem;
+  border: 1.5px solid rgba(137, 214, 204, 0.4);
+  background-color: rgba(137, 214, 204, 0.07);
+  color: $teal;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(137, 214, 204, 0.15);
+    border-color: $teal;
+    color: $teal;
+  }
+}
+
+// ===== TAG FILTER PILLS (blog index) =====
+
+.blog-tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+// Each pill is a <label> wrapping a hidden checkbox.
+// Styled like .home-btn-outline but smaller.
+.blog-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.85rem;
+  border-radius: 2rem;
+  border: 1.5px solid rgba(137, 214, 204, 0.35);
+  color: $font-muted;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: $teal;
+    color: $teal;
+    background-color: rgba(137, 214, 204, 0.06);
+  }
+
+  &.active {
+    border-color: $teal;
+    background-color: rgba(137, 214, 204, 0.15);
+    color: $teal;
+  }
+}
+
+// ===== TAG MANAGER (form — new/edit) =====
+
+.tag-manager-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-checkbox-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border-dark;
+  border-radius: 2rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+  transition: border-color 0.2s ease;
+
+  &:has(.tag-checkbox-input:checked) {
+    border-color: rgba(137, 214, 204, 0.45);
+    background: rgba(137, 214, 204, 0.08);
+  }
+}
+
+.tag-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.tag-checkbox-input {
+  accent-color: $teal;
+  width: 0.85rem;
+  height: 0.85rem;
+  cursor: pointer;
+}
+
+.tag-checkbox-name {
+  font-size: 0.8rem;
+  color: $font-color;
+  white-space: nowrap;
+}
+
+.tag-delete-btn {
+  background: none;
+  border: none;
+  padding: 0.1rem 0.25rem;
+  color: $font-muted;
+  font-size: 0.7rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    color: #f87171;
+    background-color: rgba(248, 113, 113, 0.1);
+  }
+}
+
+.tag-creator-input {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid $border-dark !important;
+  border-radius: 0.5rem !important;
+  color: $font-color !important;
+  font-size: 0.85rem;
+  max-width: 240px;
+
+  &:focus {
+    border-color: rgba(137, 214, 204, 0.5) !important;
+    box-shadow: none !important;
+  }
+
+  &::placeholder {
+    color: $font-muted;
+  }
+}
+
+.tag-creator-hint {
+  font-size: 0.78rem;
+  min-height: 1.1rem;
 }
 
 // ===== SPLIT PUBLISH BUTTON =====

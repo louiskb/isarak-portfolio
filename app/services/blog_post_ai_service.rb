@@ -16,8 +16,10 @@ class BlogPostAiService
   # scheduled_at: a Time object; required when status is :scheduled.
   # Returns the BlogPost instance (persisted if successful, unpersisted with errors if not).
   def create_from_prompt(prompt, featured_image: nil, image_url: nil, status: :draft, scheduled_at: nil)
+    available_tags = Tag.order(:name).to_a
+
     chat = RubyLLM.chat(model: "gpt-4o")
-    chat.with_instructions(creation_system_prompt)
+    chat.with_instructions(creation_system_prompt(available_tags))
     chat.with_schema(BlogPostSchema)
 
     response = chat.ask(prompt)
@@ -42,6 +44,10 @@ class BlogPostAiService
 
     blog_post.featured_image.attach(featured_image) if featured_image.present?
 
+    # Assign only IDs the AI picked that actually exist — guards against hallucinated IDs
+    chosen_tag_ids = filter_valid_tag_ids(parsed["tag_ids"], available_tags)
+    blog_post.tag_ids = chosen_tag_ids
+
     blog_post.save
     blog_post
   end
@@ -52,6 +58,8 @@ class BlogPostAiService
   # Priority: new upload > keep_featured_image flag > Unsplash (default, replaces any existing image).
   # Returns the BlogPost instance.
   def revise_blog_post(blog_post, revision_prompt, featured_image: nil, image_url: nil, keep_featured_image: false, status: nil, scheduled_at: nil)
+    available_tags = Tag.order(:name).to_a
+
     current_content = if blog_post.blog_post_erb_content.present?
       blog_post.blog_post_erb_content
     elsif blog_post.body.present?
@@ -61,7 +69,7 @@ class BlogPostAiService
     end
 
     chat = RubyLLM.chat(model: "gpt-4o")
-    chat.with_instructions(revision_system_prompt(blog_post, current_content))
+    chat.with_instructions(revision_system_prompt(blog_post, current_content, available_tags))
     chat.with_schema(BlogPostSchema)
 
     response = chat.ask(revision_prompt)
@@ -103,6 +111,10 @@ class BlogPostAiService
     # Clear the rich text body — the AI has now used it as a reference.
     # Going forward this post is managed via blog_post_erb_content only.
     blog_post.body = nil
+
+    # Assign only IDs the AI picked that actually exist — guards against hallucinated IDs
+    chosen_tag_ids = filter_valid_tag_ids(parsed["tag_ids"], available_tags)
+    blog_post.tag_ids = chosen_tag_ids
 
     blog_post.save
     blog_post
@@ -159,7 +171,15 @@ class BlogPostAiService
     ""
   end
 
-  def creation_system_prompt
+  # Returns only IDs from the AI's response that exist in the available tag list.
+  # Prevents hallucinated IDs from creating unexpected associations.
+  def filter_valid_tag_ids(ai_ids, available_tags)
+    return [] if ai_ids.blank?
+    valid_ids = available_tags.map(&:id).to_set
+    Array(ai_ids).map(&:to_i).select { |id| valid_ids.include?(id) }
+  end
+
+  def creation_system_prompt(available_tags)
     <<~PROMPT
       ## Persona
       You are an expert academic writer and web developer assisting Dr Isara Khanjanasthiti — an urban and regional planning academic at the University of New England (UNE), Sydney campus. Dr Isara's research covers aviation, cross-border governance, housing affordability, and university teaching and learning.
@@ -198,10 +218,13 @@ class BlogPostAiService
       13. Optimize content for SEO: use relevant keywords naturally in headings and the opening paragraph
       14. Return the HTML as a single unformatted string with no line breaks between tags — easy to store in a database field
       15. You may insert up to 2 inline image placeholders using the syntax: <!-- IMAGE: your query here --> — place them between sections where a relevant photo would add value (e.g. after an h2 or between paragraphs). Use 2–4 word Unsplash-style queries (e.g. <!-- IMAGE: airport runway aerial --> or <!-- IMAGE: suburban housing development -->). They will be automatically replaced with real Unsplash photos. Do not use this for the header image — that is handled separately.
+
+      ## Tags
+      #{tag_list_prompt(available_tags)}
     PROMPT
   end
 
-  def revision_system_prompt(blog_post, current_content)
+  def revision_system_prompt(blog_post, current_content, available_tags)
     <<~PROMPT
       ## Persona
       You are an expert academic writer and web developer assisting Dr Isara Khanjanasthiti — an urban and regional planning academic at the University of New England (UNE), Sydney campus.
@@ -249,6 +272,23 @@ class BlogPostAiService
       13. Optimize content for SEO: use relevant keywords naturally in headings and the opening paragraph
       14. Return the HTML as a single unformatted string with no line breaks between tags — easy to store in a database field
       15. You may insert up to 2 inline image placeholders using the syntax: <!-- IMAGE: your query here --> — place them between sections where a relevant photo would add value (e.g. after an h2 or between paragraphs). Use 2–4 word Unsplash-style queries (e.g. <!-- IMAGE: airport runway aerial --> or <!-- IMAGE: suburban housing development -->). They will be automatically replaced with real Unsplash photos. Do not use this for the header image — that is handled separately.
+
+      ## Tags
+      #{tag_list_prompt(available_tags)}
     PROMPT
+  end
+
+  # Builds the tag instruction block injected into both system prompts.
+  def tag_list_prompt(available_tags)
+    if available_tags.empty?
+      "No tags have been created yet. Return an empty array for `tag_ids`."
+    else
+      tag_lines = available_tags.map { |t| "- ID #{t.id}: #{t.name}" }.join("\n")
+      <<~TEXT
+        The following tags exist on this blog. Select only those that are genuinely relevant to the post topic. Return their IDs in the `tag_ids` field. Return an empty array if none apply. Do NOT invent or guess IDs not listed below.
+
+        #{tag_lines}
+      TEXT
+    end
   end
 end

@@ -13,8 +13,6 @@
         <p class="blog-hero-subtitle resource-hero-info mt-2">
           <i class="fa-solid fa-star me-1" style="color: #facc15;"></i>Tick <strong>`Featured`</strong> on a post to include it in the homepage Blog section — <span class="hi-teal">max 3 shown, most recently updated first</span>. If you feature more than 3, the most recently edited posts take priority. <span class="hi-grad">Blog posts are ordered newest first</span> — no drag reordering.
         </p>
-      <% end %>
-      <% if user_signed_in? %>
         <div class="d-flex gap-2 mt-4">
           <%= link_to "New post", new_blog_post_path, class: "btn btn-grad" %>
           <%= link_to ai_new_blog_posts_path, class: "btn home-btn-outline" do %>
@@ -23,6 +21,42 @@
         </div>
       <% end %>
     </div>
+  </div>
+</section>
+
+<%# ===== SEARCH + FILTER BAR ===== %>
+<section class="blog-filter-section">
+  <div class="container">
+    <%= form_with url: blog_posts_path, method: :get,
+          data: { controller: "blog-filter", turbo_action: "replace" },
+          local: true do |f| %>
+
+      <div class="blog-search-wrapper">
+        <%= f.search_field :q,
+              value: params[:q],
+              placeholder: "Search posts…",
+              class: "blog-search-input",
+              autocomplete: "off",
+              data: { action: "input->blog-filter#search" } %>
+        <i class="fa-solid fa-magnifying-glass blog-search-icon"></i>
+      </div>
+
+      <% if @all_tags.any? %>
+        <div class="blog-tag-filter mt-3">
+          <% active_tag_ids = Array(params[:tag_ids]).map(&:to_s) %>
+          <% @all_tags.each do |tag| %>
+            <label class="blog-tag-pill <%= "active" if active_tag_ids.include?(tag.id.to_s) %>">
+              <%= check_box_tag "tag_ids[]", tag.id,
+                    active_tag_ids.include?(tag.id.to_s),
+                    class: "visually-hidden",
+                    data: { action: "change->blog-filter#submit" } %>
+              <%= tag.name %>
+            </label>
+          <% end %>
+        </div>
+      <% end %>
+
+    <% end %>
   </div>
 </section>
 
@@ -104,9 +138,14 @@
       </div>
     <% else %>
       <div class="blog-empty text-center py-5">
-        <p class="text-muted mb-3">No posts published yet.</p>
-        <% if user_signed_in? %>
-          <%= link_to "Write your first post", new_blog_post_path, class: "btn btn-primary" %>
+        <% if params[:q].present? || params[:tag_ids].present? %>
+          <p class="text-muted mb-3">No posts match your search or filter.</p>
+          <%= link_to "Clear filters", blog_posts_path, class: "btn home-btn-outline btn-sm" %>
+        <% else %>
+          <p class="text-muted mb-3">No posts published yet.</p>
+          <% if user_signed_in? %>
+            <%= link_to "Write your first post", new_blog_post_path, class: "btn btn-primary" %>
+          <% end %>
         <% end %>
       </div>
     <% end %>

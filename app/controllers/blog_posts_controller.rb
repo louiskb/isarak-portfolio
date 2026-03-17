@@ -1,10 +1,22 @@
 class BlogPostsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_blog_post, only: %i[ show edit update destroy ai_revise revise_with_ai publish schedule cancel_schedule ]
+  before_action :load_tags, only: %i[ new edit ]
 
   # GET /blog_posts or /blog_posts.json
   def index
     scope = user_signed_in? ? BlogPost.all : BlogPost.published
+
+    if params[:q].present?
+      scope = scope.where("title ILIKE ?", "%#{params[:q].strip}%")
+    end
+
+    if params[:tag_ids].present?
+      tag_ids = Array(params[:tag_ids]).map(&:to_i).select(&:positive?)
+      scope = scope.joins(:tags).where(tags: { id: tag_ids }).distinct if tag_ids.any?
+    end
+
+    @all_tags = Tag.order(:name)
     @pagy, @blog_posts = pagy(scope.order(created_at: :desc))
   end
 
@@ -189,7 +201,11 @@ class BlogPostsController < ApplicationController
   # - ai_generated is set by the AI service
   # - status/scheduled_at are resolved via resolve_publish_intent and merged in explicitly
   def blog_post_params
-    params.expect(blog_post: [ :title, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, :image_url, :featured, photos: [] ])
+    params.expect(blog_post: [ :title, :slug, :blog_excerpt, :blog_post_erb_content, :body, :featured_image, :image_url, :featured, { tag_ids: [], photos: [] } ])
+  end
+
+  def load_tags
+    @all_tags = Tag.order(:name)
   end
 
   def ai_params

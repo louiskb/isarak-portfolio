@@ -92,6 +92,18 @@
               <p class="text-muted fst-italic">No content yet.</p>
             <% end %>
           </div>
+
+          <%# Tags %>
+          <% if @blog_post.tags.any? %>
+            <div class="blog-show-tags">
+              <% @blog_post.tags.order(:name).each do |tag| %>
+                <%= link_to blog_posts_path(tag_ids: [tag.id]),
+                      class: "blog-show-tag-pill" do %>
+                  <%= tag.name %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
         </article>
 
         <%# ===== ADMIN ACTIONS ===== %>

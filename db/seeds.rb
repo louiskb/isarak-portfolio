@@ -30,7 +30,7 @@ teachings_data = [
   {
     title: "PLAN301 — Urban and Regional Planning Studio",
     institution: "University of New England",
-    year: 2024,
+    year: "2024",
     featured: true,
     image_url: "https://picsum.photos/seed/plan301/800/600",
     description: "A capstone studio unit for third-year planning students. Students work in multidisciplinary teams to develop a planning proposal for a real site, engaging community stakeholders, local councils, and industry mentors. Assessment includes oral presentations, stakeholder consultation reports, and a final planning proposal."
@@ -38,7 +38,7 @@ teachings_data = [
   {
     title: "PLAN201 — Introduction to Land Use Planning",
     institution: "University of New England",
-    year: 2024,
+    year: "2024",
     featured: true,
     image_url: "https://picsum.photos/seed/plan201/800/600",
     description: "A core second-year unit introducing the theory and practice of land use planning in Australia. Topics include the NSW planning system, environmental impact assessment, development control plans, strategic planning frameworks, and community participation."
@@ -46,7 +46,7 @@ teachings_data = [
   {
     title: "PLAN401 — Advanced Planning Theory and Policy",
     institution: "University of New England",
-    year: 2023,
+    year: "2023",
     featured: true,
     image_url: "https://picsum.photos/seed/plan401/800/600",
     description: "A postgraduate unit examining contemporary debates in planning theory, including communicative planning, informality, smart cities, climate adaptation, and decolonising planning practice. Students produce original research essays engaging critically with planning literature."
@@ -54,7 +54,7 @@ teachings_data = [
   {
     title: "PLAN102 — Introduction to Urban Geography",
     institution: "University of New England",
-    year: 2023,
+    year: "2023",
     featured: false,
     image_url: "https://picsum.photos/seed/plan102/800/600",
     description: "An introductory unit exploring the spatial dimensions of urban life — how cities grow, how they are shaped by infrastructure and migration, and how inequality is expressed geographically. Includes case studies from Australia, Southeast Asia, and Europe."
@@ -62,7 +62,7 @@ teachings_data = [
   {
     title: "PLAN220 — Environmental Planning and Assessment",
     institution: "University of New England",
-    year: 2024,
+    year: "2024",
     featured: false,
     image_url: "https://picsum.photos/seed/plan220/800/600",
     description: "Covers the environmental assessment frameworks used in Australian planning systems, including EIS preparation, biodiversity offsetting, heritage impact statements, and climate risk disclosure. Students complete a practitioner-style environmental assessment for a hypothetical development."
@@ -70,7 +70,7 @@ teachings_data = [
   {
     title: "PLAN320 — Housing Policy and Planning",
     institution: "University of New England",
-    year: 2023,
+    year: "2023",
     featured: false,
     image_url: "https://picsum.photos/seed/plan320/800/600",
     description: "Examines housing policy across the supply, affordability, and social housing dimensions of the Australian housing system. Topics include zoning reform, inclusionary zoning, build-to-rent, and comparative international housing systems."
@@ -93,7 +93,7 @@ puts "── Research Items ─────────────────�
 research_data = [
   {
     title: "Cross-Border Regional Planning and Airport-Driven Urban Development: The Gold Coast Case",
-    category: :publication,
+    category: :thesis,
     featured: true,
     image_url: "https://picsum.photos/seed/research-airport/800/600",
     external_url: "https://www.une.edu.au",
@@ -111,7 +111,7 @@ research_data = [
   },
   {
     title: "Housing Affordability and Zoning Reform: A Comparative Analysis of Australian Capital Cities",
-    category: :paper,
+    category: :journal_article,
     featured: true,
     image_url: "https://picsum.photos/seed/research-housing/800/600",
     external_url: "https://www.une.edu.au",
@@ -120,7 +120,7 @@ research_data = [
   },
   {
     title: "Transit-Oriented Development Outcomes in Southeast Asian Cities: Implications for Australian Planning",
-    category: :paper,
+    category: :journal_article,
     featured: true,
     image_url: "https://picsum.photos/seed/research-tod/800/600",
     external_url: "https://www.une.edu.au",
@@ -129,7 +129,7 @@ research_data = [
   },
   {
     title: "Intergovernmental Coordination Failures in Airport-Adjacent Development: A Policy Analysis",
-    category: :paper,
+    category: :conference_paper,
     featured: false,
     image_url: "https://picsum.photos/seed/research-gov/800/600",
     external_url: "https://www.une.edu.au",
@@ -138,7 +138,7 @@ research_data = [
   },
   {
     title: "Informal Settlements and Planning Theory: Towards a More Inclusive Framework",
-    category: :paper,
+    category: :journal_article,
     featured: false,
     image_url: "https://picsum.photos/seed/research-informal/800/600",
     external_url: nil,
@@ -156,7 +156,7 @@ research_data = [
   },
   {
     title: "Planning Education Reform: Authentic Assessment in Professional Degree Programs",
-    category: :publication,
+    category: :journal_article,
     featured: false,
     image_url: "https://picsum.photos/seed/research-edu/800/600",
     external_url: "https://www.une.edu.au",
@@ -182,7 +182,6 @@ grants_data = [
   {
     title: "Australian Research Council Discovery Early Career Researcher Award (DECRA)",
     category: :grant,
-    featured: true,
     awarding_body: "Australian Research Council",
     year: 2023,
     description: "A three-year DECRA fellowship supporting research into cross-border governance frameworks for airport-adjacent urban development. The project develops a practical policy toolkit for state and local governments managing multi-jurisdictional airport regions."
@@ -190,7 +189,6 @@ grants_data = [
   {
     title: "UNE Strategic Research Support Scheme — Airport Governance Project",
     category: :grant,
-    featured: true,
     awarding_body: "University of New England",
     year: 2024,
     description: "Seed funding supporting the initiation of the Airport City Development comparative research project, including fieldwork travel to Southeast Asia and engagement with international airport planning authorities."
@@ -198,7 +196,6 @@ grants_data = [
   {
     title: "Planning Institute of Australia Research Fellowship",
     category: :grant,
-    featured: true,
     awarding_body: "Planning Institute of Australia",
     year: 2022,
     description: "A competitive fellowship awarded to support policy-relevant research that advances planning practice. Supported completion of the cross-border planning governance analysis with direct engagement with PIA member practitioners."
@@ -206,7 +203,6 @@ grants_data = [
   {
     title: "UNE Vice-Chancellor's Award for Excellence in Teaching",
     category: :award,
-    featured: true,
     awarding_body: "University of New England",
     year: 2023,
     description: "Awarded in recognition of outstanding contributions to student learning and innovative curriculum design in the urban planning program. Cited for the introduction of authentic assessment formats that better reflect professional planning practice."
@@ -214,7 +210,6 @@ grants_data = [
   {
     title: "Planning Institute of Australia NSW Young Planner Award",
     category: :award,
-    featured: true,
     awarding_body: "Planning Institute of Australia (NSW Chapter)",
     year: 2021,
     description: "Awarded to a planning professional or academic under 35 who has demonstrated exceptional promise and contribution to the planning profession in NSW. Recognised for research impact and engagement with planning policy reform."
@@ -222,7 +217,6 @@ grants_data = [
   {
     title: "State of Australian Cities Conference — Best Paper Award",
     category: :award,
-    featured: true,
     awarding_body: "Australian Cities Research Network",
     year: 2022,
     description: "Best paper award at the State of Australian Cities Conference for the paper on intergovernmental coordination failures in airport-adjacent development, selected by the peer review committee from 240 submitted papers."
@@ -230,7 +224,6 @@ grants_data = [
   {
     title: "UNE HDR Completion Scholarship",
     category: :grant,
-    featured: false,
     awarding_body: "University of New England",
     year: 2022,
     description: "Competitive scholarship awarded to Higher Degree Research candidates in the final stage of doctoral completion to support full-time thesis write-up."
@@ -238,7 +231,6 @@ grants_data = [
   {
     title: "Planning Institute of Australia National Congress — Commendation",
     category: :award,
-    featured: false,
     awarding_body: "Planning Institute of Australia",
     year: 2023,
     description: "Commendation at the national PIA Congress awards for contributions to planning education, recognising innovative curriculum development and student outcomes in the UNE planning program."
@@ -251,7 +243,7 @@ grants_data.each do |attrs|
   record.save!
   puts "  ✓ [#{attrs[:category]}] #{attrs[:title][0..60]}..."
 end
-puts "  → #{grants_data.length} grants/awards seeded (#{grants_data.count { |g| g[:featured] }} featured)"
+puts "  → #{grants_data.length} grants/awards seeded"
 puts ""
 
 # ===== BLOG POSTS =====
@@ -265,8 +257,10 @@ blog_posts_data = [
     status: :published,
     featured: true,
     ai_generated: false,
+    human_generated: true,
     image_url: "https://picsum.photos/seed/blog-airport/800/450",
     created_at: 3.months.ago,
+    updated_at: 3.months.ago,
     body_html: "<h2>The Challenge of Jurisdictional Overlap</h2><p>Aviation infrastructure does not conform to state borders, yet planning policy in Australia remains stubbornly jurisdictional. My doctoral research examined how Gold Coast Airport — straddling the Queensland–New South Wales boundary — has created a complex governance landscape that neither state is fully equipped to manage alone.</p><h2>Key Findings</h2><p>The case study revealed three recurring tensions: economic competition between councils, inconsistent land-use zoning on either side of the border, and a near-total absence of formal intergovernmental coordination mechanisms.</p><h2>Implications for Australian Planning</h2><p>If Australia is serious about unlocking the economic potential of secondary airports, we need cross-border governance frameworks that match the spatial reality of airport-driven growth.</p>"
   },
   {
@@ -275,8 +269,10 @@ blog_posts_data = [
     status: :published,
     featured: true,
     ai_generated: false,
+    human_generated: true,
     image_url: "https://picsum.photos/seed/blog-housing/800/450",
     created_at: 2.months.ago,
+    updated_at: 2.months.ago,
     body_html: "<h2>A Crisis Hiding in Plain Sight</h2><p>Sydney's median house price-to-income ratio now sits above 13 — a figure that would have seemed absurd to planners in the 1980s. Yet housing affordability is still treated as primarily a market problem, with planning cast in a supporting role at best.</p><h2>The Planning Dimension</h2><p>Zoning restrictions, heritage overlays, development contribution frameworks, and slow assessment timelines all act as supply-side constraints that compound affordability pressures. These are planning failures, and they require planning solutions.</p><h2>What Needs to Change</h2><p>Evidence from international comparisons — particularly Tokyo's liberalised zoning and Vienna's social housing model — suggests that planning systems can and do shape housing outcomes at scale.</p>"
   },
   {
@@ -285,8 +281,10 @@ blog_posts_data = [
     status: :published,
     featured: true,
     ai_generated: false,
+    human_generated: true,
     image_url: "https://picsum.photos/seed/blog-education/800/450",
     created_at: 6.weeks.ago,
+    updated_at: 6.weeks.ago,
     body_html: "<h2>The Problem with the 5,000-Word Report</h2><p>Ask any practising urban planner how often they submit a 5,000-word written report in their day-to-day work. The answer, almost universally, is: never. Yet this remains the dominant assessment format in Australian planning schools.</p><h2>What Practitioners Actually Do</h2><p>Planners present to councils, brief ministers, facilitate community engagement workshops, and prepare development assessment reports — none of which map neatly onto a traditional academic essay.</p><h2>Alternatives Worth Trialling</h2><p>In my recent studio units I have experimented with oral examinations, policy briefing notes, community consultation simulations, and peer-assessed design charrettes. The results have been encouraging: students engage more deeply when the output format feels professionally authentic.</p>"
   },
   {
@@ -295,8 +293,10 @@ blog_posts_data = [
     status: :published,
     featured: false,
     ai_generated: false,
+    human_generated: true,
     image_url: "https://picsum.photos/seed/blog-aviation/800/450",
     created_at: 2.weeks.ago,
+    updated_at: 2.weeks.ago,
     body_html: "<h2>The Aviation-Growth Thesis</h2><p>Airports are frequently positioned as engines of regional economic development — catalysts for tourism, logistics, and business investment. This narrative is politically compelling, but the empirical evidence is considerably more mixed.</p><h2>What the Literature Finds</h2><p>Meta-analyses consistently show that projections made by airport proponents overstate induced employment and business activity, often by a factor of two or three.</p><h2>The Second-Tier Case</h2><p>Secondary airports face a particularly challenging evidence base. While some, like Gold Coast and Avalon, have demonstrated genuine catalytic effects in specific niches, the conditions enabling these outcomes are not easily replicated.</p>"
   },
   {
@@ -305,8 +305,10 @@ blog_posts_data = [
     status: :published,
     featured: false,
     ai_generated: true,
+    human_generated: false,
     image_url: "https://picsum.photos/seed/blog-bangkok/800/450",
     created_at: 1.month.ago,
+    updated_at: 1.month.ago,
     body_html: "<h2>Bangkok's TOD Transformation</h2><p>When the BTS Skytrain opened in 1999, Bangkok was widely regarded as a cautionary tale of urban sprawl. Two decades later, the corridors around Asok, Phrom Phong, and On Nut tell a different story: dense, walkable, mixed-use precincts that have fundamentally reshaped how middle-class Bangkokians live and move.</p><h2>Why It Worked</h2><p>Several factors converged: concentrated land ownership patterns, private-sector incentives to drive ridership through station-area development, and municipal planning flexible enough to permit density uplifts quickly.</p><h2>What Sydney Can Take From This</h2><p>Australian TOD aspirations are frequently frustrated by land fragmentation, slow rezonings, and infrastructure contribution regimes that make high-density development near stations financially marginal.</p>"
   },
   {
@@ -315,8 +317,10 @@ blog_posts_data = [
     status: :draft,
     featured: false,
     ai_generated: true,
+    human_generated: false,
     image_url: "https://picsum.photos/seed/blog-informal/800/450",
     created_at: 4.days.ago,
+    updated_at: 4.days.ago,
     body_html: "<h2>Framing the Problem</h2><p>Mainstream urban planning theory has long struggled with informality. The dominant framing treats informal settlements as deviations from a planned norm: problems to be solved through slum clearance, forced relocation, or progressive upgrading.</p><h2>An Alternative Lens</h2><p>A growing body of scholarship argues that informality is better understood as a mode of urbanisation — not an exception to the rule, but a constitutive feature of how cities grow under rapid urbanisation and housing market exclusion.</p><h2>Implications for Practice</h2><p>Rather than managing informality out of existence, planners should ask how formal systems can adapt to recognise and build upon the self-help housing strategies that millions of urban residents already employ.</p>"
   }
 ]
@@ -328,8 +332,10 @@ blog_posts_data.each do |attrs|
     status: attrs[:status],
     featured: attrs[:featured],
     ai_generated: attrs[:ai_generated],
+    human_generated: attrs[:human_generated],
     image_url: attrs[:image_url],
-    created_at: attrs[:created_at]
+    created_at: attrs[:created_at],
+    updated_at: attrs[:updated_at]
   )
 
   if attrs[:ai_generated]
@@ -344,6 +350,54 @@ blog_posts_data.each do |attrs|
   puts "  ✓ [#{attrs[:status]}] #{attrs[:title][0..60]}..."
 end
 puts "  → #{blog_posts_data.length} blog posts seeded (#{blog_posts_data.count { |b| b[:featured] }} featured)"
+puts ""
+
+# ===== TAGS =====
+puts "── Tags ──────────────────────────────────────────"
+
+tag_names = [
+  "Urban Planning",
+  "Aviation",
+  "Housing",
+  "Governance",
+  "Transit-Oriented Development",
+  "Planning Education",
+  "Regional Planning",
+  "Sustainability",
+  "Policy",
+  "Research"
+]
+
+tags = tag_names.each_with_object({}) do |name, hash|
+  hash[name] = Tag.find_or_create_by!(name: name)
+  puts "  ✓ #{name}"
+end
+
+# Assign relevant tags to seeded blog posts
+tag_map = {
+  "Cross-Border Planning Around Gold Coast Airport: Lessons for Regional Governance" =>
+    [ "Aviation", "Regional Planning", "Governance" ],
+  "Housing Affordability in Sydney: Why Urban Planners Must Lead the Conversation" =>
+    [ "Housing", "Policy", "Urban Planning" ],
+  "Rethinking Assessment in Urban Planning Education: Moving Beyond the Final Report" =>
+    [ "Planning Education", "Research" ],
+  "Second-Tier Airports and Regional Economic Development: A Literature Review" =>
+    [ "Aviation", "Regional Planning", "Policy" ],
+  "What Bangkok Can Teach Sydney About Transit-Oriented Development" =>
+    [ "Transit-Oriented Development", "Urban Planning" ],
+  "The Role of Informal Settlements in Urban Planning Theory" =>
+    [ "Housing", "Urban Planning", "Policy" ]
+}
+
+tag_map.each do |post_title, assigned_tags|
+  post = BlogPost.find_by(title: post_title)
+  next unless post
+  post.tags = assigned_tags.map { |name| tags[name] }.compact
+  post.save!
+  puts "  ✓ Tagged: #{post_title[0..55]}… → #{assigned_tags.join(", ")}"
+end
+
+puts "  → #{tag_names.length} tags seeded"
 puts ""
 
 # ===== SERVICE =====
@@ -375,6 +429,6 @@ puts ""
 puts "━" * 50
 puts "  ✅ Seed complete!"
 puts "     #{Teaching.count} teachings | #{ResearchItem.count} research items"
-puts "     #{GrantAward.count} grants/awards | #{BlogPost.count} blog posts"
+puts "     #{GrantAward.count} grants/awards | #{BlogPost.count} blog posts | #{Tag.count} tags"
 puts "━" * 50
 puts ""

@@ -15,7 +15,7 @@
           input_html: { rows: 3 } %>
     <%= f.input :featured,
           label: "Featured post",
-          hint: "Featured posts appear on your Portfolio homepage (top 3–6 shown). Posts are always ordered most recent first on the Blog page." %>
+          hint: "Featured posts appear in the Blog section on the homepage — max 3 shown, most recently updated first. If more than 3 are featured, the most recently edited posts take priority. On the Blog page, all posts are ordered newest first." %>
 
     <div class="mb-3">
       <%= f.label :featured_image, "Featured image", class: "form-label" %>
@@ -64,6 +64,58 @@
       </div>
     <% end %>
   </div>
+
+  <%# ===== TAGS ===== %>
+  <div class="mb-4 mt-4" data-controller="tag-manager">
+    <label class="form-label fw-semibold">Tags</label>
+    <p class="form-text mb-3">
+      Tags let visitors filter blog posts. Check <i class="fa-regular fa-square-check" style="color: #89D6CC;"></i> to attach a tag to this post. Use the form below to add new tags or <span style="color: #f87171; font-size: 1rem; font-weight: 600;">&times;</span> to delete one globally.
+    </p>
+
+    <%# Existing tags as checkboxes %>
+    <div class="tag-manager-list mb-3" data-tag-manager-target="tagList">
+      <% @all_tags.each do |tag| %>
+        <div class="tag-checkbox-item" data-tag-id="<%= tag.id %>">
+          <label class="tag-checkbox-label">
+            <%= check_box_tag "blog_post[tag_ids][]", tag.id,
+                  @blog_post.tag_ids.include?(tag.id),
+                  id: "tag_#{tag.id}",
+                  class: "tag-checkbox-input" %>
+            <span class="tag-checkbox-name"><%= tag.name %></span>
+          </label>
+          <button type="button"
+                  class="tag-delete-btn"
+                  title="Delete tag globally"
+                  data-action="click->tag-manager#deleteTag"
+                  data-tag-id="<%= tag.id %>">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      <% end %>
+      <% if @all_tags.empty? %>
+        <p class="text-muted small tag-manager-empty">No tags yet. Add one below.</p>
+      <% end %>
+    </div>
+
+    <%# Inline tag creator %>
+    <div class="tag-creator d-flex gap-2 align-items-center">
+      <input type="text"
+             class="form-control form-control-sm tag-creator-input"
+             placeholder="New tag name…"
+             data-tag-manager-target="nameInput"
+             data-action="keydown.enter->tag-manager#addTag:prevent">
+      <button type="button"
+              class="btn btn-resource-edit btn-sm text-nowrap"
+              data-action="click->tag-manager#addTag"
+              data-tag-manager-target="addButton">
+        <i class="fa-solid fa-plus me-1"></i>Add tag
+      </button>
+    </div>
+    <p class="profile-input-hint mt-1 mb-0 tag-creator-hint" data-tag-manager-target="hint"></p>
+  </div>
+
+  <%# Ensure empty tag_ids clears previous associations when no boxes are checked %>
+  <input type="hidden" name="blog_post[tag_ids][]" value="">
 
   <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
   <input type="hidden"
