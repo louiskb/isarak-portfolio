@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-18 (session 16: blog tag system with search + filter, AI tag selection, seed fixes, search icon focus behaviour)
+> Created: 2026-03-08 | Last updated: 2026-03-18 (session 17: Ruby 3.3.10 upgrade, Node 22.x pin, footer credit, deploy fixes, template updates)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -31,6 +31,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] Layout fixed — links left, copyright center, socials right ✅ (2026-03-15)
   - [x] Font consistency — all footer text unified at `0.8rem`; social icons restored to `1rem`; font-size set on `.site-footer` so all children inherit ✅ (2026-03-17)
   - [x] Login link font size matches Privacy Policy + Terms of Service links (`font-size: inherit` on `.footer-legal a`) ✅ (2026-03-17)
+  - [x] "Built by Louis Bourne" credit — inline with copyright, middot separator, `.footer-built-by` muted style (rgba 0.3), teal hover ✅ (2026-03-18)
   - [x] Privacy Policy + Terms of Service pages — `.legal-hero` + `.legal-body` layout; `_legal.scss` styles; routes + PagesController actions; linked from footer ✅ (2026-03-17)
 - [x] Add footer render to application layout
 
@@ -173,6 +174,14 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - Dark mode toggle
 - RSS feed for blog
 - Teaching section carousel/slider on landing page — replace static card grid with Bootstrap Carousel or Stimulus-driven Splide/Swiper; defer until Isara's content is in and layout reviewed
+
+---
+
+## Infrastructure & Deployment
+- [x] Heroku deploy — Rails 8.1, Solid Queue worker, PostgreSQL, Cloudinary ✅
+- [x] Ruby version pinned — `ruby "3.3.10"` in Gemfile + `.ruby-version` ✅ (2026-03-18)
+- [x] Node version pinned — `package.json` `engines.node: "22.x"` ✅ (2026-03-18)
+- [x] Active Storage variant processor disabled — `config.active_storage.variant_processor = :disabled`; silences image_processing warning on deploy ✅ (2026-03-18)
 
 ---
 
