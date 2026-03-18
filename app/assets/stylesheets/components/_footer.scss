@@ -25,6 +25,19 @@
 
   .footer-copyright {
     // inherits font-size and color from .site-footer
+
+    .footer-built-by {
+      color: rgba(226, 226, 226, 0.3);
+
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          color: $teal;
+        }
+      }
+    }
   }
 
   .footer-social {
