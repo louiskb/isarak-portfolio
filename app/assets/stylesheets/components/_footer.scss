@@ -31,7 +31,9 @@
 
       a {
         color: inherit;
-        text-decoration: none;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-underline-offset: 3px;
 
         &:hover {
           color: $teal;

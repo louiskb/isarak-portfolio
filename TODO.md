@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-18 (session 17: Ruby 3.3.10 upgrade, Node 22.x pin, footer credit, deploy fixes, template updates)
+> Created: 2026-03-08 | Last updated: 2026-03-18 (session 18: footer mobile layout + dotted underline on "Built by Louis Bourne")
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -32,6 +32,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] Font consistency — all footer text unified at `0.8rem`; social icons restored to `1rem`; font-size set on `.site-footer` so all children inherit ✅ (2026-03-17)
   - [x] Login link font size matches Privacy Policy + Terms of Service links (`font-size: inherit` on `.footer-legal a`) ✅ (2026-03-17)
   - [x] "Built by Louis Bourne" credit — inline with copyright, middot separator, `.footer-built-by` muted style (rgba 0.3), teal hover ✅ (2026-03-18)
+  - [x] "Built by Louis Bourne" mobile fix — own line below copyright on mobile (no middot); dotted underline always visible on link ✅ (2026-03-18)
   - [x] Privacy Policy + Terms of Service pages — `.legal-hero` + `.legal-body` layout; `_legal.scss` styles; routes + PagesController actions; linked from footer ✅ (2026-03-17)
 - [x] Add footer render to application layout
 
