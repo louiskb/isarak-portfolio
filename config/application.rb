@@ -27,6 +27,7 @@ module IsarakPortfolio
     # in config/environments, which are processed later.
     #
     config.time_zone = "Sydney"
+    config.active_storage.variant_processor = :disabled
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
