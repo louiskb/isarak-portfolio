@@ -29,6 +29,8 @@ erDiagram
         string image_url
         boolean featured
         date published_at
+        int status
+        datetime scheduled_at
         string slug
         int position
         datetime created_at
@@ -43,6 +45,8 @@ erDiagram
         string year
         string awarding_body
         int category
+        int status
+        datetime scheduled_at
         string slug
         int position
         datetime created_at
@@ -58,6 +62,8 @@ erDiagram
         string year
         string image_url
         boolean featured
+        int status
+        datetime scheduled_at
         string slug
         int position
         datetime created_at
@@ -175,6 +181,9 @@ erDiagram
   - `ResearchItem`: string-backed — 10 categories: `journal_article / edited_book / book / book_chapter / thesis / conference_paper / white_paper / conference_presentation / article / project`
   - `GrantAward`: integer-backed — `grant (0) / award (1)`
 - `BlogPost.status` enum: `draft / scheduled / published`
+- `ResearchItem.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern as BlogPost; visitors only see published items; `scheduled_at` holds the auto-publish time
+- `Teaching.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern; public show page exists; visitors only see published items
+- `GrantAward.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern; no public show page (index is admin-only); status controls homepage visibility
 - `BlogPost.body` — Action Text rich text (Trix editor). Stored in `action_text_rich_texts`, not in `blog_posts` table directly
 - `BlogPost.blog_post_erb_content` — plain text column for AI-generated HTML/ERB content
 - `BlogPost.blog_excerpt` — plain text short summary shown on index cards

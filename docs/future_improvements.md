@@ -1,7 +1,7 @@
 # Future Improvements — isarak-portfolio
 
 > Maintained by Louis + Claude. Add ideas here as they come up during development.
-> Last updated: 2026-03-20 (session 19)
+> Last updated: 2026-03-21 (session 22)
 
 ---
 
@@ -33,6 +33,7 @@
 ### Animations & Polish
 - [ ] **Scroll-triggered animations** — AOS (Animate On Scroll) or CSS `@keyframes` with `IntersectionObserver`; trigger fade-up on below-fold sections (About, Research, Teaching, Awards, Blog, Contact)
 - [ ] **Micro-interactions** — hover lift on research/blog cards, subtle scale on social icons
+- [ ] **SVG favicon** — replace `public/icon.svg` with a proper SVG of the IK pug logo for crisp rendering at all sizes (currently uses a rasterised PNG fallback)
 
 ### Research & Downloads
 - [ ] **Research PDF downloads** — allow Isara to attach a PDF to each ResearchItem (the paper itself); show a "Download PDF" button on research cards for open-access papers
@@ -64,7 +65,7 @@
 
 ## Decisions to Revisit Later
 
-- Will Isara need the Teaching and Grants "View all →" pages public (currently auth-gated)?
+- Will Isara need the Teaching and Grants "View all →" index pages public (currently auth-gated for index — show pages are already public for Teaching and Research)?
 - Should the Service page be more detailed (committee roles, peer review, etc.) or stay as a single rich-text block?
 - RSS feed format preference — Atom vs RSS 2.0?
 - Analytics: does Isara want any traffic data, or is the Privacy Policy "no analytics" stance a deliberate choice?

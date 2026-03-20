@@ -4,30 +4,22 @@
   border-bottom: none;
   padding: 0.75rem 0;
 
-  // Logo — monogram mark + text
+  // Logo image
   .navbar-brand {
     text-decoration: none;
     flex-shrink: 0;
 
-    &:hover .navbar-logo-mark {
-      background-color: $teal-hover;
+    &:hover .navbar-logo-img {
+      opacity: 0.8;
     }
   }
 
-  .navbar-logo-mark {
-    width: 36px;
-    height: 36px;
-    border-radius: 0.375rem;
-    background-color: $teal;
-    color: $black;
-    font-family: $headers-font;
-    font-size: 0.85rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.02em;
-    transition: background-color 0.2s ease;
+  .navbar-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.2s ease;
     flex-shrink: 0;
   }
 
@@ -111,7 +103,7 @@
 
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 3rem;
-      padding-left: 1.10rem;
+      padding-left: 0.5rem;
       padding-right: 0.5rem;
       padding-top: 0.35rem;
       padding-bottom: 0.35rem;
@@ -270,13 +262,18 @@ body:not(.page-home) .header--scrolled .navbar-isarak {
         linear-gradient(90deg, rgba(48, 197, 210, 0.14), rgba(71, 16, 105, 0.14)),
         #080808;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 0.75rem;
-      padding-left: 1.10rem;
+      border-radius: 3rem;
+      padding-left: 0.5rem;
       padding-right: 0.5rem;
       padding-top: 0.35rem;
       padding-bottom: 0.35rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    &:has(.navbar-collapse.show) .container,
+    &:has(.navbar-collapse.collapsing) .container {
+      border-radius: 1.25rem;
     }
   }
 }
@@ -322,20 +319,24 @@ body:not(.page-home) .header--scrolled .navbar-isarak {
 
   // Mobile — pill appears on the row containing logo + hamburger once scrolled.
   // Same background as the desktop pill; collapse keeps its own separate styling.
-  // border-radius kept small (not 3rem) — full-width mobile container clips corners otherwise.
   @include media-breakpoint-down(lg) {
     .container {
       background:
         linear-gradient(90deg, rgba(48, 197, 210, 0.14), rgba(71, 16, 105, 0.14)),
         #080808;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 0.75rem;
-      padding-left: 1.10rem;
+      border-radius: 3rem;
+      padding-left: 0.5rem;
       padding-right: 0.5rem;
       padding-top: 0.35rem;
       padding-bottom: 0.35rem;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    &:has(.navbar-collapse.show) .container,
+    &:has(.navbar-collapse.collapsing) .container {
+      border-radius: 1.25rem;
     }
   }
 }

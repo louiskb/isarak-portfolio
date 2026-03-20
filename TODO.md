@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-20 (session 20: reading progress bar, TOC sidebar, related posts, mobile navbar gradient)
+> Created: 2026-03-08 | Last updated: 2026-03-21 (session 22: IK logo + favicon, card border radius, navbar padding + mobile pill, session 21: Teaching/Research/GrantAward status system)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -25,6 +25,9 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] Homepage scroll effect — frosted glass before 30% scroll, dark pill after; iron-wall rule prevents bleed to other pages ✅ (2026-03-15)
   - [x] Contact Me navbar link — fixed to use `root_path(anchor: "contact")` so it navigates to homepage first (was `#contact`, only worked on the homepage itself) ✅ (2026-03-17)
   - [x] Mobile burger menu polish — no border/grey box, pill on scroll, 5px radius, safe padding ✅ (2026-03-15)
+  - [x] Mobile navbar pill shape — `border-radius: 3rem` (full pill) on scrolled mobile container; collapses to `1.25rem` when burger menu is open to prevent logo clipping ✅ (2026-03-21)
+  - [x] Navbar desktop padding — symmetric `0.5rem` each side; circular logo now balanced with Contact Me button ✅ (2026-03-21)
+  - [x] Navbar logo — replaced `IK` text mark with `ik-logo-tp.png` (pug logo, transparent background stripped via ImageMagick flood-fill); favicon `public/icon.png` replaced at 512×512 ✅ (2026-03-21)
   - [x] Social links added to hero banner (8 links: LinkedIn, ORCID, ResearchGate, Academia, Scholar, X, UNE, Email) ✅ (2026-03-15)
 - [x] Footer
   - [x] Social links added (same 8) ✅ (2026-03-15)
@@ -52,6 +55,11 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
 - [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented; session 14: position columns, category string changes, featured removed from grant_awards
 - [x] Teaching `year` field — changed from integer to string column; allows "2023–Present" style ranges ✅ (2026-03-17)
+- [x] Teaching + Research status system — `status` enum (draft/scheduled/published, default draft) + `scheduled_at` on both models; public show pages added; `publish/schedule/cancel_schedule` member actions; split-button forms; `resolve_publish_intent` helper; `PublishScheduledPostsJob` extended ✅ (2026-03-20, session 21)
+- [x] Teaching + Research index — status badge (Isara only), scheduled datetime shown to Isara, cards link to show page, `.resource-card-title-link` CSS ✅ (2026-03-20, session 21)
+- [x] Teaching + Research show — status badge below h1, scheduled indicator + Edit schedule button, Publish now / Schedule / Cancel Schedule modals matching blog post pattern ✅ (2026-03-20, session 21)
+- [x] Grant Award status system — same `status` enum + `scheduled_at`; no public show page (index is admin-only); status badge + scheduled time shown on index cards; `publish/schedule/cancel_schedule` actions; split-button form ✅ (2026-03-20, session 21)
+- [x] Homepage featured queries — `.published` filter added to `@featured_research`, `@featured_teachings`, `@featured_grants` in `HomePageContent` concern ✅ (2026-03-20, session 21)
 - [x] Research categories — expanded from 3 (project/paper/publication) to 10 string-backed categories (Journal Article, Edited Book, Book, Book Chapter, Thesis, Conference Paper, White Paper, Conference Presentation, Article, Project); colour-coded pill badges on index + show ✅ (2026-03-17)
 - [x] Drag-and-drop reordering — Sortable.js (ESM build vendored); `sortable_controller.js` Stimulus controller; `position` column + `reorder` collection route on Teaching, ResearchItem, GrantAward; grip handle appears on hover (desktop) / always visible (mobile) ✅ (2026-03-17)
 - [x] Grant Awards overhaul — removed `featured` column entirely; all awards show on homepage in drag order; `default_scope` removed from all models (drag only affects index page, not homepage queries) ✅ (2026-03-17)
@@ -166,7 +174,8 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Resource sections — Featured Research (3-col), Teaching (4-col, view-all auth-gated), Grants & Awards (4-col, view-all auth-gated), Blog Posts (3-col cards with images)
 - [x] Contact form section — restyled to match dark theme, Bootstrap card wrapper removed
 - [x] Teaching & Grants "View all →" links — hidden from public visitors; only shown to signed-in Isara
-- [x] Favicon — IK monogram (dark bg, teal text) replacing default Rails icon; swap when Isara has a real logo
+- [x] Favicon — IK monogram (dark bg, teal text) replacing default Rails icon; replaced with real pug logo ✅ (2026-03-21)
+- [x] Card image border radius — all index cards (research, teaching, blog) and homepage blog cards use `border-radius: 0.75rem` on all four image corners (was top-only) ✅ (2026-03-21)
 - [x] CV Download button — RESOLVED ✅ (2026-03-14); Cloudinary PDF delivery enabled + `fl_attachment` redirect
 - [ ] Get Isara's real content in (bio, avatar, CV, featured items marked)
 - [x] Mobile responsive check — full audit done (critical/medium/low all fixed) ✅ (2026-03-15)

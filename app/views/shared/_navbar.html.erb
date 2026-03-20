@@ -3,7 +3,7 @@
 
     <%# Left: Logo (always visible) %>
     <%= link_to root_path, class: "navbar-brand mb-0" do %>
-      <div class="navbar-logo-mark">IK</div>
+      <%= image_tag "ik-logo-tp.png", class: "navbar-logo-img", alt: "IK" %>
     <% end %>
 
     <% if user_signed_in? %>
