@@ -54,7 +54,7 @@
                   <%= link_to item.title, teaching_path(item), class: "resource-card-title-link" %>
                 </h2>
 
-                <% if item.institution.present? || item.year.present? %>
+                <% if item.institution.present? || item.year.present? || (user_signed_in? && item.scheduled? && item.scheduled_at) %>
                   <p class="resource-card-meta">
                     <% if item.institution.present? %>
                       <i class="fa-solid fa-graduation-cap me-1"></i><%= item.institution %>
@@ -63,7 +63,7 @@
                     <% if item.year.present? %><%= item.year %><% end %>
                     <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
                     <% if user_signed_in? && item.scheduled? && item.scheduled_at %>
-                      &nbsp;· Scheduled <%= item.scheduled_at.strftime("%-d %b %Y at %H:%M") %>
+                      &nbsp;· <i class="fa-regular fa-clock me-1"></i>Scheduled <%= item.scheduled_at.strftime("%-d %b %Y at %H:%M") %>
                     <% end %>
                   </p>
                 <% end %>
