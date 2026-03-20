@@ -14,16 +14,17 @@
 
         <article>
           <div class="resource-detail-header">
-            <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+            <div class="mb-2">
               <span class="resource-card-category resource-badge-<%= @grant_award.category %>">
                 <%= @grant_award.category.capitalize %>
-              </span>
-              <span class="badge rounded-pill blog-status-<%= @grant_award.status %>">
-                <%= @grant_award.status.capitalize %>
               </span>
             </div>
 
             <h1 class="resource-detail-title"><%= @grant_award.title %></h1>
+
+            <span class="badge rounded-pill blog-status-<%= @grant_award.status %> mb-2">
+              <%= @grant_award.status.capitalize %>
+            </span>
 
             <%# Scheduled indicator %>
             <% if @grant_award.scheduled? %>

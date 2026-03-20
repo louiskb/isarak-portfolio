@@ -14,18 +14,19 @@
 
         <article>
           <div class="resource-detail-header">
-            <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
+            <div class="mb-2">
               <span class="resource-card-category resource-badge-<%= @research_item.category %>">
                 <%= ResearchItem::CATEGORY_LABELS[@research_item.category] %>
               </span>
-              <% if user_signed_in? %>
-                <span class="badge rounded-pill blog-status-<%= @research_item.status %>">
-                  <%= @research_item.status.capitalize %>
-                </span>
-              <% end %>
             </div>
 
             <h1 class="resource-detail-title"><%= @research_item.title %></h1>
+
+            <% if user_signed_in? %>
+              <span class="badge rounded-pill blog-status-<%= @research_item.status %> mb-2">
+                <%= @research_item.status.capitalize %>
+              </span>
+            <% end %>
 
             <%# Scheduled indicator (admin only) %>
             <% if @research_item.scheduled? && user_signed_in? %>

@@ -66,10 +66,10 @@
                       <i class="fa-regular fa-calendar me-1"></i>
                       <%= item.published_at.strftime("%B %Y") %>
                     <% end %>
-                    <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
                     <% if user_signed_in? && item.scheduled? && item.scheduled_at %>
                       &nbsp;· <i class="fa-regular fa-clock me-1"></i>Scheduled <%= item.scheduled_at.strftime("%-d %b %Y at %H:%M") %>
                     <% end %>
+                    <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
                   </p>
                 <% end %>
 

@@ -16,15 +16,13 @@
 
         <article>
           <div class="resource-detail-header">
-            <% if user_signed_in? %>
-              <div class="mb-2">
-                <span class="badge rounded-pill blog-status-<%= @teaching.status %>">
-                  <%= @teaching.status.capitalize %>
-                </span>
-              </div>
-            <% end %>
-
             <h1 class="resource-detail-title"><%= @teaching.title %></h1>
+
+            <% if user_signed_in? %>
+              <span class="badge rounded-pill blog-status-<%= @teaching.status %> mb-2">
+                <%= @teaching.status.capitalize %>
+              </span>
+            <% end %>
 
             <%# Scheduled indicator (admin only) %>
             <% if @teaching.scheduled? && user_signed_in? %>
