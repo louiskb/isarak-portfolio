@@ -1,8 +1,13 @@
 <% content_for :title, "#{@blog_post.title} — Blog" %>
 
+<%# Reading progress bar — fixed at top of viewport, only on this page %>
+<div class="reading-progress-wrap" data-controller="reading-progress">
+  <div class="reading-progress-bar" data-reading-progress-target="bar"></div>
+</div>
+
 <div class="blog-show">
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row gx-5 justify-content-center" data-controller="toc">
       <div class="col-lg-8">
 
         <nav aria-label="breadcrumb" class="mb-4">
@@ -90,8 +95,14 @@
             </figure>
           <% end %>
 
-          <%# Content %>
-          <div class="blog-post-content">
+          <%# Mobile TOC — inline, only shown below lg where the sidebar is hidden %>
+          <nav class="blog-toc-mobile d-lg-none mb-4" data-toc-target="mobileNav" hidden>
+            <p class="blog-toc-label">In this post</p>
+            <ul class="blog-toc-list" data-toc-target="list"></ul>
+          </nav>
+
+          <%# Content — TOC controller on the row scans headings here %>
+          <div class="blog-post-content" data-toc-target="content">
             <% if @blog_post.blog_post_erb_content.present? %>
               <div data-controller="html-inject" hidden>
                 <%= sanitize @blog_post.blog_post_erb_content %>
@@ -115,6 +126,53 @@
             </div>
           <% end %>
         </article>
+
+        <%# ===== RELATED POSTS ===== %>
+        <% if @related_posts.any? %>
+          <section class="blog-related">
+            <h2 class="blog-related-title">Related posts</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+              <% @related_posts.each do |post| %>
+                <div class="col">
+                  <article class="card blog-card h-100">
+                    <%= link_to post, class: "blog-card-img-link" do %>
+                      <div class="position-relative overflow-hidden blog-card-img-top">
+                        <div class="ratio ratio-16x9">
+                          <% if post.featured_image.attached? %>
+                            <%= image_tag post.featured_image, alt: post.title, class: "object-fit-cover blog-card-image" %>
+                          <% elsif post.image_url.present? %>
+                            <img src="<%= post.image_url %>" alt="<%= post.title %>" class="object-fit-cover blog-card-image">
+                          <% else %>
+                            <div class="blog-card-placeholder d-flex align-items-center justify-content-center">
+                              <i class="fa-solid fa-newspaper blog-card-placeholder-icon"></i>
+                            </div>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                    <div class="card-body d-flex flex-column">
+                      <div class="blog-card-meta">
+                        <i class="fa-regular fa-calendar me-1"></i>
+                        <%= post.created_at.strftime("%b %-d, %Y") %>
+                        &nbsp;·
+                        <i class="fa-regular fa-clock me-1"></i><%= post.reading_time %>
+                      </div>
+                      <h3 class="blog-card-title">
+                        <%= link_to post.title, post, class: "blog-card-title-link" %>
+                      </h3>
+                      <% if post.blog_excerpt.present? %>
+                        <p class="blog-card-excerpt"><%= post.blog_excerpt %></p>
+                      <% end %>
+                      <div class="blog-card-footer mt-auto">
+                        <%= link_to "Read more", post, class: "blog-card-read-more" %>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              <% end %>
+            </div>
+          </section>
+        <% end %>
 
         <%# ===== ADMIN ACTIONS ===== %>
         <% if user_signed_in? %>
@@ -288,6 +346,15 @@
         <% end %>
 
       </div>
+
+      <%# Sticky TOC sidebar — revealed by toc_controller.js when 2+ headings found %>
+      <aside class="col-lg-3 d-none" data-toc-target="sidebar">
+        <div class="blog-toc-sticky">
+          <p class="blog-toc-label">In this post</p>
+          <ul class="blog-toc-list" data-toc-target="list"></ul>
+        </div>
+      </aside>
+
     </div>
   </div>
 </div>

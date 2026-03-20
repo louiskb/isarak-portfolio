@@ -8,9 +8,9 @@
 ## High Priority (do soon)
 
 ### Real Content from Isara
-- [ ] Replace all seed/placeholder content with Isara's real bio, avatar, CV, and featured items
-- [ ] Mark featured items (research, teaching, grants/awards) to show on landing page
-- [ ] Set `APP_HOST` and `SMTP_PASSWORD` in `.env` for production mailer
+- [x] Replace all seed/placeholder content with Isara's real bio, avatar, CV, and featured items
+- [x] Mark featured items (research, teaching, grants/awards) to show on landing page
+- [x] Set `APP_HOST` and `SMTP_PASSWORD` in `.env` for production mailer
 
 ### SEO & Social Sharing
 - [ ] **Open Graph meta tags** — add `og:title`, `og:description`, `og:image`, `og:url` to blog show pages; required for proper link previews when sharing on LinkedIn, X, iMessage etc. (the copy link button is only as good as the preview it generates)
@@ -25,10 +25,10 @@
 
 ### Blog UX
 - [x] **Reading time estimate** — `BlogPost#reading_time` method; strips HTML/plain text, divides word count by 200 wpm; shows on show page meta row + index card meta row ✅ (2026-03-20)
-- [ ] **Related posts** — show 2–3 posts at the bottom of each blog show page (same category or recent); keeps visitors on site longer
-- [ ] **Table of contents** — auto-generate from `<h2>` / `<h3>` tags in AI-generated posts; show as sticky sidebar or collapsible block at the top of long posts
+- [x] **Related posts** — show 2–3 posts at bottom of show page (same tags → recent fallback); `@related_posts` in controller, card grid in view ✅ (2026-03-20)
+- [x] **Table of contents** — `toc_controller.js` scans `h2`/`h3` in content, injects nav above post; hidden if fewer than 2 headings ✅ (2026-03-20)
 - [x] **Blog post tags / category filtering** — `Tag` model + `BlogPostTag` join table; filter pills on blog index with Stimulus + GET params + Turbo Drive replace; search bar with 400ms debounce; clear-all × button ✅ (2026-03-18/20)
-- [ ] **Reading progress bar** — thin teal bar at top of viewport that fills as user scrolls through a blog post; elegant signal for long-form content
+- [x] **Reading progress bar** — `reading_progress_controller.js`; fixed 3px teal bar at top of viewport, fills on scroll ✅ (2026-03-20)
 
 ### Animations & Polish
 - [ ] **Scroll-triggered animations** — AOS (Animate On Scroll) or CSS `@keyframes` with `IntersectionObserver`; trigger fade-up on below-fold sections (About, Research, Teaching, Awards, Blog, Contact)

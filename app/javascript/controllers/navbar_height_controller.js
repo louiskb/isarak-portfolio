@@ -38,10 +38,13 @@ export default class extends Controller {
   }
 
   _onScroll() {
-    // Only toggle the scrolled state on the homepage — other pages keep their
-    // navbar styling unchanged regardless of scroll position.
     const hero = document.querySelector(".home-hero")
-    if (!hero) return
-    this.element.classList.toggle("header--scrolled", window.scrollY > hero.offsetHeight * 0.3)
+    if (hero) {
+      // Homepage: trigger after scrolling 30% past the hero
+      this.element.classList.toggle("header--scrolled", window.scrollY > hero.offsetHeight * 0.3)
+    } else {
+      // All other pages: trigger after 20% of the viewport height
+      this.element.classList.toggle("header--scrolled", window.scrollY > window.innerHeight * 0.2)
+    }
   }
 }

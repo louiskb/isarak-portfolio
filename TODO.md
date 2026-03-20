@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-20 (session 19: AI image fix, scheduling fixes, clear filters, reading time)
+> Created: 2026-03-08 | Last updated: 2026-03-20 (session 20: reading progress bar, TOC sidebar, related posts, mobile navbar gradient)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -138,6 +138,10 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Timezone hints on all scheduling modals — `Times are in [Sydney/AEDT] (Sydney)` note added to schedule pickers in `_form.html.erb`, `ai_new.html.erb`, `ai_revise.html.erb`, `show.html.erb` ✅ (2026-03-20)
 - [x] Blog filter clear button — teal × pill shown only when ≥1 tag filter is active; clears search + all tags in one click; styled `.blog-tag-pill-clear` (red × variant); `data-turbo-action="replace"` consistent with filter form ✅ (2026-03-20)
 - [x] Reading time estimate — `BlogPost#reading_time` model method; strips HTML (`strip_tags`) for AI posts, `.to_plain_text` for Action Text body; 200 wpm, minimum 1 min; shown on show page meta row (clock icon) + index card meta row (middot separator) ✅ (2026-03-20)
+- [x] Reading progress bar — fixed 3px teal bar at top of viewport; `reading_progress_controller.js` fills on scroll; only rendered on blog show page ✅ (2026-03-20)
+- [x] Table of contents — `toc_controller.js` scans h2/h3 in content; desktop: sticky transparent sidebar (col-lg-3, `d-lg-block`); mobile: inline opaque card above content (`d-lg-none`); active section highlighted in teal via scroll tracking; `scroll-margin-top` offsets anchor links to clear sticky navbar ✅ (2026-03-20)
+- [x] Related posts — `@related_posts` loaded in `show` action (same tags → recent fallback, limit 3, published only); card grid below tags section on show page ✅ (2026-03-20)
+- [x] Mobile navbar gradient — `navbar_height_controller.js` now adds `header--scrolled` on non-homepage pages after 20% scroll; CSS rule applies gradient pill on mobile at that point ✅ (2026-03-20)
 - [x] Pagination — Pagy wired on all 4 resource indexes (blog_posts, research_items, teachings, grant_awards); limit=9 globally ✅
 - [x] Container layout — all new/edit/form views wrapped in `container py-5 > row justify-content-center > col-lg-8` ✅
 - [x] Author hardcoded on BlogPost — `before_validation :set_author` always sets "Isara Khanjanasthiti"; removed from forms; "By [author]" shown on show page above meta row ✅

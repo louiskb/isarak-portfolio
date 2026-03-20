@@ -22,6 +22,11 @@ class BlogPostsController < ApplicationController
 
   # GET /blog_posts/1 or /blog_posts/1.json
   def show
+    tag_ids = @blog_post.tag_ids
+    scope = tag_ids.any? \
+      ? BlogPost.published.joins(:tags).where(tags: { id: tag_ids }).distinct
+      : BlogPost.published
+    @related_posts = scope.where.not(id: @blog_post.id).order(created_at: :desc).limit(3)
   end
 
   # GET /blog_posts/new

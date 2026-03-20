@@ -261,6 +261,26 @@ body:not(.page-home) .navbar-isarak {
   }
 }
 
+// Non-homepage mobile: gradient pill fades in after 20% scroll.
+// JS adds .header--scrolled to <header> once the threshold is crossed.
+body:not(.page-home) .header--scrolled .navbar-isarak {
+  @include media-breakpoint-down(lg) {
+    .container {
+      background:
+        linear-gradient(90deg, rgba(48, 197, 210, 0.14), rgba(71, 16, 105, 0.14)),
+        #080808;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0.75rem;
+      padding-left: 1.10rem;
+      padding-right: 0.5rem;
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+  }
+}
+
 // Homepage — frosted glass pill, only while the user hasn't scrolled past 30% of the hero.
 // The :not() means these styles switch off the moment JS adds .header--scrolled to <header>,
 // so no override battle is needed for the scrolled state below.
