@@ -45,6 +45,10 @@
               <i class="fa-regular fa-calendar me-1"></i>
               <%= @blog_post.created_at.strftime("%B %-d, %Y") %>
             </p>
+            <p class="blog-show-meta mb-0">
+              <i class="fa-regular fa-clock me-1"></i>
+              <%= @blog_post.reading_time %>
+            </p>
             <% if @blog_post.featured? %>
               <span class="resource-featured-badge">
                 <i class="fa-solid fa-star me-1"></i>Featured

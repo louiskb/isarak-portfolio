@@ -1,7 +1,7 @@
 # Future Improvements — isarak-portfolio
 
 > Maintained by Louis + Claude. Add ideas here as they come up during development.
-> Last updated: 2026-03-17 (session 11)
+> Last updated: 2026-03-20 (session 19)
 
 ---
 
@@ -24,10 +24,10 @@
 ## Medium Priority
 
 ### Blog UX
-- [ ] **Reading time estimate** — calculate words ÷ 200 wpm on BlogPost; display "5 min read" on show page and index cards
+- [x] **Reading time estimate** — `BlogPost#reading_time` method; strips HTML/plain text, divides word count by 200 wpm; shows on show page meta row + index card meta row ✅ (2026-03-20)
 - [ ] **Related posts** — show 2–3 posts at the bottom of each blog show page (same category or recent); keeps visitors on site longer
 - [ ] **Table of contents** — auto-generate from `<h2>` / `<h3>` tags in AI-generated posts; show as sticky sidebar or collapsible block at the top of long posts
-- [ ] **Blog post tags / category filtering** — many-to-many tags on BlogPost (e.g. "Urban Planning", "Aviation", "Teaching", "Opinion"); render filter pills on the blog index ("All", "Research", "Teaching", etc.); use Stimulus + CSS show/hide for a no-reload feel, or a simple query param approach
+- [x] **Blog post tags / category filtering** — `Tag` model + `BlogPostTag` join table; filter pills on blog index with Stimulus + GET params + Turbo Drive replace; search bar with 400ms debounce; clear-all × button ✅ (2026-03-18/20)
 - [ ] **Reading progress bar** — thin teal bar at top of viewport that fills as user scrolls through a blog post; elegant signal for long-form content
 
 ### Animations & Polish
@@ -56,8 +56,8 @@
 - [ ] **Thai language support** — Isara is Thai-Australian; consider `i18n` with EN/TH locale toggle; low priority unless Isara has a Thai-speaking audience to target
 
 ### Infrastructure
-- [ ] **Pin Ruby version in Gemfile** — add `ruby "3.3.9"` (or latest) to suppress the Heroku warning on every deploy
-- [ ] **Pin Node.js buildpack** — add `heroku/nodejs` buildpack before `heroku/ruby` to pin the Node version and suppress the Node.js warning
+- [x] **Pin Ruby version in Gemfile** — `ruby "3.3.10"` in Gemfile + `.ruby-version` ✅ (2026-03-18)
+- [x] **Pin Node.js buildpack** — `engines.node: "22.x"` in `package.json` ✅ (2026-03-18)
 - [ ] **Plausible or Fathom analytics** — privacy-first, cookie-free analytics (consistent with the Privacy Policy's "no tracking cookies" claim); embed via a single `<script>` tag
 
 ---

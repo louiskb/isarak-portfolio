@@ -112,6 +112,8 @@
                 <div class="blog-card-meta">
                   <i class="fa-regular fa-calendar me-1"></i>
                   <%= post.created_at.strftime("%b %-d, %Y") %>
+                  &nbsp;·
+                  <i class="fa-regular fa-clock me-1"></i><%= post.reading_time %>
                   <% if user_signed_in? && post.scheduled? && post.scheduled_at %>
                     &nbsp;· Scheduled <%= post.scheduled_at.strftime("%-d %b %Y at %H:%M") %>
                   <% end %>

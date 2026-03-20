@@ -22,6 +22,21 @@ class BlogPost < ApplicationRecord
   validates :status, presence: true
   validate :one_content_field_only
 
+  # Returns estimated reading time as a string, e.g. "4 min read".
+  # Strips HTML tags, counts words, assumes 200 wpm. Minimum 1 min.
+  def reading_time
+    text = if blog_post_erb_content.present?
+      ActionController::Base.helpers.strip_tags(blog_post_erb_content)
+    elsif body.present?
+      body.to_plain_text
+    else
+      ""
+    end
+    words = text.split.size
+    minutes = [(words / 200.0).ceil, 1].max
+    "#{minutes} min read"
+  end
+
   # Returns a display label for AI involvement, shown to Isara only.
   # nil when no AI was involved (pure manual, or manual with no AI revision).
   # human_generated alone (!ai_generated) → nil (nothing shown)

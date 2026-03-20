@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-20 (session 19: AI featured image fix, attribution column, clear filters button, scheduling fixes)
+> Created: 2026-03-08 | Last updated: 2026-03-20 (session 19: AI image fix, scheduling fixes, clear filters, reading time)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -137,6 +137,7 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Scheduling fixes ✅ (2026-03-20) — `resolve_publish_intent` falls back to `:draft` (not `:published`) when scheduled time is missing/past (safer default); `showSpinner` used for dropdown items so `publish-form` actions own submission (fixed `loader`+`publish-form` race condition); `_restoreLoadButtonState()` called in `saveDraft` cancel path to un-hide buttons
 - [x] Timezone hints on all scheduling modals — `Times are in [Sydney/AEDT] (Sydney)` note added to schedule pickers in `_form.html.erb`, `ai_new.html.erb`, `ai_revise.html.erb`, `show.html.erb` ✅ (2026-03-20)
 - [x] Blog filter clear button — teal × pill shown only when ≥1 tag filter is active; clears search + all tags in one click; styled `.blog-tag-pill-clear` (red × variant); `data-turbo-action="replace"` consistent with filter form ✅ (2026-03-20)
+- [x] Reading time estimate — `BlogPost#reading_time` model method; strips HTML (`strip_tags`) for AI posts, `.to_plain_text` for Action Text body; 200 wpm, minimum 1 min; shown on show page meta row (clock icon) + index card meta row (middot separator) ✅ (2026-03-20)
 - [x] Pagination — Pagy wired on all 4 resource indexes (blog_posts, research_items, teachings, grant_awards); limit=9 globally ✅
 - [x] Container layout — all new/edit/form views wrapped in `container py-5 > row justify-content-center > col-lg-8` ✅
 - [x] Author hardcoded on BlogPost — `before_validation :set_author` always sets "Isara Khanjanasthiti"; removed from forms; "By [author]" shown on show page above meta row ✅
