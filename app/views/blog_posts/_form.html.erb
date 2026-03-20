@@ -224,6 +224,7 @@
                  value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
                  data-publish-form-target="scheduleInput"
                  required>
+          <div class="form-text"><i class="fa-solid fa-clock me-1"></i>Times are in <strong><%= Time.current.zone %></strong> (Sydney).</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>

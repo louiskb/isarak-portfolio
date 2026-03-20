@@ -78,6 +78,7 @@ erDiagram
         string slug
         text blog_post_erb_content
         string image_url
+        text featured_image_caption
         datetime created_at
         datetime updated_at
     }
@@ -180,6 +181,7 @@ erDiagram
 - `BlogPost.featured` — flags posts for display on the homepage blog section
 - `BlogPost.featured_image` — Active Storage `has_one_attached`; auto-set from Unsplash on AI posts
 - `BlogPost.image_url` — plain string fallback; shown only when `featured_image` is not attached; passed through `ai_params` and saved by `BlogPostAiService`
+- `BlogPost.featured_image_caption` — plain text column storing `<figcaption>` HTML for Unsplash photographer attribution; set by `BlogPostAiService` when an Unsplash URL is fetched; rendered with `raw` under the featured image on the show page; nil for uploaded images
 - `BlogPost.photos` — Active Storage `has_many_attached`; available for manual uploads
 - `BlogPost.human_generated` — boolean flag (default false); mirrors `ai_generated` for filtering
 - `Service.description` — Action Text rich text stored in `action_text_rich_texts`; single record per user

@@ -214,15 +214,14 @@ class BlogPostsController < ApplicationController
 
   # Parses the status + scheduled_at coming from the split button.
   # Returns [status_symbol, scheduled_at_or_nil].
-  # Falls back to :draft if the scheduled time is missing or in the past.
+  # Falls back to :draft if no scheduled_at is given or the time is in the past.
+  # Silently drafting is safer than silently publishing when a time can't be honoured.
   def resolve_publish_intent(raw_status, raw_scheduled_at)
     status = (raw_status.presence || "draft").to_sym
 
     if status == :scheduled
       parsed = raw_scheduled_at.present? ? Time.zone.parse(raw_scheduled_at.to_s) : nil
-      if parsed.nil? || parsed <= Time.current
-        return [ :draft, nil ]
-      end
+      return [ :draft, nil ] if parsed.nil? || parsed <= Time.current
       return [ :scheduled, parsed ]
     end
 

@@ -28,15 +28,16 @@ class BlogPostAiService
     # Replace any <!-- IMAGE: query --> placeholders the AI placed in the content
     content = inject_inline_images(parsed["content"])
 
-    # Feature image: skip Unsplash if Isara uploaded their own
-    image_html = featured_image.present? ? "" : fetch_image_html(parsed["image_query"])
-    full_content = "#{image_html}#{content}"
+    # Feature image: skip Unsplash if Isara uploaded their own or supplied a URL
+    unsplash = (featured_image.present? || image_url.present?) ? nil : fetch_unsplash_data(parsed["image_query"])
+    final_image_url = image_url.presence || unsplash&.fetch(:url)
 
     blog_post = @user.blog_posts.build(
       title: parsed["title"],
       blog_excerpt: parsed["excerpt"],
-      blog_post_erb_content: full_content,
-      image_url: image_url,
+      blog_post_erb_content: content,
+      image_url: final_image_url,
+      featured_image_caption: unsplash ? figcaption_html(unsplash) : nil,
       ai_generated: true,
       status: status,
       scheduled_at: scheduled_at
@@ -77,28 +78,55 @@ class BlogPostAiService
 
     content = inject_inline_images(parsed["content"])
 
-    # Feature image priority: new upload > keep flag > Unsplash (default replaces existing)
+    # Detect whether the user deliberately typed a NEW custom URL, vs the form just
+    # submitting the pre-filled existing value unchanged. A pre-filled URL that is
+    # identical to the current blog_post.image_url is NOT treated as a manual override —
+    # it means "I didn't change the URL field", so Unsplash should still be refreshed.
+    new_custom_url = image_url.present? && image_url != blog_post.image_url
+
+    # Feature image priority: new upload > keep flag > new custom URL > fresh Unsplash (default)
+    unsplash = nil
     if featured_image.present?
-      # Isara uploaded a new image — use it
+      # New file upload — attach it, clear any stored image_url and caption
       blog_post.featured_image.attach(featured_image)
-      image_html = ""
     elsif keep_featured_image
-      # Isara opted to keep the existing image — leave it untouched
-      image_html = ""
+      # Isara opted to keep the existing image — leave featured_image, image_url, caption untouched
+    elsif new_custom_url
+      # User typed a genuinely new URL — use it as-is with no Unsplash attribution
+      blog_post.featured_image.purge_later if blog_post.featured_image.attached?
     else
       # Default: revision may have changed the topic, so fetch a fresh Unsplash photo.
       # Purge any previously attached featured_image so the show page doesn't show a stale one.
       blog_post.featured_image.purge_later if blog_post.featured_image.attached?
-      image_html = fetch_image_html(parsed["image_query"])
+      unsplash = fetch_unsplash_data(parsed["image_query"])
     end
 
-    full_content = "#{image_html}#{content}"
+    final_image_url = if featured_image.present?
+      nil  # Active Storage attachment takes over; clear image_url
+    elsif keep_featured_image
+      blog_post.image_url  # preserve unchanged
+    elsif new_custom_url
+      image_url  # user's explicit new URL
+    else
+      unsplash&.fetch(:url)  # fresh Unsplash URL (nil if fetch failed)
+    end
+
+    final_caption = if featured_image.present?
+      nil  # uploaded image — no Unsplash attribution
+    elsif keep_featured_image
+      blog_post.featured_image_caption  # preserve unchanged
+    elsif new_custom_url
+      nil  # custom URL — no Unsplash attribution
+    else
+      unsplash ? figcaption_html(unsplash) : nil  # attribution for fresh Unsplash image
+    end
 
     attrs = {
       title: parsed["title"],
       blog_excerpt: parsed["excerpt"],
-      blog_post_erb_content: full_content,
-      image_url: image_url,
+      blog_post_erb_content: content,
+      image_url: final_image_url,
+      featured_image_caption: final_caption,
       ai_generated: true,
       human_generated: true
     }
@@ -132,7 +160,50 @@ class BlogPostAiService
     end
   end
 
+  # Fetches Unsplash image metadata for use as a featured image.
+  # Returns a hash { url:, photographer:, photographer_url:, photo_url: } or nil on failure.
+  def fetch_unsplash_data(query)
+    access_key = ENV.fetch("UNSPLASH_ACCESS_KEY", nil)
+    return nil if access_key.blank? || query.blank?
+
+    uri = URI(UNSPLASH_API_URL)
+    uri.query = URI.encode_www_form(
+      query: query,
+      orientation: "landscape",
+      client_id: access_key
+    )
+
+    response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, verify_mode: OpenSSL::SSL::VERIFY_NONE) do |http|
+      http.get(uri.request_uri)
+    end
+    return nil unless response.is_a?(Net::HTTPSuccess)
+
+    data = JSON.parse(response.body)
+    url = data.dig("urls", "regular")
+    return nil if url.blank?
+
+    {
+      url: url,
+      photographer: data.dig("user", "name"),
+      photographer_url: "#{data.dig("user", "links", "html")}?utm_source=isarak_portfolio&utm_medium=referral",
+      photo_url: "#{data.dig("links", "html")}?utm_source=isarak_portfolio&utm_medium=referral"
+    }
+  rescue StandardError => e
+    Rails.logger.warn "Unsplash featured image fetch failed: #{e.message}"
+    nil
+  end
+
+  # Returns a <figcaption> HTML string for an Unsplash photo.
+  # Stored in featured_image_caption and rendered directly below the featured image.
+  def figcaption_html(data)
+    "<figcaption class=\"text-muted mt-1\" style=\"font-size:0.8em;\">" \
+      "Photo by <a href=\"#{data[:photographer_url]}\">#{data[:photographer]}</a> on " \
+      "<a href=\"#{data[:photo_url]}\">Unsplash</a>" \
+      "</figcaption>"
+  end
+
   # Fetches a relevant image from Unsplash and returns a ready-to-inject HTML string.
+  # Used for inline <!-- IMAGE: query --> placeholders within post content.
   # Returns an empty string if the API key is missing or the request fails — so a failed image fetch never blocks the post from saving.
   def fetch_image_html(query)
     access_key = ENV.fetch("UNSPLASH_ACCESS_KEY", nil)

@@ -35,6 +35,28 @@
         </a>
         <div class="collapse" id="currentContentPreview">
           <div class="border rounded p-3" style="max-height: 300px; overflow-y: auto; font-size: 0.875rem;">
+            <%# Featured image preview %>
+            <% if @blog_post.featured_image.attached? %>
+              <figure class="mb-3">
+                <%= image_tag @blog_post.featured_image,
+                      class: "img-fluid rounded",
+                      style: "width:100%;max-height:200px;object-fit:cover;" %>
+                <% if @blog_post.featured_image_caption.present? %>
+                  <%= raw @blog_post.featured_image_caption %>
+                <% end %>
+              </figure>
+            <% elsif @blog_post.image_url.present? %>
+              <figure class="mb-3">
+                <img src="<%= @blog_post.image_url %>"
+                     class="img-fluid rounded"
+                     style="width:100%;max-height:200px;object-fit:cover;"
+                     alt="Featured image">
+                <% if @blog_post.featured_image_caption.present? %>
+                  <%= raw @blog_post.featured_image_caption %>
+                <% end %>
+              </figure>
+            <% end %>
+            <%# Post body %>
             <% if @blog_post.blog_post_erb_content.present? %>
               <%= raw @blog_post.blog_post_erb_content %>
             <% elsif @blog_post.body.present? %>
@@ -62,6 +84,28 @@
               <%= image_tag @blog_post.featured_image,
                     class: "img-fluid rounded",
                     style: "max-height:160px;object-fit:cover;" %>
+            </div>
+            <div class="form-check mb-3">
+              <%= f.check_box :keep_featured_image, class: "form-check-input" %>
+              <%= f.label :keep_featured_image, "Keep this image", class: "form-check-label" %>
+            </div>
+            <div class="form-text mb-3">
+              By default the AI fetches a fresh Unsplash photo. Check the box above to keep your current image,
+              or upload a replacement below — uploading always takes priority.
+            </div>
+            <%= f.file_field :featured_image, class: "form-control", accept: "image/*",
+                  data: { "image-preview-target": "fileInput", action: "change->image-preview#updateFile" } %>
+            <img class="img-fluid rounded mt-2 d-none"
+                 style="max-height:160px;object-fit:cover;"
+                 data-image-preview-target="preview"
+                 alt="Upload preview">
+          <% elsif @blog_post.image_url.present? %>
+            <div class="mb-3">
+              <p class="profile-input-hint mb-1">Current image (from Unsplash):</p>
+              <img src="<%= @blog_post.image_url %>"
+                   class="img-fluid rounded"
+                   style="max-height:160px;object-fit:cover;"
+                   alt="Current featured image">
             </div>
             <div class="form-check mb-3">
               <%= f.check_box :keep_featured_image, class: "form-check-input" %>
@@ -169,15 +213,15 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
                 <button type="button" class="dropdown-item"
-                        data-action="click->load-button#loader click->publish-form#saveDraft"
-                        data-load-button-loading-text-value="Revising your post...">
+                        data-action="click->load-button#showSpinner click->publish-form#saveDraft"
+                        data-load-button-loading-text-value="Revising and saving as draft...">
                   <i class="fa-regular fa-file me-2 text-muted"></i>Revise and save as draft
                 </button>
               </li>
               <li><hr class="dropdown-divider"></li>
               <li>
                 <button type="button" class="dropdown-item"
-                        data-action="click->load-button#loader click->publish-form#publishNow"
+                        data-action="click->load-button#showSpinner click->publish-form#publishNow"
                         data-load-button-loading-text-value="Revising and publishing...">
                   <i class="fa-solid fa-globe me-2 text-muted"></i>Revise and publish now
                 </button>
@@ -217,12 +261,13 @@
                        value="<%= @blog_post.scheduled_at&.strftime("%Y-%m-%dT%H:%M") %>"
                        data-publish-form-target="scheduleInput"
                        required>
+                <div class="form-text"><i class="fa-solid fa-clock me-1"></i>Times are in <strong><%= Time.current.zone %></strong> (Sydney).</div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-blog-publish"
                         data-action="click->load-button#showSpinner click->publish-form#confirmSchedule"
-                        data-load-button-loading-text-value="Revising your post...">
+                        data-load-button-loading-text-value="Revising and scheduling...">
                   Revise and schedule
                 </button>
               </div>

@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-18 (session 18: footer mobile layout + dotted underline on "Built by Louis Bourne")
+> Created: 2026-03-08 | Last updated: 2026-03-20 (session 19: AI featured image fix, attribution column, clear filters button, scheduling fixes)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -93,6 +93,11 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] sanitize initializer — figure, figcaption, style added to allowlist
   - [x] Inline Unsplash images — AI puts `<!-- IMAGE: query -->` placeholders; service replaces with real Unsplash figures
 - [x] featured_image on BlogPost — `has_one_attached :featured_image`; shown on show page; upload on all forms (manual + AI new + AI revise); on AI revision defaults to fresh Unsplash; "Keep this image" checkbox on ai_revise to opt out; ENV.fetch used project-wide
+- [x] featured_image_caption column — `text` column on blog_posts; stores `<figcaption>` HTML for Unsplash attribution; rendered with `raw` under the featured image on show page; kept separate from content body ✅ (2026-03-20)
+- [x] AI featured image fix — Unsplash URL now stored in `image_url`, attribution HTML in `featured_image_caption`; content body stays clean (no embedded `<figure>`); show page renders caption directly under featured image ✅ (2026-03-20)
+- [x] AI revision image fix — `new_custom_url` detection compares submitted `image_url` vs `blog_post.image_url` to avoid pre-filled stale URL overriding freshly fetched Unsplash URL ✅ (2026-03-20)
+- [x] "Keep this image" checkbox extended to `image_url`-based posts (not just Active Storage uploads) in `ai_revise` form ✅ (2026-03-20)
+- [x] Featured image shown in current content preview panel on `ai_revise` page ✅ (2026-03-20)
 - [x] Show featured_image on public blog index cards ✅
 - [x] image_url fallback on BlogPost — migration, strong params, all 3 forms (manual + ai_new + ai_revise), all 3 views (show + index + home), seeds ✅ (2026-03-15)
 - [x] Live image preview Stimulus controller (`image_preview_controller.js`) — `connect()` auto-shows on page load; `updateUrl` for URL field; `updateFile` for uploads; wired to all blog forms ✅ (2026-03-15)
@@ -129,6 +134,9 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
   - [x] cancel_schedule action — sets status: draft, clears scheduled_at
   - [x] Show status badge on public blog index cards (Isara only) ✅
 - [x] Publish/schedule edge cases — consistent `resolve_publish_intent` across all 4 save actions; `publish_notice` flash helper; split-button dropup on all create/edit forms (manual + AI) ✅
+- [x] Scheduling fixes ✅ (2026-03-20) — `resolve_publish_intent` falls back to `:draft` (not `:published`) when scheduled time is missing/past (safer default); `showSpinner` used for dropdown items so `publish-form` actions own submission (fixed `loader`+`publish-form` race condition); `_restoreLoadButtonState()` called in `saveDraft` cancel path to un-hide buttons
+- [x] Timezone hints on all scheduling modals — `Times are in [Sydney/AEDT] (Sydney)` note added to schedule pickers in `_form.html.erb`, `ai_new.html.erb`, `ai_revise.html.erb`, `show.html.erb` ✅ (2026-03-20)
+- [x] Blog filter clear button — teal × pill shown only when ≥1 tag filter is active; clears search + all tags in one click; styled `.blog-tag-pill-clear` (red × variant); `data-turbo-action="replace"` consistent with filter form ✅ (2026-03-20)
 - [x] Pagination — Pagy wired on all 4 resource indexes (blog_posts, research_items, teachings, grant_awards); limit=9 globally ✅
 - [x] Container layout — all new/edit/form views wrapped in `container py-5 > row justify-content-center > col-lg-8` ✅
 - [x] Author hardcoded on BlogPost — `before_validation :set_author` always sets "Isara Khanjanasthiti"; removed from forms; "By [author]" shown on show page above meta row ✅

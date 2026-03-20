@@ -13,7 +13,11 @@ export default class extends Controller {
   saveDraft(event) {
     event.preventDefault()
     if (this.currentStatusValue === "published") {
-      if (!confirm("This will unpublish the post and move it back to draft. Continue?")) return
+      if (!confirm("This will unpublish the post and move it back to draft. Continue?")) {
+        // showSpinner already hid the buttons — restore them so the user isn't frozen.
+        this._restoreLoadButtonState()
+        return
+      }
     }
     this.statusInputTarget.value = "draft"
     this.scheduledAtInputTarget.value = ""

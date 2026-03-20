@@ -53,6 +53,11 @@
               <%= tag.name %>
             </label>
           <% end %>
+          <% if active_tag_ids.any? %>
+            <%= link_to blog_posts_path, class: "blog-tag-pill blog-tag-pill-clear", data: { turbo_action: "replace" } do %>
+              <i class="fa-solid fa-xmark me-1"></i>Clear filters
+            <% end %>
+          <% end %>
         </div>
       <% end %>
 
