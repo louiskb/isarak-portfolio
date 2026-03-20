@@ -18,5 +18,10 @@ class PublishScheduledPostsJob < ApplicationJob
       item.published!
       Rails.logger.info "PublishScheduledPostsJob: published Teaching ##{item.id} \"#{item.title}\""
     end
+
+    GrantAward.scheduled.where(scheduled_at: due).find_each do |item|
+      item.published!
+      Rails.logger.info "PublishScheduledPostsJob: published GrantAward ##{item.id} \"#{item.title}\""
+    end
   end
 end

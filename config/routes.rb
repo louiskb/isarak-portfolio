@@ -26,6 +26,11 @@ Rails.application.routes.draw do
   end
   resources :grant_awards do
     collection { patch :reorder }
+    member do
+      patch "publish"
+      patch "schedule"
+      patch "cancel_schedule"
+    end
   end
   resources :research_items do
     collection { patch :reorder }

@@ -12,17 +12,32 @@
           </ol>
         </nav>
 
-        <%= render "shared/flashes" %>
-
         <article>
           <div class="resource-detail-header">
             <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
               <span class="resource-card-category resource-badge-<%= @grant_award.category %>">
                 <%= @grant_award.category.capitalize %>
               </span>
+              <span class="badge rounded-pill blog-status-<%= @grant_award.status %>">
+                <%= @grant_award.status.capitalize %>
+              </span>
             </div>
 
             <h1 class="resource-detail-title"><%= @grant_award.title %></h1>
+
+            <%# Scheduled indicator %>
+            <% if @grant_award.scheduled? %>
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <small class="resource-detail-meta">
+                  <i class="fa-regular fa-clock me-1"></i>
+                  Scheduled for <%= @grant_award.scheduled_at.strftime("%d %b %Y at %H:%M") %> (<%= Time.current.zone %>)
+                </small>
+                <button type="button" class="btn btn-resource-edit btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#editScheduleModal">
+                  Edit schedule
+                </button>
+              </div>
+            <% end %>
 
             <div class="resource-detail-meta">
               <% if @grant_award.awarding_body.present? %>
@@ -49,12 +64,127 @@
 
         <%# Admin actions %>
         <div class="resource-detail-actions">
-          <%= link_to "Edit", edit_grant_award_path(@grant_award), class: "btn btn-resource-edit rounded-4" %>
+
+          <%# Status actions %>
+          <% if @grant_award.draft? %>
+            <%= button_to "Publish now",
+                  publish_grant_award_path(@grant_award),
+                  method: :patch,
+                  data: { turbo_confirm: "Publish this entry? It will appear on the homepage immediately." },
+                  class: "btn btn-blog-publish btn-sm" %>
+            <button type="button" class="btn btn-blog-schedule btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#scheduleModal">
+              Schedule
+            </button>
+          <% end %>
+
+          <% if @grant_award.scheduled? %>
+            <button type="button" class="btn btn-blog-publish btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#publishNowModal">
+              Publish now
+            </button>
+          <% end %>
+
+          <% if @grant_award.draft? || @grant_award.scheduled? %>
+            <span class="blog-show-actions-divider"></span>
+          <% end %>
+
+          <%= link_to "Edit", edit_grant_award_path(@grant_award), class: "btn btn-resource-edit btn-sm" %>
           <%= button_to "Delete", @grant_award,
                 method: :delete,
-                class: "btn btn-resource-delete rounded-4",
+                class: "btn btn-resource-delete btn-sm",
                 data: { turbo_confirm: "Delete \"#{@grant_award.title}\"? This cannot be undone." } %>
         </div>
+
+        <%# Schedule modal (draft only) %>
+        <% if @grant_award.draft? %>
+          <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="scheduleModalLabel">Schedule entry</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <%= form_with url: schedule_grant_award_path(@grant_award), method: :patch do |f| %>
+                  <div class="modal-body">
+                    <p class="text-muted mb-3">Choose when this entry will appear on the homepage.</p>
+                    <div class="mb-3">
+                      <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
+                      <%= f.datetime_local_field :scheduled_at,
+                            class: "form-control",
+                            min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+                            required: true %>
+                      <div class="form-text"><i class="fa-solid fa-clock me-1"></i>Times are in <strong><%= Time.current.zone %></strong> (Sydney).</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                    <%= f.submit "Schedule", class: "btn btn-blog-publish" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Publish now + edit schedule modals (scheduled only) %>
+        <% if @grant_award.scheduled? %>
+          <div class="modal fade" id="publishNowModal" tabindex="-1" aria-labelledby="publishNowModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="publishNowModalLabel">Publish now?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Scheduled for <strong><%= @grant_award.scheduled_at.strftime("%d %b %Y at %H:%M") %></strong>.</p>
+                  <p class="mb-0">Publishing now will <strong>cancel that schedule</strong> and make this entry live immediately.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Keep schedule</button>
+                  <%= form_with url: publish_grant_award_path(@grant_award), method: :patch do |f| %>
+                    <%= f.submit "Publish now", class: "btn btn-blog-publish" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="editScheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editScheduleModalLabel">Edit schedule</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <%= form_with url: schedule_grant_award_path(@grant_award), method: :patch, id: "edit-schedule-form" do |f| %>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
+                      <%= f.datetime_local_field :scheduled_at,
+                            class: "form-control",
+                            value: @grant_award.scheduled_at.strftime("%Y-%m-%dT%H:%M"),
+                            min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+                            required: true %>
+                      <div class="form-text"><i class="fa-solid fa-clock me-1"></i>Times are in <strong><%= Time.current.zone %></strong> (Sydney).</div>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="modal-footer d-flex justify-content-between align-items-center">
+                  <%= button_to "Revert to draft",
+                        cancel_schedule_grant_award_path(@grant_award),
+                        method: :patch,
+                        class: "btn btn-resource-edit",
+                        form: { class: "m-0" } %>
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="edit-schedule-form" class="btn btn-blog-publish">Update schedule</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
 
       </div>
     </div>
