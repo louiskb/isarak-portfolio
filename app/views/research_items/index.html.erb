@@ -42,17 +42,19 @@
                 <img src="<%= img_src %>" class="resource-card-img" alt="<%= item.title %>">
               <% end %>
               <div class="card-body">
-                <%# Category badge + status badge (Isara only) %>
-                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                  <span class="resource-card-category resource-badge-<%= item.category %>">
-                    <%= ResearchItem::CATEGORY_LABELS[item.category] %>
-                  </span>
-                  <% if user_signed_in? %>
+                <%# Category badge %>
+                <span class="resource-card-category resource-badge-<%= item.category %>">
+                  <%= ResearchItem::CATEGORY_LABELS[item.category] %>
+                </span>
+
+                <%# Status badge (Isara only) %>
+                <% if user_signed_in? %>
+                  <div class="mb-2">
                     <span class="badge rounded-pill blog-status-<%= item.status %>">
                       <%= item.status.capitalize %>
                     </span>
-                  <% end %>
-                </div>
+                  </div>
+                <% end %>
 
                 <h2 class="resource-card-title">
                   <%= link_to item.title, research_item_path(item), class: "resource-card-title-link" %>

@@ -32,12 +32,14 @@
                 <i class="fa-solid fa-grip-vertical"></i>
               </div>
               <div class="card-body">
-                <%# Category badge + status badge %>
-                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                  <span class="resource-card-category resource-badge-<%= item.category %>">
-                    <i class="fa-solid <%= item.category == "award" ? "fa-trophy" : "fa-hand-holding-dollar" %> me-1"></i>
-                    <%= item.category.capitalize %>
-                  </span>
+                <%# Category badge %>
+                <span class="resource-card-category resource-badge-<%= item.category %>">
+                  <i class="fa-solid <%= item.category == "award" ? "fa-trophy" : "fa-hand-holding-dollar" %> me-1"></i>
+                  <%= item.category.capitalize %>
+                </span>
+
+                <%# Status badge %>
+                <div class="mb-2">
                   <span class="badge rounded-pill blog-status-<%= item.status %>">
                     <%= item.status.capitalize %>
                   </span>
