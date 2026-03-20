@@ -151,7 +151,7 @@
         <% else %>
           <p class="text-muted mb-3">No posts published yet.</p>
           <% if user_signed_in? %>
-            <%= link_to "Write your first post", new_blog_post_path, class: "btn btn-primary" %>
+            <%= link_to "Write your first post", new_blog_post_path, class: "btn btn-resource-add" %>
           <% end %>
         <% end %>
       </div>

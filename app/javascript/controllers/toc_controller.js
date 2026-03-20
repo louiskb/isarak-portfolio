@@ -16,7 +16,7 @@ export default class extends Controller {
   }
 
   _build() {
-    const headings = this.contentTarget.querySelectorAll("h2, h3")
+    const headings = this.contentTarget.querySelectorAll("h1, h2, h3")
     if (headings.length < 2) return
 
     // Assign stable IDs to any headings that don't already have one
@@ -31,7 +31,7 @@ export default class extends Controller {
         const a = document.createElement("a")
         a.href = `#${heading.id}`
         a.textContent = heading.textContent
-        a.className = heading.tagName === "H3" ? "toc-link toc-link-sub" : "toc-link"
+        a.className = heading.tagName === "H3" ? "toc-link toc-link-sub" : "toc-link toc-link-top"
         li.appendChild(a)
         listEl.appendChild(li)
       })
@@ -53,7 +53,7 @@ export default class extends Controller {
     )
 
     const track = () => {
-      const headings = Array.from(this.contentTarget.querySelectorAll("h2, h3"))
+      const headings = Array.from(this.contentTarget.querySelectorAll("h1, h2, h3"))
       const scrollY = window.scrollY + navbarOffset + 60
 
       let active = null
