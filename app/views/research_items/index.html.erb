@@ -42,18 +42,32 @@
                 <img src="<%= img_src %>" class="resource-card-img" alt="<%= item.title %>">
               <% end %>
               <div class="card-body">
-                <%# Category badge %>
-                <span class="resource-card-category resource-badge-<%= item.category %>">
-                  <%= ResearchItem::CATEGORY_LABELS[item.category] %>
-                </span>
+                <%# Category badge + status badge (Isara only) %>
+                <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
+                  <span class="resource-card-category resource-badge-<%= item.category %>">
+                    <%= ResearchItem::CATEGORY_LABELS[item.category] %>
+                  </span>
+                  <% if user_signed_in? %>
+                    <span class="badge rounded-pill blog-status-<%= item.status %>">
+                      <%= item.status.capitalize %>
+                    </span>
+                  <% end %>
+                </div>
 
-                <h2 class="resource-card-title"><%= item.title %></h2>
+                <h2 class="resource-card-title">
+                  <%= link_to item.title, research_item_path(item), class: "resource-card-title-link" %>
+                </h2>
 
-                <% if item.published_at.present? %>
+                <% if item.published_at.present? || (user_signed_in? && item.scheduled? && item.scheduled_at) %>
                   <p class="resource-card-meta">
-                    <i class="fa-regular fa-calendar me-1"></i>
-                    <%= item.published_at.strftime("%B %Y") %>
+                    <% if item.published_at.present? %>
+                      <i class="fa-regular fa-calendar me-1"></i>
+                      <%= item.published_at.strftime("%B %Y") %>
+                    <% end %>
                     <% if item.featured? %>&nbsp;<i class="fa-solid fa-star ms-1" title="Featured"></i><% end %>
+                    <% if user_signed_in? && item.scheduled? && item.scheduled_at %>
+                      &nbsp;· Scheduled <%= item.scheduled_at.strftime("%-d %b %Y at %H:%M") %>
+                    <% end %>
                   </p>
                 <% end %>
 
@@ -62,13 +76,9 @@
                 <% end %>
 
                 <div class="resource-card-footer">
+                  <%= link_to "View →", research_item_path(item), class: "btn btn-resource-link btn-sm" %>
                   <% if user_signed_in? %>
-                    <div class="d-flex justify-content-between align-items-center w-100">
-                      <%= link_to "Learn more →", item.external_url, class: "btn btn-resource-link btn-sm", target: "_blank", rel: "noopener noreferrer" %>
-                      <%= link_to "Manage →", research_item_path(item), class: "btn btn-resource-manage btn-sm" %>
-                    </div>
-                  <% elsif item.external_url.present? %>
-                    <%= link_to "Learn more →", item.external_url, class: "btn btn-resource-link btn-sm", target: "_blank", rel: "noopener noreferrer" %>
+                    <%= link_to "Manage →", research_item_path(item), class: "btn btn-resource-manage btn-sm ms-auto" %>
                   <% end %>
                 </div>
               </div>

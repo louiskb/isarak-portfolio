@@ -1,11 +1,12 @@
 class ResearchItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  before_action :set_research_item, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: %i[ index show ]
+  before_action :set_research_item, only: %i[ show edit update destroy publish schedule cancel_schedule ]
 
-  # GET /research_items or /research_items.json
-  # Public — visitors see all items with external links; Isara gets a Manage button
+  # GET /research_items
+  # Public — visitors see published items; Isara sees all with status badges + Manage button
   def index
-    @pagy, @research_items = pagy(ResearchItem.order(:position, :created_at))
+    scope = user_signed_in? ? ResearchItem.all : ResearchItem.published
+    @pagy, @research_items = pagy(scope.order(:position, :created_at))
   end
 
   def reorder
@@ -15,7 +16,8 @@ class ResearchItemsController < ApplicationController
     head :ok
   end
 
-  # GET /research_items/1 or /research_items/1.json
+  # GET /research_items/1
+  # Public show page — visitors and Isara both see this
   def show
   end
 
@@ -28,13 +30,19 @@ class ResearchItemsController < ApplicationController
   def edit
   end
 
-  # POST /research_items or /research_items.json
+  # POST /research_items
   def create
-    @research_item = current_user.research_items.new(research_item_params)
+    status, scheduled_at = resolve_publish_intent(
+      params.dig(:research_item, :status),
+      params.dig(:research_item, :scheduled_at)
+    )
+    @research_item = current_user.research_items.new(
+      research_item_params.merge(status: status, scheduled_at: scheduled_at)
+    )
 
     respond_to do |format|
       if @research_item.save
-        format.html { redirect_to @research_item, notice: "Research item was successfully created." }
+        format.html { redirect_to @research_item, notice: publish_notice(status, scheduled_at, action: :created) }
         format.json { render :show, status: :created, location: @research_item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,11 +51,16 @@ class ResearchItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /research_items/1 or /research_items/1.json
+  # PATCH/PUT /research_items/1
   def update
+    status, scheduled_at = resolve_publish_intent(
+      params.dig(:research_item, :status),
+      params.dig(:research_item, :scheduled_at)
+    )
+
     respond_to do |format|
-      if @research_item.update(research_item_params)
-        format.html { redirect_to @research_item, notice: "Research item was successfully updated.", status: :see_other }
+      if @research_item.update(research_item_params.merge(status: status, scheduled_at: scheduled_at))
+        format.html { redirect_to @research_item, notice: publish_notice(status, scheduled_at, action: :updated), status: :see_other }
         format.json { render :show, status: :ok, location: @research_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +69,7 @@ class ResearchItemsController < ApplicationController
     end
   end
 
-  # DELETE /research_items/1 or /research_items/1.json
+  # DELETE /research_items/1
   def destroy
     @research_item.destroy!
 
@@ -66,14 +79,67 @@ class ResearchItemsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_research_item
-      @research_item = ResearchItem.friendly.find(params[:id])
+  # PATCH /research_items/:id/publish
+  def publish
+    @research_item.published!
+    redirect_to @research_item, notice: "Research item published successfully."
+  end
+
+  # PATCH /research_items/:id/schedule
+  def schedule
+    scheduled_at = params[:scheduled_at]
+
+    if scheduled_at.blank?
+      redirect_to @research_item, alert: "Please choose a date and time to schedule."
+      return
     end
 
-    # Only allow a list of trusted parameters through.
-    def research_item_params
-      params.expect(research_item: [ :title, :category, :description, :external_url, :image_url, :image, :featured, :published_at, :slug ])
+    parsed_time = Time.zone.parse(scheduled_at)
+
+    if parsed_time.nil? || parsed_time <= Time.current
+      redirect_to @research_item, alert: "Scheduled time must be in the future."
+      return
     end
+
+    @research_item.update!(status: :scheduled, scheduled_at: parsed_time)
+    redirect_to @research_item, notice: "Research item scheduled for #{parsed_time.strftime("%d %b %Y at %H:%M")}."
+  end
+
+  # PATCH /research_items/:id/cancel_schedule
+  def cancel_schedule
+    @research_item.update!(status: :draft, scheduled_at: nil)
+    redirect_to @research_item, notice: "Schedule cancelled. Reverted to draft."
+  end
+
+  private
+
+  def set_research_item
+    @research_item = ResearchItem.friendly.find(params[:id])
+  end
+
+  def research_item_params
+    params.expect(research_item: [ :title, :category, :description, :external_url, :image_url, :image, :featured, :slug ])
+  end
+
+  def resolve_publish_intent(raw_status, raw_scheduled_at)
+    status = (raw_status.presence || "draft").to_sym
+
+    if status == :scheduled
+      parsed = raw_scheduled_at.present? ? Time.zone.parse(raw_scheduled_at.to_s) : nil
+      return [ :draft, nil ] if parsed.nil? || parsed <= Time.current
+      return [ :scheduled, parsed ]
+    end
+
+    [ status, nil ]
+  end
+
+  def publish_notice(status, scheduled_at, action:)
+    base = action == :created ? "Research item saved" : "Research item updated"
+
+    case status
+    when :published then "#{base} and published."
+    when :scheduled then "#{base} and scheduled for #{scheduled_at.strftime("%d %b %Y at %H:%M")}."
+    else                 "#{base} as draft."
+    end
+  end
 end

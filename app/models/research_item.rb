@@ -16,9 +16,13 @@ class ResearchItem < ApplicationRecord
   }.freeze
 
   enum :category, CATEGORY_LABELS.keys.index_with { |k| k }
+  enum :status, { draft: 0, scheduled: 1, published: 2 }
 
   belongs_to :user
   has_one_attached :image
+
+  scope :published, -> { where(status: :published) }
+  scope :visible_to_visitors, -> { published }
 
   validates :title, presence: true
   validates :category, presence: true

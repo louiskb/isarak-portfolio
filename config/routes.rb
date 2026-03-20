@@ -18,12 +18,22 @@ Rails.application.routes.draw do
   end
   resources :teachings do
     collection { patch :reorder }
+    member do
+      patch "publish"
+      patch "schedule"
+      patch "cancel_schedule"
+    end
   end
   resources :grant_awards do
     collection { patch :reorder }
   end
   resources :research_items do
     collection { patch :reorder }
+    member do
+      patch "publish"
+      patch "schedule"
+      patch "cancel_schedule"
+    end
   end
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
   devise_for :users

@@ -16,7 +16,29 @@
 
         <article>
           <div class="resource-detail-header">
+            <% if user_signed_in? %>
+              <div class="mb-2">
+                <span class="badge rounded-pill blog-status-<%= @teaching.status %>">
+                  <%= @teaching.status.capitalize %>
+                </span>
+              </div>
+            <% end %>
+
             <h1 class="resource-detail-title"><%= @teaching.title %></h1>
+
+            <%# Scheduled indicator (admin only) %>
+            <% if @teaching.scheduled? && user_signed_in? %>
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <small class="resource-detail-meta">
+                  <i class="fa-regular fa-clock me-1"></i>
+                  Scheduled for <%= @teaching.scheduled_at.strftime("%d %b %Y at %H:%M") %> (<%= Time.current.zone %>)
+                </small>
+                <button type="button" class="btn btn-resource-edit btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#editScheduleModal">
+                  Edit schedule
+                </button>
+              </div>
+            <% end %>
 
             <div class="resource-detail-meta">
               <% if @teaching.institution.present? %>
@@ -64,11 +86,126 @@
 
         <% if user_signed_in? %>
           <div class="resource-detail-actions">
-            <%= link_to "Edit", edit_teaching_path(@teaching), class: "btn btn-resource-edit rounded-4" %>
+
+            <%# Status actions %>
+            <% if @teaching.draft? %>
+              <%= button_to "Publish now",
+                    publish_teaching_path(@teaching),
+                    method: :patch,
+                    data: { turbo_confirm: "Publish this teaching entry? It will be visible to everyone immediately." },
+                    class: "btn btn-blog-publish btn-sm" %>
+              <button type="button" class="btn btn-blog-schedule btn-sm"
+                      data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                Schedule
+              </button>
+            <% end %>
+
+            <% if @teaching.scheduled? %>
+              <button type="button" class="btn btn-blog-publish btn-sm"
+                      data-bs-toggle="modal" data-bs-target="#publishNowModal">
+                Publish now
+              </button>
+            <% end %>
+
+            <% if @teaching.draft? || @teaching.scheduled? %>
+              <span class="blog-show-actions-divider"></span>
+            <% end %>
+
+            <%= link_to "Edit", edit_teaching_path(@teaching), class: "btn btn-resource-edit btn-sm" %>
             <%= button_to "Delete", @teaching,
                   method: :delete,
-                  class: "btn btn-resource-delete rounded-4",
+                  class: "btn btn-resource-delete btn-sm",
                   data: { turbo_confirm: "Delete \"#{@teaching.title}\"? This cannot be undone." } %>
+          </div>
+        <% end %>
+
+        <%# Schedule modal (draft only) %>
+        <% if user_signed_in? && @teaching.draft? %>
+          <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="scheduleModalLabel">Schedule teaching entry</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <%= form_with url: schedule_teaching_path(@teaching), method: :patch do |f| %>
+                  <div class="modal-body">
+                    <p class="text-muted mb-3">Choose when this entry will be published.</p>
+                    <div class="mb-3">
+                      <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
+                      <%= f.datetime_local_field :scheduled_at,
+                            class: "form-control",
+                            min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+                            required: true %>
+                      <div class="form-text"><i class="fa-solid fa-clock me-1"></i>Times are in <strong><%= Time.current.zone %></strong> (Sydney).</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                    <%= f.submit "Schedule", class: "btn btn-blog-publish" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <%# Publish now + edit schedule modals (scheduled only) %>
+        <% if user_signed_in? && @teaching.scheduled? %>
+          <div class="modal fade" id="publishNowModal" tabindex="-1" aria-labelledby="publishNowModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="publishNowModalLabel">Publish now?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Scheduled for <strong><%= @teaching.scheduled_at.strftime("%d %b %Y at %H:%M") %></strong>.</p>
+                  <p class="mb-0">Publishing now will <strong>cancel that schedule</strong> and make this entry live immediately.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Keep schedule</button>
+                  <%= form_with url: publish_teaching_path(@teaching), method: :patch do |f| %>
+                    <%= f.submit "Publish now", class: "btn btn-blog-publish" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="editScheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editScheduleModalLabel">Edit schedule</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <%= form_with url: schedule_teaching_path(@teaching), method: :patch, id: "edit-schedule-form" do |f| %>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <%= f.label :scheduled_at, "Publish at", class: "form-label fw-semibold" %>
+                      <%= f.datetime_local_field :scheduled_at,
+                            class: "form-control",
+                            value: @teaching.scheduled_at.strftime("%Y-%m-%dT%H:%M"),
+                            min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+                            required: true %>
+                      <div class="form-text"><i class="fa-solid fa-clock me-1"></i>Times are in <strong><%= Time.current.zone %></strong> (Sydney).</div>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="modal-footer d-flex justify-content-between align-items-center">
+                  <%= button_to "Revert to draft",
+                        cancel_schedule_teaching_path(@teaching),
+                        method: :patch,
+                        class: "btn btn-resource-edit",
+                        form: { class: "m-0" } %>
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-resource-edit" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="edit-schedule-form" class="btn btn-blog-publish">Update schedule</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         <% end %>
 
