@@ -46,5 +46,3 @@
 # Claude Code local settings (may contain API keys)
 .claude/settings.local.json
 
-# Ignore sitemap.xml as it gets regenerated on deploy.
-public/sitemap.xml
