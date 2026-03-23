@@ -1,5 +1,29 @@
 <% content_for :title, "#{@research_item.title} — Research" %>
 
+<% content_for :meta_tags do %>
+  <%
+    og_description = truncate(@research_item.description.to_s, length: 160, omission: "…")
+    og_image = if @research_item.image.attached?
+                 url_for(@research_item.image)
+               elsif @research_item.image_url.present?
+                 @research_item.image_url
+               else
+                 image_url("ik-logo-tp.png")
+               end
+  %>
+  <meta property="og:site_name" content="Dr Isara Khanjanasthiti">
+  <meta property="og:title" content="<%= @research_item.title %> — Research">
+  <meta property="og:description" content="<%= og_description %>">
+  <meta property="og:url" content="<%= research_item_url(@research_item) %>">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="<%= og_image %>">
+  <meta property="article:author" content="Isara Khanjanasthiti">
+  <meta name="twitter:card" content="<%= @research_item.image.attached? || @research_item.image_url.present? ? "summary_large_image" : "summary" %>">
+  <meta name="twitter:title" content="<%= @research_item.title %> — Research">
+  <meta name="twitter:description" content="<%= og_description %>">
+  <meta name="twitter:image" content="<%= og_image %>">
+<% end %>
+
 <div class="resource-detail">
   <div class="container">
     <div class="row justify-content-center">
@@ -57,7 +81,7 @@
               <% if @research_item.external_url.present? %>
                 <span>
                   <i class="fa-solid fa-link me-1"></i>
-                  <%= link_to "View full paper", @research_item.external_url, target: "_blank", rel: "noopener noreferrer" %>
+                  <%= link_to "More Information", @research_item.external_url, target: "_blank", rel: "noopener noreferrer" %>
                 </span>
               <% end %>
             </div>

@@ -57,6 +57,11 @@
       </div>
     <% end %>
 
+    <%= f.input :external_url,
+          label: "External link (optional)",
+          placeholder: "https://example.com/course-page",
+          hint: "A link to more information — e.g. a course page or unit guide. Shown as \"More Information\" on the public page." %>
+
     <%= f.input :featured,
           label: "Featured item",
           hint: "Featured items appear in the Teaching section on the homepage — max 3 shown, most recently updated first. Drag order applies on the Teaching index page only." %>

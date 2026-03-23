@@ -60,6 +60,7 @@ erDiagram
         text description
         string institution
         string year
+        string external_url
         string image_url
         boolean featured
         int status
@@ -198,6 +199,8 @@ erDiagram
 - `Teaching.featured` — flags teachings for display on the homepage Teaching spotlight (max 3, ordered by `updated_at: :desc`)
 - `ResearchItem.featured` — flags items for homepage Research section (max 4, ordered by `updated_at: :desc`)
 - `position` (int) — on Teaching, ResearchItem, GrantAward; controls drag-and-drop display order on index pages only (does not affect homepage for Teaching/Research)
+- `Teaching.external_url` — optional string; shown as a "More Information" link on the public show page; input in the edit form
+- `ResearchItem.external_url` — optional string; shown as a "More Information" link on the public show page (was "View full paper" — renamed for consistency)
 - `User.cv` — Active Storage `has_one_attached`; stored in Cloudinary via Active Storage
 - `User.name` — display name (e.g. "Dr Isara Khanjanasthiti")
 - `User.slug` — FriendlyId slug (based on email); used for readable URLs

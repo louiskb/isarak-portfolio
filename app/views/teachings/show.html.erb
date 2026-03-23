@@ -1,5 +1,29 @@
 <% content_for :title, "#{@teaching.title} — Teaching" %>
 
+<% content_for :meta_tags do %>
+  <%
+    og_description = truncate(@teaching.description.to_s, length: 160, omission: "…")
+    og_image = if @teaching.image.attached?
+                 url_for(@teaching.image)
+               elsif @teaching.image_url.present?
+                 @teaching.image_url
+               else
+                 image_url("ik-logo-tp.png")
+               end
+  %>
+  <meta property="og:site_name" content="Dr Isara Khanjanasthiti">
+  <meta property="og:title" content="<%= @teaching.title %> — Teaching">
+  <meta property="og:description" content="<%= og_description %>">
+  <meta property="og:url" content="<%= teaching_url(@teaching) %>">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="<%= og_image %>">
+  <meta property="article:author" content="Isara Khanjanasthiti">
+  <meta name="twitter:card" content="<%= @teaching.image.attached? || @teaching.image_url.present? ? "summary_large_image" : "summary" %>">
+  <meta name="twitter:title" content="<%= @teaching.title %> — Teaching">
+  <meta name="twitter:description" content="<%= og_description %>">
+  <meta name="twitter:image" content="<%= og_image %>">
+<% end %>
+
 <div class="resource-detail">
   <div class="container">
     <div class="row justify-content-center">
@@ -54,6 +78,12 @@
               <% if @teaching.featured? %>
                 <span class="resource-featured-badge">
                   <i class="fa-solid fa-star me-1"></i>Featured
+                </span>
+              <% end %>
+              <% if @teaching.external_url.present? %>
+                <span>
+                  <i class="fa-solid fa-link me-1"></i>
+                  <%= link_to "More Information", @teaching.external_url, target: "_blank", rel: "noopener noreferrer" %>
                 </span>
               <% end %>
             </div>

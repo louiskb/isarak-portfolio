@@ -13,8 +13,8 @@
 - [x] Set `APP_HOST` and `SMTP_PASSWORD` in `.env` for production mailer
 
 ### SEO & Social Sharing
-- [ ] **Open Graph meta tags** — add `og:title`, `og:description`, `og:image`, `og:url` to blog show pages; required for proper link previews when sharing on LinkedIn, X, iMessage etc. (the copy link button is only as good as the preview it generates)
-- [ ] **Sitemap.xml** — auto-generated from published blog posts + research items; helps Google index the site; use `sitemap_generator` gem or a custom rake task
+- [x] **Open Graph meta tags** — `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `article:author`, `twitter:card` added to blog, research, and teaching show pages; fallback defaults in application layout for all other pages ✅ (2026-03-24)
+- [x] **Sitemap.xml** — `sitemap_generator` gem; `config/sitemap.rb` covers homepage, blog index, research index, teaching index, and all published records; `robots.txt` updated with Sitemap pointer ✅ (2026-03-24)
 
 ### CV Page-1 Preview
 - [ ] Use Cloudinary's PDF-to-image transformation (`/pg_1/`) to show a thumbnail of Isara's CV on the landing page About section; "Download CV" link below it
@@ -32,12 +32,10 @@
 
 ### Animations & Polish
 - [ ] **Scroll-triggered animations** — AOS (Animate On Scroll) or CSS `@keyframes` with `IntersectionObserver`; trigger fade-up on below-fold sections (About, Research, Teaching, Awards, Blog, Contact)
-- [ ] **Micro-interactions** — hover lift on research/blog cards, subtle scale on social icons
-- [ ] **SVG favicon** — replace `public/icon.svg` with a proper SVG of the IK pug logo for crisp rendering at all sizes (currently uses a rasterised PNG fallback)
 
 ### Research & Downloads
 - [ ] **Research PDF downloads** — allow Isara to attach a PDF to each ResearchItem (the paper itself); show a "Download PDF" button on research cards for open-access papers
-- [ ] **Teaching image uploads** — `has_one_attached :image` on Teaching model (currently uses `image_url` string only); consistent with how other models handle images
+- [x] **Teaching image uploads** — `has_one_attached :image` on Teaching model (currently uses `image_url` string only); consistent with how other models handle images
 
 ---
 

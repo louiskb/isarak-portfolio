@@ -8,6 +8,21 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="google-site-verification" content="_HxXeRLj1BEMXpYPiLGUQDtNO37UMG3CK2ZLQCoClVo">
+
+    <%# Open Graph / social sharing meta tags — overridden per-page via content_for :meta_tags %>
+    <% unless content_for?(:meta_tags) %>
+      <meta property="og:site_name" content="Dr Isara Khanjanasthiti">
+      <meta property="og:title" content="Dr Isara Khanjanasthiti — Urban Planner, Educator, Researcher">
+      <meta property="og:description" content="Urban Planner, Educator, Researcher in Aviation, Housing and Teaching &amp; Learning. University of New England, Sydney campus.">
+      <meta property="og:url" content="<%= request.url %>">
+      <meta property="og:type" content="website">
+      <meta property="og:image" content="<%= image_url("ik-logo-tp.png") %>">
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:title" content="Dr Isara Khanjanasthiti — Urban Planner, Educator, Researcher">
+      <meta name="twitter:description" content="Urban Planner, Educator, Researcher in Aviation, Housing and Teaching &amp; Learning. University of New England, Sydney campus.">
+    <% end %>
+    <%= yield :meta_tags %>
 
     <%= yield :head %>
 

@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-21 (session 22: IK logo + favicon, card border radius, navbar padding + mobile pill, session 21: Teaching/Research/GrantAward status system)
+> Created: 2026-03-08 | Last updated: 2026-03-24 (session 23: teaching external_url, Open Graph meta tags, sitemap.xml, Google Search Console verification)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -55,6 +55,8 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
 - [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented; session 14: position columns, category string changes, featured removed from grant_awards
 - [x] Teaching `year` field — changed from integer to string column; allows "2023–Present" style ranges ✅ (2026-03-17)
+- [x] Teaching `external_url` field — string column; shown as "More Information" link on public show page; field in edit form ✅ (2026-03-24)
+- [x] Research `external_url` show page link — renamed from "View full paper" to "More Information" for consistency ✅ (2026-03-24)
 - [x] Teaching + Research status system — `status` enum (draft/scheduled/published, default draft) + `scheduled_at` on both models; public show pages added; `publish/schedule/cancel_schedule` member actions; split-button forms; `resolve_publish_intent` helper; `PublishScheduledPostsJob` extended ✅ (2026-03-20, session 21)
 - [x] Teaching + Research index — status badge (Isara only), scheduled datetime shown to Isara, cards link to show page, `.resource-card-title-link` CSS ✅ (2026-03-20, session 21)
 - [x] Teaching + Research show — status badge below h1, scheduled indicator + Edit schedule button, Publish now / Schedule / Cancel Schedule modals matching blog post pattern ✅ (2026-03-20, session 21)
@@ -205,6 +207,9 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Ruby version pinned — `ruby "3.3.10"` in Gemfile + `.ruby-version` ✅ (2026-03-18)
 - [x] Node version pinned — `package.json` `engines.node: "22.x"` ✅ (2026-03-18)
 - [x] Active Storage variant processor disabled — `config.active_storage.variant_processor = :disabled`; silences image_processing warning on deploy ✅ (2026-03-18)
+- [x] Open Graph meta tags — `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `article:author`, `twitter:card` on blog/research/teaching show pages; fallback defaults in application layout for all other pages ✅ (2026-03-24)
+- [x] Sitemap.xml — `sitemap_generator` gem; `config/sitemap.rb` covers all published blog posts, research items, teachings + index/static pages; `robots.txt` updated; `APP_HOST` scheme guard added; run `rails sitemap:refresh` after deploy ✅ (2026-03-24)
+- [x] Google Search Console — verification meta tag in application layout; submit `https://isarak.me/sitemap.xml` after deploy ✅ (2026-03-24)
 
 ---
 
