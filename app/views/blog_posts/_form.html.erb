@@ -7,12 +7,19 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :blog_excerpt,
-          label: "Excerpt",
-          hint: "A 1–2 sentence preview shown on the Blog page.",
-          as: :text,
-          input_html: { rows: 3 } %>
+    <div data-controller="char-counter" data-char-counter-limit-value="80">
+      <%= f.input :title,
+            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
+      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
+    </div>
+    <div data-controller="char-counter" data-char-counter-limit-value="150">
+      <%= f.input :blog_excerpt,
+            label: "Excerpt",
+            hint: "A 1–2 sentence preview shown on blog cards. Truncated to 2 lines on the homepage.",
+            as: :text,
+            input_html: { rows: 3, data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
+      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
+    </div>
     <%= f.input :featured,
           label: "Featured post",
           hint: "Featured posts appear in the Blog section on the homepage — max 3 shown, most recently updated first. If more than 3 are featured, the most recently edited posts take priority. On the Blog page, all posts are ordered newest first." %>
