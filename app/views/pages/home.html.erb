@@ -292,11 +292,8 @@
                 <% if item.published_at.present? %>
                   <p class="research-grid-card-date"><%= item.published_at.strftime("%B %Y") %></p>
                 <% end %>
-                <% if item.external_url.present? %>
-                  <%= link_to item.external_url, class: "research-grid-card-arrow",
-                        target: "_blank", rel: "noopener noreferrer" do %>
-                    <i class="fa-solid fa-arrow-right"></i>
-                  <% end %>
+                <%= link_to research_item_path(item), class: "research-grid-card-arrow" do %>
+                  <i class="fa-solid fa-arrow-right"></i>
                 <% end %>
               </div>
             </article>
