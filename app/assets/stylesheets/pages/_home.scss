@@ -622,6 +622,10 @@
   color: $font-muted;
   line-height: 1.7;
   margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
 }
 
 .teaching-spotlight-card-footer {
