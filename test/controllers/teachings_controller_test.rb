@@ -2,6 +2,7 @@ require "test_helper"
 
 class TeachingsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:isara)
     @teaching = teachings(:one)
   end
 
@@ -17,7 +18,7 @@ class TeachingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create teaching" do
     assert_difference("Teaching.count") do
-      post teachings_url, params: { teaching: { description: @teaching.description, image_url: @teaching.image_url, institution: @teaching.institution, slug: @teaching.slug, title: @teaching.title, year: @teaching.year } }
+      post teachings_url, params: { teaching: { title: "New Teaching", slug: "new-teaching", institution: "UNE", year: "2025" } }
     end
 
     assert_redirected_to teaching_url(Teaching.last)
@@ -34,7 +35,7 @@ class TeachingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update teaching" do
-    patch teaching_url(@teaching), params: { teaching: { description: @teaching.description, image_url: @teaching.image_url, institution: @teaching.institution, slug: @teaching.slug, title: @teaching.title, year: @teaching.year } }
+    patch teaching_url(@teaching), params: { teaching: { title: "Updated Title" } }
     assert_redirected_to teaching_url(@teaching)
   end
 

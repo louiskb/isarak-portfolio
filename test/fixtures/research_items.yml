@@ -1,0 +1,13 @@
+one:
+  title: "Test Research Item"
+  slug: "test-research-item"
+  category: "journal_article"
+  status: 2
+  user: isara
+
+two:
+  title: "Another Research Item"
+  slug: "another-research-item"
+  category: "conference_paper"
+  status: 0
+  user: isara

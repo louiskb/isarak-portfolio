@@ -1,0 +1,13 @@
+one:
+  title: "Test Blog Post"
+  slug: "test-blog-post"
+  status: 2
+  author: "Isara Khanjanasthiti"
+  user: isara
+
+two:
+  title: "Another Blog Post"
+  slug: "another-blog-post"
+  status: 0
+  author: "Isara Khanjanasthiti"
+  user: isara

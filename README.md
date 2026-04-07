@@ -37,6 +37,7 @@ Built with Ruby on Rails 8 as client work by [Louis Bourne](https://github.com/l
 | Background Jobs | Solid Queue |
 | Frontend | Hotwire (Turbo + Stimulus) |
 | Spam Protection | invisible_captcha |
+| Analytics | PostHog (cookieless, visitor-only) |
 | Images | Unsplash API (AI-generated posts) |
 
 ## Local Setup
@@ -93,6 +94,10 @@ SMTP_PASSWORD=your-app-specific-password
 
 # App host (used in email links)
 APP_HOST=localhost:3000
+
+# PostHog analytics (cookieless, visitor-only)
+POSTHOG_PROJECT_TOKEN=phc_...
+POSTHOG_HOST=https://us.i.posthog.com
 ```
 
 > **Note:** `CLOUDINARY_URL` must not have an inline comment on the same line — dotenv will include it in the value and break the URI parser.
@@ -123,6 +128,7 @@ bundle exec rubocop -a        # Auto-fix linting
 - `bin/dev` uses `Procfile.dev` to run both the Rails server and the Solid Queue worker — both are needed for scheduling to work
 - AI blog generation uses `ruby_llm` with structured output; inline images use Unsplash placeholders injected at generation time
 - The contact form sends an admin notification to Isara and a confirmation email to the sender
+- PostHog runs in **cookieless mode** — no cookies, no localStorage, no cross-session tracking. Analytics JS only loads for visitors (not the admin). No cookie consent banner needed
 
 ---
 

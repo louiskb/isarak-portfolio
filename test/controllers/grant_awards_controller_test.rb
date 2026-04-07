@@ -2,6 +2,7 @@ require "test_helper"
 
 class GrantAwardsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:isara)
     @grant_award = grant_awards(:one)
   end
 
@@ -17,7 +18,7 @@ class GrantAwardsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create grant_award" do
     assert_difference("GrantAward.count") do
-      post grant_awards_url, params: { grant_award: { awarding_body: @grant_award.awarding_body, category: @grant_award.category, description: @grant_award.description, slug: @grant_award.slug, title: @grant_award.title, year: @grant_award.year } }
+      post grant_awards_url, params: { grant_award: { title: "New Award", slug: "new-award", category: "award", awarding_body: "UNE", year: 2025 } }
     end
 
     assert_redirected_to grant_award_url(GrantAward.last)
@@ -34,7 +35,7 @@ class GrantAwardsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update grant_award" do
-    patch grant_award_url(@grant_award), params: { grant_award: { awarding_body: @grant_award.awarding_body, category: @grant_award.category, description: @grant_award.description, slug: @grant_award.slug, title: @grant_award.title, year: @grant_award.year } }
+    patch grant_award_url(@grant_award), params: { grant_award: { title: "Updated Title" } }
     assert_redirected_to grant_award_url(@grant_award)
   end
 

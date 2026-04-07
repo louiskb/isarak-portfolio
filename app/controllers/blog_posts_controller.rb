@@ -27,6 +27,19 @@ class BlogPostsController < ApplicationController
       ? BlogPost.published.joins(:tags).where(tags: { id: tag_ids }).distinct
       : BlogPost.published
     @related_posts = scope.where.not(id: @blog_post.id).order(created_at: :desc).limit(3)
+
+    unless user_signed_in?
+      PostHog.capture(
+        distinct_id: "anonymous",
+        event: "blog_post_viewed",
+        properties: {
+          title: @blog_post.title,
+          slug: @blog_post.slug,
+          tags: @blog_post.tags.pluck(:name),
+          ai_generated: @blog_post.ai_generated?
+        }
+      )
+    end
   end
 
   # GET /blog_posts/new

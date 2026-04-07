@@ -9,6 +9,14 @@ export default class extends Controller {
       setTimeout(() => {
         this.iconTarget.className = "fa-solid fa-link"
       }, 2000)
+
+      // PostHog: track link copy
+      if (typeof window.posthog !== "undefined" && window.posthog.capture) {
+        window.posthog.capture("blog_link_copied", {
+          slug: window.location.pathname,
+          title: document.querySelector(".blog-show-title")?.textContent?.trim() || ""
+        })
+      }
     })
   }
 }

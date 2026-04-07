@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-03-24 (session 23: teaching external_url, Open Graph meta tags, sitemap.xml, Google Search Console verification)
+> Created: 2026-03-08 | Last updated: 2026-04-07 (session 25: PostHog cookieless analytics, test fixtures, privacy policy)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation audit complete. Next: About section + working down the portfolio page sections. Real content from Isara needed.
+Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
 
 ---
 
@@ -210,6 +210,14 @@ Phase 4 complete ✅ — Landing page live with animations. Mobile optimisation 
 - [x] Open Graph meta tags — `og:title`, `og:description`, `og:image`, `og:url`, `og:type`, `article:author`, `twitter:card` on blog/research/teaching show pages; fallback defaults in application layout for all other pages ✅ (2026-03-24)
 - [x] Sitemap.xml — `sitemap_generator` gem; `config/sitemap.rb` covers all published blog posts, research items, teachings + index/static pages; `robots.txt` updated; `APP_HOST` scheme guard added; run `rails sitemap:refresh` after deploy ✅ (2026-03-24)
 - [x] Google Search Console — verification meta tag in application layout; submit `https://isarak.me/sitemap.xml` after deploy ✅ (2026-03-24)
+- [x] PostHog analytics — cookieless visitor tracking (`persistence: 'memory'`, no cookies, no cross-session tracking, no cookie banner needed) ✅ (2026-04-07)
+  - [x] Server-side events: `blog_post_viewed`, `research_item_viewed`, `teaching_viewed`, `contact_submitted`, `cv_downloaded`
+  - [x] Client-side events (Stimulus `analytics_controller.js`): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress` (25/50/75/100%), `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`
+  - [x] PostHog JS only loads for visitors (not admin) — `unless user_signed_in?` guard in layout
+  - [x] All admin-only events removed (no login, blog create/publish/AI tracking)
+  - [x] Privacy policy updated to describe cookieless PostHog analytics
+  - [x] ENV vars: `POSTHOG_PROJECT_TOKEN`, `POSTHOG_HOST`
+- [x] Test fixtures + Devise integration helpers — fixtures for all 4 resources + user; scaffold controller tests fixed (were broken since scaffolding — missing fixtures + no auth) ✅ (2026-04-07)
 
 ---
 

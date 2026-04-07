@@ -7,6 +7,13 @@ class PagesController < ApplicationController
     isara = User.first
     if isara&.cv&.attached?
       url = isara.cv.url.sub("/upload/", "/upload/fl_attachment:isara_khanjanasthiti_cv/")
+
+      # PostHog: track CV download
+      PostHog.capture(
+        distinct_id: "anonymous",
+        event: "cv_downloaded"
+      )
+
       redirect_to url, allow_other_host: true
     else
       redirect_to root_path, alert: "CV not available."

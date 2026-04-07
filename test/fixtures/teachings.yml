@@ -1,0 +1,15 @@
+one:
+  title: "Test Teaching"
+  slug: "test-teaching"
+  institution: "UNE"
+  year: "2024"
+  status: 2
+  user: isara
+
+two:
+  title: "Another Teaching"
+  slug: "another-teaching"
+  institution: "UNE"
+  year: "2023"
+  status: 0
+  user: isara

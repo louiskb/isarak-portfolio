@@ -1,0 +1,6 @@
+isara:
+  email: "isara@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
+  name: "Isara Khanjanasthiti"
+  slug: "isara-example-com"
+  confirmed_at: <%= Time.current %>

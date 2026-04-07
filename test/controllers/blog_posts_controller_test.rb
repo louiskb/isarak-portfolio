@@ -2,6 +2,7 @@ require "test_helper"
 
 class BlogPostsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:isara)
     @blog_post = blog_posts(:one)
   end
 
@@ -17,7 +18,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create blog_post" do
     assert_difference("BlogPost.count") do
-      post blog_posts_url, params: { blog_post: { ai_generated: @blog_post.ai_generated, author: @blog_post.author, scheduled_at: @blog_post.scheduled_at, slug: @blog_post.slug, status: @blog_post.status, title: @blog_post.title } }
+      post blog_posts_url, params: { blog_post: { title: "New Post", slug: "new-post", status: "draft" } }
     end
 
     assert_redirected_to blog_post_url(BlogPost.last)
@@ -34,7 +35,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update blog_post" do
-    patch blog_post_url(@blog_post), params: { blog_post: { ai_generated: @blog_post.ai_generated, author: @blog_post.author, scheduled_at: @blog_post.scheduled_at, slug: @blog_post.slug, status: @blog_post.status, title: @blog_post.title } }
+    patch blog_post_url(@blog_post), params: { blog_post: { title: "Updated Title" } }
     assert_redirected_to blog_post_url(@blog_post)
   end
 

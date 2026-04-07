@@ -1,0 +1,17 @@
+one:
+  title: "Test Grant Award"
+  slug: "test-grant-award"
+  category: 0
+  awarding_body: "UNE"
+  year: 2024
+  status: 2
+  user: isara
+
+two:
+  title: "Another Grant Award"
+  slug: "another-grant-award"
+  category: 1
+  awarding_body: "ARC"
+  year: 2023
+  status: 0
+  user: isara

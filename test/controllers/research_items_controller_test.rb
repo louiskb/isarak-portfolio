@@ -2,6 +2,7 @@ require "test_helper"
 
 class ResearchItemsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:isara)
     @research_item = research_items(:one)
   end
 
@@ -17,7 +18,7 @@ class ResearchItemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create research_item" do
     assert_difference("ResearchItem.count") do
-      post research_items_url, params: { research_item: { category: @research_item.category, description: @research_item.description, external_url: @research_item.external_url, featured: @research_item.featured, published_at: @research_item.published_at, slug: @research_item.slug, title: @research_item.title } }
+      post research_items_url, params: { research_item: { title: "New Item", slug: "new-item", category: "journal_article" } }
     end
 
     assert_redirected_to research_item_url(ResearchItem.last)
@@ -34,7 +35,7 @@ class ResearchItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update research_item" do
-    patch research_item_url(@research_item), params: { research_item: { category: @research_item.category, description: @research_item.description, external_url: @research_item.external_url, featured: @research_item.featured, published_at: @research_item.published_at, slug: @research_item.slug, title: @research_item.title } }
+    patch research_item_url(@research_item), params: { research_item: { title: "Updated Title" } }
     assert_redirected_to research_item_url(@research_item)
   end
 

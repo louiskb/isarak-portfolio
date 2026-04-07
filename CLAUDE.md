@@ -24,6 +24,7 @@ Louis's own portfolio (same structure, use as reference):
 - **Action Text** (Trix rich text editor for blog posts)
 - **Hotwire** (Turbo + Stimulus) for SPA-like interactions
 - **invisible_captcha** — honeypot spam protection on contact form
+- **PostHog** — cookieless visitor analytics (`posthog-ruby` + `posthog-rails` server-side, `posthog-js` client-side inline snippet; `persistence: 'memory'`, no cookies)
 - **Minitest** for testing (Rails default)
 
 ## Color Scheme (Dark Theme — GMK Delta Light)
@@ -52,8 +53,9 @@ bundle exec rubocop -a    # Auto-fix linting
 ```
 app/
   controllers/        # RESTful controllers + pages_controller (home)
+    users/            # Custom Devise sessions controller (empty override)
   javascript/
-    controllers/      # Stimulus controllers (load_button, html_inject, sortable, char_counter, etc.)
+    controllers/      # Stimulus controllers (analytics, load_button, html_inject, sortable, char_counter, etc.)
   models/             # BlogPost, Teaching, ResearchItem, GrantAward, Contact, Tag, User
   schemas/            # RubyLLM structured output schemas (blog_post_schema.rb)
   services/           # BlogPostAiService (AI generation + Unsplash)
@@ -71,6 +73,7 @@ vendor/javascript/    # Vendored ESM builds (sortablejs.js)
 - `app/assets/stylesheets/_colors.scss` — All theme color variables
 - `app/assets/stylesheets/_bootstrap_variables.scss` — Bootstrap overrides
 - `config/importmap.rb` — JavaScript pin configuration
+- `config/initializers/posthog.rb` — PostHog server-side config (auto-instrumentation, exception capture, ActiveJob)
 
 ## Environment Variables
 Required in `.env`:
@@ -81,6 +84,8 @@ Required in `.env`:
 - `MAILER_SENDER` — Email sender address
 - `SMTP_ADDRESS`, `SMTP_PORT`, `SMTP_DOMAIN`, `SMTP_USERNAME`, `SMTP_PASSWORD` — SMTP config
 - `APP_HOST` — Application host for mailer URLs
+- `POSTHOG_PROJECT_TOKEN` — PostHog project API key
+- `POSTHOG_HOST` — PostHog ingest endpoint (e.g. `https://us.i.posthog.com`)
 
 ## Conventions
 - Double quotes throughout (Ruby, ERB, JS, HTML attributes)
@@ -109,3 +114,8 @@ Required in `.env`:
 - Drag-and-drop reordering on index pages (SortableJS + `position` column)
 - Contact form uses Turbo disabled (`data-turbo="false"`) for reliable flash rendering
 - CV is an Active Storage attachment on User model (not its own model)
+- PostHog is **cookieless** (`persistence: 'memory'`) — no cookies, no localStorage, no cross-session tracking. JS snippet only loads for visitors (not admin). No cookie banner needed.
+- PostHog **server-side events** (controllers): `blog_post_viewed`, `research_item_viewed`, `teaching_viewed`, `contact_submitted`, `cv_downloaded`
+- PostHog **client-side events** (Stimulus): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress`, `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`
+- `analytics_controller.js` — generic Stimulus controller for declarative event tracking via `data-action` attributes
+- No admin events tracked (no login, no blog create/publish/AI events)

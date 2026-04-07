@@ -13,6 +13,13 @@ class ContactsController < ApplicationController
 
     if @contact.valid?
       persist_and_deliver_contact!
+
+      # PostHog: track successful contact form submission
+      PostHog.capture(
+        distinct_id: "anonymous",
+        event: "contact_submitted"
+      )
+
       redirect_to root_path(anchor: "contact"), notice: "Message sent! Check your email for confirmation."
     else
       render_contact_failure("Please correct the highlighted fields and try again.")

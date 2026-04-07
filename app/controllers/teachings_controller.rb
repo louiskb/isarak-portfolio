@@ -19,6 +19,17 @@ class TeachingsController < ApplicationController
   # GET /teachings/1
   # Public show page — visitors and Isara both see this
   def show
+    unless user_signed_in?
+      PostHog.capture(
+        distinct_id: "anonymous",
+        event: "teaching_viewed",
+        properties: {
+          title: @teaching.title,
+          slug: @teaching.slug,
+          institution: @teaching.institution
+        }
+      )
+    end
   end
 
   # GET /teachings/new

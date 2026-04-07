@@ -132,7 +132,10 @@
 
                 <%# Footer row: Read more + Manage button (Isara only) %>
                 <div class="blog-card-footer mt-auto">
-                  <%= link_to "Read more", post, class: "blog-card-read-more" %>
+                  <%= link_to "Read more", post, class: "blog-card-read-more",
+                        data: { controller: "analytics", action: "click->analytics#trackClick",
+                                analytics_event_value: "blog_card_clicked",
+                                analytics_properties_value: { title: post.title, location: "blog_index" }.to_json } %>
                   <% if user_signed_in? %>
                     <%= link_to "Manage →", post, class: "btn btn-resource-manage btn-sm ms-auto" %>
                   <% end %>

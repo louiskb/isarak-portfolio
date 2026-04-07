@@ -60,6 +60,10 @@ gem "ruby_llm"
 
 gem "invisible_captcha"
 
+# PostHog analytics
+gem "posthog-ruby"
+gem "posthog-rails"
+
 group :development, :test do
   gem "dotenv-rails"
   gem "faker"

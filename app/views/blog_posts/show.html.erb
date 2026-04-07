@@ -144,10 +144,13 @@
 
           <%# Tags %>
           <% if @blog_post.tags.any? %>
-            <div class="blog-show-tags">
+            <div class="blog-show-tags" data-controller="analytics">
               <% @blog_post.tags.order(:name).each do |tag| %>
                 <%= link_to blog_posts_path(tag_ids: [tag.id]),
-                      class: "blog-show-tag-pill" do %>
+                      class: "blog-show-tag-pill",
+                      data: { action: "click->analytics#trackClick",
+                              analytics_event_value: "blog_tag_clicked",
+                              analytics_properties_value: { tag_name: tag.name, from_post: @blog_post.title }.to_json } do %>
                   <%= tag.name %>
                 <% end %>
               <% end %>
@@ -192,7 +195,10 @@
                         <p class="blog-card-excerpt"><%= post.blog_excerpt %></p>
                       <% end %>
                       <div class="blog-card-footer mt-auto">
-                        <%= link_to "Read more", post, class: "blog-card-read-more" %>
+                        <%= link_to "Read more", post, class: "blog-card-read-more",
+                              data: { controller: "analytics", action: "click->analytics#trackClick",
+                                      analytics_event_value: "related_post_clicked",
+                                      analytics_properties_value: { title: post.title, from_post: @blog_post.title }.to_json } %>
                       </div>
                     </div>
                   </article>

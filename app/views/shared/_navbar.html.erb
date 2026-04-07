@@ -104,34 +104,34 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <%# Visitors: Service + Awards link to homepage anchor sections; Teaching + Research + Blog have separate pages %>
-        <ul class="navbar-nav mx-auto nav-links-pill align-items-center gap-1">
+        <ul class="navbar-nav mx-auto nav-links-pill align-items-center gap-1" data-controller="analytics">
           <li class="nav-item">
-            <%= link_to "Home", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil) %>
+            <%= link_to "Home", root_path, class: nav_link_class(root_path), "aria-current": (current_page?(root_path) ? "page" : nil), data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
-            <%= link_to "Teaching", teachings_path, class: nav_link_class(teachings_path) %>
+            <%= link_to "Teaching", teachings_path, class: nav_link_class(teachings_path), data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
-            <%= link_to "Research", research_items_path, class: nav_link_class(research_items_path) %>
+            <%= link_to "Research", research_items_path, class: nav_link_class(research_items_path), data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
-            <%= link_to "Service", root_path(anchor: "service"), class: "nav-link" %>
+            <%= link_to "Service", root_path(anchor: "service"), class: "nav-link", data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
-            <%= link_to "Awards", root_path(anchor: "awards"), class: "nav-link" %>
+            <%= link_to "Awards", root_path(anchor: "awards"), class: "nav-link", data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
-            <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path) %>
+            <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path), data: { action: "click->analytics#trackNav" } %>
           </li>
           <%# Mobile only — Contact Me inside the collapse grey box %>
           <li class="nav-item d-lg-none mt-2 pt-2 border-top border-secondary text-center">
-            <%= link_to "Contact Me", root_path(anchor: "contact"), class: "btn btn-grad btn-nav-cta-sm w-100" %>
+            <%= link_to "Contact Me", root_path(anchor: "contact"), class: "btn btn-grad btn-nav-cta-sm w-100", data: { action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "Contact Me (mobile nav)" }.to_json } %>
           </li>
         </ul>
       </div>
 
       <%# Desktop only — Contact Me CTA in the pill %>
-      <%= link_to "Contact Me", root_path(anchor: "contact"), class: "btn btn-grad d-none d-lg-block" %>
+      <%= link_to "Contact Me", root_path(anchor: "contact"), class: "btn btn-grad d-none d-lg-block", data: { controller: "analytics", action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "Contact Me (navbar)" }.to_json } %>
 
     <% end %>
 

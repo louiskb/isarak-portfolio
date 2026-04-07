@@ -19,6 +19,17 @@ class ResearchItemsController < ApplicationController
   # GET /research_items/1
   # Public show page — visitors and Isara both see this
   def show
+    unless user_signed_in?
+      PostHog.capture(
+        distinct_id: "anonymous",
+        event: "research_item_viewed",
+        properties: {
+          title: @research_item.title,
+          slug: @research_item.slug,
+          category: @research_item.category
+        }
+      )
+    end
   end
 
   # GET /research_items/new

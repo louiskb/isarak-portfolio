@@ -3,10 +3,10 @@
     <div class="row align-items-center gy-2">
 
       <%# Left: legal links + discrete login %>
-      <div class="col-12 col-md-4 footer-legal text-center text-md-start">
-        <%= link_to "Privacy Policy", privacy_policy_path %>
+      <div class="col-12 col-md-4 footer-legal text-center text-md-start" data-controller="analytics">
+        <%= link_to "Privacy Policy", privacy_policy_path, data: { action: "click->analytics#trackFooter" } %>
         &ensp;&middot;&ensp;
-        <%= link_to "Terms of Service", terms_of_service_path %>
+        <%= link_to "Terms of Service", terms_of_service_path, data: { action: "click->analytics#trackFooter" } %>
         <%# Discrete login — only shown on the research page, when not signed in %>
         <% if !user_signed_in? && request.path.start_with?(research_items_path) %>
           &ensp;&middot;&ensp;
@@ -21,29 +21,30 @@
       </div>
 
       <%# Right: social icons %>
-      <div class="col-12 col-md-4 footer-social d-flex align-items-center flex-wrap justify-content-center justify-content-md-end gap-3">
-        <a href="https://www.linkedin.com/in/isarakj/" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+      <div class="col-12 col-md-4 footer-social d-flex align-items-center flex-wrap justify-content-center justify-content-md-end gap-3"
+           data-controller="analytics" data-analytics-properties-value="<%= { location: "footer" }.to_json %>">
+        <a href="https://www.linkedin.com/in/isarakj/" title="LinkedIn" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-linkedin"></i>
         </a>
-        <a href="https://orcid.org/0000-0002-0841-5708" title="ORCID" target="_blank" rel="noopener noreferrer">
+        <a href="https://orcid.org/0000-0002-0841-5708" title="ORCID" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-orcid"></i>
         </a>
-        <a href="https://www.researchgate.net/profile/Isara-Khanjanasthiti" title="ResearchGate" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.researchgate.net/profile/Isara-Khanjanasthiti" title="ResearchGate" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-researchgate"></i>
         </a>
-        <a href="https://une-au.academia.edu/IsaraKhanjanasthiti" title="Academia.edu" target="_blank" rel="noopener noreferrer">
+        <a href="https://une-au.academia.edu/IsaraKhanjanasthiti" title="Academia.edu" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-solid fa-graduation-cap"></i>
         </a>
-        <a href="https://scholar.google.com/citations?user=nmy-Uw0AAAAJ&h" title="Google Scholar" target="_blank" rel="noopener noreferrer">
+        <a href="https://scholar.google.com/citations?user=nmy-Uw0AAAAJ&h" title="Google Scholar" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-google"></i>
         </a>
-        <a href="https://x.com/IsaraKJ" title="X (Twitter)" target="_blank" rel="noopener noreferrer">
+        <a href="https://x.com/IsaraKJ" title="X (Twitter)" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-x-twitter"></i>
         </a>
-        <a href="https://www.une.edu.au/staff-profiles/hass/isara-khanjanasthiti" title="UNE Staff Profile" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.une.edu.au/staff-profiles/hass/isara-khanjanasthiti" title="UNE Staff Profile" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-solid fa-building-columns"></i>
         </a>
-        <a href="mailto:isarapd@icloud.com" title="Email">
+        <a href="mailto:isarapd@icloud.com" title="Email" data-action="click->analytics#trackSocial">
           <i class="fa-solid fa-envelope"></i>
         </a>
       </div>

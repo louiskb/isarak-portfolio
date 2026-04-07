@@ -49,3 +49,4 @@
 # Sitemap is generated dynamically by SitemapsController — ignore any local copies
 public/sitemap.xml
 
+.env

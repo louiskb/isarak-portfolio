@@ -17,37 +17,40 @@
         Aviation policy, housing governance, and university teaching &amp; learning
         at the University of New England, Sydney.
       </p>
-      <div class="home-hero-ctas">
-        <a href="#contact" class="btn btn-grad">Contact Me</a>
-        <%= link_to "View Research", research_items_path, class: "btn home-btn-outline" %>
+      <div class="home-hero-ctas" data-controller="analytics">
+        <a href="#contact" class="btn btn-grad"
+           data-action="click->analytics#trackCta"
+           data-analytics-properties-value="<%= { cta_name: "Contact Me (hero)" }.to_json %>">Contact Me</a>
+        <%= link_to "View Research", research_items_path, class: "btn home-btn-outline",
+              data: { action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "View Research (hero)" }.to_json } %>
       </div>
     </div>
 
     <%# Bottom row — socials left, tags right %>
     <div class="home-hero-bottom">
-      <div class="home-hero-socials">
-        <a href="https://www.linkedin.com/in/isarakj/" class="home-hero-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+      <div class="home-hero-socials" data-controller="analytics" data-analytics-properties-value="<%= { location: "hero" }.to_json %>">
+        <a href="https://www.linkedin.com/in/isarakj/" class="home-hero-social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-linkedin"></i>
         </a>
-        <a href="https://orcid.org/0000-0002-0841-5708" class="home-hero-social-link" aria-label="ORCID" target="_blank" rel="noopener noreferrer">
+        <a href="https://orcid.org/0000-0002-0841-5708" class="home-hero-social-link" aria-label="ORCID" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-orcid"></i>
         </a>
-        <a href="https://www.researchgate.net/profile/Isara-Khanjanasthiti" class="home-hero-social-link" aria-label="ResearchGate" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.researchgate.net/profile/Isara-Khanjanasthiti" class="home-hero-social-link" aria-label="ResearchGate" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-researchgate"></i>
         </a>
-        <a href="https://une-au.academia.edu/IsaraKhanjanasthiti" class="home-hero-social-link" aria-label="Academia.edu" target="_blank" rel="noopener noreferrer">
+        <a href="https://une-au.academia.edu/IsaraKhanjanasthiti" class="home-hero-social-link" aria-label="Academia.edu" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-solid fa-graduation-cap"></i>
         </a>
-        <a href="https://scholar.google.com/citations?user=nmy-Uw0AAAAJ&h" class="home-hero-social-link" aria-label="Google Scholar" target="_blank" rel="noopener noreferrer">
+        <a href="https://scholar.google.com/citations?user=nmy-Uw0AAAAJ&h" class="home-hero-social-link" aria-label="Google Scholar" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-google"></i>
         </a>
-        <a href="https://x.com/IsaraKJ" class="home-hero-social-link" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
+        <a href="https://x.com/IsaraKJ" class="home-hero-social-link" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-brands fa-x-twitter"></i>
         </a>
-        <a href="https://www.une.edu.au/staff-profiles/hass/isara-khanjanasthiti" class="home-hero-social-link" aria-label="UNE Staff Profile" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.une.edu.au/staff-profiles/hass/isara-khanjanasthiti" class="home-hero-social-link" aria-label="UNE Staff Profile" target="_blank" rel="noopener noreferrer" data-action="click->analytics#trackSocial">
           <i class="fa-solid fa-building-columns"></i>
         </a>
-        <a href="mailto:isarapd@icloud.com" class="home-hero-social-link" aria-label="Email">
+        <a href="mailto:isarapd@icloud.com" class="home-hero-social-link" aria-label="Email" data-action="click->analytics#trackSocial">
           <i class="fa-solid fa-envelope"></i>
         </a>
       </div>
@@ -158,8 +161,9 @@
         </div>
 
         <% if @isara&.cv&.attached? %>
-          <div class="mt-4">
-            <%= link_to "Download CV", download_cv_path, class: "btn home-btn-outline", target: "_blank" %>
+          <div class="mt-4" data-controller="analytics">
+            <%= link_to "Download CV", download_cv_path, class: "btn home-btn-outline", target: "_blank",
+                  data: { action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "Download CV" }.to_json } %>
           </div>
         <% end %>
       </div>
@@ -179,7 +183,8 @@
           <p class="home-section-label">Education</p>
           <h2 class="home-section-title">Teaching</h2>
         </div>
-        <%= link_to "View all &rarr;".html_safe, teachings_path, class: "home-section-viewall" %>
+        <%= link_to "View all &rarr;".html_safe, teachings_path, class: "home-section-viewall",
+              data: { controller: "analytics", action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "View all Teaching" }.to_json } %>
       </div>
 
       <%# Spotlight — card left, image right %>
@@ -279,7 +284,8 @@
           <p class="home-section-label">Research</p>
           <h2 class="home-section-title">Research &amp; Publications</h2>
         </div>
-        <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall" %>
+        <%= link_to "View all &rarr;".html_safe, research_items_path, class: "home-section-viewall",
+              data: { controller: "analytics", action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "View all Research" }.to_json } %>
       </div>
 
       <div class="row g-4">
@@ -292,7 +298,10 @@
                 <% if item.published_at.present? %>
                   <p class="research-grid-card-date"><%= item.published_at.strftime("%B %Y") %></p>
                 <% end %>
-                <%= link_to research_item_path(item), class: "research-grid-card-arrow" do %>
+                <%= link_to research_item_path(item), class: "research-grid-card-arrow",
+                      data: { controller: "analytics", action: "click->analytics#trackClick",
+                              analytics_event_value: "research_card_clicked",
+                              analytics_properties_value: { title: item.title }.to_json } do %>
                   <i class="fa-solid fa-arrow-right"></i>
                 <% end %>
               </div>
@@ -400,7 +409,8 @@
           <p class="home-section-label">Writing</p>
           <h2 class="home-section-title">Latest Thinking</h2>
         </div>
-        <%= link_to "View all posts &rarr;".html_safe, blog_posts_path, class: "home-section-viewall" %>
+        <%= link_to "View all posts &rarr;".html_safe, blog_posts_path, class: "home-section-viewall",
+              data: { controller: "analytics", action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "View all Blog" }.to_json } %>
       </div>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -433,7 +443,10 @@
                   <p class="home-blog-card-excerpt"><%= post.blog_excerpt %></p>
                 <% end %>
                 <div class="home-blog-card-footer">
-                  <%= link_to "Read more", post, class: "home-blog-read-more" %>
+                  <%= link_to "Read more", post, class: "home-blog-read-more",
+                        data: { controller: "analytics", action: "click->analytics#trackClick",
+                                analytics_event_value: "blog_card_clicked",
+                                analytics_properties_value: { title: post.title, location: "home" }.to_json } %>
                 </div>
               </div>
             </article>

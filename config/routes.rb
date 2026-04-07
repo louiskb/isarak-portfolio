@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     end
   end
 # FriendlyId: `/users/john@example.com` works alongside `/users/1`
-  devise_for :users
+  devise_for :users, controllers: { sessions: "users/sessions" }
   resource :profile, only: [ :show, :update ] do
     delete "purge_cv", on: :member
   end
