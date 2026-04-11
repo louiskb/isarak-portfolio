@@ -7,25 +7,30 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <div data-controller="char-counter" data-char-counter-limit-value="80">
-      <%= f.input :title,
-            hint: "The full title of the paper, project, or publication. Shown on homepage cards.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="80"> %>
+    <%= f.input :title,
+          hint: "The full title of the paper, project, or publication." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
     <%= f.input :category,
           collection: ResearchItem::CATEGORY_LABELS.map { |k, v| [v, k] },
           include_blank: "Select a category",
           hint: "Select the type that best describes this research item." %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="150">
-      <%= f.input :description,
-            as: :text,
-            input_html: { rows: 4, data: { char_counter_target: "input", action: "input->char-counter#update" } },
-            hint: "A short summary shown on the index card (2–4 sentences)." %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%= f.input :card_summary,
+          label: "Card summary",
+          as: :text,
+          input_html: { rows: 2 },
+          hint: "A short 1–2 sentence preview shown on index and homepage cards." %>
+
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="150"> %>
+    <%= f.input :description,
+          as: :text,
+          input_html: { rows: 4 },
+          hint: "The full description shown on the public show page." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
     <%= f.input :external_url,
           label: "External URL",

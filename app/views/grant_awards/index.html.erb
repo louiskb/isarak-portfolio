@@ -9,12 +9,14 @@
       <p class="resource-hero-subtitle">
         Research grants, academic awards, and funding received throughout my career.
       </p>
-      <p class="resource-hero-subtitle resource-hero-info mt-2">
-        <i class="fa-solid fa-grip-vertical me-1"></i><span class="hi-teal">Only published grants &amp; awards appear on the homepage slider.</span> <span class="hi-grad"><u>Drag to set their order here and on the homepage.</u></span> Use the split button or Manage page to publish, draft, or schedule each item.
-      </p>
-      <div class="mt-4">
-        <%= link_to "Add Grant / Award", new_grant_award_path, class: "btn btn-grad" %>
-      </div>
+      <% if user_signed_in? %>
+        <p class="resource-hero-subtitle resource-hero-info mt-2">
+          <i class="fa-solid fa-grip-vertical me-1"></i><span class="hi-teal">Only published grants &amp; awards appear on the homepage slider.</span> <span class="hi-grad"><u>Drag to set their order here and on the homepage.</u></span> Use the split button or Manage page to publish, draft, or schedule each item.
+        </p>
+        <div class="mt-4">
+          <%= link_to "Add Grant / Award", new_grant_award_path, class: "btn btn-grad" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </section>
@@ -24,13 +26,15 @@
   <div class="container">
     <% if @grant_awards.any? %>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
-           data-controller="sortable" data-sortable-url-value="<%= reorder_grant_awards_path %>">
+           <% if user_signed_in? %>data-controller="sortable" data-sortable-url-value="<%= reorder_grant_awards_path %>"<% end %>>
         <% @grant_awards.each do |item| %>
           <div class="col" data-id="<%= item.id %>">
             <article class="resource-card card">
-              <div class="drag-handle" title="Drag to reorder">
-                <i class="fa-solid fa-grip-vertical"></i>
-              </div>
+              <% if user_signed_in? %>
+                <div class="drag-handle" title="Drag to reorder">
+                  <i class="fa-solid fa-grip-vertical"></i>
+                </div>
+              <% end %>
               <div class="card-body">
                 <%# Category badge %>
                 <span class="resource-card-category resource-badge-<%= item.category %>">
@@ -38,32 +42,39 @@
                   <%= item.category.capitalize %>
                 </span>
 
-                <%# Status badge %>
-                <div class="mb-2">
-                  <span class="badge rounded-pill blog-status-<%= item.status %>">
-                    <%= item.status.capitalize %>
-                  </span>
-                </div>
+                <%# Status badge (Isara only) %>
+                <% if user_signed_in? %>
+                  <div class="mb-2">
+                    <span class="badge rounded-pill blog-status-<%= item.status %>">
+                      <%= item.status.capitalize %>
+                    </span>
+                  </div>
+                <% end %>
 
-                <h2 class="resource-card-title"><%= item.title %></h2>
+                <h2 class="resource-card-title">
+                  <%= link_to item.title, grant_award_path(item), class: "resource-card-title-link" %>
+                </h2>
 
-                <% if item.awarding_body.present? || item.year.present? || (item.scheduled? && item.scheduled_at) %>
+                <% if item.awarding_body.present? || item.year.present? || (user_signed_in? && item.scheduled? && item.scheduled_at) %>
                   <p class="resource-card-meta">
                     <% if item.awarding_body.present? %><%= item.awarding_body %><% end %>
                     <% if item.awarding_body.present? && item.year.present? %> &middot; <% end %>
                     <% if item.year.present? %><%= item.year %><% end %>
-                    <% if item.scheduled? && item.scheduled_at %>
+                    <% if user_signed_in? && item.scheduled? && item.scheduled_at %>
                       &nbsp;· <i class="fa-regular fa-clock me-1"></i>Scheduled <%= item.scheduled_at.strftime("%-d %b %Y at %H:%M") %>
                     <% end %>
                   </p>
                 <% end %>
 
-                <% if item.description.present? %>
-                  <p class="resource-card-description"><%= item.description %></p>
+                <% if item.card_summary.present? %>
+                  <p class="resource-card-description"><%= item.card_summary %></p>
                 <% end %>
 
-                <div class="d-flex justify-content-end align-items-center resource-card-footer">
-                  <%= link_to "Manage →", grant_award_path(item), class: "btn btn-resource-manage btn-sm" %>
+                <div class="d-flex justify-content-between align-items-center resource-card-footer">
+                  <%= link_to "View →", grant_award_path(item), class: "btn btn-resource-link btn-sm" %>
+                  <% if user_signed_in? %>
+                    <%= link_to "Manage →", grant_award_path(item), class: "btn btn-resource-manage btn-sm" %>
+                  <% end %>
                 </div>
               </div>
             </article>
@@ -73,7 +84,9 @@
     <% else %>
       <div class="resource-empty text-center">
         <p class="text-muted mb-3">No grants or awards yet.</p>
-        <%= link_to "Add your first entry", new_grant_award_path, class: "btn btn-resource-add" %>
+        <% if user_signed_in? %>
+          <%= link_to "Add your first entry", new_grant_award_path, class: "btn btn-resource-add" %>
+        <% end %>
       </div>
     <% end %>
 

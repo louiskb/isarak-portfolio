@@ -203,8 +203,8 @@
                     <i class="fa-solid fa-chalkboard-user me-1"></i> Course
                   </p>
                   <h3 class="teaching-spotlight-title"><%= item.title %></h3>
-                  <% if item.description.present? %>
-                    <p class="teaching-spotlight-desc"><%= item.description %></p>
+                  <% if item.card_summary.present? %>
+                    <p class="teaching-spotlight-desc"><%= item.card_summary %></p>
                   <% end %>
                 </div>
 
@@ -342,13 +342,17 @@
           <p class="home-section-label">Recognition</p>
           <h2 class="home-section-title">Grants &amp; Awards</h2>
         </div>
-        <div class="awards-slider-nav">
-          <button class="awards-slider-btn" data-action="click->awards-slider#prev" aria-label="Previous">
-            <i class="fa-solid fa-arrow-left"></i>
-          </button>
-          <button class="awards-slider-btn" data-action="click->awards-slider#next" aria-label="Next">
-            <i class="fa-solid fa-arrow-right"></i>
-          </button>
+        <div class="d-flex align-items-center gap-3">
+          <%= link_to "View all &rarr;".html_safe, grant_awards_path, class: "home-section-viewall d-none d-md-inline",
+                data: { controller: "analytics", action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "View all Awards (header)" }.to_json } %>
+          <div class="awards-slider-nav">
+            <button class="awards-slider-btn" data-action="click->awards-slider#prev" aria-label="Previous">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button class="awards-slider-btn" data-action="click->awards-slider#next" aria-label="Next">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -368,8 +372,8 @@
             <h3 class="awards-card-title"><%= item.title %></h3>
 
             <%# Description %>
-            <% if item.description.present? %>
-              <p class="awards-card-desc"><%= item.description %></p>
+            <% if item.card_summary.present? %>
+              <p class="awards-card-desc"><%= item.card_summary %></p>
             <% end %>
 
             <%# Footer — awarding body + year %>
@@ -391,11 +395,10 @@
         <% end %>
       </div>
 
-      <% if user_signed_in? %>
-        <div class="mt-4">
-          <%= link_to "View all &rarr;".html_safe, grant_awards_path, class: "home-section-viewall" %>
-        </div>
-      <% end %>
+      <div class="mt-4">
+        <%= link_to "View all &rarr;".html_safe, grant_awards_path, class: "home-section-viewall",
+              data: { controller: "analytics", action: "click->analytics#trackCta", analytics_properties_value: { cta_name: "View all Awards" }.to_json } %>
+      </div>
     </div>
   </section>
 <% end %>

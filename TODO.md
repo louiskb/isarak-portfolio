@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-04-07 (session 25: PostHog cookieless analytics, test fixtures, privacy policy)
+> Created: 2026-03-08 | Last updated: 2026-04-11 (session 26: card_summary column, public awards pages, char counter removal)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
+Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
 
 ---
 
@@ -60,7 +60,10 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] Teaching + Research status system — `status` enum (draft/scheduled/published, default draft) + `scheduled_at` on both models; public show pages added; `publish/schedule/cancel_schedule` member actions; split-button forms; `resolve_publish_intent` helper; `PublishScheduledPostsJob` extended ✅ (2026-03-20, session 21)
 - [x] Teaching + Research index — status badge (Isara only), scheduled datetime shown to Isara, cards link to show page, `.resource-card-title-link` CSS ✅ (2026-03-20, session 21)
 - [x] Teaching + Research show — status badge below h1, scheduled indicator + Edit schedule button, Publish now / Schedule / Cancel Schedule modals matching blog post pattern ✅ (2026-03-20, session 21)
-- [x] Grant Award status system — same `status` enum + `scheduled_at`; no public show page (index is admin-only); status badge + scheduled time shown on index cards; `publish/schedule/cancel_schedule` actions; split-button form ✅ (2026-03-20, session 21)
+- [x] Grant Award status system — same `status` enum + `scheduled_at`; `publish/schedule/cancel_schedule` actions; split-button form ✅ (2026-03-20, session 21)
+- [x] Grant Award public pages — index + show now accessible to visitors (published items only); status badges, drag handles, scheduled info, and CRUD are admin-only; OG meta tags added to show page; sitemap updated; navbar "Awards" link now points to index for visitors ✅ (2026-04-11, session 26)
+- [x] `card_summary` column on Research, Teaching, and Awards — short text for index/homepage cards (parallels `blog_excerpt`); `description` now reserved for show page content only ✅ (2026-04-11, session 26)
+- [x] Character counters commented out — all `char_counter_controller` references in forms wrapped in ERB comments; Stimulus controller left as dead code for reference ✅ (2026-04-11, session 26)
 - [x] Homepage featured queries — `.published` filter added to `@featured_research`, `@featured_teachings`, `@featured_grants` in `HomePageContent` concern ✅ (2026-03-20, session 21)
 - [x] Research categories — expanded from 3 (project/paper/publication) to 10 string-backed categories (Journal Article, Edited Book, Book, Book Chapter, Thesis, Conference Paper, White Paper, Conference Presentation, Article, Project); colour-coded pill badges on index + show ✅ (2026-03-17)
 - [x] Drag-and-drop reordering — Sortable.js (ESM build vendored); `sortable_controller.js` Stimulus controller; `position` column + `reorder` collection route on Teaching, ResearchItem, GrantAward; grip handle appears on hover (desktop) / always visible (mobile) ✅ (2026-03-17)
@@ -175,7 +178,7 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] About / bio section — `User.about` bio with placeholder fallback, research interest tags, Download CV (if attached), facts sidebar
 - [x] Resource sections — Featured Research (3-col), Teaching (4-col, view-all auth-gated), Grants & Awards (4-col, view-all auth-gated), Blog Posts (3-col cards with images)
 - [x] Contact form section — restyled to match dark theme, Bootstrap card wrapper removed
-- [x] Teaching & Grants "View all →" links — hidden from public visitors; only shown to signed-in Isara
+- [x] Teaching & Grants "View all →" links — now public for all visitors (awards index + show opened to visitors in session 26)
 - [x] Favicon — IK monogram (dark bg, teal text) replacing default Rails icon; replaced with real pug logo ✅ (2026-03-21)
 - [x] Card image border radius — all index cards (research, teaching, blog) and homepage blog cards use `border-radius: 0.75rem` on all four image corners (was top-only) ✅ (2026-03-21)
 - [x] CV Download button — RESOLVED ✅ (2026-03-14); Cloudinary PDF delivery enabled + `fl_attachment` redirect

@@ -56,7 +56,7 @@ app/
     users/            # Custom Devise sessions controller (empty override)
   javascript/
     controllers/      # Stimulus controllers (analytics, load_button, html_inject, sortable, char_counter, etc.)
-  models/             # BlogPost, Teaching, ResearchItem, GrantAward, Contact, Tag, User
+  models/             # BlogPost, Teaching, ResearchItem, GrantAward, Contact, Tag, User, Service
   schemas/            # RubyLLM structured output schemas (blog_post_schema.rb)
   services/           # BlogPostAiService (AI generation + Unsplash)
   views/
@@ -110,7 +110,8 @@ Required in `.env`:
 - Isara is the **only authenticated user** — no public sign-up
 - Blog dual-mode: Action Text `body` (manual) OR `blog_post_erb_content` (AI-generated HTML)
 - AI-generated posts set `ai_generated: true` automatically
-- Teaching + Research have public show pages; Grant Awards do NOT (homepage only)
+- Teaching, Research, and Grant Awards all have public index + show pages; visitors see published items only
+- `card_summary` column on Research, Teaching, and Grant Awards — short text shown on index/homepage cards; `description` is the full content shown on show pages only (parallels `blog_excerpt` on BlogPost)
 - Drag-and-drop reordering on index pages (SortableJS + `position` column)
 - Contact form uses Turbo disabled (`data-turbo="false"`) for reliable flash rendering
 - CV is an Active Storage attachment on User model (not its own model)

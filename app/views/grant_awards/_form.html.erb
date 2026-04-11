@@ -7,13 +7,12 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <div data-controller="char-counter" data-char-counter-limit-value="70">
-      <%= f.input :title,
-            placeholder: "e.g. ARC Discovery Project Grant",
-            hint: "The full name of the grant or award. Shown on the homepage slider card.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="70"> %>
+    <%= f.input :title,
+          placeholder: "e.g. ARC Discovery Project Grant",
+          hint: "The full name of the grant or award." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
     <%= f.input :category,
           label: "Type",
@@ -21,31 +20,35 @@
           collection: GrantAward.categories.keys.map { |k| [k.capitalize, k] },
           hint: "Select Grant for funding you received, or Award for recognition of your work." %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="60">
-      <%= f.input :awarding_body,
-            label: "Awarding body / Funder",
-            placeholder: "e.g. Australian Research Council",
-            hint: "The organisation that granted the funding or presented the award. Shown in the card footer.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="60"> %>
+    <%= f.input :awarding_body,
+          label: "Awarding body / Funder",
+          placeholder: "e.g. Australian Research Council",
+          hint: "The organisation that granted the funding or presented the award. Shown in the card footer." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="20">
-      <%= f.input :year,
-            placeholder: "e.g. 2023 or 2021–2023",
-            hint: "The year the grant was awarded or the award was received.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="20"> %>
+    <%= f.input :year,
+          placeholder: "e.g. 2023 or 2021–2023",
+          hint: "The year the grant was awarded or the award was received." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="180">
-      <%= f.input :description,
-            label: "Description (optional)",
-            hint: "Briefly describe the scope, value, or significance. Shown on the homepage slider card.",
-            as: :text,
-            input_html: { rows: 4, data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%= f.input :card_summary,
+          label: "Card summary",
+          as: :text,
+          input_html: { rows: 2 },
+          hint: "A short 1–2 sentence preview shown on the index and homepage cards." %>
+
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="180"> %>
+    <%= f.input :description,
+          label: "Description (optional)",
+          hint: "The full description shown on the show page. Describe the scope, value, or significance.",
+          as: :text,
+          input_html: { rows: 4 } %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
   </div>
 

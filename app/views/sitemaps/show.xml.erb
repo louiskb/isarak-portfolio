@@ -52,4 +52,19 @@
   </url>
   <% end %>
 
+  <url>
+    <loc><%= grant_awards_url %></loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <% @grant_awards.each do |award| %>
+  <url>
+    <loc><%= grant_award_url(award) %></loc>
+    <lastmod><%= award.updated_at.utc.strftime("%Y-%m-%d") %></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <% end %>
+
 </urlset>

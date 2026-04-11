@@ -129,7 +129,7 @@ class TeachingsController < ApplicationController
   end
 
   def teaching_params
-    params.expect(teaching: [ :title, :description, :institution, :year, :image_url, :image, :slug, :featured, :external_url ])
+    params.expect(teaching: [ :title, :description, :card_summary, :institution, :year, :image_url, :image, :slug, :featured, :external_url ])
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

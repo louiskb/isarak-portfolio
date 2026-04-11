@@ -1,10 +1,12 @@
 class GrantAwardsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_grant_award, only: %i[ show edit update destroy publish schedule cancel_schedule ]
 
   # GET /grant_awards
+  # Public — visitors see published items; Isara sees all with status badges + Manage button
   def index
-    @pagy, @grant_awards = pagy(current_user.grant_awards.order(:position, :created_at))
+    scope = user_signed_in? ? GrantAward.all : GrantAward.published
+    @pagy, @grant_awards = pagy(scope.order(:position, :created_at))
   end
 
   def reorder
@@ -115,7 +117,7 @@ class GrantAwardsController < ApplicationController
   end
 
   def grant_award_params
-    params.expect(grant_award: [ :title, :description, :year, :awarding_body, :category, :slug, :featured ])
+    params.expect(grant_award: [ :title, :description, :card_summary, :year, :awarding_body, :category, :slug, :featured ])
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

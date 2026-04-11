@@ -7,46 +7,49 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <div class="alert alert-info small mb-4">
+    <%# <div class="alert alert-info small mb-4">
       <i class="fa-solid fa-circle-info me-1"></i>
       <strong>Heads up:</strong> The title and description appear on the homepage teaching card alongside the image.
       Keep them concise so the text fits neatly within the card.
-    </div>
+    </div> %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="80">
-      <%= f.input :title,
-            placeholder: "e.g. Urban Planning Studio, PLAN3001",
-            hint: "The course name or teaching role as it should appear on your portfolio.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="80"> %>
+    <%= f.input :title,
+          placeholder: "e.g. Urban Planning Studio, PLAN3001",
+          hint: "The course name or teaching role as it should appear on your portfolio." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="60">
-      <%= f.input :institution,
-            label: "Institution",
-            placeholder: "e.g. University of New England",
-            hint: "The university or organisation where this teaching took place. Shown in the card footer.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="60"> %>
+    <%= f.input :institution,
+          label: "Institution",
+          placeholder: "e.g. University of New England",
+          hint: "The university or organisation where this teaching took place. Shown in the card footer." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="20">
-      <%= f.input :year,
-            as: :string,
-            placeholder: "e.g. 2024 or 2023–Present",
-            hint: "The year or year range this course was delivered.",
-            input_html: { data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="20"> %>
+    <%= f.input :year,
+          as: :string,
+          placeholder: "e.g. 2024 or 2023–Present",
+          hint: "The year or year range this course was delivered." %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
-    <div data-controller="char-counter" data-char-counter-limit-value="250">
-      <%= f.input :description,
-            label: "Description",
-            hint: "Summarise the course content and your teaching role. Shown as a blurb on your Teaching page.",
-            as: :text,
-            input_html: { rows: 4, data: { char_counter_target: "input", action: "input->char-counter#update" } } %>
-      <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span>
-    </div>
+    <%= f.input :card_summary,
+          label: "Card summary",
+          as: :text,
+          input_html: { rows: 2 },
+          hint: "A short 1–2 sentence preview shown on index and homepage cards." %>
+
+    <%# <div data-controller="char-counter" data-char-counter-limit-value="250"> %>
+    <%= f.input :description,
+          label: "Description",
+          hint: "The full description of the course content and your teaching role. Shown on the public show page.",
+          as: :text,
+          input_html: { rows: 4 } %>
+    <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
+    <%# </div> %>
 
     <%= f.input :image,
           as: :file,

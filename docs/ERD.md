@@ -24,6 +24,7 @@ erDiagram
         int user_id FK
         string title
         string category
+        text card_summary
         text description
         string external_url
         string image_url
@@ -41,6 +42,7 @@ erDiagram
         int id PK
         int user_id FK
         string title
+        text card_summary
         text description
         string year
         string awarding_body
@@ -57,6 +59,7 @@ erDiagram
         int id PK
         int user_id FK
         string title
+        text card_summary
         text description
         string institution
         string year
@@ -184,10 +187,11 @@ erDiagram
 - `BlogPost.status` enum: `draft / scheduled / published`
 - `ResearchItem.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern as BlogPost; visitors only see published items; `scheduled_at` holds the auto-publish time
 - `Teaching.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern; public show page exists; visitors only see published items
-- `GrantAward.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern; no public show page (index is admin-only); status controls homepage visibility
+- `GrantAward.status` enum: `draft (0) / scheduled (1) / published (2)` — same pattern as other resources; public index + show pages exist (visitors see published items only)
 - `BlogPost.body` — Action Text rich text (Trix editor). Stored in `action_text_rich_texts`, not in `blog_posts` table directly
 - `BlogPost.blog_post_erb_content` — plain text column for AI-generated HTML/ERB content
 - `BlogPost.blog_excerpt` — plain text short summary shown on index cards
+- `ResearchItem.card_summary`, `Teaching.card_summary`, `GrantAward.card_summary` — short text shown on index/homepage cards (parallels `blog_excerpt`); `description` is reserved for show page content
 - `BlogPost.featured` — flags posts for display on the homepage blog section
 - `BlogPost.featured_image` — Active Storage `has_one_attached`; auto-set from Unsplash on AI posts
 - `BlogPost.image_url` — plain string fallback; shown only when `featured_image` is not attached; passed through `ai_params` and saved by `BlogPostAiService`

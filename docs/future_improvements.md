@@ -1,7 +1,7 @@
 # Future Improvements — isarak-portfolio
 
 > Maintained by Louis + Claude. Add ideas here as they come up during development.
-> Last updated: 2026-03-21 (session 22)
+> Last updated: 2026-04-11 (session 26)
 
 ---
 
@@ -57,13 +57,13 @@
 ### Infrastructure
 - [x] **Pin Ruby version in Gemfile** — `ruby "3.3.10"` in Gemfile + `.ruby-version` ✅ (2026-03-18)
 - [x] **Pin Node.js buildpack** — `engines.node: "22.x"` in `package.json` ✅ (2026-03-18)
-- [ ] **Plausible or Fathom analytics** — privacy-first, cookie-free analytics (consistent with the Privacy Policy's "no tracking cookies" claim); embed via a single `<script>` tag
+- [x] **PostHog cookieless analytics** — `posthog-ruby` server-side + `posthog-js` client-side (inline snippet, `persistence: 'memory'`, no cookies); visitor-only tracking ✅ (2026-04-07)
 
 ---
 
 ## Decisions to Revisit Later
 
-- Will Isara need the Teaching and Grants "View all →" index pages public (currently auth-gated for index — show pages are already public for Teaching and Research)?
+- ~~Will Isara need the Teaching and Grants "View all →" index pages public?~~ ✅ RESOLVED (2026-04-11) — All resource index + show pages are now public for visitors (published items only)
 - Should the Service page be more detailed (committee roles, peer review, etc.) or stay as a single rich-text block?
 - RSS feed format preference — Atom vs RSS 2.0?
-- Analytics: does Isara want any traffic data, or is the Privacy Policy "no analytics" stance a deliberate choice?
+- ~~Analytics: does Isara want any traffic data?~~ ✅ RESOLVED (2026-04-07) — PostHog cookieless analytics now in place; privacy policy updated

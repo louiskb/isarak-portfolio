@@ -1,5 +1,23 @@
 <% content_for :title, "#{@grant_award.title} — Grants & Awards" %>
 
+<% content_for :meta_tags do %>
+  <%
+    og_description = truncate(@grant_award.description.to_s, length: 160, omission: "…")
+    og_image = image_url("ik-logo-tp.png")
+  %>
+  <meta property="og:site_name" content="Dr Isara Khanjanasthiti">
+  <meta property="og:title" content="<%= @grant_award.title %> — Grants & Awards">
+  <meta property="og:description" content="<%= og_description %>">
+  <meta property="og:url" content="<%= grant_award_url(@grant_award) %>">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="<%= og_image %>">
+  <meta property="article:author" content="Isara Khanjanasthiti">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="<%= @grant_award.title %> — Grants & Awards">
+  <meta name="twitter:description" content="<%= og_description %>">
+  <meta name="twitter:image" content="<%= og_image %>">
+<% end %>
+
 <div class="resource-detail">
   <div class="container">
     <div class="row justify-content-center">
@@ -22,12 +40,14 @@
 
             <h1 class="resource-detail-title"><%= @grant_award.title %></h1>
 
-            <span class="badge rounded-pill blog-status-<%= @grant_award.status %> mb-2">
-              <%= @grant_award.status.capitalize %>
-            </span>
+            <% if user_signed_in? %>
+              <span class="badge rounded-pill blog-status-<%= @grant_award.status %> mb-2">
+                <%= @grant_award.status.capitalize %>
+              </span>
+            <% end %>
 
-            <%# Scheduled indicator %>
-            <% if @grant_award.scheduled? %>
+            <%# Scheduled indicator (admin only) %>
+            <% if @grant_award.scheduled? && user_signed_in? %>
               <div class="d-flex align-items-center gap-2 mb-3">
                 <small class="resource-detail-meta">
                   <i class="fa-regular fa-clock me-1"></i>
@@ -64,6 +84,7 @@
         </article>
 
         <%# Admin actions %>
+        <% if user_signed_in? %>
         <div class="resource-detail-actions">
 
           <%# Status actions %>
@@ -186,6 +207,7 @@
             </div>
           </div>
         <% end %>
+        <% end %> <%# end user_signed_in? %>
 
       </div>
     </div>

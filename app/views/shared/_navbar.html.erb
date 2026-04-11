@@ -118,7 +118,7 @@
             <%= link_to "Service", root_path(anchor: "service"), class: "nav-link", data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
-            <%= link_to "Awards", root_path(anchor: "awards"), class: "nav-link", data: { action: "click->analytics#trackNav" } %>
+            <%= link_to "Awards", grant_awards_path, class: nav_link_class(grant_awards_path), data: { action: "click->analytics#trackNav" } %>
           </li>
           <li class="nav-item">
             <%= link_to "Blog", blog_posts_path, class: nav_link_class(blog_posts_path), data: { action: "click->analytics#trackNav" } %>
