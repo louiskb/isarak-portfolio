@@ -66,6 +66,15 @@
               </div>
             <% end %>
 
+            <% if @research_item.authors.present? %>
+              <div class="resource-detail-meta mb-2">
+                <span>
+                  <i class="fa-solid fa-user-pen me-1"></i>
+                  <%= @research_item.authors %>
+                </span>
+              </div>
+            <% end %>
+
             <div class="resource-detail-meta">
               <% if @research_item.published_at.present? %>
                 <span>

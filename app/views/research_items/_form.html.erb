@@ -32,6 +32,9 @@
     <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
     <%# </div> %>
 
+    <%= f.input :authors,
+          hint: "Author(s) of this work. For multiple co-authors, separate with commas (e.g. \"Khanjanasthiti, I., Smith, J., Lee, C.\")." %>
+
     <%= f.input :external_url,
           label: "External URL",
           hint: "Link to the journal, conference proceedings, or hosted project page." %>
@@ -39,6 +42,8 @@
     <%= f.input :published_at,
           as: :date,
           label: "Published / presented date",
+          start_year: 2010,
+          end_year: Date.current.year,
           hint: "Used to sort and display the month & year on the card." %>
 
     <%= f.input :image,

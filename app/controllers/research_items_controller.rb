@@ -129,7 +129,7 @@ class ResearchItemsController < ApplicationController
   end
 
   def research_item_params
-    params.expect(research_item: [ :title, :category, :description, :card_summary, :external_url, :image_url, :image, :featured, :slug ])
+    params.expect(research_item: [ :title, :category, :description, :card_summary, :external_url, :published_at, :authors, :image_url, :image, :featured, :slug ])
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

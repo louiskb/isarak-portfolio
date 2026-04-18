@@ -8,7 +8,7 @@ class ResearchItem < ApplicationRecord
     "book" => "Book",
     "book_chapter" => "Book Chapter",
     "thesis" => "Thesis",
-    "conference_paper" => "Conference Paper",
+    "conference_paper" => "Refereed Conference Paper",
     "white_paper" => "White Paper",
     "conference_presentation" => "Conference Presentation",
     "article" => "Article",

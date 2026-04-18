@@ -60,6 +60,13 @@
                   <%= link_to item.title, research_item_path(item), class: "resource-card-title-link" %>
                 </h2>
 
+                <% if item.authors.present? %>
+                  <p class="resource-card-meta mb-1">
+                    <i class="fa-solid fa-user-pen me-1"></i>
+                    <%= item.authors %>
+                  </p>
+                <% end %>
+
                 <% if item.published_at.present? || (user_signed_in? && item.scheduled? && item.scheduled_at) %>
                   <p class="resource-card-meta">
                     <% if item.published_at.present? %>
