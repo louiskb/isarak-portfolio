@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-04-18 (session 27: authors field on research items, Refereed Conference Paper relabel, published_at year range)
+> Created: 2026-03-08 | Last updated: 2026-04-18 (session 28: grant_award year column changed to string)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -55,6 +55,7 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] Cloudinary wiring — verified: Active Storage uses Cloudinary in dev + prod; handles images, PDFs, Trix uploads; no initializer needed (gem auto-reads CLOUDINARY_URL)
 - [x] ERD (docs/ERD.md) — updated to match schema: Contact model added, user_id FKs on all resource tables, User Devise fields corrected, BlogPost featured_image + photos relationships documented; session 14: position columns, category string changes, featured removed from grant_awards
 - [x] Teaching `year` field — changed from integer to string column; allows "2023–Present" style ranges ✅ (2026-03-17)
+- [x] Grant Award `year` field — changed from integer to string column; allows "2021–Present" and similar ranges (parallels Teaching); form input switched to `as: :string` ✅ (2026-04-18, session 28)
 - [x] Teaching `external_url` field — string column; shown as "More Information" link on public show page; field in edit form ✅ (2026-03-24)
 - [x] Research `external_url` show page link — renamed from "View full paper" to "More Information" for consistency ✅ (2026-03-24)
 - [x] Teaching + Research status system — `status` enum (draft/scheduled/published, default draft) + `scheduled_at` on both models; public show pages added; `publish/schedule/cancel_schedule` member actions; split-button forms; `resolve_publish_intent` helper; `PublishScheduledPostsJob` extended ✅ (2026-03-20, session 21)

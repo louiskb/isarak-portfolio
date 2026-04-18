@@ -87,6 +87,14 @@ Required in `.env`:
 - `POSTHOG_PROJECT_TOKEN` — PostHog project API key
 - `POSTHOG_HOST` — PostHog ingest endpoint (e.g. `https://us.i.posthog.com`)
 
+## Docs Sync
+Living docs for this project (checked by the `docs-sync` skill):
+- `CLAUDE.md` (root) — this file
+- `README.md` (root)
+- `TODO.md` (root)
+- `docs/ERD.md` — schema diagram
+- `docs/future_improvements.md` — roadmap-adjacent ideas
+
 ## Conventions
 - Double quotes throughout (Ruby, ERB, JS, HTML attributes)
 - 2-space indentation
