@@ -30,8 +30,9 @@
 
     <%# <div data-controller="char-counter" data-char-counter-limit-value="20"> %>
     <%= f.input :year,
-          placeholder: "e.g. 2023 or 2021–2023",
-          hint: "The year the grant was awarded or the award was received." %>
+          as: :string,
+          placeholder: "e.g. 2023 or 2021–Present",
+          hint: "The year or year range the grant was awarded or the award was received." %>
     <%# <span class="form-text small mt-n2 d-block mb-3" data-char-counter-target="display"></span> %>
     <%# </div> %>
 
