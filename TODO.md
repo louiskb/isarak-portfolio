@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-04-11 (session 26: card_summary column, public awards pages, char counter removal)
+> Created: 2026-03-08 | Last updated: 2026-04-18 (session 27: authors field on research items, Refereed Conference Paper relabel, published_at year range)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
+Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Research items now support an `authors` field for co-author attribution. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
 
 ---
 
@@ -64,6 +64,9 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] Grant Award public pages — index + show now accessible to visitors (published items only); status badges, drag handles, scheduled info, and CRUD are admin-only; OG meta tags added to show page; sitemap updated; navbar "Awards" link now points to index for visitors ✅ (2026-04-11, session 26)
 - [x] `card_summary` column on Research, Teaching, and Awards — short text for index/homepage cards (parallels `blog_excerpt`); `description` now reserved for show page content only ✅ (2026-04-11, session 26)
 - [x] Character counters commented out — all `char_counter_controller` references in forms wrapped in ERB comments; Stimulus controller left as dead code for reference ✅ (2026-04-11, session 26)
+- [x] Research `authors` field — `string authors` column on research_items; free-text list of co-authors (e.g. "Khanjanasthiti, I., Smith, J., Lee, C."); shown with `fa-user-pen` icon on index cards and show page above the published date; permitted in strong params ✅ (2026-04-18, session 27)
+- [x] Research `Conference Paper` relabel — `CATEGORY_LABELS["conference_paper"]` renamed to `"Refereed Conference Paper"` (enum key unchanged) ✅ (2026-04-18, session 27)
+- [x] Research `published_at` form fixes — added `:published_at` to strong params (was previously missing so the date wasn't being saved); date picker restricted to `start_year: 2010, end_year: Date.current.year` ✅ (2026-04-18, session 27)
 - [x] Homepage featured queries — `.published` filter added to `@featured_research`, `@featured_teachings`, `@featured_grants` in `HomePageContent` concern ✅ (2026-03-20, session 21)
 - [x] Research categories — expanded from 3 (project/paper/publication) to 10 string-backed categories (Journal Article, Edited Book, Book, Book Chapter, Thesis, Conference Paper, White Paper, Conference Presentation, Article, Project); colour-coded pill badges on index + show ✅ (2026-03-17)
 - [x] Drag-and-drop reordering — Sortable.js (ESM build vendored); `sortable_controller.js` Stimulus controller; `position` column + `reorder` collection route on Teaching, ResearchItem, GrantAward; grip handle appears on hover (desktop) / always visible (mobile) ✅ (2026-03-17)

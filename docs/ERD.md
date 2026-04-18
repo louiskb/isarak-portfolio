@@ -26,6 +26,7 @@ erDiagram
         string category
         text card_summary
         text description
+        string authors
         string external_url
         string image_url
         boolean featured
@@ -205,6 +206,7 @@ erDiagram
 - `position` (int) — on Teaching, ResearchItem, GrantAward; controls drag-and-drop display order on index pages only (does not affect homepage for Teaching/Research)
 - `Teaching.external_url` — optional string; shown as a "More Information" link on the public show page; input in the edit form
 - `ResearchItem.external_url` — optional string; shown as a "More Information" link on the public show page (was "View full paper" — renamed for consistency)
+- `ResearchItem.authors` — optional string; free-text list of co-authors (e.g. "Khanjanasthiti, I., Smith, J., Lee, C."); rendered with a user-pen icon on index cards and show page, above the published date
 - `User.cv` — Active Storage `has_one_attached`; stored in Cloudinary via Active Storage
 - `User.name` — display name (e.g. "Dr Isara Khanjanasthiti")
 - `User.slug` — FriendlyId slug (based on email); used for readable URLs
