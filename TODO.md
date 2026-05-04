@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-04-18 (session 28: grant_award year column changed to string)
+> Created: 2026-03-08 | Last updated: 2026-05-04 (Heroku v77 deploy: sessions 27 + 28 live; dependabot PR triage deferred)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -225,6 +225,13 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
   - [x] Privacy policy updated to describe cookieless PostHog analytics
   - [x] ENV vars: `POSTHOG_PROJECT_TOKEN`, `POSTHOG_HOST`
 - [x] Test fixtures + Devise integration helpers — fixtures for all 4 resources + user; scaffold controller tests fixed (were broken since scaffolding — missing fixtures + no auth) ✅ (2026-04-07)
+- [x] Heroku deploy v77 — sessions 27 + 28 pushed live; `AddAuthorsToResearchItems` + `ChangeYearToStringOnGrantAwards` migrations ran via Procfile release command ✅ (2026-05-04)
+- [ ] Dependabot PR triage (deferred — schedule a focused session) — 12 open PRs on GitHub; deliberately deferred 2026-05-04. Priority order when picked up:
+  - **Tier 1 (security)**: #12 rails 8.1.2→8.1.3, #7 devise 5.0.2→5.0.3
+  - **Tier 2 (low risk)**: #20 pagy 43.3→43.5, #13 solid_queue 1.3→1.4, #18 ruby_llm 1.13→1.14, #10 kamal 2.10→2.11
+  - **Tier 3 (read changelog first)**: #21 puma 7→8 (major bump on web server)
+  - **Tier 4 (ignore or batch)**: #22 faker, #14 thruster, #19 simple_form, #1/#2 GitHub Actions
+  - Also: bump Ruby to 3.3.11 (Heroku flagged 3.3.10 as outdated on v77 build)
 
 ---
 
