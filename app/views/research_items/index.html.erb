@@ -11,12 +11,26 @@
       </p>
       <% if user_signed_in? %>
         <p class="resource-hero-subtitle resource-hero-info mt-2">
-          <i class="fa-solid fa-star me-1" style="color: #facc15;"></i>Tick <strong>`Featured`</strong> on an item to include it in the homepage Research section — <span class="hi-teal">max 4 shown, most recently updated first</span>. If you feature more than 4, the most recently edited items take priority. <span class="hi-grad">Drag reorders this page only</span> — it does not affect the homepage.
+          <i class="fa-solid fa-star me-1" style="color: #facc15;"></i>Tick <strong>`Featured`</strong> on an item to include it in the homepage Research section — <span class="hi-teal">max 4 shown, most recently updated first</span>. If you feature more than 4, the most recently edited items take priority. <span class="hi-grad">Drag to reorder</span> this list (not the homepage). Items default to newest publication first — use <strong>View all on one page</strong> to drag across everything without pages, or <strong>Sort by most recent</strong> to reset.
         </p>
-      <% end %>
-      <% if user_signed_in? %>
-        <div class="mt-4">
-          <%= link_to "Add Research Item", new_research_item_path, class: "btn btn-grad" %>
+        <div class="mt-4 d-flex flex-wrap gap-2">
+          <%= link_to new_research_item_path, class: "btn btn-grad" do %>
+            <i class="fa-solid fa-plus me-1"></i>Add Research Item
+          <% end %>
+          <% if @full_view %>
+            <%= link_to research_items_path, class: "btn home-btn-outline" do %>
+              <i class="fa-solid fa-compress me-1"></i>Back to paged view
+            <% end %>
+            <%= link_to sort_by_recency_research_items_path, class: "btn home-btn-outline",
+                  data: { turbo_method: :patch,
+                          turbo_confirm: "This resets the order to newest-first and discards your manual arrangement. Continue?" } do %>
+              <i class="fa-solid fa-arrow-down-wide-short me-1"></i>Sort by most recent
+            <% end %>
+          <% else %>
+            <%= link_to research_items_path(view: "full"), class: "btn home-btn-outline" do %>
+              <i class="fa-solid fa-up-right-and-down-left-from-center me-1"></i>View all on one page
+            <% end %>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -104,8 +118,10 @@
       </div>
     <% end %>
 
-    <div class="mt-5">
-      <%= raw @pagy.series_nav(:bootstrap) if @pagy.pages > 1 %>
-    </div>
+    <% if @pagy && @pagy.pages > 1 %>
+      <div class="mt-5">
+        <%= raw @pagy.series_nav(:bootstrap) %>
+      </div>
+    <% end %>
   </div>
 </section>

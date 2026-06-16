@@ -33,7 +33,10 @@ Rails.application.routes.draw do
     end
   end
   resources :research_items do
-    collection { patch :reorder }
+    collection do
+      patch :reorder
+      patch :sort_by_recency
+    end
     member do
       patch "publish"
       patch "schedule"

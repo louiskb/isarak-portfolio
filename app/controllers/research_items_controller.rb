@@ -3,10 +3,20 @@ class ResearchItemsController < ApplicationController
   before_action :set_research_item, only: %i[ show edit update destroy publish schedule cancel_schedule ]
 
   # GET /research_items
-  # Public — visitors see published items; Isara sees all with status badges + Manage button
+  # Public — visitors see published items (paginated); Isara sees all items.
+  # Isara can toggle ?view=full to see every item on one un-paginated page for
+  # easier drag-and-drop reordering across the whole set.
   def index
     scope = user_signed_in? ? ResearchItem.all : ResearchItem.published
-    @pagy, @research_items = pagy(scope.order(:position, :created_at))
+    ordered = scope.order(:position, :created_at)
+
+    if user_signed_in? && params[:view] == "full"
+      @full_view = true
+      @research_items = ordered
+    else
+      @full_view = false
+      @pagy, @research_items = pagy(ordered)
+    end
   end
 
   def reorder
@@ -14,6 +24,14 @@ class ResearchItemsController < ApplicationController
       ResearchItem.where(id: id).update_all(position: index)
     end
     head :ok
+  end
+
+  # PATCH /research_items/sort_by_recency
+  # Reset button — re-stamps every item's order to newest-publication-first.
+  def sort_by_recency
+    ResearchItem.sort_by_recency!
+    redirect_to research_items_path(view: "full"),
+                notice: "Research items sorted by most recent."
   end
 
   # GET /research_items/1
@@ -48,7 +66,7 @@ class ResearchItemsController < ApplicationController
       params.dig(:research_item, :scheduled_at)
     )
     @research_item = current_user.research_items.new(
-      research_item_params.merge(status: status, scheduled_at: scheduled_at)
+      research_item_params.merge(status: status, scheduled_at: scheduled_at, position: top_position)
     )
 
     respond_to do |format|
@@ -126,6 +144,12 @@ class ResearchItemsController < ApplicationController
 
   def set_research_item
     @research_item = ResearchItem.friendly.find(params[:id])
+  end
+
+  # New items go to the top of the list (one below the current minimum), so a
+  # freshly added publication shows first by default rather than at the bottom.
+  def top_position
+    (ResearchItem.minimum(:position) || 0) - 1
   end
 
   def research_item_params
