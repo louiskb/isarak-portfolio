@@ -1,6 +1,6 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-05-04 (Heroku v77 deploy: sessions 27 + 28 live; dependabot PR triage deferred)
+> Created: 2026-03-08 | Last updated: 2026-06-16 (Research index now date-default + full-page drag/reorder view with "Sort by most recent" reset)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
@@ -71,6 +71,7 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] Homepage featured queries — `.published` filter added to `@featured_research`, `@featured_teachings`, `@featured_grants` in `HomePageContent` concern ✅ (2026-03-20, session 21)
 - [x] Research categories — expanded from 3 (project/paper/publication) to 10 string-backed categories (Journal Article, Edited Book, Book, Book Chapter, Thesis, Conference Paper, White Paper, Conference Presentation, Article, Project); colour-coded pill badges on index + show ✅ (2026-03-17)
 - [x] Drag-and-drop reordering — Sortable.js (ESM build vendored); `sortable_controller.js` Stimulus controller; `position` column + `reorder` collection route on Teaching, ResearchItem, GrantAward; grip handle appears on hover (desktop) / always visible (mobile) ✅ (2026-03-17)
+- [x] Research index ordering + full-page reorder view — index defaults to newest publication first (`published_at` desc, NULLS LAST; one-time backfill migration via `ResearchItem.sort_by_recency!`); signed-in Isara can toggle `?view=full` for an un-paginated one-page drag view + "Sort by most recent" reset button (re-stamps `position` by date, confirm-guarded); new items land at the top; visitors keep the paginated published-only list; homepage Featured Research unchanged ✅ (2026-06-16)
 - [x] Grant Awards overhaul — removed `featured` column entirely; all awards show on homepage in drag order; `default_scope` removed from all models (drag only affects index page, not homepage queries) ✅ (2026-03-17)
 - [x] Homepage featured ordering — Teaching + Research now use `updated_at: :desc` (most recently edited floats up); GrantAward uses drag position; `default_scope` removed from all three models to prevent bleed ✅ (2026-03-17)
 - [x] Hero banner explanations — consistent `resource-hero-info` + `hi-teal` CSS classes across Teaching, Research, Awards, Blog index pages; yellow star + Featured styling on Teaching/Research/Blog ✅ (2026-03-17)

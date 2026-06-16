@@ -121,6 +121,7 @@ Living docs for this project (checked by the `docs-sync` skill):
 - Teaching, Research, and Grant Awards all have public index + show pages; visitors see published items only
 - `card_summary` column on Research, Teaching, and Grant Awards — short text shown on index/homepage cards; `description` is the full content shown on show pages only (parallels `blog_excerpt` on BlogPost)
 - Drag-and-drop reordering on index pages (SortableJS + `position` column)
+- Research index defaults to newest-publication-first (`published_at` desc, nulls last). Signed-in Isara can toggle `?view=full` for an un-paginated one-page drag view, plus a "Sort by most recent" button that re-stamps `position` by date. New research items land at the top. Homepage Featured Research is unaffected.
 - Contact form uses Turbo disabled (`data-turbo="false"`) for reliable flash rendering
 - CV is an Active Storage attachment on User model (not its own model)
 - PostHog is **cookieless** (`persistence: 'memory'`) — no cookies, no localStorage, no cross-session tracking. JS snippet only loads for visitors (not admin). No cookie banner needed.
