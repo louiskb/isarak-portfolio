@@ -1,0 +1,56 @@
+<%# Inline tag creator/selector shared across resource forms.
+    Mirrors the blog post tag manager. Requires @all_tags to be loaded.
+    Locals:
+      record — the model instance being edited (for pre-checking its tags)
+      param  — the nested form param name, e.g. "research_item" %>
+<div class="mb-4 mt-4" data-controller="tag-manager"
+     data-tag-manager-resource-param-value="<%= param %>">
+  <label class="form-label fw-semibold">Tags</label>
+  <p class="form-text mb-3">
+    Tags let visitors filter these items. Check <i class="fa-regular fa-square-check" style="color: #89D6CC;"></i> to attach a tag. Use the form below to add new tags or <span style="color: #f87171; font-size: 1rem; font-weight: 600;">&times;</span> to delete one globally.
+  </p>
+
+  <%# Existing tags as checkboxes %>
+  <div class="tag-manager-list mb-3" data-tag-manager-target="tagList">
+    <% @all_tags.each do |tag| %>
+      <div class="tag-checkbox-item" data-tag-id="<%= tag.id %>">
+        <label class="tag-checkbox-label">
+          <%= check_box_tag "#{param}[tag_ids][]", tag.id,
+                record.tag_ids.include?(tag.id),
+                id: "tag_#{tag.id}",
+                class: "tag-checkbox-input" %>
+          <span class="tag-checkbox-name"><%= tag.name %></span>
+        </label>
+        <button type="button"
+                class="tag-delete-btn"
+                title="Delete tag globally"
+                data-action="click->tag-manager#deleteTag"
+                data-tag-id="<%= tag.id %>">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    <% end %>
+    <% if @all_tags.empty? %>
+      <p class="text-muted small tag-manager-empty">No tags yet. Add one below.</p>
+    <% end %>
+  </div>
+
+  <%# Inline tag creator %>
+  <div class="tag-creator d-flex gap-2 align-items-center">
+    <input type="text"
+           class="form-control form-control-sm tag-creator-input"
+           placeholder="New tag name…"
+           data-tag-manager-target="nameInput"
+           data-action="keydown.enter->tag-manager#addTag:prevent">
+    <button type="button"
+            class="btn btn-resource-edit btn-sm text-nowrap"
+            data-action="click->tag-manager#addTag"
+            data-tag-manager-target="addButton">
+      <i class="fa-solid fa-plus me-1"></i>Add tag
+    </button>
+  </div>
+  <p class="profile-input-hint mt-1 mb-0 tag-creator-hint" data-tag-manager-target="hint"></p>
+</div>
+
+<%# Ensure empty tag_ids clears previous associations when no boxes are checked %>
+<input type="hidden" name="<%= param %>[tag_ids][]" value="">

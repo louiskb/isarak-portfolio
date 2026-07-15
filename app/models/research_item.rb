@@ -21,6 +21,9 @@ class ResearchItem < ApplicationRecord
   belongs_to :user
   has_one_attached :image
 
+  has_many :research_item_tags, dependent: :destroy
+  has_many :tags, through: :research_item_tags
+
   scope :published, -> { where(status: :published) }
   scope :visible_to_visitors, -> { published }
 

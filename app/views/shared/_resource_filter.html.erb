@@ -1,0 +1,47 @@
+<%# Search + tag filter bar shared across resource index pages.
+    Reuses the blog filter styling (blog-*) and blog-filter Stimulus controller.
+    Locals:
+      path         — the index path to submit the GET form to
+      resource     — analytics event prefix passed to blog-filter (e.g. "research")
+      all_tags     — collection of Tag records to render as filter pills
+      placeholder  — (optional) search input placeholder text %>
+<% placeholder ||= "Search…" %>
+<section class="blog-filter-section">
+  <div class="container">
+    <%= form_with url: path, method: :get,
+          data: { controller: "blog-filter", "blog-filter-resource-value": resource, turbo_action: "replace" },
+          local: true do |f| %>
+
+      <div class="blog-search-wrapper">
+        <%= f.search_field :q,
+              value: params[:q],
+              placeholder: placeholder,
+              class: "blog-search-input",
+              autocomplete: "off",
+              data: { action: "input->blog-filter#search" } %>
+        <i class="fa-solid fa-magnifying-glass blog-search-icon"></i>
+      </div>
+
+      <% if all_tags.any? %>
+        <div class="blog-tag-filter mt-3">
+          <% active_tag_ids = Array(params[:tag_ids]).map(&:to_s) %>
+          <% all_tags.each do |tag| %>
+            <label class="blog-tag-pill <%= "active" if active_tag_ids.include?(tag.id.to_s) %>">
+              <%= check_box_tag "tag_ids[]", tag.id,
+                    active_tag_ids.include?(tag.id.to_s),
+                    class: "visually-hidden",
+                    data: { action: "change->blog-filter#submit" } %>
+              <%= tag.name %>
+            </label>
+          <% end %>
+          <% if active_tag_ids.any? %>
+            <%= link_to path, class: "blog-tag-pill blog-tag-pill-clear", data: { turbo_action: "replace" } do %>
+              <i class="fa-solid fa-xmark me-1"></i>Clear filters
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+    <% end %>
+  </div>
+</section>

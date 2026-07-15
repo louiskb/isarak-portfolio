@@ -37,16 +37,18 @@
   </div>
 </section>
 
+<%= render "shared/resource_filter", path: research_items_path, resource: "research", all_tags: @all_tags, placeholder: "Search research…" %>
+
 <%# ===== GRID ===== %>
 <section class="resource-grid-section">
   <div class="container">
     <% if @research_items.any? %>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
-           <% if user_signed_in? %>data-controller="sortable" data-sortable-url-value="<%= reorder_research_items_path %>"<% end %>>
+           <% if user_signed_in? && !@filtering %>data-controller="sortable" data-sortable-url-value="<%= reorder_research_items_path %>"<% end %>>
         <% @research_items.each do |item| %>
           <div class="col" data-id="<%= item.id %>">
             <article class="resource-card card">
-              <% if user_signed_in? %>
+              <% if user_signed_in? && !@filtering %>
                 <div class="drag-handle" title="Drag to reorder">
                   <i class="fa-solid fa-grip-vertical"></i>
                 </div>
@@ -111,9 +113,14 @@
       </div>
     <% else %>
       <div class="resource-empty text-center">
-        <p class="text-muted mb-3">No research items yet.</p>
-        <% if user_signed_in? %>
-          <%= link_to "Add your first item", new_research_item_path, class: "btn btn-resource-add" %>
+        <% if @filtering %>
+          <p class="text-muted mb-3">No research items match your search or filter.</p>
+          <%= link_to "Clear filters", research_items_path, class: "btn home-btn-outline btn-sm" %>
+        <% else %>
+          <p class="text-muted mb-3">No research items yet.</p>
+          <% if user_signed_in? %>
+            <%= link_to "Add your first item", new_research_item_path, class: "btn btn-resource-add" %>
+          <% end %>
         <% end %>
       </div>
     <% end %>

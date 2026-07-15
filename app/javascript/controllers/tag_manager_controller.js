@@ -1,10 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Handles inline tag creation and deletion inside the blog post new/edit forms.
+// Handles inline tag creation and deletion inside any resource new/edit form
+// (blog posts, research items, teachings, grant awards).
 // Creates tags via POST /tags (JSON), deletes via DELETE /tags/:id (JSON).
 // Dynamically adds/removes checkboxes without a page reload.
+// resourceParamValue names the form param (e.g. "blog_post", "research_item")
+// so newly added checkboxes post under the right nested key. Defaults to
+// "blog_post" for backward compatibility.
 export default class extends Controller {
   static targets = ["nameInput", "tagList", "addButton", "hint"]
+  static values = { resourceParam: { type: String, default: "blog_post" } }
 
   async addTag(event) {
     event.preventDefault()
@@ -60,7 +65,7 @@ export default class extends Controller {
     item.dataset.tagId = id
     item.innerHTML = `
       <label class="tag-checkbox-label">
-        <input type="checkbox" name="blog_post[tag_ids][]" value="${id}" id="tag_${id}" class="tag-checkbox-input" checked>
+        <input type="checkbox" name="${this.resourceParamValue}[tag_ids][]" value="${id}" id="tag_${id}" class="tag-checkbox-input" checked>
         <span class="tag-checkbox-name">${this.escapeHtml(name)}</span>
       </label>
       <button type="button"
@@ -81,7 +86,7 @@ export default class extends Controller {
     const item = this.tagListTarget.querySelector(`[data-tag-id="${tagId}"]`)
     const tagName = item?.querySelector(".tag-checkbox-name")?.textContent || "this tag"
 
-    if (!confirm(`Delete "${tagName}"? It will be removed from all blog posts.`)) return
+    if (!confirm(`Delete "${tagName}"? It will be removed everywhere it's used.`)) return
 
     try {
       const response = await fetch(`/tags/${tagId}`, {

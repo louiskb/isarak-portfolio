@@ -1,6 +1,7 @@
 class ResearchItemsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_research_item, only: %i[ show edit update destroy publish schedule cancel_schedule ]
+  before_action :load_tags, only: %i[ new edit ]
 
   # GET /research_items
   # Public — visitors see published items (paginated); Isara sees all items.
@@ -8,6 +9,18 @@ class ResearchItemsController < ApplicationController
   # easier drag-and-drop reordering across the whole set.
   def index
     scope = user_signed_in? ? ResearchItem.all : ResearchItem.published
+
+    if params[:q].present?
+      scope = scope.where("title ILIKE ?", "%#{params[:q].strip}%")
+    end
+
+    if params[:tag_ids].present?
+      tag_ids = Array(params[:tag_ids]).map(&:to_i).select(&:positive?)
+      scope = scope.joins(:tags).where(tags: { id: tag_ids }).distinct if tag_ids.any?
+    end
+
+    @filtering = params[:q].present? || params[:tag_ids].present?
+    @all_tags = Tag.order(:name)
     ordered = scope.order(:position, :created_at)
 
     if user_signed_in? && params[:view] == "full"
@@ -153,7 +166,11 @@ class ResearchItemsController < ApplicationController
   end
 
   def research_item_params
-    params.expect(research_item: [ :title, :category, :description, :card_summary, :external_url, :published_at, :authors, :image_url, :image, :featured, :slug ])
+    params.expect(research_item: [ :title, :category, :description, :card_summary, :external_url, :published_at, :authors, :image_url, :image, :featured, :slug, { tag_ids: [] } ])
+  end
+
+  def load_tags
+    @all_tags = Tag.order(:name)
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

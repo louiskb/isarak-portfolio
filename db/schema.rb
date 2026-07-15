@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_16_122333) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_15_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -90,6 +90,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_122333) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "grant_award_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "grant_award_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grant_award_id", "tag_id"], name: "index_grant_award_tags_on_grant_award_id_and_tag_id", unique: true
+    t.index ["grant_award_id"], name: "index_grant_award_tags_on_grant_award_id"
+    t.index ["tag_id"], name: "index_grant_award_tags_on_tag_id"
+  end
+
   create_table "grant_awards", force: :cascade do |t|
     t.string "awarding_body"
     t.text "card_summary"
@@ -105,6 +115,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_122333) do
     t.bigint "user_id", null: false
     t.string "year"
     t.index ["user_id"], name: "index_grant_awards_on_user_id"
+  end
+
+  create_table "research_item_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "research_item_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["research_item_id", "tag_id"], name: "index_research_item_tags_on_research_item_id_and_tag_id", unique: true
+    t.index ["research_item_id"], name: "index_research_item_tags_on_research_item_id"
+    t.index ["tag_id"], name: "index_research_item_tags_on_tag_id"
   end
 
   create_table "research_items", force: :cascade do |t|
@@ -139,6 +159,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_122333) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "teaching_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "tag_id", null: false
+    t.bigint "teaching_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_teaching_tags_on_tag_id"
+    t.index ["teaching_id", "tag_id"], name: "index_teaching_tags_on_teaching_id_and_tag_id", unique: true
+    t.index ["teaching_id"], name: "index_teaching_tags_on_teaching_id"
   end
 
   create_table "teachings", force: :cascade do |t|
@@ -185,8 +215,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_122333) do
   add_foreign_key "blog_post_tags", "blog_posts"
   add_foreign_key "blog_post_tags", "tags"
   add_foreign_key "blog_posts", "users"
+  add_foreign_key "grant_award_tags", "grant_awards"
+  add_foreign_key "grant_award_tags", "tags"
   add_foreign_key "grant_awards", "users"
+  add_foreign_key "research_item_tags", "research_items"
+  add_foreign_key "research_item_tags", "tags"
   add_foreign_key "research_items", "users"
   add_foreign_key "services", "users"
+  add_foreign_key "teaching_tags", "tags"
+  add_foreign_key "teaching_tags", "teachings"
   add_foreign_key "teachings", "users"
 end

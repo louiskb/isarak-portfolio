@@ -2,6 +2,15 @@ class Tag < ApplicationRecord
   has_many :blog_post_tags, dependent: :destroy
   has_many :blog_posts, through: :blog_post_tags
 
+  has_many :research_item_tags, dependent: :destroy
+  has_many :research_items, through: :research_item_tags
+
+  has_many :teaching_tags, dependent: :destroy
+  has_many :teachings, through: :teaching_tags
+
+  has_many :grant_award_tags, dependent: :destroy
+  has_many :grant_awards, through: :grant_award_tags
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   # Capitalise the first letter of each word, preserving hyphens.

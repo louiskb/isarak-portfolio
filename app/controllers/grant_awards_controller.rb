@@ -1,11 +1,24 @@
 class GrantAwardsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_grant_award, only: %i[ show edit update destroy publish schedule cancel_schedule ]
+  before_action :load_tags, only: %i[ new edit ]
 
   # GET /grant_awards
   # Public — visitors see published items; Isara sees all with status badges + Manage button
   def index
     scope = user_signed_in? ? GrantAward.all : GrantAward.published
+
+    if params[:q].present?
+      scope = scope.where("title ILIKE ?", "%#{params[:q].strip}%")
+    end
+
+    if params[:tag_ids].present?
+      tag_ids = Array(params[:tag_ids]).map(&:to_i).select(&:positive?)
+      scope = scope.joins(:tags).where(tags: { id: tag_ids }).distinct if tag_ids.any?
+    end
+
+    @filtering = params[:q].present? || params[:tag_ids].present?
+    @all_tags = Tag.order(:name)
     @pagy, @grant_awards = pagy(scope.order(:position, :created_at))
   end
 
@@ -117,7 +130,11 @@ class GrantAwardsController < ApplicationController
   end
 
   def grant_award_params
-    params.expect(grant_award: [ :title, :description, :card_summary, :year, :awarding_body, :category, :slug, :featured ])
+    params.expect(grant_award: [ :title, :description, :card_summary, :year, :awarding_body, :category, :slug, :featured, { tag_ids: [] } ])
+  end
+
+  def load_tags
+    @all_tags = Tag.order(:name)
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

@@ -54,6 +54,8 @@
   </div>
 
   <%# Hidden fields — controlled by the split button via the publish-form Stimulus controller %>
+  <%= render "shared/tag_manager", record: @grant_award, param: "grant_award" %>
+
   <input type="hidden"
          name="grant_award[status]"
          value="<%= @grant_award.status || "draft" %>"

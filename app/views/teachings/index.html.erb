@@ -21,16 +21,18 @@
   </div>
 </section>
 
+<%= render "shared/resource_filter", path: teachings_path, resource: "teaching", all_tags: @all_tags, placeholder: "Search teaching…" %>
+
 <%# ===== GRID ===== %>
 <section class="resource-grid-section">
   <div class="container">
     <% if @teachings.any? %>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
-           <% if user_signed_in? %>data-controller="sortable" data-sortable-url-value="<%= reorder_teachings_path %>"<% end %>>
+           <% if user_signed_in? && !@filtering %>data-controller="sortable" data-sortable-url-value="<%= reorder_teachings_path %>"<% end %>>
         <% @teachings.each do |item| %>
           <div class="col" data-id="<%= item.id %>">
             <article class="resource-card card">
-              <% if user_signed_in? %>
+              <% if user_signed_in? && !@filtering %>
                 <div class="drag-handle" title="Drag to reorder">
                   <i class="fa-solid fa-grip-vertical"></i>
                 </div>
@@ -85,9 +87,14 @@
       </div>
     <% else %>
       <div class="resource-empty text-center">
-        <p class="text-muted mb-3">No teaching entries yet.</p>
-        <% if user_signed_in? %>
-          <%= link_to "Add your first entry", new_teaching_path, class: "btn btn-resource-add" %>
+        <% if @filtering %>
+          <p class="text-muted mb-3">No teaching entries match your search or filter.</p>
+          <%= link_to "Clear filters", teachings_path, class: "btn home-btn-outline btn-sm" %>
+        <% else %>
+          <p class="text-muted mb-3">No teaching entries yet.</p>
+          <% if user_signed_in? %>
+            <%= link_to "Add your first entry", new_teaching_path, class: "btn btn-resource-add" %>
+          <% end %>
         <% end %>
       </div>
     <% end %>

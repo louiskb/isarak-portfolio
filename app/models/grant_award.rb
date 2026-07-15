@@ -7,6 +7,9 @@ class GrantAward < ApplicationRecord
 
   belongs_to :user
 
+  has_many :grant_award_tags, dependent: :destroy
+  has_many :tags, through: :grant_award_tags
+
   scope :published, -> { where(status: :published) }
 
   validates :title, presence: true

@@ -1,11 +1,24 @@
 class TeachingsController < ApplicationController
   before_action :authenticate_user!, except: %i[ index show ]
   before_action :set_teaching, only: %i[ show edit update destroy publish schedule cancel_schedule ]
+  before_action :load_tags, only: %i[ new edit ]
 
   # GET /teachings
   # Public — visitors see published items; Isara sees all with status badges + Manage button
   def index
     scope = user_signed_in? ? Teaching.all : Teaching.published
+
+    if params[:q].present?
+      scope = scope.where("title ILIKE ?", "%#{params[:q].strip}%")
+    end
+
+    if params[:tag_ids].present?
+      tag_ids = Array(params[:tag_ids]).map(&:to_i).select(&:positive?)
+      scope = scope.joins(:tags).where(tags: { id: tag_ids }).distinct if tag_ids.any?
+    end
+
+    @filtering = params[:q].present? || params[:tag_ids].present?
+    @all_tags = Tag.order(:name)
     @pagy, @teachings = pagy(scope.order(:position, :created_at))
   end
 
@@ -129,7 +142,11 @@ class TeachingsController < ApplicationController
   end
 
   def teaching_params
-    params.expect(teaching: [ :title, :description, :card_summary, :institution, :year, :image_url, :image, :slug, :featured, :external_url ])
+    params.expect(teaching: [ :title, :description, :card_summary, :institution, :year, :image_url, :image, :slug, :featured, :external_url, { tag_ids: [] } ])
+  end
+
+  def load_tags
+    @all_tags = Tag.order(:name)
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)
