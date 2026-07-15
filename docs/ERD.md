@@ -151,6 +151,7 @@ erDiagram
     TAG {
         int id PK
         string name
+        string resource_type
         datetime created_at
         datetime updated_at
     }
@@ -243,7 +244,7 @@ erDiagram
 - `Contact` — standalone model; no FK to User; stores contact form submissions only
 - Active Storage uses Cloudinary as the backend in both development and production (`config.active_storage.service = :cloudinary`)
 - `active_storage_variant_records` stores Cloudinary transformation references (not local files)
-- `Tag.name` — unique case-insensitively; `before_save` normalises capitalisation using `\b[a-z]` regex (preserves hyphens, unlike `titleize`)
+- `Tag.name` — unique case-insensitively **per `resource_type`** (composite unique index `[resource_type, name]`); `before_save` normalises capitalisation using `\b[a-z]` regex (preserves hyphens, unlike `titleize`). `resource_type` (one of `blog_post`/`research_item`/`teaching`/`grant_award`) scopes each tag to a single resource
 - `BlogPostTag` — join table; unique composite index on `[blog_post_id, tag_id]`; `has_many :through` from both sides
-- `ResearchItemTag`, `TeachingTag`, `GrantAwardTag` — parallel join tables mirroring `BlogPostTag`; each has a unique composite index and `has_many :through` from both sides. All four join tables point at the **same shared `tags` table**, so a tag created on one resource type (e.g. a blog post) is reusable on every other resource. `Tag` has reciprocal `has_many ... dependent: :destroy` for each join, so deleting a tag cleans every join row across all resources
+- `ResearchItemTag`, `TeachingTag`, `GrantAwardTag` — parallel join tables mirroring `BlogPostTag`; each has a unique composite index and `has_many :through` from both sides. Each resource owns an **isolated tag library**: `tags.resource_type` scopes every tag to one resource, so a tag created on one resource is **not** reusable on another and deleting it only cleans that resource's join rows. `Tag` keeps reciprocal `has_many ... dependent: :destroy` for each join, but any given tag only ever has rows in its own resource's join table
 - Mermaid can't model polymorphic associations precisely — `ACTIVE_STORAGE_ATTACHMENT.record_type` holds the owner class name (`"User"`, `"BlogPost"`, `"Service"`, etc.) and `record_id` holds the owner's PK

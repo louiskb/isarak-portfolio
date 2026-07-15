@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-07-15 (Search + tag filters extended from blog to Research, Teaching, and Grants & Awards — shared global tag vocabulary + inline tag creation on each resource form)
+> Created: 2026-03-08 | Last updated: 2026-07-15 (Tag libraries isolated per resource — blog/research/teaching/awards each own a separate tag list via `tags.resource_type`; deleting/creating a tag only affects its own section)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Research items now support an `authors` field for co-author attribution. Search + tag filters now work on Research, Teaching, and Grants & Awards indexes (matching the blog), with inline tag creation on each resource form and one shared global tag vocabulary. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
+Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Research items now support an `authors` field for co-author attribution. Search + tag filters now work on Research, Teaching, and Grants & Awards indexes (matching the blog), with inline tag creation on each resource form. Each resource owns an **isolated tag library** (`tags.resource_type`) — blog tags are separate from research/teaching/awards tags, so creating or deleting a tag only affects that one section. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
 
 ---
 
