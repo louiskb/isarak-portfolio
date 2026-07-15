@@ -18,7 +18,7 @@ class GrantAwardsController < ApplicationController
     end
 
     @filtering = params[:q].present? || params[:tag_ids].present?
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("grant_award").order(:name)
     @pagy, @grant_awards = pagy(scope.order(:position, :created_at))
   end
 
@@ -134,7 +134,7 @@ class GrantAwardsController < ApplicationController
   end
 
   def load_tags
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("grant_award").order(:name)
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

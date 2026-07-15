@@ -20,7 +20,7 @@ class ResearchItemsController < ApplicationController
     end
 
     @filtering = params[:q].present? || params[:tag_ids].present?
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("research_item").order(:name)
     ordered = scope.order(:position, :created_at)
 
     if user_signed_in? && params[:view] == "full"
@@ -170,7 +170,7 @@ class ResearchItemsController < ApplicationController
   end
 
   def load_tags
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("research_item").order(:name)
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

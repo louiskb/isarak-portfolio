@@ -16,7 +16,7 @@ class BlogPostsController < ApplicationController
       scope = scope.joins(:tags).where(tags: { id: tag_ids }).distinct if tag_ids.any?
     end
 
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("blog_post").order(:name)
     @pagy, @blog_posts = pagy(scope.order(created_at: :desc))
   end
 
@@ -223,7 +223,7 @@ class BlogPostsController < ApplicationController
   end
 
   def load_tags
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("blog_post").order(:name)
   end
 
   def ai_params

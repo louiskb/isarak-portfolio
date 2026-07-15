@@ -75,7 +75,7 @@
   <div class="mb-4 mt-4" data-controller="tag-manager">
     <label class="form-label fw-semibold">Tags</label>
     <p class="form-text mb-3">
-      Tags let visitors filter blog posts. Check <i class="fa-regular fa-square-check" style="color: #89D6CC;"></i> to attach a tag to this post. Use the form below to add new tags or <span style="color: #f87171; font-size: 1rem; font-weight: 600;">&times;</span> to delete one globally.
+      Tags let visitors filter blog posts. Check <i class="fa-regular fa-square-check" style="color: #89D6CC;"></i> to attach a tag to this post. Use the form below to add new tags or <span style="color: #f87171; font-size: 1rem; font-weight: 600;">&times;</span> to delete one from the blog. Blog tags are separate from research, teaching and awards tags.
     </p>
 
     <%# Existing tags as checkboxes %>
@@ -91,7 +91,7 @@
           </label>
           <button type="button"
                   class="tag-delete-btn"
-                  title="Delete tag globally"
+                  title="Delete tag from the blog"
                   data-action="click->tag-manager#deleteTag"
                   data-tag-id="<%= tag.id %>">
             <i class="fa-solid fa-xmark"></i>

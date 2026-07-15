@@ -7,7 +7,7 @@
      data-tag-manager-resource-param-value="<%= param %>">
   <label class="form-label fw-semibold">Tags</label>
   <p class="form-text mb-3">
-    Tags let visitors filter these items. Check <i class="fa-regular fa-square-check" style="color: #89D6CC;"></i> to attach a tag. Use the form below to add new tags or <span style="color: #f87171; font-size: 1rem; font-weight: 600;">&times;</span> to delete one globally.
+    Tags let visitors filter these items. Check <i class="fa-regular fa-square-check" style="color: #89D6CC;"></i> to attach a tag. Use the form below to add new tags or <span style="color: #f87171; font-size: 1rem; font-weight: 600;">&times;</span> to delete one from this section. Each section keeps its own tag list.
   </p>
 
   <%# Existing tags as checkboxes %>
@@ -23,7 +23,7 @@
         </label>
         <button type="button"
                 class="tag-delete-btn"
-                title="Delete tag globally"
+                title="Delete tag from this section"
                 data-action="click->tag-manager#deleteTag"
                 data-tag-id="<%= tag.id %>">
           <i class="fa-solid fa-xmark"></i>

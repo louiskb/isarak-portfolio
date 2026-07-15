@@ -11,7 +11,14 @@ class Tag < ApplicationRecord
   has_many :grant_award_tags, dependent: :destroy
   has_many :grant_awards, through: :grant_award_tags
 
-  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  # Each resource owns an isolated tag library — a tag belongs to exactly one.
+  RESOURCE_TYPES = %w[blog_post research_item teaching grant_award].freeze
+
+  validates :resource_type, presence: true, inclusion: { in: RESOURCE_TYPES }
+  validates :name, presence: true,
+                   uniqueness: { case_sensitive: false, scope: :resource_type }
+
+  scope :for_resource, ->(type) { where(resource_type: type) }
 
   # Capitalise the first letter of each word, preserving hyphens.
   # titleize strips hyphens ("Transit-Oriented" → "Transit Oriented"), so use \b instead.

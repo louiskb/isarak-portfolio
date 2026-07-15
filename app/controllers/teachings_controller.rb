@@ -18,7 +18,7 @@ class TeachingsController < ApplicationController
     end
 
     @filtering = params[:q].present? || params[:tag_ids].present?
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("teaching").order(:name)
     @pagy, @teachings = pagy(scope.order(:position, :created_at))
   end
 
@@ -146,7 +146,7 @@ class TeachingsController < ApplicationController
   end
 
   def load_tags
-    @all_tags = Tag.order(:name)
+    @all_tags = Tag.for_resource("teaching").order(:name)
   end
 
   def resolve_publish_intent(raw_status, raw_scheduled_at)

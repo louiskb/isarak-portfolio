@@ -27,7 +27,7 @@ export default class extends Controller {
           "X-CSRF-Token": this.csrfToken,
           "Accept": "application/json"
         },
-        body: JSON.stringify({ tag: { name } })
+        body: JSON.stringify({ tag: { name }, resource_type: this.resourceParamValue })
       })
 
       const data = await response.json()
@@ -70,7 +70,7 @@ export default class extends Controller {
       </label>
       <button type="button"
               class="tag-delete-btn"
-              title="Delete tag globally"
+              title="Delete tag from this section"
               data-action="click->tag-manager#deleteTag"
               data-tag-id="${id}">
         <i class="fa-solid fa-xmark"></i>
@@ -86,7 +86,7 @@ export default class extends Controller {
     const item = this.tagListTarget.querySelector(`[data-tag-id="${tagId}"]`)
     const tagName = item?.querySelector(".tag-checkbox-name")?.textContent || "this tag"
 
-    if (!confirm(`Delete "${tagName}"? It will be removed everywhere it's used.`)) return
+    if (!confirm(`Delete "${tagName}"? It will be removed from this section's tags only — other sections keep their own tags.`)) return
 
     try {
       const response = await fetch(`/tags/${tagId}`, {

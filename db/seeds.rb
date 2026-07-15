@@ -369,7 +369,7 @@ tag_names = [
 ]
 
 tags = tag_names.each_with_object({}) do |name, hash|
-  hash[name] = Tag.find_or_create_by!(name: name)
+  hash[name] = Tag.find_or_create_by!(name: name, resource_type: "blog_post")
   puts "  ✓ #{name}"
 end
 
