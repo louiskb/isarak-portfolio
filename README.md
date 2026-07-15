@@ -8,6 +8,7 @@ Built with Ruby on Rails 8 as client work by [Louis Bourne](https://github.com/l
 
 **For visitors:**
 - Browse Isara's academic profile, research areas, teaching highlights, and career history
+- Search and filter research, teaching, and grants & awards by keyword or tag (same as the blog)
 - Read Isara's blog (written manually or AI-generated with Unsplash imagery)
 - Download documents — CV, research papers, publications
 - Get in touch via a contact form (spam-protected, email confirmation sent to sender)

@@ -163,6 +163,30 @@ erDiagram
         datetime updated_at
     }
 
+    RESEARCH_ITEM_TAG {
+        int id PK
+        int research_item_id FK
+        int tag_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    TEACHING_TAG {
+        int id PK
+        int teaching_id FK
+        int tag_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
+    GRANT_AWARD_TAG {
+        int id PK
+        int grant_award_id FK
+        int tag_id FK
+        datetime created_at
+        datetime updated_at
+    }
+
     USER ||--o{ RESEARCH_ITEM : "has many"
     USER ||--o{ GRANT_AWARD : "has many"
     USER ||--o{ TEACHING : "has many"
@@ -177,6 +201,12 @@ erDiagram
     ACTIVE_STORAGE_BLOB ||--o{ ACTIVE_STORAGE_VARIANT_RECORD : "has variants"
     BLOG_POST ||--o{ BLOG_POST_TAG : "has many"
     TAG ||--o{ BLOG_POST_TAG : "has many"
+    RESEARCH_ITEM ||--o{ RESEARCH_ITEM_TAG : "has many"
+    TAG ||--o{ RESEARCH_ITEM_TAG : "has many"
+    TEACHING ||--o{ TEACHING_TAG : "has many"
+    TAG ||--o{ TEACHING_TAG : "has many"
+    GRANT_AWARD ||--o{ GRANT_AWARD_TAG : "has many"
+    TAG ||--o{ GRANT_AWARD_TAG : "has many"
 ```
 
 ## Notes
@@ -215,4 +245,5 @@ erDiagram
 - `active_storage_variant_records` stores Cloudinary transformation references (not local files)
 - `Tag.name` — unique case-insensitively; `before_save` normalises capitalisation using `\b[a-z]` regex (preserves hyphens, unlike `titleize`)
 - `BlogPostTag` — join table; unique composite index on `[blog_post_id, tag_id]`; `has_many :through` from both sides
+- `ResearchItemTag`, `TeachingTag`, `GrantAwardTag` — parallel join tables mirroring `BlogPostTag`; each has a unique composite index and `has_many :through` from both sides. All four join tables point at the **same shared `tags` table**, so a tag created on one resource type (e.g. a blog post) is reusable on every other resource. `Tag` has reciprocal `has_many ... dependent: :destroy` for each join, so deleting a tag cleans every join row across all resources
 - Mermaid can't model polymorphic associations precisely — `ACTIVE_STORAGE_ATTACHMENT.record_type` holds the owner class name (`"User"`, `"BlogPost"`, `"Service"`, etc.) and `record_id` holds the owner's PK

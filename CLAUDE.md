@@ -56,7 +56,7 @@ app/
     users/            # Custom Devise sessions controller (empty override)
   javascript/
     controllers/      # Stimulus controllers (analytics, load_button, html_inject, sortable, char_counter, etc.)
-  models/             # BlogPost, Teaching, ResearchItem, GrantAward, Contact, Tag, User, Service
+  models/             # BlogPost, Teaching, ResearchItem, GrantAward, Contact, Tag, User, Service (+ *_tag join models)
   schemas/            # RubyLLM structured output schemas (blog_post_schema.rb)
   services/           # BlogPostAiService (AI generation + Unsplash)
   views/
@@ -121,11 +121,12 @@ Living docs for this project (checked by the `docs-sync` skill):
 - Teaching, Research, and Grant Awards all have public index + show pages; visitors see published items only
 - `card_summary` column on Research, Teaching, and Grant Awards — short text shown on index/homepage cards; `description` is the full content shown on show pages only (parallels `blog_excerpt` on BlogPost)
 - Drag-and-drop reordering on index pages (SortableJS + `position` column)
+- **Search + tag filters on all resource indexes** — Research, Teaching, Grants & Awards, and Blog each have a title search (`q`, `ILIKE`) + multi-select tag-filter pills (`tag_ids[]`). The blog markup/styles are reused via `shared/_resource_filter` (+ `blog_filter_controller`). Isara creates/deletes tags inline on each new/edit form via `shared/_tag_manager` (+ `tag_manager_controller`, POST/DELETE `/tags`). All four resources share **one global `tags` table** — a tag made on the blog is reusable on research, teaching, and awards (join tables: `blog_post_tags`, `research_item_tags`, `teaching_tags`, `grant_award_tags`; `Tag` has reciprocal `dependent: :destroy` so a delete cleans every join row). While a search/filter is active on a drag-reorderable index, drag handles + SortableJS are disabled (`@filtering`) so a filtered subset can't corrupt `position`.
 - Research index defaults to newest-publication-first (`published_at` desc, nulls last). Signed-in Isara can toggle `?view=full` for an un-paginated one-page drag view, plus a "Sort by most recent" button that re-stamps `position` by date. New research items land at the top. The index orders by `position` for **both** signed-in Isara and visitors, so the drag arrangement is exactly what the public sees on `/research_items`. Homepage Featured Research is the only exception — it ignores `position` (ordered by `updated_at` + Featured).
 - Contact form uses Turbo disabled (`data-turbo="false"`) for reliable flash rendering
 - CV is an Active Storage attachment on User model (not its own model)
 - PostHog is **cookieless** (`persistence: 'memory'`) — no cookies, no localStorage, no cross-session tracking. JS snippet only loads for visitors (not admin). No cookie banner needed.
 - PostHog **server-side events** (controllers): `blog_post_viewed`, `research_item_viewed`, `teaching_viewed`, `contact_submitted`, `cv_downloaded`
-- PostHog **client-side events** (Stimulus): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress`, `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`
+- PostHog **client-side events** (Stimulus): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress`, `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`, `research_searched`, `research_tag_filtered`, `teaching_searched`, `teaching_tag_filtered`, `award_searched`, `award_tag_filtered` (the last six fire from `blog_filter_controller` on the Research/Teaching/Awards indexes via its `resourceValue`)
 - `analytics_controller.js` — generic Stimulus controller for declarative event tracking via `data-action` attributes
 - No admin events tracked (no login, no blog create/publish/AI events)

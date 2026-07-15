@@ -1,10 +1,10 @@
 # Isarak Portfolio — TODO
 
-> Created: 2026-03-08 | Last updated: 2026-06-16 (Research index now date-default + full-page drag/reorder view with "Sort by most recent" reset)
+> Created: 2026-03-08 | Last updated: 2026-07-15 (Search + tag filters extended from blog to Research, Teaching, and Grants & Awards — shared global tag vocabulary + inline tag creation on each resource form)
 > Both Louis and Claude maintain this file. Check it at the start of each session.
 
 ## Current Focus
-Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Research items now support an `authors` field for co-author attribution. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
+Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fully wired (cookieless, visitor-only). Awards now have public index + show pages (matching Research/Teaching). `card_summary` added to Research, Teaching, and Awards for card text; `description` reserved for show pages. Research items now support an `authors` field for co-author attribution. Search + tag filters now work on Research, Teaching, and Grants & Awards indexes (matching the blog), with inline tag creation on each resource form and one shared global tag vocabulary. Next: Get Isara's real content in (bio, avatar, CV, featured items); scroll-triggered animations.
 
 ---
 
@@ -72,6 +72,11 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] Research categories — expanded from 3 (project/paper/publication) to 10 string-backed categories (Journal Article, Edited Book, Book, Book Chapter, Thesis, Conference Paper, White Paper, Conference Presentation, Article, Project); colour-coded pill badges on index + show ✅ (2026-03-17)
 - [x] Drag-and-drop reordering — Sortable.js (ESM build vendored); `sortable_controller.js` Stimulus controller; `position` column + `reorder` collection route on Teaching, ResearchItem, GrantAward; grip handle appears on hover (desktop) / always visible (mobile) ✅ (2026-03-17)
 - [x] Research index ordering + full-page reorder view — index defaults to newest publication first (`published_at` desc, NULLS LAST; one-time backfill migration via `ResearchItem.sort_by_recency!`); signed-in Isara can toggle `?view=full` for an un-paginated one-page drag view + "Sort by most recent" reset button (re-stamps `position` by date, confirm-guarded); new items land at the top; visitors keep the paginated published-only list; homepage Featured Research unchanged ✅ (2026-06-16)
+- [x] Search + tag filters extended to all resources — Research, Teaching, and Grants & Awards indexes now have the blog's title search (`q`, ILIKE) + multi-select tag-filter pills (`tag_ids[]`), plus inline tag create/delete on each new/edit form ✅ (2026-07-15)
+  - [x] Parallel join tables `research_item_tags` / `teaching_tags` / `grant_award_tags` mirroring `blog_post_tags`; all point at the **same shared `tags` table** (a tag made on the blog is reusable everywhere); `Tag` given reciprocal `has_many ... dependent: :destroy` per join so a delete cleans all join rows
+  - [x] Reused blog markup + CSS via two new shared partials — `shared/_resource_filter` (search/filter bar) and `shared/_tag_manager` (inline creator); zero new styling
+  - [x] Generalised `blog_filter_controller` (`resourceValue`) + `tag_manager_controller` (`resourceParamValue`) with backward-compatible defaults so the blog is unchanged
+  - [x] Drag-reorder auto-disabled while a search/filter is active (`@filtering`) so a filtered subset can't corrupt the `position` column
 - [x] Grant Awards overhaul — removed `featured` column entirely; all awards show on homepage in drag order; `default_scope` removed from all models (drag only affects index page, not homepage queries) ✅ (2026-03-17)
 - [x] Homepage featured ordering — Teaching + Research now use `updated_at: :desc` (most recently edited floats up); GrantAward uses drag position; `default_scope` removed from all three models to prevent bleed ✅ (2026-03-17)
 - [x] Hero banner explanations — consistent `resource-hero-info` + `hi-teal` CSS classes across Teaching, Research, Awards, Blog index pages; yellow star + Featured styling on Teaching/Research/Blog ✅ (2026-03-17)
@@ -221,6 +226,7 @@ Phase 4 complete ✅ — Landing page live with animations. PostHog analytics fu
 - [x] PostHog analytics — cookieless visitor tracking (`persistence: 'memory'`, no cookies, no cross-session tracking, no cookie banner needed) ✅ (2026-04-07)
   - [x] Server-side events: `blog_post_viewed`, `research_item_viewed`, `teaching_viewed`, `contact_submitted`, `cv_downloaded`
   - [x] Client-side events (Stimulus `analytics_controller.js`): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress` (25/50/75/100%), `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`
+  - [x] Search/filter events on the other resource indexes (`blog_filter_controller` `resourceValue`): `research_searched`, `research_tag_filtered`, `teaching_searched`, `teaching_tag_filtered`, `award_searched`, `award_tag_filtered` ✅ (2026-07-15)
   - [x] PostHog JS only loads for visitors (not admin) — `unless user_signed_in?` guard in layout
   - [x] All admin-only events removed (no login, blog create/publish/AI tracking)
   - [x] Privacy policy updated to describe cookieless PostHog analytics

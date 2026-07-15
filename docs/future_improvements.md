@@ -1,7 +1,7 @@
 # Future Improvements — isarak-portfolio
 
 > Maintained by Louis + Claude. Add ideas here as they come up during development.
-> Last updated: 2026-04-11 (session 26)
+> Last updated: 2026-07-15 (search + tag filters extended from blog to Research, Teaching, and Grants & Awards)
 
 ---
 
@@ -28,6 +28,7 @@
 - [x] **Related posts** — show 2–3 posts at bottom of show page (same tags → recent fallback); `@related_posts` in controller, card grid in view ✅ (2026-03-20)
 - [x] **Table of contents** — `toc_controller.js` scans `h2`/`h3` in content, injects nav above post; hidden if fewer than 2 headings ✅ (2026-03-20)
 - [x] **Blog post tags / category filtering** — `Tag` model + `BlogPostTag` join table; filter pills on blog index with Stimulus + GET params + Turbo Drive replace; search bar with 400ms debounce; clear-all × button ✅ (2026-03-18/20)
+- [x] **Search + tag filters on all resources** — the blog's search/filter + inline tag creation extended to Research, Teaching, and Grants & Awards; parallel join tables (`research_item_tags`/`teaching_tags`/`grant_award_tags`) share one global `tags` table; two shared partials (`_resource_filter`, `_tag_manager`) reuse the blog markup/CSS; drag-reorder auto-disabled while filtering so `position` can't be corrupted ✅ (2026-07-15)
 - [x] **Reading progress bar** — `reading_progress_controller.js`; fixed 3px teal bar at top of viewport, fills on scroll ✅ (2026-03-20)
 
 ### Animations & Polish
