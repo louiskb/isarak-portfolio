@@ -129,6 +129,15 @@ Living docs for this project (checked by the `docs-sync` skill):
   ⚠️ **Do NOT write "no cross-session tracking" again.** That was true only while the id lived in memory and reset every page load (which also made returning visitors count as new people). Cookieless deliberately DOES link a visitor's requests, via a hash PostHog computes server-side from IP + user agent — that is the whole point of it. The claim was live in the privacy policy and in three docs until 2026-08-25.
   ⚠️ `persistence: 'memory'` is REQUIRED alongside `cookieless_mode`: cookieless alone only marks persistence disabled, leaving the backend at its localStorage+cookie default, so the instance writes cookies and storage entries and only then deletes them. The end state looks clean, which is what makes it dangerous.
   ⚠️ It also needs **"Cookieless server hash mode" ON in the PostHog project** (Settings → Web analytics), or events are dropped server-side while every request still returns 200.
+- ⚠️ **TWO legal pages describe the analytics, and they must agree.** `privacy_policy.html.erb`
+  AND `terms_of_service.html.erb` both have an Analytics section. On 2026-08-25 the Terms
+  still said analytics collect "no personal data" while the Policy had just been updated to
+  disclose that PostHog receives the visitor's **IP address and user-agent string** — an IP is
+  personal data under the GDPR and the PDPA, so the site's two legal documents contradicted
+  each other. Both now describe the same processing. **When either page's analytics wording
+  changes, check the other**, and bump the `legal-hero-meta` "Last updated" on whichever page
+  actually changed — not on both by reflex.
+
 - PostHog **server-side events** (controllers): `blog_post_viewed`, `research_item_viewed`, `teaching_viewed`, `contact_submitted`, `cv_downloaded`
 - PostHog **client-side events** (Stimulus): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress`, `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`, `research_searched`, `research_tag_filtered`, `teaching_searched`, `teaching_tag_filtered`, `award_searched`, `award_tag_filtered` (the last six fire from `blog_filter_controller` on the Research/Teaching/Awards indexes via its `resourceValue`)
 - `analytics_controller.js` — generic Stimulus controller for declarative event tracking via `data-action` attributes
