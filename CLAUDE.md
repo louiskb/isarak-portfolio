@@ -24,7 +24,7 @@ Louis's own portfolio (same structure, use as reference):
 - **Action Text** (Trix rich text editor for blog posts)
 - **Hotwire** (Turbo + Stimulus) for SPA-like interactions
 - **invisible_captcha** — honeypot spam protection on contact form
-- **PostHog** — cookieless visitor analytics (`posthog-ruby` + `posthog-rails` server-side, `posthog-js` client-side inline snippet; `persistence: 'memory'`, no cookies)
+- **PostHog** — cookieless visitor analytics on **EU Cloud** (`posthog-ruby` + `posthog-rails` server-side, `posthog-js` client-side inline snippet; `cookieless_mode: 'always'` + `persistence: 'memory'`, no cookies)
 - **Minitest** for testing (Rails default)
 
 ## Color Scheme (Dark Theme — GMK Delta Light)
@@ -85,7 +85,7 @@ Required in `.env`:
 - `SMTP_ADDRESS`, `SMTP_PORT`, `SMTP_DOMAIN`, `SMTP_USERNAME`, `SMTP_PASSWORD` — SMTP config
 - `APP_HOST` — Application host for mailer URLs
 - `POSTHOG_PROJECT_TOKEN` — PostHog project API key
-- `POSTHOG_HOST` — PostHog ingest endpoint (e.g. `https://us.i.posthog.com`)
+- `POSTHOG_HOST` — PostHog **ingest** endpoint — `https://eu.i.posthog.com` (EU Cloud since 2026-08-25). ⚠️ The ingest host, NOT the app host `eu.posthog.com`: this app SENDS events. A US token/host is a different project and will not error, it will simply never appear.
 
 ## Docs Sync
 Living docs for this project (checked by the `docs-sync` skill):
@@ -125,7 +125,10 @@ Living docs for this project (checked by the `docs-sync` skill):
 - Research index defaults to newest-publication-first (`published_at` desc, nulls last). Signed-in Isara can toggle `?view=full` for an un-paginated one-page drag view, plus a "Sort by most recent" button that re-stamps `position` by date. New research items land at the top. The index orders by `position` for **both** signed-in Isara and visitors, so the drag arrangement is exactly what the public sees on `/research_items`. Homepage Featured Research is the only exception — it ignores `position` (ordered by `updated_at` + Featured).
 - Contact form uses Turbo disabled (`data-turbo="false"`) for reliable flash rendering
 - CV is an Active Storage attachment on User model (not its own model)
-- PostHog is **cookieless** (`persistence: 'memory'`) — no cookies, no localStorage, no cross-session tracking. JS snippet only loads for visitors (not admin). No cookie banner needed.
+- PostHog is **cookieless** (`cookieless_mode: 'always'` + `persistence: 'memory'`) — no cookies, no localStorage, no profile. JS snippet only loads for visitors (not admin). No cookie banner needed.
+  ⚠️ **Do NOT write "no cross-session tracking" again.** That was true only while the id lived in memory and reset every page load (which also made returning visitors count as new people). Cookieless deliberately DOES link a visitor's requests, via a hash PostHog computes server-side from IP + user agent — that is the whole point of it. The claim was live in the privacy policy and in three docs until 2026-08-25.
+  ⚠️ `persistence: 'memory'` is REQUIRED alongside `cookieless_mode`: cookieless alone only marks persistence disabled, leaving the backend at its localStorage+cookie default, so the instance writes cookies and storage entries and only then deletes them. The end state looks clean, which is what makes it dangerous.
+  ⚠️ It also needs **"Cookieless server hash mode" ON in the PostHog project** (Settings → Web analytics), or events are dropped server-side while every request still returns 200.
 - PostHog **server-side events** (controllers): `blog_post_viewed`, `research_item_viewed`, `teaching_viewed`, `contact_submitted`, `cv_downloaded`
 - PostHog **client-side events** (Stimulus): `cta_clicked`, `nav_link_clicked`, `footer_link_clicked`, `social_link_clicked`, `blog_card_clicked`, `blog_searched`, `blog_tag_filtered`, `blog_tag_clicked`, `blog_read_progress`, `blog_link_copied`, `research_card_clicked`, `related_post_clicked`, `teaching_spotlight_navigated`, `awards_slider_navigated`, `research_searched`, `research_tag_filtered`, `teaching_searched`, `teaching_tag_filtered`, `award_searched`, `award_tag_filtered` (the last six fire from `blog_filter_controller` on the Research/Teaching/Awards indexes via its `resourceValue`)
 - `analytics_controller.js` — generic Stimulus controller for declarative event tracking via `data-action` attributes

@@ -98,7 +98,7 @@ APP_HOST=localhost:3000
 
 # PostHog analytics (cookieless, visitor-only)
 POSTHOG_PROJECT_TOKEN=phc_...
-POSTHOG_HOST=https://us.i.posthog.com
+POSTHOG_HOST=https://eu.i.posthog.com
 ```
 
 > **Note:** `CLOUDINARY_URL` must not have an inline comment on the same line — dotenv will include it in the value and break the URI parser.
@@ -129,7 +129,7 @@ bundle exec rubocop -a        # Auto-fix linting
 - `bin/dev` uses `Procfile.dev` to run both the Rails server and the Solid Queue worker — both are needed for scheduling to work
 - AI blog generation uses `ruby_llm` with structured output; inline images use Unsplash placeholders injected at generation time
 - The contact form sends an admin notification to Isara and a confirmation email to the sender
-- PostHog runs in **cookieless mode** — no cookies, no localStorage, no cross-session tracking. Analytics JS only loads for visitors (not the admin). No cookie consent banner needed
+- PostHog runs in **cookieless mode** (`cookieless_mode: 'always'`) on **EU Cloud** — no cookies, no localStorage, no personal profiles. Visitors are counted with a hash PostHog computes on its own servers from IP + user agent, so PostHog receives both. Analytics JS only loads for visitors (not the admin). No cookie consent banner needed
 
 ---
 
