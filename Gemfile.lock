@@ -503,6 +503,7 @@ DEPENDENCIES
   importmap-rails
   invisible_captcha
   jbuilder
+  json (< 3)
   kamal
   pagy
   pg (~> 1.1)
