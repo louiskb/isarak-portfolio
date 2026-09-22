@@ -87,6 +87,35 @@ Required in `.env`:
 - `POSTHOG_PROJECT_TOKEN` — PostHog project API key
 - `POSTHOG_HOST` — PostHog **ingest** endpoint — `https://eu.i.posthog.com` (EU Cloud since 2026-08-25). ⚠️ The ingest host, NOT the app host `eu.posthog.com`: this app SENDS events. A US token/host is a different project and will not error, it will simply never appear.
 
+## Deployment
+
+Heroku app `isarak-portfolio` (region `us`, stack `heroku-24`), serving `isarak.me` and
+`www.isarak.me`. One `heroku-postgresql:essential-0` add-on; Cloudinary and PostHog are
+external accounts.
+
+**It runs on ONE Basic web dyno.** Solid Queue runs *inside* Puma, via the line already in
+`config/puma.rb`:
+
+```ruby
+plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
+```
+
+enabled by the `SOLID_QUEUE_IN_PUMA` config var (set 2026-09-22, release v88). The plugin
+boots `SolidQueue::Supervisor.start(mode: :fork)` — the *full* supervisor, so the web dyno
+runs the worker, the dispatcher **and** the recurring scheduler. Both `recurring.yml`
+production tasks (`publish_scheduled_posts` every minute, `clear_solid_queue_finished_jobs`
+hourly) were confirmed firing on the web dyno with no separate worker.
+
+- ⚠️ **`Procfile` declares `worker: bin/rails solid_queue:start`, but it is scaled to 0.**
+  The Procfile is not the deployed truth — `heroku ps -a isarak-portfolio` is. Do **not**
+  scale the worker back up "because the Procfile says so": it costs $7/mo to duplicate work
+  the web dyno already does. It previously ran at 1 and was the app's only real waste.
+- ⚠️ If `SOLID_QUEUE_IN_PUMA` is ever unset while `worker` is still at 0, **background jobs
+  stop silently** — the site stays up and returns 200, but scheduled posts never publish.
+  The two settings are a pair; change one and you must change the other.
+- Local development is unaffected: `bin/dev` (`Procfile.dev`) still runs the server and a
+  separate Solid Queue worker, and that is still the right way to work locally.
+
 ## Docs Sync
 Living docs for this project (checked by the `docs-sync` skill):
 - `CLAUDE.md` (root) — this file
